@@ -10,7 +10,7 @@ import com.adedom.myfood.data.models.request.TokenRequest
 import com.adedom.myfood.data.models.response.TokenResponse
 import io.ktor.client.*
 import io.ktor.client.call.*
-import io.ktor.client.engine.cio.*
+import io.ktor.client.engine.*
 import io.ktor.client.plugins.*
 import io.ktor.client.plugins.auth.*
 import io.ktor.client.plugins.auth.providers.*
@@ -26,8 +26,8 @@ class DataSourceProvider(
     private val appDataStore: AppDataStore,
 ) {
 
-    fun getHttpClient(): HttpClient {
-        return HttpClient(CIO) {
+    fun getHttpClient(engine: HttpClientEngine): HttpClient {
+        return HttpClient(engine) {
             install(ContentNegotiation) {
                 json(Json {
                     ignoreUnknownKeys = true
@@ -82,7 +82,7 @@ class DataSourceProvider(
         }
     }
 
-    private fun HttpClientConfig<CIOEngineConfig>.httpResponseValidator() {
+    private fun HttpClientConfig<*>.httpResponseValidator() {
         HttpResponseValidator {
             handleResponseExceptionWithRequest { exception, request ->
                 val clientException = exception as? ClientRequestException

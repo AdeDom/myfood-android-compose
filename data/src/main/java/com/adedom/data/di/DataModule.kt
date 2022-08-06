@@ -24,21 +24,35 @@ import com.adedom.data.repositories.splash_screen.SplashScreenRepositoryImpl
 import com.adedom.data.repositories.welcome.WelcomeRepository
 import com.adedom.data.repositories.welcome.WelcomeRepositoryImpl
 import com.adedom.myfood.MyFoodDatabase
+import io.ktor.client.engine.cio.*
 import org.kodein.di.DI
 import org.kodein.di.bindSingleton
 import org.kodein.di.instance
 
 val dataModule = DI.Module(name = "data") {
 
+    bindSingleton { CIO.create() }
     bindSingleton { DataSourceProvider(instance()) }
     bindSingleton { MyFoodDatabase(instance()) }
 
     bindSingleton<UserProfileLocalDataSource> { UserProfileLocalDataSourceImpl(instance()) }
 
-    bindSingleton<AuthRemoteDataSource> { AuthRemoteDataSourceImpl(instance(), instance()) }
-    bindSingleton<ProfileRemoteDataSource> { ProfileRemoteDataSourceImpl(instance(), instance()) }
-    bindSingleton<CategoryRemoteDataSource> { CategoryRemoteDataSourceImpl(instance()) }
-    bindSingleton<FoodRemoteDataSource> { FoodRemoteDataSourceImpl(instance()) }
+    bindSingleton<AuthRemoteDataSource> {
+        AuthRemoteDataSourceImpl(
+            instance(),
+            instance(),
+            instance(),
+        )
+    }
+    bindSingleton<ProfileRemoteDataSource> {
+        ProfileRemoteDataSourceImpl(
+            instance(),
+            instance(),
+            instance(),
+        )
+    }
+    bindSingleton<CategoryRemoteDataSource> { CategoryRemoteDataSourceImpl(instance(), instance()) }
+    bindSingleton<FoodRemoteDataSource> { FoodRemoteDataSourceImpl(instance(), instance()) }
 
     bindSingleton<SplashScreenRepository> { SplashScreenRepositoryImpl(instance()) }
     bindSingleton<AuthLoginRepository> { AuthLoginRepositoryImpl(instance(), instance()) }
