@@ -84,7 +84,7 @@ class DataSourceProvider(
 
     private fun HttpClientConfig<*>.httpResponseValidator() {
         HttpResponseValidator {
-            handleResponseExceptionWithRequest { exception, request ->
+            handleResponseExceptionWithRequest { exception, _ ->
                 val clientException = exception as? ClientRequestException
                     ?: return@handleResponseExceptionWithRequest
                 val exceptionResponse = clientException.response
@@ -92,7 +92,7 @@ class DataSourceProvider(
                     HttpStatusCode.BadRequest -> {
                         val jsonString = exceptionResponse.bodyAsText()
                         val baseResponse = jsonString.decodeApiServiceResponseFromString()
-                        val baseError = baseResponse.error ?: createBaseError()
+                        val baseError = baseResponse.error
                         throw ApiServiceException(baseError)
                     }
                     HttpStatusCode.Forbidden -> {
@@ -101,20 +101,16 @@ class DataSourceProvider(
                         appDataStore.setAuthRole(AuthRole.UnAuth)
                         val jsonString = exceptionResponse.bodyAsText()
                         val baseResponse = jsonString.decodeApiServiceResponseFromString()
-                        val baseError = baseResponse.error ?: createBaseError()
+                        val baseError = baseResponse.error
                         throw ApiServiceException(baseError)
                     }
                     else -> {
-                        val baseError = createBaseError(exception.message)
+                        val messageString = exception.message
+                        val baseError = BaseError(message = messageString)
                         throw ApiServiceException(baseError)
                     }
                 }
             }
         }
-    }
-
-    private fun createBaseError(message: String? = null): BaseError {
-        val messageString = message ?: "Error."
-        return BaseError(message = messageString)
     }
 }
