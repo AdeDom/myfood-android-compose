@@ -3,6 +3,7 @@ package com.adedom.data.providers.local
 import com.adedom.myfood.MyFoodDatabase
 import com.squareup.sqldelight.runtime.coroutines.asFlow
 import com.squareup.sqldelight.runtime.coroutines.mapToOneOrNull
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import myfood.database.MyFoodDatabaseQueries
@@ -10,12 +11,13 @@ import myfood.database.UserProfileEntity
 
 class UserProfileLocalDataSourceImpl(
     db: MyFoodDatabase,
+    private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO,
 ) : UserProfileLocalDataSource {
 
     private val queries: MyFoodDatabaseQueries = db.myFoodDatabaseQueries
 
     override fun getUserProfile(): Flow<UserProfileEntity?> {
-        return queries.getUserProfile().asFlow().mapToOneOrNull(Dispatchers.IO)
+        return queries.getUserProfile().asFlow().mapToOneOrNull(ioDispatcher)
     }
 
     override suspend fun saveUserProfile(userProfile: UserProfileEntity) {
