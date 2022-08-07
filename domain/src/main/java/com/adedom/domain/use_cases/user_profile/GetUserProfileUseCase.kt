@@ -10,7 +10,7 @@ class GetUserProfileUseCase(
 ) {
 
     operator fun invoke(): Flow<UserProfileModel> {
-        return userProfileRepository.getUserProfile()
+        return userProfileRepository.getUserProfileFlow()
             .map { userProfileEntity ->
                 UserProfileModel(
                     userId = userProfileEntity?.userId.orEmpty(),

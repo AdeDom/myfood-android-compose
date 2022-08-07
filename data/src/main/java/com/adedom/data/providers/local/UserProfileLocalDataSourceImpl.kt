@@ -16,8 +16,12 @@ class UserProfileLocalDataSourceImpl(
 
     private val queries: MyFoodDatabaseQueries = db.myFoodDatabaseQueries
 
-    override fun getUserProfile(): Flow<UserProfileEntity?> {
+    override fun getUserProfileFlow(): Flow<UserProfileEntity?> {
         return queries.getUserProfile().asFlow().mapToOneOrNull(ioDispatcher)
+    }
+
+    override suspend fun getUserProfile(): UserProfileEntity? {
+        return queries.getUserProfile().executeAsOneOrNull()
     }
 
     override suspend fun saveUserProfile(userProfile: UserProfileEntity) {

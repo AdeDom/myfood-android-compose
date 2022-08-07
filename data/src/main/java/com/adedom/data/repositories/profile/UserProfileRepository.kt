@@ -8,7 +8,9 @@ interface UserProfileRepository {
 
     suspend fun callUserProfile(): UserProfileResponse?
 
-    fun getUserProfile(): Flow<UserProfileEntity?>
+    fun getUserProfileFlow(): Flow<UserProfileEntity?>
+
+    suspend fun getUserProfile(): UserProfileEntity?
 
     suspend fun saveUserProfile(userProfile: UserProfileEntity)
 

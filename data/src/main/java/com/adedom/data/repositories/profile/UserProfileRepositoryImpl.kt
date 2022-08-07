@@ -22,8 +22,14 @@ class UserProfileRepositoryImpl(
         }
     }
 
-    override fun getUserProfile(): Flow<UserProfileEntity?> {
-        return userProfileLocalDataSource.getUserProfile()
+    override fun getUserProfileFlow(): Flow<UserProfileEntity?> {
+        return userProfileLocalDataSource.getUserProfileFlow()
+    }
+
+    override suspend fun getUserProfile(): UserProfileEntity? {
+        return withContext(ioDispatcher) {
+            userProfileLocalDataSource.getUserProfile()
+        }
     }
 
     override suspend fun saveUserProfile(userProfile: UserProfileEntity) {
