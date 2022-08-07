@@ -35,4 +35,10 @@ class AuthLoginRepositoryImpl(
             appDataStore.setAuthRole(authRole)
         }
     }
+
+    override suspend fun getAuthRole(): AuthRole {
+        return withContext(ioDispatcher) {
+            appDataStore.getAuthRole()
+        }
+    }
 }
