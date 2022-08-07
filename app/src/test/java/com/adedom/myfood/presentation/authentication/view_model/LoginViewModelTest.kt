@@ -8,18 +8,15 @@ import com.adedom.domain.use_cases.validate.ValidatePasswordUseCase
 import com.adedom.myfood.data.models.base.BaseError
 import com.adedom.myfood.presentation.authentication.event.LoginUiEvent
 import com.adedom.myfood.presentation.authentication.state.LoginUiState
+import com.adedom.myfood.utils.MainCoroutineRule
 import com.google.common.truth.Truth.assertThat
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.mockk
-import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.test.TestCoroutineDispatcher
-import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.runTest
-import kotlinx.coroutines.test.setMain
-import org.junit.After
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -27,18 +24,19 @@ import org.junit.Test
 class LoginViewModelTest {
 
     @get:Rule
-    val instantTaskExecutorRule = InstantTaskExecutorRule()
+    var instantExecutorRule = InstantTaskExecutorRule()
+
+    @ExperimentalCoroutinesApi
+    @get:Rule
+    var mainCoroutineRule = MainCoroutineRule()
 
     private val loginUseCase: LoginUseCase = mockk()
     private lateinit var validateEmailUseCase: ValidateEmailUseCase
     private lateinit var validatePasswordUseCase: ValidatePasswordUseCase
     private lateinit var viewModel: LoginViewModel
 
-    private val testDispatcher = TestCoroutineDispatcher()
-
     @Before
     fun setUp() {
-        Dispatchers.setMain(testDispatcher)
         validateEmailUseCase = ValidateEmailUseCase()
         validatePasswordUseCase = ValidatePasswordUseCase()
         viewModel = LoginViewModel(
@@ -46,12 +44,6 @@ class LoginViewModelTest {
             validatePasswordUseCase,
             loginUseCase,
         )
-    }
-
-    @After
-    fun tearDown() {
-        Dispatchers.resetMain()
-        testDispatcher.cleanupTestCoroutines()
     }
 
     @Test
