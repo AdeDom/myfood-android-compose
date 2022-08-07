@@ -1,6 +1,5 @@
 package com.adedom.myfood.presentation.authentication.view_model
 
-import androidx.lifecycle.viewModelScope
 import com.adedom.data.utils.Resource
 import com.adedom.domain.use_cases.login.LoginUseCase
 import com.adedom.domain.use_cases.validate.ValidateEmailUseCase
@@ -12,7 +11,6 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
-import kotlinx.coroutines.launch
 
 class LoginViewModel(
     private val validateEmailUseCase: ValidateEmailUseCase,
@@ -58,7 +56,7 @@ class LoginViewModel(
     }
 
     fun onLoginEvent() {
-        viewModelScope.launch {
+        launch {
             _uiState.update {
                 LoginUiState.Loading
             }
@@ -81,7 +79,7 @@ class LoginViewModel(
     }
 
     fun onRegisterEvent() {
-        viewModelScope.launch {
+        launch {
             val event = LoginUiEvent.Register
             _uiEvent.emit(event)
         }

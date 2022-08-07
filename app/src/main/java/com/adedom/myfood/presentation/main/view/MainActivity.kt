@@ -2,6 +2,7 @@ package com.adedom.myfood.presentation.main.view
 
 import android.content.Intent
 import android.os.Bundle
+import android.widget.Toast
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
@@ -55,6 +56,18 @@ class MainActivity : BaseActivity() {
                             finishAffinity()
                         }
                     }
+                }
+            }
+        }
+
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.refreshTokenExpired.collect { baseError ->
+                    val errorMessage = baseError.message
+                    Toast.makeText(baseContext, errorMessage, Toast.LENGTH_SHORT).show()
+                    val intent = Intent(baseContext, WelcomeActivity::class.java)
+                    startActivity(intent)
+                    finishAffinity()
                 }
             }
         }

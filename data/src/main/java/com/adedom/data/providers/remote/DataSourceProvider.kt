@@ -4,6 +4,7 @@ import com.adedom.data.BuildConfig
 import com.adedom.data.providers.data_store.AppDataStore
 import com.adedom.data.utils.ApiServiceException
 import com.adedom.data.utils.AuthRole
+import com.adedom.data.utils.RefreshTokenExpiredException
 import com.adedom.myfood.data.models.base.BaseError
 import com.adedom.myfood.data.models.base.BaseResponse
 import com.adedom.myfood.data.models.request.TokenRequest
@@ -102,7 +103,7 @@ class DataSourceProvider(
                         val jsonString = exceptionResponse.bodyAsText()
                         val baseResponse = jsonString.decodeApiServiceResponseFromString()
                         val baseError = baseResponse.error
-                        throw ApiServiceException(baseError)
+                        throw RefreshTokenExpiredException(baseError)
                     }
                     else -> {
                         val messageString = exception.message

@@ -13,3 +13,12 @@ class ApiServiceException(baseError: BaseError?) : IOException(baseError?.toMess
         } ?: BaseError(message = message)
     }
 }
+
+class RefreshTokenExpiredException(baseError: BaseError?) : IOException(baseError?.toMessage()) {
+
+    fun toBaseError(): BaseError {
+        return message?.let { msg ->
+            Json.decodeFromString(msg)
+        } ?: BaseError(message = message)
+    }
+}

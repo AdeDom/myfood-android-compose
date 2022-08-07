@@ -1,6 +1,5 @@
 package com.adedom.myfood.presentation.main.view_model
 
-import androidx.lifecycle.viewModelScope
 import com.adedom.domain.use_cases.logout.LogoutUseCase
 import com.adedom.domain.use_cases.main.MainPageUseCase
 import com.adedom.domain.use_cases.user_profile.GetUserProfileUseCase
@@ -22,7 +21,7 @@ class MainViewModel(
     }
 
     private fun getUserProfile() {
-        viewModelScope.launch {
+        launch {
             getUserProfileUseCase().collect { userProfile ->
                 _uiState.update {
                     MainUiState.ShowUserProfile(userProfile)
@@ -32,7 +31,7 @@ class MainViewModel(
     }
 
     fun callApiService() {
-        viewModelScope.launch {
+        launch {
             try {
                 mainPageUseCase()
             } catch (ex: Throwable) {
@@ -48,7 +47,7 @@ class MainViewModel(
     }
 
     fun onLogoutEvent() {
-        viewModelScope.launch {
+        launch {
             val event = MainUiEvent.Logout
             _uiEvent.emit(event)
         }
