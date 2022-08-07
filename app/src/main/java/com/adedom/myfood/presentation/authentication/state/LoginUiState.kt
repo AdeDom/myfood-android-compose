@@ -15,10 +15,7 @@ sealed interface LoginUiState {
         val isLogin: Boolean,
     ) : LoginUiState
 
-    data class Loading(
-        val isLoading: Boolean,
-        val isLogin: Boolean,
-    ) : LoginUiState
+    object Loading : LoginUiState
 
     data class LoginError(
         val error: BaseError,

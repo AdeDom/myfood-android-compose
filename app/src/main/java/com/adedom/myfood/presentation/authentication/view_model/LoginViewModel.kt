@@ -9,6 +9,8 @@ import com.adedom.myfood.base.BaseViewModel
 import com.adedom.myfood.presentation.authentication.event.LoginUiEvent
 import com.adedom.myfood.presentation.authentication.state.LoginUiState
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
@@ -19,6 +21,7 @@ class LoginViewModel(
 ) : BaseViewModel<LoginUiState, LoginUiEvent>(LoginUiState.Initial) {
 
     private val _form = MutableStateFlow(LoginUiState.LoginForm())
+    val form: StateFlow<LoginUiState.LoginForm> = _form.asStateFlow()
 
     fun setEmail(email: String) {
         _form.update {
@@ -57,10 +60,7 @@ class LoginViewModel(
     fun onLoginEvent() {
         viewModelScope.launch {
             _uiState.update {
-                LoginUiState.Loading(
-                    isLoading = true,
-                    isLogin = false,
-                )
+                LoginUiState.Loading
             }
 
             val email = _form.value.email
@@ -76,13 +76,6 @@ class LoginViewModel(
                         LoginUiState.LoginError(resource.error)
                     }
                 }
-            }
-
-            _uiState.update {
-                LoginUiState.Loading(
-                    isLoading = false,
-                    isLogin = true,
-                )
             }
         }
     }

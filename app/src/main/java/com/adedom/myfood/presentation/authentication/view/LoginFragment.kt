@@ -70,17 +70,16 @@ class LoginFragment : BaseFragment() {
                             }
                         }
                         is LoginUiState.LoginError -> {
+                            binding.progressBar.isVisible = false
+                            binding.btnLogin.isClickable = true
+                            binding.btnLogin.setBackgroundResource(R.drawable.shape_overlay_button_yellow)
                             val errorMessage = uiState.error.message ?: uiState.error.code.orEmpty()
                             Toast.makeText(context, errorMessage, Toast.LENGTH_SHORT).show()
                         }
                         is LoginUiState.Loading -> {
-                            binding.progressBar.isVisible = uiState.isLoading
-                            binding.btnLogin.isClickable = uiState.isLogin
-                            if (uiState.isLogin) {
-                                binding.btnLogin.setBackgroundResource(R.drawable.shape_overlay_button_yellow)
-                            } else {
-                                binding.btnLogin.setBackgroundResource(R.drawable.shape_overlay_button_grey)
-                            }
+                            binding.progressBar.isVisible = true
+                            binding.btnLogin.isClickable = false
+                            binding.btnLogin.setBackgroundResource(R.drawable.shape_overlay_button_grey)
                         }
                     }
                 }
