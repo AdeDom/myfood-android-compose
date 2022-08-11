@@ -3,7 +3,7 @@ package com.adedom.myfood.di
 import android.content.Context
 import androidx.datastore.preferences.core.PreferenceDataStoreFactory
 import androidx.datastore.preferences.preferencesDataStoreFile
-import com.adedom.data.providers.data_store.AppDataStore
+import com.adedom.core.data.providers.data_store.AppDataStore
 import com.adedom.myfood.data.providers.data_store.AppDataStoreImpl
 import com.adedom.myfood.data.providers.database.MyFoodDatabaseDriverFactory
 import org.kodein.di.DI

@@ -5,7 +5,6 @@ import com.adedom.splash_screen.domain.use_cases.GetIsAuthUseCase
 import com.adedom.splash_screen.presentation.splash_screen.event.SplashScreenUiEvent
 import com.adedom.splash_screen.presentation.splash_screen.state.SplashScreenUiState
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.update
 
 class SplashScreenViewModel(
     private val getIsAuthUseCase: GetIsAuthUseCase,
@@ -20,13 +19,9 @@ class SplashScreenViewModel(
             delay(2_000)
             val isAuth = getIsAuthUseCase()
             if (isAuth) {
-                _uiState.update {
-                    SplashScreenUiState.Authentication
-                }
+                _uiEvent.emit(SplashScreenUiEvent.Authentication)
             } else {
-                _uiState.update {
-                    SplashScreenUiState.UnAuthentication
-                }
+                _uiEvent.emit(SplashScreenUiEvent.UnAuthentication)
             }
         }
     }
