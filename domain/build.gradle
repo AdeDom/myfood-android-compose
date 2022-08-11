@@ -24,15 +24,17 @@ android {
     productFlavors {
         flavorDimensions "develop"
         develop {
-            buildConfigField "String", "APP_TYPE", "\"develop\""
+            buildConfigField "Boolean", "IS_DEVELOP_MODE", "true"
             buildConfigField "String", "BASE_URL", "\"https://myfood-server.herokuapp.com/\""
+            buildConfigField "String", "HOST", "\"myfood-server.herokuapp.com\""
             versionNameSuffix "-Dev"
         }
 
         flavorDimensions "production"
         production {
-            buildConfigField "String", "APP_TYPE", "\"production\""
+            buildConfigField "Boolean", "IS_DEVELOP_MODE", "false"
             buildConfigField "String", "BASE_URL", "\"https://myfood-server.herokuapp.com/\""
+            buildConfigField "String", "HOST", "\"myfood-server.herokuapp.com\""
         }
     }
 
