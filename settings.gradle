@@ -18,3 +18,4 @@ rootProject.name = "My Food"
 include ':app'
 include ':domain'
 include ':data'
+include ':core'
