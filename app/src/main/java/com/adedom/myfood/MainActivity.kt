@@ -65,10 +65,16 @@ class MainActivity : ComponentActivity() {
                             }
                         }
                         composable(Screen.Login.route) {
-                            LoginScreen()
+                            LoginScreen {
+                                navController.popBackStack()
+                                navController.navigate(Screen.Register.route)
+                            }
                         }
                         composable(Screen.Register.route) {
-                            RegisterScreen()
+                            RegisterScreen {
+                                navController.popBackStack()
+                                navController.navigate(Screen.Login.route)
+                            }
                         }
                         composable(Screen.Main.route) {
                             MainScreen()
