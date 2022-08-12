@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -17,20 +18,29 @@ import com.adedom.ui_components.AppButton
 import com.adedom.ui_components.AppText
 import com.adedom.ui_components.LogoApp
 import com.adedom.welcome.R
+import com.adedom.welcome.presentation.event.WelcomeUiEvent
+import com.adedom.welcome.presentation.view_model.WelcomeViewModel
+import org.kodein.di.compose.rememberInstance
 
 @Composable
 fun WelcomeScreen(
-    onNavigateLogin: () -> Unit,
-    onNavigateRegister: () -> Unit,
-    onNavigateSkip: () -> Unit,
+    onNavigate: (WelcomeUiEvent) -> Unit,
 ) {
+    val viewModel: WelcomeViewModel by rememberInstance()
+
+    LaunchedEffect(viewModel) {
+        viewModel.uiEvent.collect { uiEvent ->
+            onNavigate(uiEvent)
+        }
+    }
+
     Box(
         modifier = Modifier.fillMaxSize(),
     ) {
         Column {
             TopSection()
             Spacer(modifier = Modifier.height(64.dp))
-            BottomSection(onNavigateLogin, onNavigateRegister, onNavigateSkip)
+            BottomSection(viewModel)
         }
     }
 }
@@ -63,11 +73,7 @@ private fun TopSection() {
 }
 
 @Composable
-private fun BottomSection(
-    onNavigateLogin: () -> Unit,
-    onNavigateRegister: () -> Unit,
-    onNavigateSkip: () -> Unit,
-) {
+private fun BottomSection(viewModel: WelcomeViewModel) {
     Column(
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -76,18 +82,18 @@ private fun BottomSection(
         AppButton(
             text = "Login",
             backgroundColor = Color(0xFFFFD700),
-            onClick = onNavigateLogin,
+            onClick = viewModel::onLoginEvent,
         )
         Spacer(modifier = Modifier.height(20.dp))
         AppButton(
             text = "Create an Account",
             backgroundColor = Color.White,
-            onClick = onNavigateRegister,
+            onClick = viewModel::onRegisterEvent,
         )
         Spacer(modifier = Modifier.height(20.dp))
         Row(
             modifier = Modifier.clickable {
-                onNavigateSkip()
+                viewModel.onSkipEvent()
             }
         ) {
             AppText(

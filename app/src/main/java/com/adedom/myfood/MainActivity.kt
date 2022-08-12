@@ -15,6 +15,7 @@ import com.adedom.myfood.ui.theme.MyFoodTheme
 import com.adedom.splash_screen.presentation.component.SplashScreen
 import com.adedom.splash_screen.presentation.event.SplashScreenUiEvent
 import com.adedom.welcome.presentation.component.WelcomeScreen
+import com.adedom.welcome.presentation.event.WelcomeUiEvent
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -46,11 +47,13 @@ class MainActivity : ComponentActivity() {
                             }
                         }
                         composable(Screen.Welcome.route) {
-                            WelcomeScreen(
-                                onNavigateLogin = {},
-                                onNavigateRegister = {},
-                                onNavigateSkip = {},
-                            )
+                            WelcomeScreen { uiEvent ->
+                                when (uiEvent) {
+                                    WelcomeUiEvent.Login -> {}
+                                    WelcomeUiEvent.Register -> {}
+                                    is WelcomeUiEvent.Skip -> {}
+                                }
+                            }
                         }
                         composable(Screen.Main.route) {
                             MainScreen()
