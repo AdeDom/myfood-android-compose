@@ -17,7 +17,7 @@
         android:theme="@style/Theme.MyFood"
         tools:targetApi="31">
         <activity
-            android:name="com.adedom.splash_screen.presentation.splash_screen.view.SplashScreenActivity"
+            android:name="com.adedom.splash_screen.presentation.SplashScreenActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

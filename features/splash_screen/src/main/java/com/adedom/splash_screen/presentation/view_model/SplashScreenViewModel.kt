@@ -1,9 +1,9 @@
-package com.adedom.splash_screen.presentation.splash_screen.view_model
+package com.adedom.splash_screen.presentation.view_model
 
 import com.adedom.core.base.BaseViewModel
 import com.adedom.splash_screen.domain.use_cases.GetIsAuthUseCase
-import com.adedom.splash_screen.presentation.splash_screen.event.SplashScreenUiEvent
-import com.adedom.splash_screen.presentation.splash_screen.state.SplashScreenUiState
+import com.adedom.splash_screen.presentation.event.SplashScreenUiEvent
+import com.adedom.splash_screen.presentation.state.SplashScreenUiState
 import kotlinx.coroutines.delay
 
 class SplashScreenViewModel(

@@ -13,8 +13,8 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.adedom.splash_screen.R
-import com.adedom.splash_screen.presentation.splash_screen.event.SplashScreenUiEvent
-import com.adedom.splash_screen.presentation.splash_screen.view_model.SplashScreenViewModel
+import com.adedom.splash_screen.presentation.event.SplashScreenUiEvent
+import com.adedom.splash_screen.presentation.view_model.SplashScreenViewModel
 import org.kodein.di.compose.rememberInstance
 
 @Composable
