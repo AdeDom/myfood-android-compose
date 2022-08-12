@@ -1,7 +1,7 @@
 package com.adedom.domain.use_cases.splash_screen
 
+import com.adedom.core.utils.AuthRole
 import com.adedom.data.repositories.splash_screen.SplashScreenRepository
-import com.adedom.data.utils.AuthRole
 
 class GetIsAuthUseCase(
     private val splashScreenRepository: SplashScreenRepository,

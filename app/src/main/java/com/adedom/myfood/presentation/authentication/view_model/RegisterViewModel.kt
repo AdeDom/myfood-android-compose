@@ -1,6 +1,6 @@
 package com.adedom.myfood.presentation.authentication.view_model
 
-import com.adedom.myfood.base.BaseViewModel
+import com.adedom.core.base.BaseViewModel
 import com.adedom.myfood.presentation.authentication.event.RegisterUiEvent
 import com.adedom.myfood.presentation.authentication.state.RegisterUiState
 

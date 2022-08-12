@@ -1,6 +1,6 @@
 package com.adedom.data.repositories.auth
 
-import com.adedom.data.utils.AuthRole
+import com.adedom.core.utils.AuthRole
 import com.adedom.myfood.data.models.request.LoginRequest
 import com.adedom.myfood.data.models.response.TokenResponse
 

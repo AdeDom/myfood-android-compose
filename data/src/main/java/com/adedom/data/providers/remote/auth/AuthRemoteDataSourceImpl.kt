@@ -1,8 +1,8 @@
 package com.adedom.data.providers.remote.auth
 
+import com.adedom.core.data.providers.data_store.AppDataStore
+import com.adedom.core.data.providers.remote.DataSourceProvider
 import com.adedom.data.BuildConfig
-import com.adedom.data.providers.data_store.AppDataStore
-import com.adedom.data.providers.remote.DataSourceProvider
 import com.adedom.myfood.data.models.base.BaseResponse
 import com.adedom.myfood.data.models.request.LoginRequest
 import com.adedom.myfood.data.models.response.TokenResponse

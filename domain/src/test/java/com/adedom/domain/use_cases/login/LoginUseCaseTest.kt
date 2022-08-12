@@ -1,7 +1,10 @@
 package com.adedom.domain.use_cases.login
 
-import com.adedom.data.models.error.AppErrorCode
-import com.adedom.data.providers.data_store.AppDataStore
+import com.adedom.core.data.models.error.AppErrorCode
+import com.adedom.core.data.providers.data_store.AppDataStore
+import com.adedom.core.utils.ApiServiceException
+import com.adedom.core.utils.AuthRole
+import com.adedom.core.utils.Resource
 import com.adedom.data.providers.local.FakeUserProfileLocalDataSource
 import com.adedom.data.providers.local.UserProfileLocalDataSource
 import com.adedom.data.providers.remote.auth.AuthRemoteDataSource
@@ -10,9 +13,6 @@ import com.adedom.data.repositories.auth.AuthLoginRepository
 import com.adedom.data.repositories.auth.AuthLoginRepositoryImpl
 import com.adedom.data.repositories.profile.UserProfileRepository
 import com.adedom.data.repositories.profile.UserProfileRepositoryImpl
-import com.adedom.data.utils.ApiServiceException
-import com.adedom.data.utils.AuthRole
-import com.adedom.data.utils.Resource
 import com.adedom.domain.providers.data_store.FakeAppDataStore
 import com.adedom.myfood.data.models.base.BaseError
 import com.adedom.myfood.data.models.base.BaseResponse

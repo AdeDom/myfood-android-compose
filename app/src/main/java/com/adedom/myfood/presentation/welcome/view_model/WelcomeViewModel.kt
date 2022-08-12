@@ -1,7 +1,7 @@
 package com.adedom.myfood.presentation.welcome.view_model
 
+import com.adedom.core.base.BaseViewModel
 import com.adedom.domain.use_cases.welcome.WelcomeGuestRoleUseCase
-import com.adedom.myfood.base.BaseViewModel
 import com.adedom.myfood.presentation.welcome.event.WelcomeUiEvent
 import com.adedom.myfood.presentation.welcome.state.WelcomeUiState
 

@@ -1,6 +1,7 @@
 package com.adedom.data.providers.data_store
 
-import com.adedom.data.utils.AuthRole
+import com.adedom.core.data.providers.data_store.AppDataStore
+import com.adedom.core.utils.AuthRole
 
 class FakeAppDataStore : AppDataStore {
     private var accessToken: String? = null

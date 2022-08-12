@@ -2,7 +2,6 @@ package com.adedom.data.di
 
 import com.adedom.data.providers.local.UserProfileLocalDataSource
 import com.adedom.data.providers.local.UserProfileLocalDataSourceImpl
-import com.adedom.data.providers.remote.DataSourceProvider
 import com.adedom.data.providers.remote.auth.AuthRemoteDataSource
 import com.adedom.data.providers.remote.auth.AuthRemoteDataSourceImpl
 import com.adedom.data.providers.remote.category.CategoryRemoteDataSource
@@ -28,8 +27,6 @@ import org.kodein.di.bindSingleton
 import org.kodein.di.instance
 
 val dataModule = DI.Module(name = "data") {
-
-    bindSingleton { DataSourceProvider(instance()) }
 
     bindSingleton<UserProfileLocalDataSource> { UserProfileLocalDataSourceImpl(instance()) }
 

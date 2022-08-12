@@ -1,7 +1,7 @@
 package com.adedom.myfood.presentation.splash_screen.view_model
 
+import com.adedom.core.base.BaseViewModel
 import com.adedom.domain.use_cases.splash_screen.GetIsAuthUseCase
-import com.adedom.myfood.base.BaseViewModel
 import com.adedom.myfood.presentation.splash_screen.event.SplashScreenUiEvent
 import com.adedom.myfood.presentation.splash_screen.state.SplashScreenUiState
 import kotlinx.coroutines.delay

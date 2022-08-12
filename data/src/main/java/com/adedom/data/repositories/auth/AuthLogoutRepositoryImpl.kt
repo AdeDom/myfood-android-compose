@@ -1,8 +1,8 @@
 package com.adedom.data.repositories.auth
 
-import com.adedom.data.providers.data_store.AppDataStore
+import com.adedom.core.data.providers.data_store.AppDataStore
+import com.adedom.core.utils.AuthRole
 import com.adedom.data.providers.remote.auth.AuthRemoteDataSource
-import com.adedom.data.utils.AuthRole
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext

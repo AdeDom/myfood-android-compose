@@ -1,7 +1,7 @@
 package com.adedom.myfood.presentation.authentication.view_model
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import com.adedom.data.utils.Resource
+import com.adedom.core.utils.Resource
 import com.adedom.domain.use_cases.login.LoginUseCase
 import com.adedom.domain.use_cases.validate.ValidateEmailUseCase
 import com.adedom.domain.use_cases.validate.ValidatePasswordUseCase

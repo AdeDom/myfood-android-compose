@@ -1,10 +1,10 @@
 package com.adedom.myfood.presentation.authentication.view_model
 
-import com.adedom.data.utils.Resource
+import com.adedom.core.base.BaseViewModel
+import com.adedom.core.utils.Resource
 import com.adedom.domain.use_cases.login.LoginUseCase
 import com.adedom.domain.use_cases.validate.ValidateEmailUseCase
 import com.adedom.domain.use_cases.validate.ValidatePasswordUseCase
-import com.adedom.myfood.base.BaseViewModel
 import com.adedom.myfood.presentation.authentication.event.LoginUiEvent
 import com.adedom.myfood.presentation.authentication.state.LoginUiState
 import kotlinx.coroutines.flow.MutableStateFlow

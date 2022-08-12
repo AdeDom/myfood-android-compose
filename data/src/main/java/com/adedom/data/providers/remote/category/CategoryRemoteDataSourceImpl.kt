@@ -1,7 +1,7 @@
 package com.adedom.data.providers.remote.category
 
+import com.adedom.core.data.providers.remote.DataSourceProvider
 import com.adedom.data.BuildConfig
-import com.adedom.data.providers.remote.DataSourceProvider
 import com.adedom.myfood.data.models.base.BaseResponse
 import com.adedom.myfood.data.models.response.CategoryResponse
 import io.ktor.client.call.*

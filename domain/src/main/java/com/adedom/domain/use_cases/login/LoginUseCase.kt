@@ -1,10 +1,10 @@
 package com.adedom.domain.use_cases.login
 
-import com.adedom.data.models.error.AppErrorCode
+import com.adedom.core.data.models.error.AppErrorCode
+import com.adedom.core.utils.ApiServiceException
+import com.adedom.core.utils.Resource
 import com.adedom.data.repositories.auth.AuthLoginRepository
 import com.adedom.data.repositories.profile.UserProfileRepository
-import com.adedom.data.utils.ApiServiceException
-import com.adedom.data.utils.Resource
 import com.adedom.myfood.data.models.base.BaseError
 import com.adedom.myfood.data.models.request.LoginRequest
 import com.adedom.myfood.data.models.response.UserProfileResponse

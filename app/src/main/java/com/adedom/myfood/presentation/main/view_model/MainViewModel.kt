@@ -1,9 +1,9 @@
 package com.adedom.myfood.presentation.main.view_model
 
+import com.adedom.core.base.BaseViewModel
 import com.adedom.domain.use_cases.logout.LogoutUseCase
 import com.adedom.domain.use_cases.main.MainPageUseCase
 import com.adedom.domain.use_cases.user_profile.GetUserProfileUseCase
-import com.adedom.myfood.base.BaseViewModel
 import com.adedom.myfood.presentation.main.event.MainUiEvent
 import com.adedom.myfood.presentation.main.state.MainUiState
 import kotlinx.coroutines.GlobalScope
