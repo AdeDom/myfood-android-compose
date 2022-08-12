@@ -39,12 +39,18 @@ class MainActivity : ComponentActivity() {
                             SplashScreen { uiEvent ->
                                 when (uiEvent) {
                                     SplashScreenUiEvent.Authentication -> {
-                                        navController.popBackStack()
-                                        navController.navigate(Screen.Main.route)
+                                        navController.navigate(Screen.Main.route) {
+                                            popUpTo(Screen.SplashScreen.route) {
+                                                inclusive = true
+                                            }
+                                        }
                                     }
                                     SplashScreenUiEvent.UnAuthentication -> {
-                                        navController.popBackStack()
-                                        navController.navigate(Screen.Welcome.route)
+                                        navController.navigate(Screen.Welcome.route) {
+                                            popUpTo(Screen.SplashScreen.route) {
+                                                inclusive = true
+                                            }
+                                        }
                                     }
                                 }
                             }
@@ -59,8 +65,11 @@ class MainActivity : ComponentActivity() {
                                         navController.navigate(Screen.Register.route)
                                     }
                                     is WelcomeUiEvent.Skip -> {
-                                        navController.popBackStack()
-                                        navController.navigate(Screen.Main.route)
+                                        navController.navigate(Screen.Main.route) {
+                                            popUpTo(Screen.Welcome.route) {
+                                                inclusive = true
+                                            }
+                                        }
                                     }
                                 }
                             }
@@ -68,7 +77,13 @@ class MainActivity : ComponentActivity() {
                         composable(Screen.Login.route) {
                             LoginScreen { uiEvent ->
                                 when (uiEvent) {
-                                    LoginUiEvent.LoginSuccess -> {}
+                                    LoginUiEvent.LoginSuccess -> {
+                                        navController.navigate(Screen.Main.route) {
+                                            popUpTo(Screen.Welcome.route) {
+                                                inclusive = true
+                                            }
+                                        }
+                                    }
                                     LoginUiEvent.Register -> {
                                         navController.popBackStack()
                                         navController.navigate(Screen.Register.route)
