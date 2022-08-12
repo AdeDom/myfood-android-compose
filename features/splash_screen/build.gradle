@@ -61,4 +61,6 @@ dependencies {
 
     implementation "org.kodein.di:kodein-di:$kodein_version"
     implementation "org.kodein.di:kodein-di-framework-compose:$kodein_version"
+
+    implementation "androidx.navigation:navigation-compose:$nav_version"
 }
