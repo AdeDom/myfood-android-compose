@@ -18,12 +18,12 @@ import com.adedom.splash_screen.presentation.view_model.SplashScreenViewModel
 import org.kodein.di.compose.rememberInstance
 
 @Composable
-fun SplashScreen(splashScreenNav: (SplashScreenUiEvent) -> Unit) {
+fun SplashScreen(onNavigate: (SplashScreenUiEvent) -> Unit) {
     val viewModel: SplashScreenViewModel by rememberInstance()
 
     LaunchedEffect(key1 = true) {
         viewModel.uiEvent.collect { uiEvent ->
-            splashScreenNav(uiEvent)
+            onNavigate(uiEvent)
         }
     }
 

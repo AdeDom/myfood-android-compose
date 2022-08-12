@@ -35,9 +35,11 @@ class SplashScreenActivity : ComponentActivity() {
                             SplashScreen { uiEvent ->
                                 when (uiEvent) {
                                     SplashScreenUiEvent.Authentication -> {
+                                        navController.popBackStack()
                                         navController.navigate("main")
                                     }
                                     SplashScreenUiEvent.UnAuthentication -> {
+                                        navController.popBackStack()
                                         navController.navigate("welcome")
                                     }
                                 }
