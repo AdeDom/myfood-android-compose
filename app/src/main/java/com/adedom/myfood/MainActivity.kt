@@ -10,6 +10,8 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.adedom.authentication.presentation.component.LoginScreen
+import com.adedom.authentication.presentation.component.RegisterScreen
 import com.adedom.main.presentation.component.MainScreen
 import com.adedom.myfood.ui.theme.MyFoodTheme
 import com.adedom.splash_screen.presentation.component.SplashScreen
@@ -49,11 +51,24 @@ class MainActivity : ComponentActivity() {
                         composable(Screen.Welcome.route) {
                             WelcomeScreen { uiEvent ->
                                 when (uiEvent) {
-                                    WelcomeUiEvent.Login -> {}
-                                    WelcomeUiEvent.Register -> {}
-                                    is WelcomeUiEvent.Skip -> {}
+                                    WelcomeUiEvent.Login -> {
+                                        navController.navigate(Screen.Login.route)
+                                    }
+                                    WelcomeUiEvent.Register -> {
+                                        navController.navigate(Screen.Register.route)
+                                    }
+                                    is WelcomeUiEvent.Skip -> {
+                                        navController.popBackStack()
+                                        navController.navigate(Screen.Main.route)
+                                    }
                                 }
                             }
+                        }
+                        composable(Screen.Login.route) {
+                            LoginScreen()
+                        }
+                        composable(Screen.Register.route) {
+                            RegisterScreen()
                         }
                         composable(Screen.Main.route) {
                             MainScreen()

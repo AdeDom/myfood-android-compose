@@ -1,6 +1,7 @@
 package com.adedom.myfood
 
 import android.app.Application
+import com.adedom.authentication.di.featureAuthenticationModule
 import com.adedom.data.di.dataModule
 import com.adedom.domain.di.domainModule
 import com.adedom.myfood.di.appModule
@@ -23,6 +24,7 @@ class MainApplication : Application(), DIAware {
             presentationModule,
             featureSplashScreenModule,
             featureWelcomeModule,
+            featureAuthenticationModule,
         )
     }
 }
