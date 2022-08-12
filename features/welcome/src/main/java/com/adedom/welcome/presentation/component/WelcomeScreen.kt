@@ -1,6 +1,9 @@
 package com.adedom.welcome.presentation.component
 
-import androidx.compose.foundation.*
+import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
@@ -16,6 +19,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.adedom.ui_components.AppButton
 import com.adedom.ui_components.AppText
+import com.adedom.ui_components.BottomText
 import com.adedom.ui_components.LogoApp
 import com.adedom.welcome.R
 import com.adedom.welcome.presentation.event.WelcomeUiEvent
@@ -91,22 +95,11 @@ private fun BottomSection(viewModel: WelcomeViewModel) {
             onClick = viewModel::onRegisterEvent,
         )
         Spacer(modifier = Modifier.height(20.dp))
-        Row(
-            modifier = Modifier.clickable {
-                viewModel.onSkipEvent()
-            }
-        ) {
-            AppText(
-                "Don\'t want login?",
-                color = Color.Gray,
-            )
-            Spacer(modifier = Modifier.width(4.dp))
-            AppText(
-                "Skip",
-                color = Color(0xFFFFD700),
-                fontWeight = FontWeight.Bold,
-            )
-        }
+        BottomText(
+            firstText = "Don\'t want login?",
+            secondText = "Skip",
+            onClick = viewModel::onSkipEvent,
+        )
         Spacer(modifier = Modifier.height(20.dp))
         Row(
             modifier = Modifier
