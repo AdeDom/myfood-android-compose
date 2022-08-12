@@ -1,10 +1,13 @@
 package com.adedom.welcome.presentation.view_model
 
 import com.adedom.core.base.BaseViewModel
+import com.adedom.welcome.domain.use_cases.WelcomeGuestRoleUseCase
 import com.adedom.welcome.presentation.event.WelcomeUiEvent
 import com.adedom.welcome.presentation.state.WelcomeUiState
 
-class WelcomeViewModel : BaseViewModel<WelcomeUiState, WelcomeUiEvent>(WelcomeUiState.Initial) {
+class WelcomeViewModel(
+    private val welcomeGuestRoleUseCase: WelcomeGuestRoleUseCase,
+) : BaseViewModel<WelcomeUiState, WelcomeUiEvent>(WelcomeUiState.Initial) {
 
     fun onLoginEvent() {
         launch {
@@ -22,8 +25,7 @@ class WelcomeViewModel : BaseViewModel<WelcomeUiState, WelcomeUiEvent>(WelcomeUi
 
     fun onSkipEvent() {
         launch {
-//            val event = WelcomeUiEvent.Skip(welcomeGuestRoleUseCase())
-            val event = WelcomeUiEvent.Skip(Unit)
+            val event = WelcomeUiEvent.Skip(welcomeGuestRoleUseCase())
             _uiEvent.emit(event)
         }
     }
