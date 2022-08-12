@@ -1,12 +1,6 @@
 package com.adedom.authentication.presentation.component
 
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.text.KeyboardActions
-import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material.Text
-import androidx.compose.material.TextField
-import androidx.compose.material.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -14,7 +8,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
@@ -23,6 +16,7 @@ import com.adedom.authentication.presentation.event.LoginUiEvent
 import com.adedom.authentication.presentation.view_model.LoginViewModel
 import com.adedom.ui_components.AppButton
 import com.adedom.ui_components.AppText
+import com.adedom.ui_components.AppTextField
 import com.adedom.ui_components.BottomText
 import org.kodein.di.compose.rememberInstance
 
@@ -33,8 +27,6 @@ fun LoginScreen(
     val viewModel: LoginViewModel by rememberInstance()
 
     val form by viewModel.form.collectAsState()
-
-    val focusManager = LocalFocusManager.current
 
     LaunchedEffect(viewModel) {
         viewModel.uiEvent.collect { uiEvent ->
@@ -62,49 +54,20 @@ fun LoginScreen(
                 color = Color.Gray,
             )
             Spacer(modifier = Modifier.height(20.dp))
-            TextField(
+            AppTextField(
                 value = form.email,
                 onValueChange = viewModel::setEmail,
-                placeholder = {
-                    Text(text = "Your Email")
-                },
-                keyboardOptions = KeyboardOptions(
-                    keyboardType = KeyboardType.Email,
-                    imeAction = ImeAction.Next,
-                ),
-                singleLine = true,
-                colors = TextFieldDefaults.textFieldColors(
-                    focusedIndicatorColor = Color.Transparent,
-                    unfocusedIndicatorColor = Color.Transparent,
-                ),
-                shape = RoundedCornerShape(32.dp),
-                modifier = Modifier
-                    .width(300.dp)
-                    .height(60.dp),
+                hint = "Your Email",
+                keyboardType = KeyboardType.Email,
+                imeAction = ImeAction.Next,
             )
             Spacer(modifier = Modifier.height(20.dp))
-            TextField(
+            AppTextField(
                 value = form.password,
                 onValueChange = viewModel::setPassword,
-                placeholder = {
-                    Text(text = "Password")
-                },
-                keyboardOptions = KeyboardOptions(
-                    keyboardType = KeyboardType.Password,
-                    imeAction = ImeAction.Done
-                ),
-                keyboardActions = KeyboardActions {
-                    focusManager.clearFocus()
-                },
-                singleLine = true,
-                colors = TextFieldDefaults.textFieldColors(
-                    focusedIndicatorColor = Color.Transparent,
-                    unfocusedIndicatorColor = Color.Transparent,
-                ),
-                shape = RoundedCornerShape(32.dp),
-                modifier = Modifier
-                    .width(300.dp)
-                    .height(60.dp),
+                hint = "Password",
+                keyboardType = KeyboardType.Password,
+                imeAction = ImeAction.Done,
             )
             Spacer(modifier = Modifier.height(20.dp))
             AppButton(
