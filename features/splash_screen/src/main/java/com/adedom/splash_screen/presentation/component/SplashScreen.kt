@@ -1,4 +1,4 @@
-package com.adedom.splash_screen.presentation.splash_screen.view
+package com.adedom.splash_screen.presentation.component
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box

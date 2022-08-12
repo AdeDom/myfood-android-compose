@@ -1,4 +1,4 @@
-package com.adedom.splash_screen.presentation.splash_screen.view
+package com.adedom.welcome.presentation.component
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize

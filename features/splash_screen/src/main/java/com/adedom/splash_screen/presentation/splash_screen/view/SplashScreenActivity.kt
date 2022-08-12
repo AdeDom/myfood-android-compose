@@ -12,8 +12,10 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.adedom.splash_screen.presentation.component.SplashScreen
 import com.adedom.splash_screen.presentation.splash_screen.event.SplashScreenUiEvent
 import com.adedom.splash_screen.presentation.ui.theme.MyFoodTheme
+import com.adedom.welcome.presentation.component.WelcomeScreen
 
 class SplashScreenActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -43,11 +45,7 @@ class SplashScreenActivity : ComponentActivity() {
                                         ).show()
                                     }
                                     SplashScreenUiEvent.UnAuthentication -> {
-                                        Toast.makeText(
-                                            context,
-                                            "UnAuthentication",
-                                            Toast.LENGTH_SHORT
-                                        ).show()
+                                        navController.navigate("welcome")
                                     }
                                 }
                             }
