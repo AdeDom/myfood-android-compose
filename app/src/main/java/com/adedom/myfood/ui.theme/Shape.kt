@@ -1,4 +1,4 @@
-package com.adedom.splash_screen.presentation.ui.theme
+package com.adedom.myfood.ui.theme
 
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Shapes

@@ -1,4 +1,4 @@
-package com.adedom.splash_screen.presentation.screen
+package com.adedom.myfood
 
 sealed class Screen(val route: String) {
     object SplashScreen : Screen("splash_screen")
