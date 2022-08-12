@@ -46,7 +46,11 @@ class MainActivity : ComponentActivity() {
                             }
                         }
                         composable(Screen.Welcome.route) {
-                            WelcomeScreen()
+                            WelcomeScreen(
+                                onNavigateLogin = {},
+                                onNavigateRegister = {},
+                                onNavigateSkip = {},
+                            )
                         }
                         composable(Screen.Main.route) {
                             MainScreen()
