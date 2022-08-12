@@ -1,7 +1,6 @@
 package com.adedom.welcome.presentation.component
 
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.clickable
+import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
@@ -101,6 +100,46 @@ private fun BottomSection(
                 color = Color(0xFFFFD700),
                 fontWeight = FontWeight.Bold,
             )
+        }
+        Spacer(modifier = Modifier.height(20.dp))
+        Row(
+            modifier = Modifier
+                .width(80.dp)
+                .height(32.dp)
+                .border(
+                    border = BorderStroke(
+                        width = 1.dp,
+                        color = Color(0xFFFFD700),
+                    ),
+                    shape = RoundedCornerShape(32.dp),
+                ),
+        ) {
+            Box(
+                modifier = Modifier
+                    .width(40.dp)
+                    .height(32.dp)
+                    .background(
+                        color = Color(0xFFFFD700),
+                        shape = RoundedCornerShape(32.dp),
+                    ),
+            ) {
+                AppText(
+                    text = "TH",
+                    fontWeight = FontWeight.Bold,
+                    color = Color.White,
+                    modifier = Modifier.align(Alignment.Center),
+                )
+            }
+            Box(
+                modifier = Modifier
+                    .width(40.dp)
+                    .height(32.dp),
+            ) {
+                AppText(
+                    text = "EN",
+                    modifier = Modifier.align(Alignment.Center),
+                )
+            }
         }
     }
 }
