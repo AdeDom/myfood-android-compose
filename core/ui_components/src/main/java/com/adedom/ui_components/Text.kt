@@ -67,7 +67,10 @@ fun AppErrorText(
         AppText(
             text = errorText,
             color = Color.Red,
-            modifier = Modifier.align(Alignment.CenterEnd),
+            fontSize = 14.sp,
+            modifier = Modifier
+                .align(Alignment.CenterEnd)
+                .padding(end = 32.dp),
         )
     }
 }

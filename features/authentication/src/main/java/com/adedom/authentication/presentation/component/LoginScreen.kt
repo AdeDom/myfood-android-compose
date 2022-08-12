@@ -1,6 +1,8 @@
 package com.adedom.authentication.presentation.component
 
+import android.widget.Toast
 import androidx.compose.foundation.layout.*
+import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -8,6 +10,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
@@ -26,6 +29,8 @@ fun LoginScreen(
 
     val uiState by viewModel.uiState.collectAsState()
     val form by viewModel.form.collectAsState()
+
+    val context = LocalContext.current
 
     LaunchedEffect(viewModel) {
         viewModel.uiEvent.collect { uiEvent ->
@@ -58,8 +63,25 @@ fun LoginScreen(
                 isLogin = state.isLogin,
             )
         }
-        LoginUiState.Loading -> {}
-        is LoginUiState.LoginError -> {}
+        LoginUiState.Loading -> {
+            LoginRender(
+                viewModel = viewModel,
+                form = form,
+                isLoading = true,
+            )
+        }
+        is LoginUiState.LoginError -> {
+            val state = uiState as LoginUiState.LoginError
+            val errorMessage = state.error.message ?: state.error.code.orEmpty()
+            Toast.makeText(context, errorMessage, Toast.LENGTH_SHORT).show()
+
+            LoginRender(
+                viewModel = viewModel,
+                form = form,
+                isLogin = true,
+                isLoading = false,
+            )
+        }
     }
 }
 
@@ -70,10 +92,15 @@ fun LoginRender(
     isErrorEmail: Boolean = false,
     isErrorPassword: Boolean = false,
     isLogin: Boolean = false,
+    isLoading: Boolean = false,
 ) {
     Box(
         modifier = Modifier.fillMaxSize(),
     ) {
+        if (isLoading) {
+            CircularProgressIndicator()
+        }
+
         Column(
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally,
