@@ -19,17 +19,19 @@ import androidx.compose.ui.unit.sp
 fun AppButton(
     text: String,
     backgroundColor: Color,
+    borderColor: Color = Color(0xFFFFD700),
+    enabled: Boolean = true,
     onClick: () -> Unit,
 ) {
     Card(
         shape = RoundedCornerShape(32.dp),
         backgroundColor = backgroundColor,
-        border = BorderStroke(1.dp, Color(0xFFFFD700)),
+        border = BorderStroke(1.dp, borderColor),
         elevation = 2.dp,
         modifier = Modifier
             .width(300.dp)
             .height(60.dp)
-            .clickable {
+            .clickable(enabled = enabled) {
                 onClick()
             },
     ) {

@@ -13,11 +13,9 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.adedom.authentication.presentation.event.LoginUiEvent
+import com.adedom.authentication.presentation.state.LoginUiState
 import com.adedom.authentication.presentation.view_model.LoginViewModel
-import com.adedom.ui_components.AppButton
-import com.adedom.ui_components.AppText
-import com.adedom.ui_components.AppTextField
-import com.adedom.ui_components.BottomText
+import com.adedom.ui_components.*
 import org.kodein.di.compose.rememberInstance
 
 @Composable
@@ -26,6 +24,7 @@ fun LoginScreen(
 ) {
     val viewModel: LoginViewModel by rememberInstance()
 
+    val uiState by viewModel.uiState.collectAsState()
     val form by viewModel.form.collectAsState()
 
     LaunchedEffect(viewModel) {
@@ -34,6 +33,44 @@ fun LoginScreen(
         }
     }
 
+    when (uiState) {
+        LoginUiState.Initial -> {
+            LoginRender(
+                viewModel = viewModel,
+                form = form,
+            )
+        }
+        is LoginUiState.ValidateEmail -> {
+            val state = uiState as LoginUiState.ValidateEmail
+            LoginRender(
+                viewModel = viewModel,
+                form = form,
+                isErrorEmail = state.isError,
+                isLogin = state.isLogin,
+            )
+        }
+        is LoginUiState.ValidatePassword -> {
+            val state = uiState as LoginUiState.ValidatePassword
+            LoginRender(
+                viewModel = viewModel,
+                form = form,
+                isErrorPassword = state.isError,
+                isLogin = state.isLogin,
+            )
+        }
+        LoginUiState.Loading -> {}
+        is LoginUiState.LoginError -> {}
+    }
+}
+
+@Composable
+fun LoginRender(
+    viewModel: LoginViewModel,
+    form: LoginUiState.LoginForm,
+    isErrorEmail: Boolean = false,
+    isErrorPassword: Boolean = false,
+    isLogin: Boolean = false,
+) {
     Box(
         modifier = Modifier.fillMaxSize(),
     ) {
@@ -56,23 +93,39 @@ fun LoginScreen(
             Spacer(modifier = Modifier.height(20.dp))
             AppTextField(
                 value = form.email,
-                onValueChange = viewModel::setEmail,
+                onValueChange = { email ->
+                    viewModel.setEmail(email)
+                    viewModel.onValidateEmail()
+                },
                 hint = "Your Email",
                 keyboardType = KeyboardType.Email,
                 imeAction = ImeAction.Next,
             )
-            Spacer(modifier = Modifier.height(20.dp))
+            if (isErrorEmail) {
+                AppErrorText("Email is incorrect")
+            } else {
+                Spacer(modifier = Modifier.height(20.dp))
+            }
             AppTextField(
                 value = form.password,
-                onValueChange = viewModel::setPassword,
+                onValueChange = { password ->
+                    viewModel.setPassword(password)
+                    viewModel.onValidatePassword()
+                },
                 hint = "Password",
                 keyboardType = KeyboardType.Password,
                 imeAction = ImeAction.Done,
             )
-            Spacer(modifier = Modifier.height(20.dp))
+            if (isErrorPassword) {
+                AppErrorText("Password is incorrect")
+            } else {
+                Spacer(modifier = Modifier.height(20.dp))
+            }
             AppButton(
                 text = "Login",
-                backgroundColor = Color(0xFFFFD700),
+                backgroundColor = if (isLogin) Color(0xFFFFD700) else Color.Gray,
+                borderColor = if (isLogin) Color(0xFFFFD700) else Color.Gray,
+                enabled = isLogin,
                 onClick = viewModel::onLoginEvent,
             )
             Spacer(modifier = Modifier.height(20.dp))
@@ -82,7 +135,7 @@ fun LoginScreen(
             )
         }
 
-        BottomText(
+        AppBottomText(
             firstText = "Don\'t have an Account?",
             secondText = "Sign Up",
             onClick = viewModel::onRegisterEvent,

@@ -8,7 +8,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.adedom.ui_components.BottomText
+import com.adedom.ui_components.AppBottomText
 
 @Composable
 fun RegisterScreen(
@@ -19,7 +19,7 @@ fun RegisterScreen(
     ) {
         Text(text = "Register")
 
-        BottomText(
+        AppBottomText(
             firstText = "Already have an Account?",
             secondText = "Login",
             onClick = onNavigate,

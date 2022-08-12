@@ -17,9 +17,9 @@ import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import com.adedom.ui_components.AppBottomText
 import com.adedom.ui_components.AppButton
 import com.adedom.ui_components.AppText
-import com.adedom.ui_components.BottomText
 import com.adedom.ui_components.LogoApp
 import com.adedom.welcome.R
 import com.adedom.welcome.presentation.event.WelcomeUiEvent
@@ -95,7 +95,7 @@ private fun BottomSection(viewModel: WelcomeViewModel) {
             onClick = viewModel::onRegisterEvent,
         )
         Spacer(modifier = Modifier.height(20.dp))
-        BottomText(
+        AppBottomText(
             firstText = "Don\'t want login?",
             secondText = "Skip",
             onClick = viewModel::onSkipEvent,
