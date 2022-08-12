@@ -13,6 +13,7 @@ import androidx.navigation.compose.rememberNavController
 import com.adedom.main.presentation.component.MainScreen
 import com.adedom.splash_screen.presentation.component.SplashScreen
 import com.adedom.splash_screen.presentation.event.SplashScreenUiEvent
+import com.adedom.splash_screen.presentation.screen.Screen
 import com.adedom.splash_screen.presentation.ui.theme.MyFoodTheme
 import com.adedom.welcome.presentation.component.WelcomeScreen
 
@@ -29,26 +30,26 @@ class SplashScreenActivity : ComponentActivity() {
 
                     NavHost(
                         navController = navController,
-                        startDestination = "splash_screen",
+                        startDestination = Screen.SplashScreen.route,
                     ) {
-                        composable("splash_screen") {
+                        composable(Screen.SplashScreen.route) {
                             SplashScreen { uiEvent ->
                                 when (uiEvent) {
                                     SplashScreenUiEvent.Authentication -> {
                                         navController.popBackStack()
-                                        navController.navigate("main")
+                                        navController.navigate(Screen.Main.route)
                                     }
                                     SplashScreenUiEvent.UnAuthentication -> {
                                         navController.popBackStack()
-                                        navController.navigate("welcome")
+                                        navController.navigate(Screen.Welcome.route)
                                     }
                                 }
                             }
                         }
-                        composable("welcome") {
+                        composable(Screen.Welcome.route) {
                             WelcomeScreen()
                         }
-                        composable("main") {
+                        composable(Screen.Main.route) {
                             MainScreen()
                         }
                     }
