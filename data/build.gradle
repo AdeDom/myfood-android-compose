@@ -2,13 +2,6 @@ plugins {
     id 'com.android.library'
     id 'org.jetbrains.kotlin.android'
     id 'kotlinx-serialization'
-    id 'com.squareup.sqldelight'
-}
-
-sqldelight {
-    MyFoodDatabase {
-        packageName = "com.adedom.myfood"
-    }
 }
 
 android {
@@ -56,6 +49,7 @@ android {
 }
 
 dependencies {
+    implementation project(path: ':core')
 
     implementation "org.kodein.di:kodein-di:$kodein_version"
 

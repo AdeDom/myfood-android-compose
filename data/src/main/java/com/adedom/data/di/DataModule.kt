@@ -23,17 +23,13 @@ import com.adedom.data.repositories.splash_screen.SplashScreenRepository
 import com.adedom.data.repositories.splash_screen.SplashScreenRepositoryImpl
 import com.adedom.data.repositories.welcome.WelcomeRepository
 import com.adedom.data.repositories.welcome.WelcomeRepositoryImpl
-import com.adedom.myfood.MyFoodDatabase
-import io.ktor.client.engine.cio.*
 import org.kodein.di.DI
 import org.kodein.di.bindSingleton
 import org.kodein.di.instance
 
 val dataModule = DI.Module(name = "data") {
 
-    bindSingleton { CIO.create() }
     bindSingleton { DataSourceProvider(instance()) }
-    bindSingleton { MyFoodDatabase(instance()) }
 
     bindSingleton<UserProfileLocalDataSource> { UserProfileLocalDataSourceImpl(instance()) }
 

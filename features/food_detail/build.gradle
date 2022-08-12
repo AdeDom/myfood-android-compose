@@ -20,6 +20,24 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+
+    productFlavors {
+        flavorDimensions "develop"
+        develop {
+            buildConfigField "Boolean", "IS_DEVELOP_MODE", "true"
+            buildConfigField "String", "BASE_URL", "\"https://myfood-server.herokuapp.com/\""
+            buildConfigField "String", "HOST", "\"myfood-server.herokuapp.com\""
+            versionNameSuffix "-Dev"
+        }
+
+        flavorDimensions "production"
+        production {
+            buildConfigField "Boolean", "IS_DEVELOP_MODE", "false"
+            buildConfigField "String", "BASE_URL", "\"https://myfood-server.herokuapp.com/\""
+            buildConfigField "String", "HOST", "\"myfood-server.herokuapp.com\""
+        }
+    }
+
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8

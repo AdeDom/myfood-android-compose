@@ -1,10 +1,12 @@
 package com.adedom.authentication.presentation.view_model
 
+import com.adedom.authentication.domain.use_cases.LoginUseCase
 import com.adedom.authentication.domain.use_cases.ValidateEmailUseCase
 import com.adedom.authentication.domain.use_cases.ValidatePasswordUseCase
 import com.adedom.authentication.presentation.event.LoginUiEvent
 import com.adedom.authentication.presentation.state.LoginUiState
 import com.adedom.core.base.BaseViewModel
+import com.adedom.core.utils.Resource
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -13,7 +15,7 @@ import kotlinx.coroutines.flow.update
 class LoginViewModel(
     private val validateEmailUseCase: ValidateEmailUseCase,
     private val validatePasswordUseCase: ValidatePasswordUseCase,
-//    private val loginUseCase: LoginUseCase,
+    private val loginUseCase: LoginUseCase,
 ) : BaseViewModel<LoginUiState, LoginUiEvent>(LoginUiState.Initial) {
 
     private val _form = MutableStateFlow(LoginUiState.LoginForm())
@@ -61,18 +63,18 @@ class LoginViewModel(
 
             val email = _form.value.email
             val password = _form.value.password
-//            val resource = loginUseCase(email, password)
-//            when (resource) {
-//                is Resource.Success -> {
-//                    val event = LoginUiEvent.LoginSuccess
-//                    _uiEvent.emit(event)
-//                }
-//                is Resource.Error -> {
-//                    _uiState.update {
-//                        LoginUiState.LoginError(resource.error)
-//                    }
-//                }
-//            }
+            val resource = loginUseCase(email, password)
+            when (resource) {
+                is Resource.Success -> {
+                    val event = LoginUiEvent.LoginSuccess
+                    _uiEvent.emit(event)
+                }
+                is Resource.Error -> {
+                    _uiState.update {
+                        LoginUiState.LoginError(resource.error)
+                    }
+                }
+            }
         }
     }
 
