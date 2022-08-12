@@ -62,4 +62,6 @@ dependencies {
 
     implementation "org.kodein.di:kodein-di:$kodein_version"
     implementation "org.kodein.di:kodein-di-framework-compose:$kodein_version"
+
+    implementation "com.github.AdeDom:myfood-server:$myfood_version"
 }
