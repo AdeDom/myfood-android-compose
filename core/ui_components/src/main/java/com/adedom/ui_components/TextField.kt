@@ -14,6 +14,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 
 @Composable
@@ -28,12 +30,22 @@ fun AppTextField(
 ) {
     val focusManager = LocalFocusManager.current
 
+    val visualTransformation = if (keyboardType == KeyboardType.Password) {
+        PasswordVisualTransformation()
+    } else {
+        VisualTransformation.None
+    }
+
     TextField(
         value = value,
         onValueChange = onValueChange,
+        label = {
+            Text(hint)
+        },
         placeholder = {
             Text(text = hint)
         },
+        visualTransformation = visualTransformation,
         keyboardOptions = KeyboardOptions(
             keyboardType = keyboardType,
             imeAction = imeAction,
