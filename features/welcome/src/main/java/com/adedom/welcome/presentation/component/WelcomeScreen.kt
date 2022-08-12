@@ -1,16 +1,19 @@
 package com.adedom.welcome.presentation.component
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import com.adedom.ui_components.LogoApp
 import com.adedom.welcome.R
 
 @Composable
@@ -45,24 +48,6 @@ private fun TopSection() {
             modifier = Modifier.fillMaxSize(),
         )
 
-        Box(
-            modifier = Modifier.fillMaxSize(),
-        ) {
-            Column(
-                horizontalAlignment = Alignment.CenterHorizontally,
-                modifier = Modifier.align(Alignment.Center),
-            ) {
-                Image(
-                    painter = painterResource(id = R.drawable.logo_black),
-                    contentDescription = null,
-                    modifier = Modifier.width(200.dp),
-                )
-                Image(
-                    painter = painterResource(id = R.drawable.logo_food_delivery),
-                    contentDescription = null,
-                    modifier = Modifier.width(120.dp),
-                )
-            }
-        }
+        LogoApp()
     }
 }
