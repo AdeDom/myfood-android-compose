@@ -14,6 +14,7 @@ import com.adedom.authentication.domain.use_cases.LoginUseCase
 import com.adedom.authentication.domain.use_cases.ValidateEmailUseCase
 import com.adedom.authentication.domain.use_cases.ValidatePasswordUseCase
 import com.adedom.authentication.presentation.view_model.LoginViewModel
+import com.adedom.authentication.presentation.view_model.RegisterViewModel
 import com.adedom.core.data.providers.remote.DataSourceProvider
 import com.adedom.myfood.MyFoodDatabase
 import io.ktor.client.engine.cio.*
@@ -56,4 +57,5 @@ val featureAuthenticationModule = DI.Module(name = "featureAuthenticationModule"
 
     // presentation
     bindProvider { LoginViewModel(instance(), instance(), instance()) }
+    bindProvider { RegisterViewModel() }
 }

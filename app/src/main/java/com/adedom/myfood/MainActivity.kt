@@ -13,6 +13,7 @@ import androidx.navigation.compose.rememberNavController
 import com.adedom.authentication.presentation.component.LoginScreen
 import com.adedom.authentication.presentation.component.RegisterScreen
 import com.adedom.authentication.presentation.event.LoginUiEvent
+import com.adedom.authentication.presentation.event.RegisterUiEvent
 import com.adedom.main.presentation.component.MainScreen
 import com.adedom.myfood.ui.theme.MyFoodTheme
 import com.adedom.splash_screen.presentation.component.SplashScreen
@@ -92,9 +93,13 @@ class MainActivity : ComponentActivity() {
                             }
                         }
                         composable(Screen.Register.route) {
-                            RegisterScreen {
-                                navController.popBackStack()
-                                navController.navigate(Screen.Login.route)
+                            RegisterScreen { uiEvent ->
+                                when (uiEvent) {
+                                    RegisterUiEvent.Login -> {
+                                        navController.popBackStack()
+                                        navController.navigate(Screen.Login.route)
+                                    }
+                                }
                             }
                         }
                         composable(Screen.Main.route) {
