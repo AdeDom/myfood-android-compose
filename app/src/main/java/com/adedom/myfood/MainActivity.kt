@@ -15,6 +15,7 @@ import com.adedom.authentication.presentation.component.RegisterScreen
 import com.adedom.authentication.presentation.event.LoginUiEvent
 import com.adedom.authentication.presentation.event.RegisterUiEvent
 import com.adedom.main.presentation.component.MainScreen
+import com.adedom.main.presentation.event.MainUiEvent
 import com.adedom.myfood.ui.theme.MyFoodTheme
 import com.adedom.splash_screen.presentation.component.SplashScreen
 import com.adedom.splash_screen.presentation.event.SplashScreenUiEvent
@@ -104,7 +105,17 @@ class MainActivity : ComponentActivity() {
                             }
                         }
                         composable(Screen.Main.route) {
-                            MainScreen()
+                            MainScreen { uiEvent ->
+                                when (uiEvent) {
+                                    MainUiEvent.Logout -> {
+                                        navController.navigate(Screen.Welcome.route) {
+                                            popUpTo(Screen.Main.route) {
+                                                inclusive = true
+                                            }
+                                        }
+                                    }
+                                }
+                            }
                         }
                     }
                 }
