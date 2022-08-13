@@ -1,14 +1,12 @@
 package com.adedom.myfood
 
 import android.os.Bundle
-import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
@@ -34,8 +32,6 @@ class MainActivity : ComponentActivity() {
                     color = MaterialTheme.colors.background
                 ) {
                     val navController = rememberNavController()
-
-                    val context = LocalContext.current
 
                     NavHost(
                         navController = navController,
@@ -93,11 +89,6 @@ class MainActivity : ComponentActivity() {
                                     LoginUiEvent.Register -> {
                                         navController.popBackStack()
                                         navController.navigate(Screen.Register.route)
-                                    }
-                                    is LoginUiEvent.LoginError -> {
-                                        val errorMessage = uiEvent.error.message
-                                        Toast.makeText(context, errorMessage, Toast.LENGTH_SHORT)
-                                            .show()
                                     }
                                 }
                             }

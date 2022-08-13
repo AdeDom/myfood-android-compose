@@ -91,8 +91,6 @@ dependencies {
     implementation "androidx.compose.material:material:$compose_version"
     implementation "androidx.navigation:navigation-compose:$nav_version"
 
-    implementation "com.github.AdeDom:myfood-server:$myfood_version"
-
     testImplementation "junit:junit:$junit_version"
     testImplementation "com.google.truth:truth:$truth_version"
     testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutine_version"

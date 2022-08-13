@@ -22,6 +22,10 @@ class LoginViewModel(
         uiState = uiState.copy(password = password)
     }
 
+    fun onHideErrorDialog() {
+        uiState = uiState.copy(error = null)
+    }
+
     fun onValidateEmail() {
         val isValidateEmail = validateEmailUseCase(uiState.email)
         val isValidatePassword = validatePasswordUseCase(uiState.password)
@@ -56,15 +60,13 @@ class LoginViewModel(
                     _uiEvent.emit(event)
                 }
                 is Resource.Error -> {
-                    val event = LoginUiEvent.LoginError(resource.error)
-                    _uiEvent.emit(event)
+                    uiState = uiState.copy(
+                        error = resource.error,
+                        isLoading = false,
+                        isLogin = true,
+                    )
                 }
             }
-
-            uiState = uiState.copy(
-                isLoading = false,
-                isLogin = true,
-            )
         }
     }
 

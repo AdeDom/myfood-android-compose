@@ -35,6 +35,13 @@ fun LoginScreen(
             AppLoadingAlertDialog()
         }
 
+        state.error?.let { error ->
+            AppErrorAlertDialog(
+                error = error,
+                onDismiss = viewModel::onHideErrorDialog,
+            )
+        }
+
         Column(
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally,
