@@ -1,5 +1,8 @@
 package com.adedom.authentication.presentation.view_model
 
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import com.adedom.authentication.domain.use_cases.LoginUseCase
 import com.adedom.authentication.domain.use_cases.ValidateEmailUseCase
 import com.adedom.authentication.domain.use_cases.ValidatePasswordUseCase
@@ -7,10 +10,6 @@ import com.adedom.authentication.presentation.event.LoginUiEvent
 import com.adedom.authentication.presentation.state.LoginUiState
 import com.adedom.core.base.BaseViewModel
 import com.adedom.core.utils.Resource
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.update
 
 class LoginViewModel(
     private val validateEmailUseCase: ValidateEmailUseCase,
@@ -18,51 +17,41 @@ class LoginViewModel(
     private val loginUseCase: LoginUseCase,
 ) : BaseViewModel<LoginUiState, LoginUiEvent>(LoginUiState.Initial) {
 
-    private val _form = MutableStateFlow(LoginUiState.LoginForm())
-    val form: StateFlow<LoginUiState.LoginForm> = _form.asStateFlow()
+    var form by mutableStateOf(LoginUiState.LoginForm())
+        private set
 
     fun setEmail(email: String) {
-        _form.update {
-            it.copy(email = email)
-        }
+        form = form.copy(email = email)
     }
 
     fun setPassword(password: String) {
-        _form.update {
-            it.copy(password = password)
-        }
+        form = form.copy(password = password)
     }
 
     fun onValidateEmail() {
-        _uiState.update {
-            val isValidateEmail = validateEmailUseCase(_form.value.email)
-            val isValidatePassword = validatePasswordUseCase(_form.value.password)
-            LoginUiState.ValidateEmail(
-                isError = !isValidateEmail,
-                isLogin = isValidateEmail && isValidatePassword,
-            )
-        }
+        val isValidateEmail = validateEmailUseCase(form.email)
+        val isValidatePassword = validatePasswordUseCase(form.password)
+        uiState = LoginUiState.ValidateEmail(
+            isError = !isValidateEmail,
+            isLogin = isValidateEmail && isValidatePassword,
+        )
     }
 
     fun onValidatePassword() {
-        _uiState.update {
-            val isValidateEmail = validateEmailUseCase(_form.value.email)
-            val isValidatePassword = validatePasswordUseCase(_form.value.password)
-            LoginUiState.ValidatePassword(
-                isError = !isValidatePassword,
-                isLogin = isValidateEmail && isValidatePassword,
-            )
-        }
+        val isValidateEmail = validateEmailUseCase(form.email)
+        val isValidatePassword = validatePasswordUseCase(form.password)
+        uiState = LoginUiState.ValidatePassword(
+            isError = !isValidatePassword,
+            isLogin = isValidateEmail && isValidatePassword,
+        )
     }
 
     fun onLoginEvent() {
         launch {
-            _uiState.update {
-                LoginUiState.Loading
-            }
+            uiState = LoginUiState.Loading
 
-            val email = _form.value.email
-            val password = _form.value.password
+            val email = form.email
+            val password = form.password
             val resource = loginUseCase(email, password)
             when (resource) {
                 is Resource.Success -> {
@@ -70,9 +59,7 @@ class LoginViewModel(
                     _uiEvent.emit(event)
                 }
                 is Resource.Error -> {
-                    _uiState.update {
-                        LoginUiState.LoginError(resource.error)
-                    }
+                    uiState = LoginUiState.LoginError(resource.error)
                 }
             }
         }

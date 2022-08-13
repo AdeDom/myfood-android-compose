@@ -7,7 +7,6 @@ import com.adedom.main.domain.use_cases.MainPageUseCase
 import com.adedom.main.presentation.event.MainUiEvent
 import com.adedom.main.presentation.state.MainUiState
 import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 class MainViewModel(
@@ -23,9 +22,7 @@ class MainViewModel(
     private fun getUserProfile() {
         launch {
             getUserProfileUseCase().collect { userProfile ->
-                _uiState.update {
-                    MainUiState.ShowUserProfile(userProfile)
-                }
+                uiState = MainUiState.ShowUserProfile(userProfile)
             }
         }
     }

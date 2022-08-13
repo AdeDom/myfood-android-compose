@@ -5,8 +5,6 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -26,38 +24,35 @@ fun LoginScreen(
 ) {
     val viewModel: LoginViewModel by rememberInstance()
 
-    val uiState by viewModel.uiState.collectAsState()
-    val form by viewModel.form.collectAsState()
-
     val context = LocalContext.current
 
-    LaunchedEffect(viewModel) {
+    LaunchedEffect(viewModel.uiEvent) {
         viewModel.uiEvent.collect { uiEvent ->
             onNavigate(uiEvent)
         }
     }
 
-    when (uiState) {
+    when (viewModel.uiState) {
         LoginUiState.Initial -> {
             LoginRender(
                 viewModel = viewModel,
-                form = form,
+                form = viewModel.form,
             )
         }
         is LoginUiState.ValidateEmail -> {
-            val state = uiState as LoginUiState.ValidateEmail
+            val state = viewModel.uiState as LoginUiState.ValidateEmail
             LoginRender(
                 viewModel = viewModel,
-                form = form,
+                form = viewModel.form,
                 isErrorEmail = state.isError,
                 isLogin = state.isLogin,
             )
         }
         is LoginUiState.ValidatePassword -> {
-            val state = uiState as LoginUiState.ValidatePassword
+            val state = viewModel.uiState as LoginUiState.ValidatePassword
             LoginRender(
                 viewModel = viewModel,
-                form = form,
+                form = viewModel.form,
                 isErrorPassword = state.isError,
                 isLogin = state.isLogin,
             )
@@ -65,18 +60,18 @@ fun LoginScreen(
         LoginUiState.Loading -> {
             LoginRender(
                 viewModel = viewModel,
-                form = form,
+                form = viewModel.form,
                 isLoading = true,
             )
         }
         is LoginUiState.LoginError -> {
-            val state = uiState as LoginUiState.LoginError
+            val state = viewModel.uiState as LoginUiState.LoginError
             val errorMessage = state.error.message ?: state.error.code.orEmpty()
             Toast.makeText(context, errorMessage, Toast.LENGTH_SHORT).show()
 
             LoginRender(
                 viewModel = viewModel,
-                form = form,
+                form = viewModel.form,
                 isLogin = true,
                 isLoading = false,
             )

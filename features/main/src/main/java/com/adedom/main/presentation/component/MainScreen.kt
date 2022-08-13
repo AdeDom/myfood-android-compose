@@ -8,8 +8,6 @@ import androidx.compose.material.Button
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
@@ -24,9 +22,7 @@ fun MainScreen(
 ) {
     val viewModel: MainViewModel by rememberInstance()
 
-    val uiState by viewModel.uiState.collectAsState()
-
-    LaunchedEffect(viewModel) {
+    LaunchedEffect(viewModel.uiEvent) {
         viewModel.uiEvent.collect { uiEvent ->
             onNavigate(uiEvent)
         }
@@ -50,7 +46,7 @@ fun MainScreen(
         Column(
             modifier = Modifier.align(Alignment.Center),
         ) {
-            when (uiState) {
+            when (viewModel.uiState) {
                 MainUiState.Initial -> {
                     Text("userId")
                     Text("email")
@@ -60,7 +56,7 @@ fun MainScreen(
                     Text("image")
                 }
                 is MainUiState.ShowUserProfile -> {
-                    val state = uiState as MainUiState.ShowUserProfile
+                    val state = viewModel.uiState as MainUiState.ShowUserProfile
                     Text("userId : ${state.userProfile.userId}")
                     Text("email : ${state.userProfile.email}")
                     Text("name : ${state.userProfile.name}")

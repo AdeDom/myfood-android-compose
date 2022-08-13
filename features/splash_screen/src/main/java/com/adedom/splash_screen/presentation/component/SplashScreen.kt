@@ -18,7 +18,7 @@ import org.kodein.di.compose.rememberInstance
 fun SplashScreen(onNavigate: (SplashScreenUiEvent) -> Unit) {
     val viewModel: SplashScreenViewModel by rememberInstance()
 
-    LaunchedEffect(viewModel) {
+    LaunchedEffect(viewModel.uiEvent) {
         viewModel.uiEvent.collect { uiEvent ->
             onNavigate(uiEvent)
         }

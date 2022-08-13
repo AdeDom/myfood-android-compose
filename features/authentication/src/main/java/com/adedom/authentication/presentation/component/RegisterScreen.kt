@@ -4,8 +4,6 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -22,9 +20,7 @@ fun RegisterScreen(
 ) {
     val viewModel: RegisterViewModel by rememberInstance()
 
-    val form by viewModel.form.collectAsState()
-
-    LaunchedEffect(viewModel) {
+    LaunchedEffect(viewModel.uiEvent) {
         viewModel.uiEvent.collect { uiEvent ->
             onNavigate(uiEvent)
         }
@@ -47,42 +43,42 @@ fun RegisterScreen(
                 AppSubTitleText("Add your details to sign up")
                 Spacer(modifier = Modifier.height(20.dp))
                 AppTextField(
-                    value = form.name,
+                    value = viewModel.form.name,
                     onValueChange = viewModel::setName,
                     hint = "Name",
                     imeAction = ImeAction.Next,
                 )
                 Spacer(modifier = Modifier.height(20.dp))
                 AppTextField(
-                    value = form.email,
+                    value = viewModel.form.email,
                     onValueChange = viewModel::setEmail,
                     hint = "Email",
                     imeAction = ImeAction.Next,
                 )
                 Spacer(modifier = Modifier.height(20.dp))
                 AppTextField(
-                    value = form.mobileNo,
+                    value = viewModel.form.mobileNo,
                     onValueChange = viewModel::setMobileNo,
                     hint = "Mobile No",
                     imeAction = ImeAction.Next,
                 )
                 Spacer(modifier = Modifier.height(20.dp))
                 AppTextField(
-                    value = form.address,
+                    value = viewModel.form.address,
                     onValueChange = viewModel::setAddress,
                     hint = "Address",
                     imeAction = ImeAction.Next,
                 )
                 Spacer(modifier = Modifier.height(20.dp))
                 AppTextField(
-                    value = form.password,
+                    value = viewModel.form.password,
                     onValueChange = viewModel::setPassword,
                     hint = "Password",
                     imeAction = ImeAction.Next,
                 )
                 Spacer(modifier = Modifier.height(20.dp))
                 AppTextField(
-                    value = form.confirmPassword,
+                    value = viewModel.form.confirmPassword,
                     onValueChange = viewModel::setConfirmPassword,
                     hint = "Confirm Password",
                     imeAction = ImeAction.Next,

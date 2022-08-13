@@ -32,7 +32,7 @@ fun WelcomeScreen(
 ) {
     val viewModel: WelcomeViewModel by rememberInstance()
 
-    LaunchedEffect(viewModel) {
+    LaunchedEffect(viewModel.uiEvent) {
         viewModel.uiEvent.collect { uiEvent ->
             onNavigate(uiEvent)
         }
