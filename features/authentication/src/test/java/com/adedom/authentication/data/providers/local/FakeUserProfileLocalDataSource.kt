@@ -1,5 +1,6 @@
-package com.adedom.data.providers.local
+package com.adedom.authentication.data.providers.local
 
+import com.adedom.authentication.data.providers.local.user_profile.UserProfileLocalDataSource
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import myfood.database.UserProfileEntity

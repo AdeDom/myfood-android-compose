@@ -1,4 +1,4 @@
-package com.adedom.myfood.utils
+package com.adedom.authentication.utils
 
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi

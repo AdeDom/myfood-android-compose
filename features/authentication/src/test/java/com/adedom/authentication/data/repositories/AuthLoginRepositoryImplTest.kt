@@ -1,36 +1,41 @@
-package com.adedom.data.providers.remote.auth
+package com.adedom.authentication.data.repositories
 
+import com.adedom.authentication.data.providers.data_store.FakeAppDataStore
+import com.adedom.authentication.data.providers.remote.auth.AuthRemoteDataSource
+import com.adedom.authentication.domain.repositories.AuthLoginRepository
 import com.adedom.core.data.providers.data_store.AppDataStore
-import com.adedom.core.data.providers.remote.DataSourceProvider
 import com.adedom.core.utils.ApiServiceException
-import com.adedom.data.providers.data_store.FakeAppDataStore
+import com.adedom.core.utils.AuthRole
 import com.adedom.myfood.data.models.base.BaseResponse
 import com.adedom.myfood.data.models.request.LoginRequest
 import com.adedom.myfood.data.models.response.TokenResponse
 import com.google.common.truth.Truth.assertThat
-import io.ktor.client.engine.mock.*
-import io.ktor.http.*
-import io.ktor.utils.io.*
+import io.mockk.coEvery
+import io.mockk.coVerify
+import io.mockk.mockk
 import kotlinx.coroutines.test.runTest
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
 import org.junit.Before
 import org.junit.Test
 
-class AuthRemoteDataSourceImplTest {
+class AuthLoginRepositoryImplTest {
 
+    private val authRemoteDataSource: AuthRemoteDataSource = mockk()
     private lateinit var appDataStore: AppDataStore
-    private lateinit var dataSourceProvider: DataSourceProvider
-    private lateinit var dataSource: AuthRemoteDataSource
+    private lateinit var repository: AuthLoginRepository
 
     @Before
     fun setUp() {
         appDataStore = FakeAppDataStore()
-        dataSourceProvider = DataSourceProvider(appDataStore)
+        repository = AuthLoginRepositoryImpl(
+            appDataStore,
+            authRemoteDataSource,
+        )
     }
 
     @Test
-    fun `call login should correct return success`() = runTest {
+    fun `call login correct should be success`() = runTest {
         val loginRequest = LoginRequest(
             email = "email",
             password = "password",
@@ -45,27 +50,17 @@ class AuthRemoteDataSourceImplTest {
                 }
             }
         """.trimIndent()
-        val mockEngine = MockEngine {
-            respond(
-                content = ByteReadChannel(jsonString),
-                status = HttpStatusCode.OK,
-                headers = headersOf(HttpHeaders.ContentType, "application/json")
-            )
-        }
-        dataSource = AuthRemoteDataSourceImpl(
-            mockEngine,
-            appDataStore,
-            dataSourceProvider,
-        )
-
-        val result = dataSource.callLogin(loginRequest)
-
         val response = Json.decodeFromString<BaseResponse<TokenResponse>>(jsonString)
-        assertThat(result).isEqualTo(response)
+        coEvery { authRemoteDataSource.callLogin(any()) } returns response
+
+        val result = repository.callLogin(loginRequest)
+
+        assertThat(result).isEqualTo(response.result)
+        coVerify { authRemoteDataSource.callLogin(any()) }
     }
 
     @Test(expected = ApiServiceException::class)
-    fun `call login should incorrect return error`() = runTest {
+    fun `call login incorrect should be error`() = runTest {
         val loginRequest = LoginRequest(
             email = "email",
             password = "password",
@@ -79,19 +74,28 @@ class AuthRemoteDataSourceImplTest {
                 }
             }
         """.trimIndent()
-        val mockEngine = MockEngine {
-            respond(
-                content = ByteReadChannel(jsonString),
-                status = HttpStatusCode.BadRequest,
-                headers = headersOf(HttpHeaders.ContentType, "application/json")
-            )
-        }
-        dataSource = AuthRemoteDataSourceImpl(
-            mockEngine,
-            appDataStore,
-            dataSourceProvider,
-        )
+        val response = Json.decodeFromString<BaseResponse<TokenResponse>>(jsonString)
+        val exception = ApiServiceException(response.error)
+        coEvery { authRemoteDataSource.callLogin(any()) } throws exception
 
-        dataSource.callLogin(loginRequest)
+        repository.callLogin(loginRequest)
+    }
+
+    @Test
+    fun `save access token and refresh token should return token`() = runTest {
+        val accessToken = "123"
+        val refreshToken = "456"
+
+        repository.saveToken(accessToken, refreshToken)
+
+        assertThat(appDataStore.getAccessToken()).isEqualTo(accessToken)
+        assertThat(appDataStore.getRefreshToken()).isEqualTo(refreshToken)
+    }
+
+    @Test
+    fun `save auth role should return auth role`() = runTest {
+        repository.saveAuthRole()
+
+        assertThat(appDataStore.getAuthRole()).isEqualTo(AuthRole.Auth)
     }
 }
