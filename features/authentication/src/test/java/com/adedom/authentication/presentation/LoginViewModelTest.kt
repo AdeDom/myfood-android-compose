@@ -53,7 +53,7 @@ class LoginViewModelTest {
 
         viewModel.setEmail(email)
 
-        val result = viewModel.form.value.email
+        val result = viewModel.form.email
         assertThat(result).isEqualTo(email)
     }
 
@@ -63,7 +63,7 @@ class LoginViewModelTest {
 
         viewModel.setPassword(password)
 
-        val result = viewModel.form.value.password
+        val result = viewModel.form.password
         assertThat(result).isEqualTo(password)
     }
 
@@ -74,7 +74,7 @@ class LoginViewModelTest {
 
         viewModel.onValidateEmail()
 
-        val result = viewModel.uiState.value as LoginUiState.ValidateEmail
+        val result = viewModel.uiState as LoginUiState.ValidateEmail
         assertThat(result.isError).isTrue()
         assertThat(result.isLogin).isFalse()
     }
@@ -88,7 +88,7 @@ class LoginViewModelTest {
 
         viewModel.onValidateEmail()
 
-        val result = viewModel.uiState.value as LoginUiState.ValidateEmail
+        val result = viewModel.uiState as LoginUiState.ValidateEmail
         assertThat(result.isError).isFalse()
         assertThat(result.isLogin).isTrue()
     }
@@ -100,7 +100,7 @@ class LoginViewModelTest {
 
         viewModel.onValidatePassword()
 
-        val result = viewModel.uiState.value as LoginUiState.ValidatePassword
+        val result = viewModel.uiState as LoginUiState.ValidatePassword
         assertThat(result.isError).isTrue()
         assertThat(result.isLogin).isFalse()
     }
@@ -114,7 +114,7 @@ class LoginViewModelTest {
 
         viewModel.onValidatePassword()
 
-        val result = viewModel.uiState.value as LoginUiState.ValidatePassword
+        val result = viewModel.uiState as LoginUiState.ValidatePassword
         assertThat(result.isError).isFalse()
         assertThat(result.isLogin).isTrue()
     }
@@ -131,7 +131,7 @@ class LoginViewModelTest {
 
         viewModel.onLoginEvent()
 
-        val result = viewModel.uiState.value as LoginUiState.LoginError
+        val result = viewModel.uiState as LoginUiState.LoginError
         assertThat(result).isEqualTo(LoginUiState.LoginError(baseError))
         coVerify { loginUseCase(any(), any()) }
     }
