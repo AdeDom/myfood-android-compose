@@ -12,7 +12,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.adedom.main.presentation.event.MainUiEvent
-import com.adedom.main.presentation.state.MainUiState
 import com.adedom.main.presentation.view_model.MainViewModel
 import org.kodein.di.compose.rememberInstance
 
@@ -21,6 +20,8 @@ fun MainScreen(
     onNavigate: (MainUiEvent) -> Unit,
 ) {
     val viewModel: MainViewModel by rememberInstance()
+
+    val state = viewModel.uiState
 
     LaunchedEffect(viewModel.uiEvent) {
         viewModel.uiEvent.collect { uiEvent ->
@@ -46,25 +47,12 @@ fun MainScreen(
         Column(
             modifier = Modifier.align(Alignment.Center),
         ) {
-            when (viewModel.uiState) {
-                MainUiState.Initial -> {
-                    Text("userId")
-                    Text("email")
-                    Text("name")
-                    Text("mobileNo")
-                    Text("address")
-                    Text("image")
-                }
-                is MainUiState.ShowUserProfile -> {
-                    val state = viewModel.uiState as MainUiState.ShowUserProfile
-                    Text("userId : ${state.userProfile.userId}")
-                    Text("email : ${state.userProfile.email}")
-                    Text("name : ${state.userProfile.name}")
-                    Text("mobileNo : ${state.userProfile.mobileNo}")
-                    Text("address : ${state.userProfile.address}")
-                    Text("image : ${state.userProfile.image}")
-                }
-            }
+            Text("userId : ${state.userProfile?.userId}")
+            Text("email : ${state.userProfile?.email}")
+            Text("name : ${state.userProfile?.name}")
+            Text("mobileNo : ${state.userProfile?.mobileNo}")
+            Text("address : ${state.userProfile?.address}")
+            Text("image : ${state.userProfile?.image}")
         }
     }
 }

@@ -13,7 +13,7 @@ class MainViewModel(
     private val getUserProfileUseCase: GetUserProfileUseCase,
     private val mainPageUseCase: MainPageUseCase,
     private val logoutUseCase: LogoutUseCase,
-) : BaseViewModel<MainUiState, MainUiEvent>(MainUiState.Initial) {
+) : BaseViewModel<MainUiState, MainUiEvent>(MainUiState()) {
 
     init {
         getUserProfile()
@@ -22,7 +22,7 @@ class MainViewModel(
     private fun getUserProfile() {
         launch {
             getUserProfileUseCase().collect { userProfile ->
-                uiState = MainUiState.ShowUserProfile(userProfile)
+                uiState = MainUiState(userProfile = userProfile)
             }
         }
     }

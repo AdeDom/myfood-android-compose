@@ -43,42 +43,42 @@ fun RegisterScreen(
                 AppSubTitleText("Add your details to sign up")
                 Spacer(modifier = Modifier.height(20.dp))
                 AppTextField(
-                    value = viewModel.form.name,
+                    value = viewModel.uiState.name,
                     onValueChange = viewModel::setName,
                     hint = "Name",
                     imeAction = ImeAction.Next,
                 )
                 Spacer(modifier = Modifier.height(20.dp))
                 AppTextField(
-                    value = viewModel.form.email,
+                    value = viewModel.uiState.email,
                     onValueChange = viewModel::setEmail,
                     hint = "Email",
                     imeAction = ImeAction.Next,
                 )
                 Spacer(modifier = Modifier.height(20.dp))
                 AppTextField(
-                    value = viewModel.form.mobileNo,
+                    value = viewModel.uiState.mobileNo,
                     onValueChange = viewModel::setMobileNo,
                     hint = "Mobile No",
                     imeAction = ImeAction.Next,
                 )
                 Spacer(modifier = Modifier.height(20.dp))
                 AppTextField(
-                    value = viewModel.form.address,
+                    value = viewModel.uiState.address,
                     onValueChange = viewModel::setAddress,
                     hint = "Address",
                     imeAction = ImeAction.Next,
                 )
                 Spacer(modifier = Modifier.height(20.dp))
                 AppTextField(
-                    value = viewModel.form.password,
+                    value = viewModel.uiState.password,
                     onValueChange = viewModel::setPassword,
                     hint = "Password",
                     imeAction = ImeAction.Next,
                 )
                 Spacer(modifier = Modifier.height(20.dp))
                 AppTextField(
-                    value = viewModel.form.confirmPassword,
+                    value = viewModel.uiState.confirmPassword,
                     onValueChange = viewModel::setConfirmPassword,
                     hint = "Confirm Password",
                     imeAction = ImeAction.Next,
