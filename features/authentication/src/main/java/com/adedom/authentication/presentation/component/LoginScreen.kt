@@ -14,7 +14,6 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import com.adedom.authentication.presentation.event.LoginUiEvent
 import com.adedom.authentication.presentation.state.LoginUiState
 import com.adedom.authentication.presentation.view_model.LoginViewModel
@@ -106,17 +105,12 @@ fun LoginRender(
             horizontalAlignment = Alignment.CenterHorizontally,
             modifier = Modifier.fillMaxWidth(),
         ) {
-            AppText(
+            AppTitleText(
                 text = "Login",
-                color = Color.Gray,
-                fontSize = 24.sp,
                 modifier = Modifier.padding(top = 64.dp),
             )
             Spacer(modifier = Modifier.height(20.dp))
-            AppText(
-                text = "Add your details to login",
-                color = Color.Gray,
-            )
+            AppSubTitleText("Add your details to login")
             Spacer(modifier = Modifier.height(20.dp))
             AppTextField(
                 value = form.email,

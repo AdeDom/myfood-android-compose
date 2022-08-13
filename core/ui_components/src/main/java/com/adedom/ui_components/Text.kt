@@ -30,6 +30,30 @@ fun AppText(
 }
 
 @Composable
+fun AppTitleText(
+    text: String,
+    modifier: Modifier = Modifier,
+) {
+    AppText(
+        text = text,
+        fontSize = 24.sp,
+        modifier = modifier,
+    )
+}
+
+@Composable
+fun AppSubTitleText(
+    text: String,
+    modifier: Modifier = Modifier,
+) {
+    AppText(
+        text = text,
+        color = Color.Gray,
+        modifier = modifier,
+    )
+}
+
+@Composable
 fun AppBottomText(
     firstText: String,
     secondText: String,

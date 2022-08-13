@@ -99,6 +99,7 @@ class MainActivity : ComponentActivity() {
                                         navController.popBackStack()
                                         navController.navigate(Screen.Login.route)
                                     }
+                                    RegisterUiEvent.Register -> {}
                                 }
                             }
                         }
