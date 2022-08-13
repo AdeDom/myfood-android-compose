@@ -25,9 +25,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".presentation.welcome.view.WelcomeActivity" />
-        <activity android:name=".presentation.authentication.view.AuthenticationActivity" />
-        <activity android:name=".presentation.main.view.MainActivity" />
     </application>
 
 </manifest>

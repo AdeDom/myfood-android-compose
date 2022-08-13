@@ -6,7 +6,6 @@ import com.adedom.data.di.dataModule
 import com.adedom.domain.di.domainModule
 import com.adedom.main.di.featureMainModule
 import com.adedom.myfood.di.appModule
-import com.adedom.myfood.di.presentationModule
 import com.adedom.splash_screen.di.featureSplashScreenModule
 import com.adedom.welcome.di.featureWelcomeModule
 import org.kodein.di.DI
@@ -22,7 +21,6 @@ class MainApplication : Application(), DIAware {
             appModule,
             dataModule,
             domainModule,
-            presentationModule,
             featureSplashScreenModule,
             featureWelcomeModule,
             featureAuthenticationModule,
