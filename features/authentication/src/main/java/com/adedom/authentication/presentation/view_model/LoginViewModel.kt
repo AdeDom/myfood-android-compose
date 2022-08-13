@@ -42,7 +42,10 @@ class LoginViewModel(
 
     fun onLoginEvent() {
         launch {
-            uiState = uiState.copy(isLoading = true)
+            uiState = uiState.copy(
+                isLoading = true,
+                isLogin = false,
+            )
 
             val email = uiState.email
             val password = uiState.password
@@ -57,6 +60,11 @@ class LoginViewModel(
                     _uiEvent.emit(event)
                 }
             }
+
+            uiState = uiState.copy(
+                isLoading = false,
+                isLogin = true,
+            )
         }
     }
 
