@@ -1,7 +1,6 @@
 package com.adedom.authentication.presentation.component
 
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
@@ -33,7 +32,7 @@ fun LoginScreen(
         modifier = Modifier.fillMaxSize(),
     ) {
         if (state.isLoading) {
-            CircularProgressIndicator()
+            AppLoadingAlertDialog()
         }
 
         Column(
