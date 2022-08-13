@@ -5,7 +5,6 @@ import com.adedom.authentication.domain.use_cases.LoginUseCase
 import com.adedom.authentication.domain.use_cases.ValidateEmailUseCase
 import com.adedom.authentication.domain.use_cases.ValidatePasswordUseCase
 import com.adedom.authentication.presentation.event.LoginUiEvent
-import com.adedom.authentication.presentation.state.LoginUiState
 import com.adedom.authentication.presentation.view_model.LoginViewModel
 import com.adedom.authentication.utils.MainCoroutineRule
 import com.adedom.core.utils.Resource
@@ -53,7 +52,7 @@ class LoginViewModelTest {
 
         viewModel.setEmail(email)
 
-        val result = viewModel.form.email
+        val result = viewModel.uiState.email
         assertThat(result).isEqualTo(email)
     }
 
@@ -63,7 +62,7 @@ class LoginViewModelTest {
 
         viewModel.setPassword(password)
 
-        val result = viewModel.form.password
+        val result = viewModel.uiState.password
         assertThat(result).isEqualTo(password)
     }
 
@@ -74,8 +73,8 @@ class LoginViewModelTest {
 
         viewModel.onValidateEmail()
 
-        val result = viewModel.uiState as LoginUiState.ValidateEmail
-        assertThat(result.isError).isTrue()
+        val result = viewModel.uiState
+        assertThat(result.isErrorEmail).isTrue()
         assertThat(result.isLogin).isFalse()
     }
 
@@ -88,8 +87,8 @@ class LoginViewModelTest {
 
         viewModel.onValidateEmail()
 
-        val result = viewModel.uiState as LoginUiState.ValidateEmail
-        assertThat(result.isError).isFalse()
+        val result = viewModel.uiState
+        assertThat(result.isErrorEmail).isFalse()
         assertThat(result.isLogin).isTrue()
     }
 
@@ -100,8 +99,8 @@ class LoginViewModelTest {
 
         viewModel.onValidatePassword()
 
-        val result = viewModel.uiState as LoginUiState.ValidatePassword
-        assertThat(result.isError).isTrue()
+        val result = viewModel.uiState
+        assertThat(result.isErrorPassword).isTrue()
         assertThat(result.isLogin).isFalse()
     }
 
@@ -114,8 +113,8 @@ class LoginViewModelTest {
 
         viewModel.onValidatePassword()
 
-        val result = viewModel.uiState as LoginUiState.ValidatePassword
-        assertThat(result.isError).isFalse()
+        val result = viewModel.uiState
+        assertThat(result.isErrorPassword).isFalse()
         assertThat(result.isLogin).isTrue()
     }
 
@@ -129,10 +128,12 @@ class LoginViewModelTest {
         val resourceError = Resource.Error(baseError)
         coEvery { loginUseCase(any(), any()) } returns resourceError
 
-        viewModel.onLoginEvent()
+        launch {
+            viewModel.onLoginEvent()
+        }
 
-        val result = viewModel.uiState as LoginUiState.LoginError
-        assertThat(result).isEqualTo(LoginUiState.LoginError(baseError))
+        val result = viewModel.uiEvent.firstOrNull()
+        assertThat(result).isEqualTo(LoginUiEvent.LoginError(baseError))
         coVerify { loginUseCase(any(), any()) }
     }
 
