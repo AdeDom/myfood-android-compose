@@ -79,4 +79,17 @@ dependencies {
 
     implementation "org.kodein.di:kodein-di:$kodein_version"
     implementation "org.kodein.di:kodein-di-framework-compose:$kodein_version"
+
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutine_version"
+
+    implementation "io.ktor:ktor-client-core:$ktor_version"
+    implementation "io.ktor:ktor-client-cio:$ktor_version"
+    implementation "io.ktor:ktor-client-logging:$ktor_version"
+    implementation "io.ktor:ktor-client-content-negotiation:$ktor_version"
+    implementation "io.ktor:ktor-serialization-kotlinx-json:$ktor_version"
+    implementation "io.ktor:ktor-client-auth:$ktor_version"
+
+    implementation "com.squareup.sqldelight:coroutines-extensions:$sqldelight_version"
+
+    implementation "com.github.AdeDom:myfood-server:$myfood_version"
 }
