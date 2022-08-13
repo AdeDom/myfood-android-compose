@@ -3,7 +3,6 @@ package com.adedom.myfood
 import android.app.Application
 import com.adedom.authentication.di.featureAuthenticationModule
 import com.adedom.data.di.dataModule
-import com.adedom.domain.di.domainModule
 import com.adedom.main.di.featureMainModule
 import com.adedom.myfood.di.appModule
 import com.adedom.splash_screen.di.featureSplashScreenModule
@@ -20,7 +19,6 @@ class MainApplication : Application(), DIAware {
         importAll(
             appModule,
             dataModule,
-            domainModule,
             featureSplashScreenModule,
             featureWelcomeModule,
             featureAuthenticationModule,
