@@ -9,7 +9,7 @@ android {
 
     defaultConfig {
         applicationId "com.adedom.myfood"
-        minSdk 21
+        minSdk 24
         targetSdk 32
         versionCode 1
         versionName "1.0"
@@ -74,6 +74,7 @@ dependencies {
     implementation project(path: ':features:welcome')
     implementation project(path: ':features:main')
     implementation project(path: ':features:authentication')
+    implementation project(path: ':features:connectivity')
 
     implementation "org.kodein.di:kodein-di-framework-android-x:$kodein_version"
 
