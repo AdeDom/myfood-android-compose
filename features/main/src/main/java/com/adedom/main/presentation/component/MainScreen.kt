@@ -5,6 +5,8 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Button
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -29,49 +31,54 @@ fun MainScreen(
         }
     }
 
-    Box(
+    Surface(
         modifier = Modifier.fillMaxSize(),
+        color = MaterialTheme.colors.background,
     ) {
-        Button(
-            onClick = {
-                viewModel.callLogout()
-                viewModel.onLogoutEvent()
-            },
-            modifier = Modifier
-                .align(Alignment.TopEnd)
-                .padding(16.dp),
-        ) {
-            Text("Logout")
-        }
-
-        Column(
-            modifier = Modifier.align(Alignment.BottomCenter),
+        Box(
+            modifier = Modifier.fillMaxSize(),
         ) {
             Button(
                 onClick = {
-                    viewModel.onFoodDetailEvent(11)
+                    viewModel.callLogout()
+                    viewModel.onLogoutEvent()
                 },
+                modifier = Modifier
+                    .align(Alignment.TopEnd)
+                    .padding(16.dp),
             ) {
-                Text(text = "Tom Yum Goong")
+                Text("Logout")
             }
-            Button(
-                onClick = {
-                    viewModel.onFoodDetailEvent(31)
-                },
-            ) {
-                Text(text = "Som Tam")
-            }
-        }
 
-        Column(
-            modifier = Modifier.align(Alignment.Center),
-        ) {
-            Text("userId : ${state.userProfile?.userId}")
-            Text("email : ${state.userProfile?.email}")
-            Text("name : ${state.userProfile?.name}")
-            Text("mobileNo : ${state.userProfile?.mobileNo}")
-            Text("address : ${state.userProfile?.address}")
-            Text("image : ${state.userProfile?.image}")
+            Column(
+                modifier = Modifier.align(Alignment.BottomCenter),
+            ) {
+                Button(
+                    onClick = {
+                        viewModel.onFoodDetailEvent(11)
+                    },
+                ) {
+                    Text(text = "Tom Yum Goong")
+                }
+                Button(
+                    onClick = {
+                        viewModel.onFoodDetailEvent(31)
+                    },
+                ) {
+                    Text(text = "Som Tam")
+                }
+            }
+
+            Column(
+                modifier = Modifier.align(Alignment.Center),
+            ) {
+                Text("userId : ${state.userProfile?.userId}")
+                Text("email : ${state.userProfile?.email}")
+                Text("name : ${state.userProfile?.name}")
+                Text("mobileNo : ${state.userProfile?.mobileNo}")
+                Text("address : ${state.userProfile?.address}")
+                Text("image : ${state.userProfile?.image}")
+            }
         }
     }
 }

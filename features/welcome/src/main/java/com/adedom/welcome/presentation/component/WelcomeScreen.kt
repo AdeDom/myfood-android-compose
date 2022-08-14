@@ -7,6 +7,8 @@ import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
@@ -38,8 +40,9 @@ fun WelcomeScreen(
         }
     }
 
-    Box(
+    Surface(
         modifier = Modifier.fillMaxSize(),
+        color = MaterialTheme.colors.background,
     ) {
         Column {
             TopSection()

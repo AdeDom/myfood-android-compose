@@ -2,6 +2,8 @@ package com.adedom.authentication.presentation.component
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
@@ -26,8 +28,9 @@ fun RegisterScreen(
         }
     }
 
-    Box(
+    Surface(
         modifier = Modifier.fillMaxSize(),
+        color = MaterialTheme.colors.background,
     ) {
         LazyColumn(
             verticalArrangement = Arrangement.Center,
