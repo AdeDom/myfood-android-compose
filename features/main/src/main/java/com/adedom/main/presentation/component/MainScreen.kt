@@ -45,6 +45,25 @@ fun MainScreen(
         }
 
         Column(
+            modifier = Modifier.align(Alignment.BottomCenter),
+        ) {
+            Button(
+                onClick = {
+                    viewModel.onFoodDetailEvent(11)
+                },
+            ) {
+                Text(text = "Tom Yum Goong")
+            }
+            Button(
+                onClick = {
+                    viewModel.onFoodDetailEvent(31)
+                },
+            ) {
+                Text(text = "Som Tam")
+            }
+        }
+
+        Column(
             modifier = Modifier.align(Alignment.Center),
         ) {
             Text("userId : ${state.userProfile?.userId}")

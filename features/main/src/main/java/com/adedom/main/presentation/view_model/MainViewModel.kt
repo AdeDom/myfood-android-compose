@@ -49,4 +49,11 @@ class MainViewModel(
             _uiEvent.emit(event)
         }
     }
+
+    fun onFoodDetailEvent(foodId: Int) {
+        launch {
+            val event = MainUiEvent.FoodDetail(foodId)
+            _uiEvent.emit(event)
+        }
+    }
 }
