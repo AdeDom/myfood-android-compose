@@ -70,6 +70,7 @@ dependencies {
 
     implementation 'androidx.core:core-ktx:1.8.0'
     implementation project(path: ':core')
+    implementation project(path: ':core:ui_components')
     implementation project(path: ':features:splash_screen')
     implementation project(path: ':features:welcome')
     implementation project(path: ':features:main')

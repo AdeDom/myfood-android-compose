@@ -19,9 +19,9 @@ import com.adedom.food_detail.presentation.component.FoodDetailScreen
 import com.adedom.food_detail.presentation.event.FoodDetailUiEvent
 import com.adedom.main.presentation.component.MainScreen
 import com.adedom.main.presentation.event.MainUiEvent
-import com.adedom.myfood.ui.theme.MyFoodTheme
 import com.adedom.splash_screen.presentation.component.SplashScreen
 import com.adedom.splash_screen.presentation.event.SplashScreenUiEvent
+import com.adedom.ui_components.theme.MyFoodTheme
 import com.adedom.welcome.presentation.component.WelcomeScreen
 import com.adedom.welcome.presentation.event.WelcomeUiEvent
 
