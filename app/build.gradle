@@ -5,12 +5,12 @@ plugins {
 }
 
 android {
-    compileSdk 32
+    compileSdk target_and_compile_version
 
     defaultConfig {
         applicationId "com.adedom.myfood"
-        minSdk 24
-        targetSdk 32
+        minSdk min_sdk_version
+        targetSdk target_and_compile_version
         versionCode 1
         versionName "1.0"
 
