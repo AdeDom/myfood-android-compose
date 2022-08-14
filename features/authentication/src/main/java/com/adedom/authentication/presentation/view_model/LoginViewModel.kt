@@ -5,8 +5,8 @@ import com.adedom.authentication.domain.use_cases.ValidateEmailUseCase
 import com.adedom.authentication.domain.use_cases.ValidatePasswordUseCase
 import com.adedom.authentication.presentation.event.LoginUiEvent
 import com.adedom.authentication.presentation.state.LoginUiState
-import com.adedom.core.base.BaseViewModel
 import com.adedom.core.utils.Resource
+import com.adedom.ui_components.base.BaseViewModel
 
 class LoginViewModel(
     private val validateEmailUseCase: ValidateEmailUseCase,

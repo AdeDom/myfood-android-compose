@@ -1,11 +1,11 @@
 package com.adedom.main.presentation.view_model
 
-import com.adedom.core.base.BaseViewModel
 import com.adedom.main.domain.use_cases.GetUserProfileUseCase
 import com.adedom.main.domain.use_cases.LogoutUseCase
 import com.adedom.main.domain.use_cases.MainPageUseCase
 import com.adedom.main.presentation.event.MainUiEvent
 import com.adedom.main.presentation.state.MainUiState
+import com.adedom.ui_components.base.BaseViewModel
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 

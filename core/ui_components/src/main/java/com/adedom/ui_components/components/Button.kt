@@ -1,4 +1,4 @@
-package com.adedom.ui_components
+package com.adedom.ui_components.components
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.clickable

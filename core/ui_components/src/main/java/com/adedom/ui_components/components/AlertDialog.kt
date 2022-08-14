@@ -1,4 +1,4 @@
-package com.adedom.ui_components
+package com.adedom.ui_components.components
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*

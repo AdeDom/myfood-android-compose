@@ -11,7 +11,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import com.adedom.authentication.presentation.event.LoginUiEvent
 import com.adedom.authentication.presentation.view_model.LoginViewModel
-import com.adedom.ui_components.*
+import com.adedom.ui_components.components.*
 import org.kodein.di.compose.rememberInstance
 
 @Composable

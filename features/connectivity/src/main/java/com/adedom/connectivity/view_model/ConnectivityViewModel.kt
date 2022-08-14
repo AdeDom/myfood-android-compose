@@ -3,7 +3,7 @@ package com.adedom.connectivity.view_model
 import com.adedom.connectivity.connectivity.ConnectivityObserver
 import com.adedom.connectivity.event.ConnectivityUiEvent
 import com.adedom.connectivity.state.ConnectivityUiState
-import com.adedom.core.base.BaseViewModel
+import com.adedom.ui_components.base.BaseViewModel
 
 class ConnectivityViewModel(
     private val connectivity: ConnectivityObserver,

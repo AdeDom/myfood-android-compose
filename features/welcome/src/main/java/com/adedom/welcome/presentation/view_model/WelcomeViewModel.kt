@@ -1,6 +1,6 @@
 package com.adedom.welcome.presentation.view_model
 
-import com.adedom.core.base.BaseViewModel
+import com.adedom.ui_components.base.BaseViewModel
 import com.adedom.welcome.domain.use_cases.WelcomeGuestRoleUseCase
 import com.adedom.welcome.presentation.event.WelcomeUiEvent
 import com.adedom.welcome.presentation.state.WelcomeUiState

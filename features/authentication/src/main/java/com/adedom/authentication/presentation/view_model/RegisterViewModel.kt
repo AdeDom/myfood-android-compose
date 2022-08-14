@@ -2,7 +2,7 @@ package com.adedom.authentication.presentation.view_model
 
 import com.adedom.authentication.presentation.event.RegisterUiEvent
 import com.adedom.authentication.presentation.state.RegisterUiState
-import com.adedom.core.base.BaseViewModel
+import com.adedom.ui_components.base.BaseViewModel
 
 class RegisterViewModel : BaseViewModel<RegisterUiState, RegisterUiEvent>(RegisterUiState()) {
 

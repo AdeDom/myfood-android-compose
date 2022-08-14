@@ -11,7 +11,7 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
 import com.adedom.authentication.presentation.event.RegisterUiEvent
 import com.adedom.authentication.presentation.view_model.RegisterViewModel
-import com.adedom.ui_components.*
+import com.adedom.ui_components.components.*
 import org.kodein.di.compose.rememberInstance
 
 @Composable

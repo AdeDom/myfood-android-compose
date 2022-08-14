@@ -8,9 +8,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.Preview
 import com.adedom.food_detail.presentation.event.FoodDetailUiEvent
 import com.adedom.food_detail.presentation.view_model.FoodDetailViewModel
-import com.adedom.ui_components.AppErrorAlertDialog
+import com.adedom.ui_components.components.AppErrorAlertDialog
+import com.adedom.ui_components.theme.MyFoodTheme
 import org.kodein.di.compose.rememberInstance
 
 @Composable
@@ -45,7 +47,24 @@ fun FoodDetailScreen(
                 onDismiss = viewModel::setOnBackPressedEvent,
             )
         } else {
-            Text(text = state.foodDetail?.foodName.orEmpty())
+            FoodDetailContent()
         }
+    }
+}
+
+@Composable
+fun FoodDetailContent() {
+    Box(
+        modifier = Modifier.fillMaxSize(),
+    ) {
+        Text(text = "Hello")
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun FoodDetailContentPreview() {
+    MyFoodTheme {
+        FoodDetailContent()
     }
 }

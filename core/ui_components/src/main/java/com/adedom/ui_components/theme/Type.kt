@@ -1,4 +1,4 @@
-package com.adedom.myfood.ui.theme
+package com.adedom.ui_components.theme
 
 import androidx.compose.material.Typography
 import androidx.compose.ui.text.TextStyle

@@ -1,4 +1,4 @@
-package com.adedom.core.base
+package com.adedom.ui_components.base
 
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf

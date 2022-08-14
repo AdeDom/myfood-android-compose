@@ -1,10 +1,10 @@
 package com.adedom.food_detail.presentation.view_model
 
-import com.adedom.core.base.BaseViewModel
 import com.adedom.core.utils.Resource
 import com.adedom.food_detail.domain.use_cases.GetFoodDetailUseCase
 import com.adedom.food_detail.presentation.event.FoodDetailUiEvent
 import com.adedom.food_detail.presentation.state.FoodDetailUiState
+import com.adedom.ui_components.base.BaseViewModel
 
 class FoodDetailViewModel(
     private val getFoodDetailUseCase: GetFoodDetailUseCase,
