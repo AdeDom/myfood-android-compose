@@ -1,14 +1,34 @@
 package com.adedom.food_detail.presentation.view_model
 
 import com.adedom.core.base.BaseViewModel
+import com.adedom.core.utils.Resource
+import com.adedom.food_detail.domain.use_cases.GetFoodDetailUseCase
 import com.adedom.food_detail.presentation.event.FoodDetailUiEvent
 import com.adedom.food_detail.presentation.state.FoodDetailUiState
 
-class FoodDetailViewModel : BaseViewModel<FoodDetailUiState, FoodDetailUiEvent>(
-    FoodDetailUiState()
-) {
+class FoodDetailViewModel(
+    private val getFoodDetailUseCase: GetFoodDetailUseCase,
+) : BaseViewModel<FoodDetailUiState, FoodDetailUiEvent>(FoodDetailUiState()) {
 
-    fun setFoodId(foodId: Int?) {
-        uiState = uiState.copy(foodId = foodId)
+    fun callFoodDetail(foodId: Int?) {
+        launch {
+            uiState = uiState.copy(isLoading = true)
+
+            val resource = getFoodDetailUseCase(foodId)
+            uiState = when (resource) {
+                is Resource.Success -> {
+                    uiState.copy(
+                        isLoading = false,
+                        foodDetail = resource.data,
+                    )
+                }
+                is Resource.Error -> {
+                    uiState.copy(
+                        isLoading = false,
+                        error = resource.error,
+                    )
+                }
+            }
+        }
     }
 }
