@@ -33,9 +33,8 @@ fun RegisterScreen(
         color = MaterialTheme.colors.background,
     ) {
         LazyColumn(
-            verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally,
-            modifier = Modifier.fillMaxWidth(),
+            modifier = Modifier.fillMaxSize(),
         ) {
             item {
                 AppTitleText(
