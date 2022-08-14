@@ -18,7 +18,9 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import coil.compose.AsyncImage
 import com.adedom.food_detail.R
+import com.adedom.food_detail.domain.models.FoodDetailModel
 import com.adedom.food_detail.presentation.event.FoodDetailUiEvent
 import com.adedom.food_detail.presentation.view_model.FoodDetailViewModel
 import com.adedom.ui_components.components.AppErrorAlertDialog
@@ -56,21 +58,27 @@ fun FoodDetailScreen(
                 error = state.error,
                 onDismiss = viewModel::setOnBackPressedEvent,
             )
-        } else {
-            FoodDetailContent()
+        }
+
+        state.foodDetail?.let { foodDetail ->
+            FoodDetailContent(foodDetail)
         }
     }
 }
 
 @Composable
-fun FoodDetailContent() {
-    val screenHeightDp = LocalConfiguration.current.screenHeightDp.dp
+fun FoodDetailContent(
+    foodDetail: FoodDetailModel,
+) {
+    val configuration = LocalConfiguration.current
+    val screenWidthDp = configuration.screenWidthDp.dp
+    val screenHeightDp = configuration.screenHeightDp.dp
 
     Box(
         modifier = Modifier.fillMaxSize(),
     ) {
-        Image(
-            painter = painterResource(id = R.drawable.ic_star_amber),
+        AsyncImage(
+            model = foodDetail.image,
             contentDescription = null,
             modifier = Modifier
                 .fillMaxWidth()
@@ -85,7 +93,7 @@ fun FoodDetailContent() {
             elevation = 16.dp,
             modifier = Modifier
                 .fillMaxWidth()
-                .height(screenHeightDp / 2)
+                .height((screenHeightDp / 2) + 64.dp)
                 .align(Alignment.BottomCenter),
         ) {
             Column(
@@ -96,7 +104,7 @@ fun FoodDetailContent() {
                 )
             ) {
                 Text(
-                    text = "foodName",
+                    text = foodDetail.foodName,
                     color = Color.Black,
                     fontSize = 24.sp,
                 )
@@ -111,13 +119,13 @@ fun FoodDetailContent() {
                     )
                     Spacer(modifier = Modifier.width(4.dp))
                     Text(
-                        text = "4.9",
+                        text = foodDetail.ratingScoreCount,
                         color = Color(0xFFFFC107),
                         fontSize = 14.sp,
                     )
                     Box(modifier = Modifier.weight(1f))
                     Text(
-                        text = "price",
+                        text = "${foodDetail.price}",
                         fontSize = 32.sp,
                         fontWeight = FontWeight.Bold,
                     )
@@ -136,7 +144,7 @@ fun FoodDetailContent() {
                 )
                 Spacer(modifier = Modifier.height(8.dp))
                 Text(
-                    text = "description",
+                    text = foodDetail.description,
                     fontSize = 16.sp,
                 )
             }
@@ -145,9 +153,11 @@ fun FoodDetailContent() {
             painter = painterResource(id = R.drawable.favorite_active),
             contentDescription = null,
             modifier = Modifier
-                .size(150.dp)
-                .align(Alignment.CenterEnd)
-                .padding(bottom = 64.dp),
+                .size(80.dp)
+                .offset(
+                    x = screenWidthDp - 120.dp,
+                    y = (screenHeightDp / 2) - 100.dp,
+                )
         )
     }
 }
@@ -156,6 +166,13 @@ fun FoodDetailContent() {
 @Composable
 fun FoodDetailContentPreview() {
     MyFoodTheme {
-        FoodDetailContent()
+        val foodDetail = FoodDetailModel(
+            foodName = "",
+            image = "",
+            price = 0.0,
+            description = "",
+            ratingScoreCount = "",
+        )
+        FoodDetailContent(foodDetail)
     }
 }
