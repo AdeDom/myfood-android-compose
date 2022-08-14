@@ -8,15 +8,26 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import com.adedom.food_detail.presentation.event.FoodDetailUiEvent
 import com.adedom.food_detail.presentation.view_model.FoodDetailViewModel
+import com.adedom.ui_components.AppErrorAlertDialog
 import org.kodein.di.compose.rememberInstance
 
 @Composable
-fun FoodDetailScreen(foodId: Int?) {
+fun FoodDetailScreen(
+    foodId: Int?,
+    onNavigate: (FoodDetailUiEvent) -> Unit,
+) {
     val viewModel by rememberInstance<FoodDetailViewModel>()
 
     LaunchedEffect(key1 = viewModel) {
         viewModel.callFoodDetail(foodId)
+    }
+
+    LaunchedEffect(key1 = viewModel.uiEvent) {
+        viewModel.uiEvent.collect { uiEvent ->
+            onNavigate(uiEvent)
+        }
     }
 
     val state = viewModel.uiState
@@ -26,8 +37,15 @@ fun FoodDetailScreen(foodId: Int?) {
     ) {
         if (state.isLoading) {
             CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
+        }
+
+        if (state.error != null) {
+            AppErrorAlertDialog(
+                error = state.error,
+                onDismiss = viewModel::setOnBackPressedEvent,
+            )
         } else {
-            Text(text = "Food detail : ${state.foodDetail?.foodName}")
+            Text(text = state.foodDetail?.foodName.orEmpty())
         }
     }
 }

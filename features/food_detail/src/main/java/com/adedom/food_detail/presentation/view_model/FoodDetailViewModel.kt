@@ -31,4 +31,11 @@ class FoodDetailViewModel(
             }
         }
     }
+
+    fun setOnBackPressedEvent() {
+        launch {
+            val event = FoodDetailUiEvent.OnBackPressed
+            _uiEvent.emit(event)
+        }
+    }
 }

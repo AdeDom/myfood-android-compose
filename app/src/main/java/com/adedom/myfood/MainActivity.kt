@@ -16,6 +16,7 @@ import com.adedom.authentication.presentation.event.LoginUiEvent
 import com.adedom.authentication.presentation.event.RegisterUiEvent
 import com.adedom.connectivity.component.ConnectivityCompose
 import com.adedom.food_detail.presentation.component.FoodDetailScreen
+import com.adedom.food_detail.presentation.event.FoodDetailUiEvent
 import com.adedom.main.presentation.component.MainScreen
 import com.adedom.main.presentation.event.MainUiEvent
 import com.adedom.myfood.ui.theme.MyFoodTheme
@@ -129,7 +130,13 @@ class MainActivity : ComponentActivity() {
                             arguments = Screen.FoodDetail.arguments,
                         ) { backStackEntry ->
                             val foodId = backStackEntry.arguments?.getInt("foodId")
-                            FoodDetailScreen(foodId)
+                            FoodDetailScreen(foodId) { uiEvent ->
+                                when (uiEvent) {
+                                    FoodDetailUiEvent.OnBackPressed -> {
+                                        navController.popBackStack()
+                                    }
+                                }
+                            }
                         }
                     }
                 }
