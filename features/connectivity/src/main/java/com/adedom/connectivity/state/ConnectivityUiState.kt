@@ -1,7 +1,7 @@
 package com.adedom.connectivity.state
 
 data class ConnectivityUiState(
-    val status: Status = Status.Unavailable,
+    val status: Status = Status.Unknown,
 ) {
 
     enum class Status {
@@ -9,5 +9,6 @@ data class ConnectivityUiState(
         Unavailable,
         Losing,
         Lost,
+        Unknown,
     }
 }

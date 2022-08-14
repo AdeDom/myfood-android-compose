@@ -18,4 +18,8 @@ class ConnectivityViewModel(
             }
         }
     }
+
+    fun onClick() {
+        uiState = uiState.copy(status = ConnectivityUiState.Status.Unknown)
+    }
 }
