@@ -24,7 +24,7 @@ class MainViewModel(
     private fun getUserProfile() {
         launch {
             getUserProfileUseCase().collect { userProfile ->
-                uiState = MainUiState(userProfile = userProfile)
+                uiState = uiState.copy(userProfile = userProfile)
             }
         }
     }
