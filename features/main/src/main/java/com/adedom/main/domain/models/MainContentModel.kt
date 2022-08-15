@@ -1,6 +1,6 @@
 package com.adedom.main.domain.models
 
-data class MainPageModel(
+data class MainContentModel(
     val categoryList: List<CategoryModel>,
     val foodList: List<FoodModel>,
 )

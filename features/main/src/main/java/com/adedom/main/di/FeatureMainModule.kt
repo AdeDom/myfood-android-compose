@@ -18,7 +18,7 @@ import com.adedom.main.domain.repositories.HomeRepository
 import com.adedom.main.domain.repositories.UserProfileRepository
 import com.adedom.main.domain.use_cases.GetUserProfileUseCase
 import com.adedom.main.domain.use_cases.LogoutUseCase
-import com.adedom.main.domain.use_cases.MainPageUseCase
+import com.adedom.main.domain.use_cases.MainContentUseCase
 import com.adedom.main.presentation.view_model.MainViewModel
 import org.kodein.di.DI
 import org.kodein.di.bindProvider
@@ -53,7 +53,7 @@ val featureMainModule = DI.Module(name = "featureMainModule") {
 
     // domain
     bindProvider { GetUserProfileUseCase(instance()) }
-    bindProvider { MainPageUseCase(instance()) }
+    bindProvider { MainContentUseCase(instance()) }
     bindProvider { LogoutUseCase(instance(), instance()) }
 
     //presentation
