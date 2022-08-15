@@ -87,24 +87,26 @@ class DataSourceProvider(
     private fun HttpClientConfig<*>.httpResponseValidator() {
         HttpResponseValidator {
             handleResponseExceptionWithRequest { exception, _ ->
-                val clientException = exception as? ClientRequestException
-                    ?: return@handleResponseExceptionWithRequest
-                val exceptionResponse = clientException.response
-                when (exceptionResponse.status) {
-                    HttpStatusCode.BadRequest -> {
-                        val jsonString = exceptionResponse.bodyAsText()
-                        val baseResponse = jsonString.decodeApiServiceResponseFromString()
-                        val baseError = baseResponse.error
-                        throw ApiServiceException(baseError)
-                    }
-                    HttpStatusCode.Forbidden -> {
-                        appDataStore.setAccessToken("")
-                        appDataStore.setRefreshToken("")
-                        appDataStore.setAuthRole(AuthRole.UnAuth)
-                        val jsonString = exceptionResponse.bodyAsText()
-                        val baseResponse = jsonString.decodeApiServiceResponseFromString()
-                        val baseError = baseResponse.error
-                        throw RefreshTokenExpiredException(baseError)
+                when (exception) {
+                    is ClientRequestException -> {
+                        val exceptionResponse = exception.response
+                        when (exceptionResponse.status) {
+                            HttpStatusCode.BadRequest -> {
+                                val jsonString = exceptionResponse.bodyAsText()
+                                val baseResponse = jsonString.decodeApiServiceResponseFromString()
+                                val baseError = baseResponse.error
+                                throw ApiServiceException(baseError)
+                            }
+                            HttpStatusCode.Forbidden -> {
+                                appDataStore.setAccessToken("")
+                                appDataStore.setRefreshToken("")
+                                appDataStore.setAuthRole(AuthRole.UnAuth)
+                                val jsonString = exceptionResponse.bodyAsText()
+                                val baseResponse = jsonString.decodeApiServiceResponseFromString()
+                                val baseError = baseResponse.error
+                                throw RefreshTokenExpiredException(baseError)
+                            }
+                        }
                     }
                     else -> {
                         val messageString = exception.message
