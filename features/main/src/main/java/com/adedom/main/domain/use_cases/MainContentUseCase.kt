@@ -6,6 +6,7 @@ import com.adedom.main.domain.models.CategoryModel
 import com.adedom.main.domain.models.FoodModel
 import com.adedom.main.domain.models.MainContentModel
 import com.adedom.main.domain.repositories.HomeRepository
+import com.adedom.main.domain.repositories.MainCategoryRepository
 import com.adedom.myfood.data.models.response.CategoryResponse
 import com.adedom.myfood.data.models.response.FoodDetailResponse
 import kotlinx.coroutines.async
@@ -14,12 +15,13 @@ import kotlinx.coroutines.coroutineScope
 
 class MainContentUseCase(
     private val homeRepository: HomeRepository,
+    private val mainCategoryRepository: MainCategoryRepository,
 ) {
 
     suspend operator fun invoke(): Resource<MainContentModel> {
         return try {
             coroutineScope {
-                val categoryAll = homeRepository.callCategoryAll()
+                val categoryAll = mainCategoryRepository.callCategoryAll()
 
                 val categoryList = categoryAll.map { mapCategoryToCategoryModel(it) }
 

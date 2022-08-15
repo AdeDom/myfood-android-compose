@@ -12,9 +12,11 @@ import com.adedom.main.data.providers.remote.profile.ProfileRemoteDataSource
 import com.adedom.main.data.providers.remote.profile.ProfileRemoteDataSourceImpl
 import com.adedom.main.data.repositories.AuthLogoutRepositoryImpl
 import com.adedom.main.data.repositories.HomeRepositoryImpl
+import com.adedom.main.data.repositories.MainCategoryRepositoryImpl
 import com.adedom.main.data.repositories.UserProfileRepositoryImpl
 import com.adedom.main.domain.repositories.AuthLogoutRepository
 import com.adedom.main.domain.repositories.HomeRepository
+import com.adedom.main.domain.repositories.MainCategoryRepository
 import com.adedom.main.domain.repositories.UserProfileRepository
 import com.adedom.main.domain.use_cases.GetUserProfileUseCase
 import com.adedom.main.domain.use_cases.LogoutUseCase
@@ -48,12 +50,13 @@ val featureMainModule = DI.Module(name = "featureMainModule") {
     }
 
     bindSingleton<UserProfileRepository> { UserProfileRepositoryImpl(instance(), instance()) }
-    bindSingleton<HomeRepository> { HomeRepositoryImpl(instance(), instance()) }
+    bindSingleton<HomeRepository> { HomeRepositoryImpl(instance()) }
     bindSingleton<AuthLogoutRepository> { AuthLogoutRepositoryImpl(instance(), instance()) }
+    bindSingleton<MainCategoryRepository> { MainCategoryRepositoryImpl(instance()) }
 
     // domain
     bindProvider { GetUserProfileUseCase(instance()) }
-    bindProvider { MainContentUseCase(instance()) }
+    bindProvider { MainContentUseCase(instance(), instance()) }
     bindProvider { LogoutUseCase(instance(), instance()) }
 
     //presentation

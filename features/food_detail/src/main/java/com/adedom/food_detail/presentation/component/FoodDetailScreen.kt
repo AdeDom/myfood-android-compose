@@ -52,7 +52,9 @@ fun FoodDetailScreen(
             modifier = Modifier.fillMaxSize(),
         ) {
             if (state.isLoading) {
-                CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
+                CircularProgressIndicator(
+                    modifier = Modifier.align(Alignment.Center),
+                )
             }
 
             if (state.error != null) {

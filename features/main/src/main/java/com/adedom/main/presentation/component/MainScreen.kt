@@ -10,8 +10,8 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.adedom.main.domain.models.UserProfileModel
 import com.adedom.main.presentation.event.MainUiEvent
-import com.adedom.main.presentation.state.MainUiState
 import com.adedom.main.presentation.view_model.MainViewModel
 import com.adedom.ui_components.components.AppErrorAlertDialog
 import org.kodein.di.compose.rememberInstance
@@ -34,17 +34,25 @@ fun MainScreen(
         modifier = Modifier.fillMaxSize(),
         color = MaterialTheme.colors.background,
     ) {
-        if (state.isLoading) {
-            CircularProgressIndicator()
-        }
+        Box(
+            modifier = Modifier.fillMaxSize(),
+        ) {
+            if (state.isLoading) {
+                CircularProgressIndicator(
+                    modifier = Modifier.align(Alignment.Center),
+                )
+            }
 
-        if (state.error != null) {
-            AppErrorAlertDialog(
-                error = state.error,
-                onDismiss = viewModel::callMainContent,
-            )
-        } else {
-            MainContent(viewModel, state)
+            if (state.error != null) {
+                AppErrorAlertDialog(
+                    error = state.error,
+                    onDismiss = viewModel::callMainContent,
+                )
+            }
+
+            state.mainContent?.let {
+                MainContent(viewModel, state.userProfile!!)
+            }
         }
     }
 }
@@ -52,7 +60,7 @@ fun MainScreen(
 @Composable
 private fun MainContent(
     viewModel: MainViewModel,
-    state: MainUiState,
+    userProfile: UserProfileModel,
 ) {
     Box(
         modifier = Modifier.fillMaxSize(),
@@ -91,12 +99,12 @@ private fun MainContent(
         Column(
             modifier = Modifier.align(Alignment.Center),
         ) {
-            Text("userId : ${state.userProfile?.userId}")
-            Text("email : ${state.userProfile?.email}")
-            Text("name : ${state.userProfile?.name}")
-            Text("mobileNo : ${state.userProfile?.mobileNo}")
-            Text("address : ${state.userProfile?.address}")
-            Text("image : ${state.userProfile?.image}")
+            Text("userId : ${userProfile.userId}")
+            Text("email : ${userProfile.email}")
+            Text("name : ${userProfile.name}")
+            Text("mobileNo : ${userProfile.mobileNo}")
+            Text("address : ${userProfile.address}")
+            Text("image : ${userProfile.image}")
         }
     }
 }
