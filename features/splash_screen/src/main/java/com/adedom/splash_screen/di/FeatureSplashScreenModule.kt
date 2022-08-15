@@ -6,13 +6,12 @@ import com.adedom.splash_screen.domain.use_cases.GetIsAuthUseCase
 import com.adedom.splash_screen.presentation.view_model.SplashScreenViewModel
 import org.kodein.di.DI
 import org.kodein.di.bindProvider
-import org.kodein.di.bindSingleton
 import org.kodein.di.instance
 
 val featureSplashScreenModule = DI.Module(name = "featureSplashScreenModule") {
 
     // data
-    bindSingleton<SplashScreenRepository> { SplashScreenRepositoryImpl(instance()) }
+    bindProvider<SplashScreenRepository> { SplashScreenRepositoryImpl(instance()) }
 
     // domain
     bindProvider { GetIsAuthUseCase(instance()) }

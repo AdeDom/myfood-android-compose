@@ -15,31 +15,23 @@ import com.adedom.authentication.domain.use_cases.ValidateEmailUseCase
 import com.adedom.authentication.domain.use_cases.ValidatePasswordUseCase
 import com.adedom.authentication.presentation.view_model.LoginViewModel
 import com.adedom.authentication.presentation.view_model.RegisterViewModel
-import com.adedom.core.data.providers.remote.DataSourceProvider
-import com.adedom.myfood.MyFoodDatabase
-import io.ktor.client.engine.cio.*
 import org.kodein.di.DI
 import org.kodein.di.bindProvider
-import org.kodein.di.bindSingleton
 import org.kodein.di.instance
 
 val featureAuthenticationModule = DI.Module(name = "featureAuthenticationModule") {
 
     // data
-    bindSingleton { CIO.create() }
-    bindSingleton { DataSourceProvider(instance()) }
-    bindSingleton { MyFoodDatabase(instance()) }
+    bindProvider<UserProfileLocalDataSource> { UserProfileLocalDataSourceImpl(instance()) }
 
-    bindSingleton<UserProfileLocalDataSource> { UserProfileLocalDataSourceImpl(instance()) }
-
-    bindSingleton<AuthRemoteDataSource> {
+    bindProvider<AuthRemoteDataSource> {
         AuthRemoteDataSourceImpl(
             instance(),
             instance(),
             instance(),
         )
     }
-    bindSingleton<ProfileRemoteDataSource> {
+    bindProvider<ProfileRemoteDataSource> {
         ProfileRemoteDataSourceImpl(
             instance(),
             instance(),
@@ -47,8 +39,8 @@ val featureAuthenticationModule = DI.Module(name = "featureAuthenticationModule"
         )
     }
 
-    bindSingleton<UserProfileRepository> { UserProfileRepositoryImpl(instance(), instance()) }
-    bindSingleton<AuthLoginRepository> { AuthLoginRepositoryImpl(instance(), instance()) }
+    bindProvider<UserProfileRepository> { UserProfileRepositoryImpl(instance(), instance()) }
+    bindProvider<AuthLoginRepository> { AuthLoginRepositoryImpl(instance(), instance()) }
 
     // domain
     bindProvider { ValidateEmailUseCase() }
