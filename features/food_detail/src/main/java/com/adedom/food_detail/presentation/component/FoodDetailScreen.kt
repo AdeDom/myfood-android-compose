@@ -2,6 +2,7 @@ package com.adedom.food_detail.presentation.component
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
@@ -79,91 +80,100 @@ fun FoodDetailContent(
     val screenWidthDp = configuration.screenWidthDp.dp
     val screenHeightDp = configuration.screenHeightDp.dp
 
-    Box(
-        modifier = Modifier.fillMaxSize(),
-    ) {
-        AsyncImage(
-            model = foodDetail.image,
-            contentDescription = null,
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(screenHeightDp / 2),
-            contentScale = ContentScale.Crop,
-        )
-        Card(
-            shape = RoundedCornerShape(
-                topStart = 64.dp,
-                topEnd = 64.dp,
-            ),
-            elevation = 16.dp,
-            modifier = Modifier
-                .fillMaxWidth()
-                .height((screenHeightDp / 2) + 64.dp)
-                .align(Alignment.BottomCenter),
-        ) {
-            Column(
-                modifier = Modifier.padding(
-                    start = 32.dp,
-                    end = 32.dp,
-                    top = 32.dp,
-                )
-            ) {
-                Text(
-                    text = foodDetail.foodName,
-                    color = Color.Black,
-                    fontSize = 24.sp,
-                )
-                Spacer(modifier = Modifier.height(8.dp))
-                Row(
-                    verticalAlignment = Alignment.Bottom,
-                ) {
-                    Image(
-                        painter = painterResource(id = R.drawable.ic_star_amber),
-                        contentDescription = null,
-                        modifier = Modifier.size(18.dp),
+    AsyncImage(
+        model = foodDetail.image,
+        contentDescription = null,
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(screenHeightDp / 2),
+        contentScale = ContentScale.Crop,
+    )
+    LazyColumn {
+        item {
+            Spacer(
+                modifier = Modifier.height((screenHeightDp / 2) - 128.dp),
+            )
+            Box {
+                Column {
+                    Spacer(
+                        modifier = Modifier.height(64.dp),
                     )
-                    Spacer(modifier = Modifier.width(4.dp))
-                    Text(
-                        text = foodDetail.ratingScoreCount,
-                        color = Color(0xFFFFC107),
-                        fontSize = 14.sp,
-                    )
-                    Box(modifier = Modifier.weight(1f))
-                    Text(
-                        text = "${foodDetail.price}",
-                        fontSize = 32.sp,
-                        fontWeight = FontWeight.Bold,
-                    )
-                    Spacer(modifier = Modifier.width(8.dp))
-                    Text(
-                        text = "Bath",
-                        fontSize = 32.sp,
-                        fontWeight = FontWeight.Bold,
-                    )
+                    Card(
+                        shape = RoundedCornerShape(
+                            topStart = 64.dp,
+                            topEnd = 64.dp,
+                        ),
+                        elevation = 16.dp,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(screenHeightDp - 64.dp),
+                    ) {
+                        Column(
+                            modifier = Modifier.padding(
+                                start = 32.dp,
+                                end = 32.dp,
+                                top = 32.dp,
+                            )
+                        ) {
+                            Text(
+                                text = foodDetail.foodName,
+                                color = Color.Black,
+                                fontSize = 24.sp,
+                            )
+                            Spacer(modifier = Modifier.height(8.dp))
+                            Row(
+                                verticalAlignment = Alignment.Bottom,
+                            ) {
+                                Image(
+                                    painter = painterResource(id = R.drawable.ic_star_amber),
+                                    contentDescription = null,
+                                    modifier = Modifier.size(18.dp),
+                                )
+                                Spacer(modifier = Modifier.width(4.dp))
+                                Text(
+                                    text = foodDetail.ratingScoreCount,
+                                    color = Color(0xFFFFC107),
+                                    fontSize = 14.sp,
+                                )
+                                Box(modifier = Modifier.weight(1f))
+                                Text(
+                                    text = "${foodDetail.price}",
+                                    fontSize = 32.sp,
+                                    fontWeight = FontWeight.Bold,
+                                )
+                                Spacer(modifier = Modifier.width(8.dp))
+                                Text(
+                                    text = "Bath",
+                                    fontSize = 32.sp,
+                                    fontWeight = FontWeight.Bold,
+                                )
+                            }
+                            Spacer(modifier = Modifier.height(32.dp))
+                            Text(
+                                text = "Description",
+                                fontWeight = FontWeight.Bold,
+                                fontSize = 16.sp,
+                            )
+                            Spacer(modifier = Modifier.height(8.dp))
+                            Text(
+                                text = foodDetail.description,
+                                fontSize = 16.sp,
+                            )
+                        }
+                    }
                 }
-                Spacer(modifier = Modifier.height(32.dp))
-                Text(
-                    text = "Description",
-                    fontWeight = FontWeight.Bold,
-                    fontSize = 16.sp,
-                )
-                Spacer(modifier = Modifier.height(8.dp))
-                Text(
-                    text = foodDetail.description,
-                    fontSize = 16.sp,
+                Image(
+                    painter = painterResource(id = R.drawable.favorite_active),
+                    contentDescription = null,
+                    modifier = Modifier
+                        .size(80.dp)
+                        .offset(
+                            x = screenWidthDp - 128.dp,
+                            y = 16.dp,
+                        ),
                 )
             }
         }
-        Image(
-            painter = painterResource(id = R.drawable.favorite_active),
-            contentDescription = null,
-            modifier = Modifier
-                .size(80.dp)
-                .offset(
-                    x = screenWidthDp - 120.dp,
-                    y = (screenHeightDp / 2) - 100.dp,
-                )
-        )
     }
 }
 
