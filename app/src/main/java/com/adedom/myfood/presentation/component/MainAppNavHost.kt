@@ -2,9 +2,12 @@ package com.adedom.myfood.presentation.component
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.navigation.NavController
+import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.compose.navigation
 import androidx.navigation.compose.rememberNavController
 import com.adedom.authentication.presentation.component.LoginScreen
 import com.adedom.authentication.presentation.component.RegisterScreen
@@ -14,7 +17,6 @@ import com.adedom.food_detail.presentation.component.FoodDetailScreen
 import com.adedom.food_detail.presentation.event.FoodDetailUiEvent
 import com.adedom.main.presentation.component.MainScreen
 import com.adedom.main.presentation.event.MainUiEvent
-import com.adedom.myfood.Screen
 import com.adedom.splash_screen.presentation.component.SplashScreen
 import com.adedom.splash_screen.presentation.event.SplashScreenUiEvent
 import com.adedom.welcome.presentation.component.WelcomeScreen
@@ -35,14 +37,14 @@ fun MainAppNavHost(
             SplashScreen { uiEvent ->
                 when (uiEvent) {
                     SplashScreenUiEvent.Authentication -> {
-                        navController.navigate(Screen.Main.route) {
+                        navController.navigate(Screen.Main.graph()) {
                             popUpTo(Screen.SplashScreen.route) {
                                 inclusive = true
                             }
                         }
                     }
                     SplashScreenUiEvent.UnAuthentication -> {
-                        navController.navigate(Screen.Welcome.route) {
+                        navController.navigate(Screen.Welcome.graph()) {
                             popUpTo(Screen.SplashScreen.route) {
                                 inclusive = true
                             }
@@ -51,6 +53,13 @@ fun MainAppNavHost(
                 }
             }
         }
+        authGraph(navController)
+        mainGraph(navController)
+    }
+}
+
+fun NavGraphBuilder.authGraph(navController: NavController) {
+    navigation(startDestination = Screen.Welcome.route, route = Screen.Welcome.graph()) {
         composable(Screen.Welcome.route) {
             WelcomeScreen { uiEvent ->
                 when (uiEvent) {
@@ -61,8 +70,8 @@ fun MainAppNavHost(
                         navController.navigate(Screen.Register.route)
                     }
                     is WelcomeUiEvent.Skip -> {
-                        navController.navigate(Screen.Main.route) {
-                            popUpTo(Screen.Welcome.route) {
+                        navController.navigate(Screen.Main.graph()) {
+                            popUpTo(Screen.Welcome.graph()) {
                                 inclusive = true
                             }
                         }
@@ -74,8 +83,8 @@ fun MainAppNavHost(
             LoginScreen { uiEvent ->
                 when (uiEvent) {
                     LoginUiEvent.LoginSuccess -> {
-                        navController.navigate(Screen.Main.route) {
-                            popUpTo(Screen.Welcome.route) {
+                        navController.navigate(Screen.Main.graph()) {
+                            popUpTo(Screen.Welcome.graph()) {
                                 inclusive = true
                             }
                         }
@@ -98,12 +107,17 @@ fun MainAppNavHost(
                 }
             }
         }
+    }
+}
+
+fun NavGraphBuilder.mainGraph(navController: NavController) {
+    navigation(startDestination = Screen.Main.route, route = Screen.Main.graph()) {
         composable(Screen.Main.route) {
             MainScreen { uiEvent ->
                 when (uiEvent) {
                     MainUiEvent.Logout -> {
-                        navController.navigate(Screen.Welcome.route) {
-                            popUpTo(Screen.Main.route) {
+                        navController.navigate(Screen.Welcome.graph()) {
+                            popUpTo(Screen.Main.graph()) {
                                 inclusive = true
                             }
                         }
