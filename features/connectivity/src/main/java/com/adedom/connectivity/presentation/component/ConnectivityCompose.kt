@@ -1,4 +1,4 @@
-package com.adedom.connectivity.component
+package com.adedom.connectivity.presentation.component
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -10,8 +10,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Popup
-import com.adedom.connectivity.state.ConnectivityUiState
-import com.adedom.connectivity.view_model.ConnectivityViewModel
+import com.adedom.connectivity.data.models.Status
+import com.adedom.connectivity.presentation.view_model.ConnectivityViewModel
 import org.kodein.di.compose.rememberInstance
 
 @Composable
@@ -19,19 +19,19 @@ fun ConnectivityCompose() {
     val viewModel by rememberInstance<ConnectivityViewModel>()
 
     when (viewModel.uiState.status) {
-        ConnectivityUiState.Status.Available -> {
+        Status.Available -> {
             OnlineNetworkPopup(viewModel::onDismissRequest)
         }
-        ConnectivityUiState.Status.Unavailable -> {
+        Status.Unavailable -> {
             OfflineNetworkPopup()
         }
-        ConnectivityUiState.Status.Losing -> {
+        Status.Losing -> {
             OfflineNetworkPopup()
         }
-        ConnectivityUiState.Status.Lost -> {
+        Status.Lost -> {
             OfflineNetworkPopup()
         }
-        ConnectivityUiState.Status.Unknown -> {}
+        Status.Unknown -> {}
     }
 }
 
