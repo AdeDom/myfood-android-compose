@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
@@ -23,6 +24,7 @@ fun MainScreen(
     val viewModel: MainViewModel by rememberInstance()
 
     val state = viewModel.uiState
+    val userProfile = viewModel.userProfile.collectAsState(initial = null)
 
     LaunchedEffect(viewModel.uiEvent) {
         viewModel.uiEvent.collect { uiEvent ->
@@ -51,7 +53,7 @@ fun MainScreen(
             }
 
             state.mainContent?.let {
-                MainContent(viewModel, state.userProfile!!)
+                MainContent(viewModel, userProfile.value!!)
             }
         }
     }

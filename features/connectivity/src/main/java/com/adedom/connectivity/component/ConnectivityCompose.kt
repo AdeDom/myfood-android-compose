@@ -20,7 +20,7 @@ fun ConnectivityCompose() {
 
     when (viewModel.uiState.status) {
         ConnectivityUiState.Status.Available -> {
-            OnlineNetworkPopup(viewModel::onClick)
+            OnlineNetworkPopup(viewModel::onDismissRequest)
         }
         ConnectivityUiState.Status.Unavailable -> {
             OfflineNetworkPopup()

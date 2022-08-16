@@ -11,22 +11,15 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
 class MainViewModel(
-    private val getUserProfileUseCase: GetUserProfileUseCase,
+    getUserProfileUseCase: GetUserProfileUseCase,
     private val mainContentUseCase: MainContentUseCase,
     private val logoutUseCase: LogoutUseCase,
 ) : BaseViewModel<MainUiState, MainUiEvent>(MainUiState()) {
 
-    init {
-        getUserProfile()
-        callMainContent()
-    }
+    val userProfile = getUserProfileUseCase()
 
-    private fun getUserProfile() {
-        launch {
-            getUserProfileUseCase().collect { userProfile ->
-                uiState = uiState.copy(userProfile = userProfile)
-            }
-        }
+    init {
+        callMainContent()
     }
 
     fun callMainContent() {

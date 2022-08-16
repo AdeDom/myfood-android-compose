@@ -55,7 +55,6 @@ fun WelcomeScreen(
 @Composable
 private fun TopSection() {
     val configuration = LocalConfiguration.current
-
     val screenHeight = configuration.screenHeightDp.dp
 
     Card(

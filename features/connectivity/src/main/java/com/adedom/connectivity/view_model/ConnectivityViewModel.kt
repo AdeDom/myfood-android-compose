@@ -6,20 +6,18 @@ import com.adedom.connectivity.state.ConnectivityUiState
 import com.adedom.ui_components.base.BaseViewModel
 
 class ConnectivityViewModel(
-    private val connectivity: ConnectivityObserver,
-) : BaseViewModel<ConnectivityUiState, ConnectivityUiEvent>(
-    ConnectivityUiState()
-) {
+    private val connectivityObserver: ConnectivityObserver,
+) : BaseViewModel<ConnectivityUiState, ConnectivityUiEvent>(ConnectivityUiState()) {
 
     init {
         launch {
-            connectivity.observe().collect { status ->
+            connectivityObserver.observe().collect { status ->
                 uiState = uiState.copy(status = status)
             }
         }
     }
 
-    fun onClick() {
+    fun onDismissRequest() {
         uiState = uiState.copy(status = ConnectivityUiState.Status.Unknown)
     }
 }
