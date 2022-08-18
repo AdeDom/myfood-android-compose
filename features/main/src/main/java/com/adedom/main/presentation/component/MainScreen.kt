@@ -35,8 +35,8 @@ fun MainScreen(
     }
 
     LaunchedEffect(key1 = viewModel) {
-        if (mainSaveState?.mainContent != null) {
-            viewModel.setInitState(mainSaveState.mainContent)
+        if (mainSaveState != null) {
+            viewModel.setInitState(mainSaveState.categoryList, mainSaveState.foodList)
         } else {
             viewModel.callMainContent()
         }
@@ -53,6 +53,8 @@ fun MainScreen(
                 CircularProgressIndicator(
                     modifier = Modifier.align(Alignment.Center),
                 )
+            } else {
+                MainContent(viewModel)
             }
 
             if (state.error != null) {
@@ -61,63 +63,66 @@ fun MainScreen(
                     onDismiss = viewModel::callMainContent,
                 )
             }
+        }
+    }
+}
 
-            state.mainContent?.let {
-                Button(
-                    onClick = {
-                        viewModel.callLogout()
-                        viewModel.onLogoutEvent()
-                    },
+@Composable
+fun MainContent(viewModel: MainViewModel) {
+    Box(modifier = Modifier.fillMaxSize()) {
+        Button(
+            onClick = {
+                viewModel.callLogout()
+                viewModel.onLogoutEvent()
+            },
+            modifier = Modifier
+                .align(Alignment.TopEnd)
+                .padding(16.dp),
+        ) {
+            Text("Logout")
+        }
+
+        LazyColumn(
+            modifier = Modifier
+                .align(Alignment.Center)
+                .width(250.dp),
+        ) {
+            items(viewModel.uiState.categoryList) { category ->
+                TextCard(
+                    image = category.image,
+                    text = category.categoryName,
                     modifier = Modifier
-                        .align(Alignment.TopEnd)
-                        .padding(16.dp),
-                ) {
-                    Text("Logout")
-                }
-
-                LazyColumn(
+                        .fillParentMaxWidth()
+                        .padding(8.dp),
+                )
+            }
+            items(viewModel.uiState.foodList) { food ->
+                TextCard(
+                    image = food.image,
+                    text = food.foodName,
                     modifier = Modifier
-                        .align(Alignment.Center)
-                        .width(250.dp),
-                ) {
-                    items(state.mainContent.categoryList) { category ->
-                        TextCard(
-                            image = category.image,
-                            text = category.categoryName,
-                            modifier = Modifier
-                                .fillParentMaxWidth()
-                                .padding(8.dp),
-                        )
-                    }
-                    items(state.mainContent.foodList) { food ->
-                        TextCard(
-                            image = food.image,
-                            text = food.foodName,
-                            modifier = Modifier
-                                .fillParentMaxWidth()
-                                .padding(8.dp),
-                        )
-                    }
-                }
+                        .fillParentMaxWidth()
+                        .padding(8.dp),
+                )
+            }
+        }
 
-                Column(
-                    modifier = Modifier.align(Alignment.BottomCenter),
-                ) {
-                    Button(
-                        onClick = {
-                            viewModel.onFoodDetailEvent(11)
-                        },
-                    ) {
-                        Text(text = "Tom Yum Goong")
-                    }
-                    Button(
-                        onClick = {
-                            viewModel.onFoodDetailEvent(31)
-                        },
-                    ) {
-                        Text(text = "Som Tam")
-                    }
-                }
+        Column(
+            modifier = Modifier.align(Alignment.BottomCenter),
+        ) {
+            Button(
+                onClick = {
+                    viewModel.onFoodDetailEvent(11)
+                },
+            ) {
+                Text(text = "Tom Yum Goong")
+            }
+            Button(
+                onClick = {
+                    viewModel.onFoodDetailEvent(31)
+                },
+            ) {
+                Text(text = "Som Tam")
             }
         }
     }

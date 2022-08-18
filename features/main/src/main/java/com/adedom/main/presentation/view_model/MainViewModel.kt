@@ -1,7 +1,8 @@
 package com.adedom.main.presentation.view_model
 
 import com.adedom.core.utils.Resource
-import com.adedom.main.domain.models.MainContentModel
+import com.adedom.main.domain.models.CategoryModel
+import com.adedom.main.domain.models.FoodModel
 import com.adedom.main.domain.use_cases.LogoutUseCase
 import com.adedom.main.domain.use_cases.MainContentUseCase
 import com.adedom.main.presentation.event.MainUiEvent
@@ -15,8 +16,11 @@ class MainViewModel(
     private val logoutUseCase: LogoutUseCase,
 ) : BaseViewModel<MainUiState, MainUiEvent>(MainUiState()) {
 
-    fun setInitState(mainContent: MainContentModel) {
-        uiState = uiState.copy(mainContent = mainContent)
+    fun setInitState(categoryList: List<CategoryModel>, foodList: List<FoodModel>) {
+        uiState = uiState.copy(
+            categoryList = categoryList,
+            foodList = foodList,
+        )
     }
 
     fun callMainContent() {
@@ -30,12 +34,14 @@ class MainViewModel(
             uiState = when (resource) {
                 is Resource.Success -> {
                     val event = MainUiEvent.SaveState(
-                        mainContent = resource.data,
+                        categoryList = resource.data.categoryList,
+                        foodList = resource.data.foodList,
                     )
                     _uiEvent.emit(event)
                     uiState.copy(
                         isLoading = false,
-                        mainContent = resource.data,
+                        categoryList = resource.data.categoryList,
+                        foodList = resource.data.foodList,
                     )
                 }
                 is Resource.Error -> {

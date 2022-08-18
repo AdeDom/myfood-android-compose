@@ -1,6 +1,7 @@
 package com.adedom.main.presentation.event
 
-import com.adedom.main.domain.models.MainContentModel
+import com.adedom.main.domain.models.CategoryModel
+import com.adedom.main.domain.models.FoodModel
 
 sealed interface MainUiEvent {
 
@@ -11,6 +12,7 @@ sealed interface MainUiEvent {
     ) : MainUiEvent
 
     data class SaveState(
-        val mainContent: MainContentModel? = null,
+        val categoryList: List<CategoryModel> = emptyList(),
+        val foodList: List<FoodModel> = emptyList(),
     ) : MainUiEvent
 }
