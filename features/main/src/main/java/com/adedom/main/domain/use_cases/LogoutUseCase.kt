@@ -12,9 +12,9 @@ class LogoutUseCase(
 
     suspend operator fun invoke(): Resource<Unit> {
         return try {
-            authLogoutRepository.callLogout()
             authLogoutRepository.setUnAuthRole()
             userProfileRepository.deleteUserProfile()
+            authLogoutRepository.callLogout()
             return Resource.Success(Unit)
         } catch (exception: ApiServiceException) {
             val baseError = exception.toBaseError()

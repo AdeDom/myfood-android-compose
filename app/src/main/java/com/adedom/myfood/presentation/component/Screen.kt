@@ -12,27 +12,25 @@ sealed class Screen(
     object SplashScreen : Screen("splashScreen")
 
     object Welcome : Screen("welcome") {
-        fun graph(): String {
-            return "WelcomeGraph"
-        }
+
+        object Init : Screen("initWelcome")
+
+        object Login : Screen("login")
+
+        object Register : Screen("register")
     }
-
-    object Login : Screen("login")
-
-    object Register : Screen("register")
 
     object Main : Screen("main") {
-        fun graph(): String {
-            return "MainGraph"
-        }
-    }
 
-    object FoodDetail : Screen(
-        "foodDetail/{foodId}",
-        listOf(navArgument("foodId") { type = NavType.IntType }),
-    ) {
-        fun arguments(foodId: Int): String {
-            return "foodDetail/$foodId"
+        object Init : Screen("initMain")
+
+        object FoodDetail : Screen(
+            "foodDetail/{foodId}",
+            listOf(navArgument("foodId") { type = NavType.IntType }),
+        ) {
+            fun arguments(foodId: Int): String {
+                return "foodDetail/$foodId"
+            }
         }
     }
 }

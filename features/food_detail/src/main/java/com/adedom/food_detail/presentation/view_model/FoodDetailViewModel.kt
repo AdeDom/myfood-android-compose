@@ -12,7 +12,10 @@ class FoodDetailViewModel(
 
     fun callFoodDetail(foodId: Int?) {
         launch {
-            uiState = uiState.copy(isLoading = true)
+            uiState = uiState.copy(
+                isLoading = true,
+                error = null,
+            )
 
             val resource = getFoodDetailUseCase(foodId)
             uiState = when (resource) {

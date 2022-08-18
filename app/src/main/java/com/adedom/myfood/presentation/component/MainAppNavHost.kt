@@ -37,14 +37,14 @@ fun MainAppNavHost(
             SplashScreen { uiEvent ->
                 when (uiEvent) {
                     SplashScreenUiEvent.Authentication -> {
-                        navController.navigate(Screen.Main.graph()) {
+                        navController.navigate(Screen.Main.route) {
                             popUpTo(Screen.SplashScreen.route) {
                                 inclusive = true
                             }
                         }
                     }
                     SplashScreenUiEvent.UnAuthentication -> {
-                        navController.navigate(Screen.Welcome.graph()) {
+                        navController.navigate(Screen.Welcome.route) {
                             popUpTo(Screen.SplashScreen.route) {
                                 inclusive = true
                             }
@@ -59,19 +59,22 @@ fun MainAppNavHost(
 }
 
 fun NavGraphBuilder.authGraph(navController: NavController) {
-    navigation(startDestination = Screen.Welcome.route, route = Screen.Welcome.graph()) {
-        composable(Screen.Welcome.route) {
+    navigation(
+        startDestination = Screen.Welcome.Init.route,
+        route = Screen.Welcome.route,
+    ) {
+        composable(Screen.Welcome.Init.route) {
             WelcomeScreen { uiEvent ->
                 when (uiEvent) {
                     WelcomeUiEvent.Login -> {
-                        navController.navigate(Screen.Login.route)
+                        navController.navigate(Screen.Welcome.Login.route)
                     }
                     WelcomeUiEvent.Register -> {
-                        navController.navigate(Screen.Register.route)
+                        navController.navigate(Screen.Welcome.Register.route)
                     }
                     is WelcomeUiEvent.Skip -> {
-                        navController.navigate(Screen.Main.graph()) {
-                            popUpTo(Screen.Welcome.graph()) {
+                        navController.navigate(Screen.Main.route) {
+                            popUpTo(Screen.Welcome.route) {
                                 inclusive = true
                             }
                         }
@@ -79,29 +82,29 @@ fun NavGraphBuilder.authGraph(navController: NavController) {
                 }
             }
         }
-        composable(Screen.Login.route) {
+        composable(Screen.Welcome.Login.route) {
             LoginScreen { uiEvent ->
                 when (uiEvent) {
                     LoginUiEvent.LoginSuccess -> {
-                        navController.navigate(Screen.Main.graph()) {
-                            popUpTo(Screen.Welcome.graph()) {
+                        navController.navigate(Screen.Main.route) {
+                            popUpTo(Screen.Welcome.route) {
                                 inclusive = true
                             }
                         }
                     }
                     LoginUiEvent.Register -> {
                         navController.popBackStack()
-                        navController.navigate(Screen.Register.route)
+                        navController.navigate(Screen.Welcome.Register.route)
                     }
                 }
             }
         }
-        composable(Screen.Register.route) {
+        composable(Screen.Welcome.Register.route) {
             RegisterScreen { uiEvent ->
                 when (uiEvent) {
                     RegisterUiEvent.Login -> {
                         navController.popBackStack()
-                        navController.navigate(Screen.Login.route)
+                        navController.navigate(Screen.Welcome.Login.route)
                     }
                     RegisterUiEvent.Register -> {}
                 }
@@ -111,26 +114,29 @@ fun NavGraphBuilder.authGraph(navController: NavController) {
 }
 
 fun NavGraphBuilder.mainGraph(navController: NavController) {
-    navigation(startDestination = Screen.Main.route, route = Screen.Main.graph()) {
-        composable(Screen.Main.route) {
+    navigation(
+        startDestination = Screen.Main.Init.route,
+        route = Screen.Main.route,
+    ) {
+        composable(Screen.Main.Init.route) {
             MainScreen { uiEvent ->
                 when (uiEvent) {
                     MainUiEvent.Logout -> {
-                        navController.navigate(Screen.Welcome.graph()) {
-                            popUpTo(Screen.Main.graph()) {
+                        navController.navigate(Screen.Welcome.route) {
+                            popUpTo(Screen.Main.route) {
                                 inclusive = true
                             }
                         }
                     }
                     is MainUiEvent.FoodDetail -> {
-                        navController.navigate(Screen.FoodDetail.arguments(uiEvent.foodId))
+                        navController.navigate(Screen.Main.FoodDetail.arguments(uiEvent.foodId))
                     }
                 }
             }
         }
         composable(
-            route = Screen.FoodDetail.route,
-            arguments = Screen.FoodDetail.arguments,
+            route = Screen.Main.FoodDetail.route,
+            arguments = Screen.Main.FoodDetail.arguments,
         ) { backStackEntry ->
             val foodId = backStackEntry.arguments?.getInt("foodId")
             FoodDetailScreen(foodId) { uiEvent ->

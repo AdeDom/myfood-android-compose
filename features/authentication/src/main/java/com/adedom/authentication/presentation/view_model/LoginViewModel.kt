@@ -49,6 +49,7 @@ class LoginViewModel(
             uiState = uiState.copy(
                 isLoading = true,
                 isLogin = false,
+                error = null,
             )
 
             val email = uiState.email

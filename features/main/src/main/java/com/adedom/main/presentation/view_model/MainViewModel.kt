@@ -24,7 +24,10 @@ class MainViewModel(
 
     fun callMainContent() {
         launch {
-            uiState = uiState.copy(isLoading = true)
+            uiState = uiState.copy(
+                isLoading = true,
+                error = null,
+            )
 
             val resource = mainContentUseCase()
             uiState = when (resource) {
