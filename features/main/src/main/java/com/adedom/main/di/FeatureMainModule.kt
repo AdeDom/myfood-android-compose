@@ -1,5 +1,7 @@
 package com.adedom.main.di
 
+import com.adedom.main.data.providers.local.category.CategoryLocalDataSource
+import com.adedom.main.data.providers.local.category.CategoryLocalDataSourceImpl
 import com.adedom.main.data.providers.local.user_profile.UserProfileLocalDataSource
 import com.adedom.main.data.providers.local.user_profile.UserProfileLocalDataSourceImpl
 import com.adedom.main.data.providers.remote.auth.AuthRemoteDataSource
@@ -18,6 +20,7 @@ import com.adedom.main.domain.repositories.AuthLogoutRepository
 import com.adedom.main.domain.repositories.HomeRepository
 import com.adedom.main.domain.repositories.MainCategoryRepository
 import com.adedom.main.domain.repositories.UserProfileRepository
+import com.adedom.main.domain.use_cases.GetCategoryUseCase
 import com.adedom.main.domain.use_cases.GetUserProfileUseCase
 import com.adedom.main.domain.use_cases.LogoutUseCase
 import com.adedom.main.domain.use_cases.MainContentUseCase
@@ -31,6 +34,7 @@ val featureMainModule = DI.Module(name = "featureMainModule") {
 
     // data
     bindSingleton<UserProfileLocalDataSource> { UserProfileLocalDataSourceImpl(instance()) }
+    bindSingleton<CategoryLocalDataSource> { CategoryLocalDataSourceImpl(instance()) }
 
     bindSingleton<ProfileRemoteDataSource> {
         ProfileRemoteDataSourceImpl(
@@ -52,12 +56,13 @@ val featureMainModule = DI.Module(name = "featureMainModule") {
     bindSingleton<UserProfileRepository> { UserProfileRepositoryImpl(instance(), instance()) }
     bindSingleton<HomeRepository> { HomeRepositoryImpl(instance()) }
     bindSingleton<AuthLogoutRepository> { AuthLogoutRepositoryImpl(instance(), instance()) }
-    bindSingleton<MainCategoryRepository> { MainCategoryRepositoryImpl(instance()) }
+    bindSingleton<MainCategoryRepository> { MainCategoryRepositoryImpl(instance(), instance()) }
 
     // domain
     bindProvider { GetUserProfileUseCase(instance()) }
     bindProvider { MainContentUseCase(instance(), instance()) }
     bindProvider { LogoutUseCase(instance(), instance()) }
+    bindProvider { GetCategoryUseCase(instance()) }
 
     //presentation
     bindProvider { MainViewModel(instance(), instance(), instance()) }

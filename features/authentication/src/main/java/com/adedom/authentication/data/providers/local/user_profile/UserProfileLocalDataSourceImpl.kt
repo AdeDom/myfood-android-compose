@@ -6,15 +6,15 @@ import com.squareup.sqldelight.runtime.coroutines.mapToOneOrNull
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
-import myfood.database.MyFoodDatabaseQueries
 import myfood.database.UserProfileEntity
+import myfood.database.UserProfileQueries
 
 class UserProfileLocalDataSourceImpl(
     db: MyFoodDatabase,
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO,
 ) : UserProfileLocalDataSource {
 
-    private val queries: MyFoodDatabaseQueries = db.myFoodDatabaseQueries
+    private val queries: UserProfileQueries = db.userProfileQueries
 
     override fun getUserProfileFlow(): Flow<UserProfileEntity?> {
         return queries.getUserProfile().asFlow().mapToOneOrNull(ioDispatcher)

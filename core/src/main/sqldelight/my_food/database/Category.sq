@@ -1,0 +1,20 @@
+CREATE TABLE CategoryEntity(
+    categoryId INTEGER NOT NULL PRIMARY KEY,
+    categoryName TEXT NOT NULL,
+    categoryTypeName TEXT NOT NULL,
+    created TEXT NOT NULL,
+    image TEXT NOT NULL,
+    updated TEXT
+);
+
+getCategoryList:
+SELECT *
+FROM CategoryEntity;
+
+saveCategory:
+INSERT OR REPLACE
+INTO CategoryEntity
+VALUES (?, ? , ? , ? , ? , ?);
+
+deleteCategoryAll:
+DELETE FROM CategoryEntity;

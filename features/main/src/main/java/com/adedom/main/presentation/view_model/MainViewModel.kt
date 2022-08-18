@@ -3,8 +3,7 @@ package com.adedom.main.presentation.view_model
 import androidx.lifecycle.viewModelScope
 import com.adedom.core.utils.Resource
 import com.adedom.main.domain.models.MainContentModel
-import com.adedom.main.domain.models.UserProfileModel
-import com.adedom.main.domain.use_cases.GetUserProfileUseCase
+import com.adedom.main.domain.use_cases.GetCategoryUseCase
 import com.adedom.main.domain.use_cases.LogoutUseCase
 import com.adedom.main.domain.use_cases.MainContentUseCase
 import com.adedom.main.presentation.event.MainUiEvent
@@ -16,22 +15,21 @@ import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 
 class MainViewModel(
-    getUserProfileUseCase: GetUserProfileUseCase,
+    getCategoryUseCase: GetCategoryUseCase,
     private val mainContentUseCase: MainContentUseCase,
     private val logoutUseCase: LogoutUseCase,
 ) : BaseViewModel<MainUiState, MainUiEvent>(MainUiState()) {
 
     init {
-        getUserProfileUseCase()
-            .onEach { userProfile ->
-                uiState = uiState.copy(userProfile = userProfile)
+        getCategoryUseCase()
+            .onEach { categoryList ->
+                uiState = uiState.copy(categoryList = categoryList)
             }
             .launchIn(viewModelScope)
     }
 
-    fun setInitState(userProfile: UserProfileModel, mainContent: MainContentModel) {
+    fun setInitState(mainContent: MainContentModel) {
         uiState = uiState.copy(
-            userProfile = userProfile,
             mainContent = mainContent,
         )
     }
@@ -47,7 +45,6 @@ class MainViewModel(
             uiState = when (resource) {
                 is Resource.Success -> {
                     val event = MainUiEvent.SaveState(
-                        userProfile = uiState.userProfile,
                         mainContent = resource.data,
                     )
                     _uiEvent.emit(event)

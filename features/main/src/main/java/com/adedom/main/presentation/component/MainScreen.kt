@@ -10,7 +10,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.adedom.main.domain.models.UserProfileModel
+import com.adedom.main.domain.models.CategoryModel
 import com.adedom.main.presentation.event.MainUiEvent
 import com.adedom.main.presentation.view_model.MainViewModel
 import com.adedom.ui_components.components.AppErrorAlertDialog
@@ -32,8 +32,8 @@ fun MainScreen(
     }
 
     LaunchedEffect(key1 = viewModel) {
-        if (mainSaveState?.userProfile != null && mainSaveState.mainContent != null) {
-            viewModel.setInitState(mainSaveState.userProfile, mainSaveState.mainContent)
+        if (mainSaveState?.mainContent != null) {
+            viewModel.setInitState(mainSaveState.mainContent)
         } else {
             viewModel.callMainContent()
         }
@@ -59,8 +59,8 @@ fun MainScreen(
                 )
             }
 
-            if (state.userProfile != null && state.mainContent != null) {
-                MainContent(viewModel, state.userProfile)
+            if (state.mainContent != null) {
+                MainContent(viewModel, state.categoryList)
             }
         }
     }
@@ -69,7 +69,7 @@ fun MainScreen(
 @Composable
 private fun MainContent(
     viewModel: MainViewModel,
-    userProfile: UserProfileModel,
+    categoryList: List<CategoryModel>,
 ) {
     Box(
         modifier = Modifier.fillMaxSize(),
@@ -108,12 +108,9 @@ private fun MainContent(
         Column(
             modifier = Modifier.align(Alignment.Center),
         ) {
-            Text("userId : ${userProfile.userId}")
-            Text("email : ${userProfile.email}")
-            Text("name : ${userProfile.name}")
-            Text("mobileNo : ${userProfile.mobileNo}")
-            Text("address : ${userProfile.address}")
-            Text("image : ${userProfile.image}")
+            categoryList.forEach { category ->
+                Text("categoryName : ${category.categoryName}\n")
+            }
         }
     }
 }

@@ -1,12 +1,9 @@
-package com.adedom.main.domain.repositories
+package com.adedom.main.data.providers.local.category
 
-import com.adedom.myfood.data.models.response.CategoryResponse
 import kotlinx.coroutines.flow.Flow
 import myfood.database.CategoryEntity
 
-interface MainCategoryRepository {
-
-    suspend fun callCategoryAll(): List<CategoryResponse>
+interface CategoryLocalDataSource {
 
     fun getCategoryListFlow(): Flow<List<CategoryEntity>>
 

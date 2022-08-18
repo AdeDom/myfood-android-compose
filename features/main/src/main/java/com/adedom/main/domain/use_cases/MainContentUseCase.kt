@@ -12,6 +12,7 @@ import com.adedom.myfood.data.models.response.FoodDetailResponse
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.coroutineScope
+import myfood.database.CategoryEntity
 
 class MainContentUseCase(
     private val homeRepository: HomeRepository,
@@ -22,6 +23,18 @@ class MainContentUseCase(
         return try {
             coroutineScope {
                 val categoryAll = mainCategoryRepository.callCategoryAll()
+                val categoryEntity = categoryAll.map { category ->
+                    CategoryEntity(
+                        categoryId = category.categoryId.toLong(),
+                        categoryName = category.categoryName,
+                        categoryTypeName = category.categoryTypeName,
+                        created = category.created,
+                        image = category.image,
+                        updated = category.updated,
+                    )
+                }
+                mainCategoryRepository.deleteCategoryAll()
+                mainCategoryRepository.saveCategoryAll(categoryEntity)
 
                 val categoryList = categoryAll.map { mapCategoryToCategoryModel(it) }
 
@@ -54,7 +67,7 @@ class MainContentUseCase(
 
     private fun mapCategoryToCategoryModel(category: CategoryResponse): CategoryModel {
         return CategoryModel(
-            categoryId = category.categoryId,
+            categoryId = category.categoryId.toLong(),
             categoryName = category.categoryName,
             image = category.image,
         )
