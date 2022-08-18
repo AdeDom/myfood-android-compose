@@ -1,0 +1,27 @@
+CREATE TABLE FoodEntity(
+    alias TEXT,
+    categoryId INTEGER NOT NULL,
+    created TEXT NOT NULL,
+    description TEXT,
+    favorite INTEGER,
+    foodId INTEGER NOT NULL PRIMARY KEY,
+    foodName TEXT NOT NULL,
+    image TEXT NOT NULL,
+    price REAL NOT NULL,
+    ratingScore REAL,
+    ratingScoreCount TEXT,
+    status TEXT NOT NULL,
+    updated TEXT
+);
+
+getFoodList:
+SELECT *
+FROM FoodEntity;
+
+saveFood:
+INSERT OR REPLACE
+INTO FoodEntity
+VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
+
+deleteFoodAll:
+DELETE FROM FoodEntity;

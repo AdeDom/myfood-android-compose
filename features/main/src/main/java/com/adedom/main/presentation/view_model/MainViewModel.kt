@@ -3,7 +3,7 @@ package com.adedom.main.presentation.view_model
 import androidx.lifecycle.viewModelScope
 import com.adedom.core.utils.Resource
 import com.adedom.main.domain.models.MainContentModel
-import com.adedom.main.domain.use_cases.GetCategoryUseCase
+import com.adedom.main.domain.use_cases.GetFoodUseCase
 import com.adedom.main.domain.use_cases.LogoutUseCase
 import com.adedom.main.domain.use_cases.MainContentUseCase
 import com.adedom.main.presentation.event.MainUiEvent
@@ -15,15 +15,15 @@ import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 
 class MainViewModel(
-    getCategoryUseCase: GetCategoryUseCase,
+    getFoodUseCase: GetFoodUseCase,
     private val mainContentUseCase: MainContentUseCase,
     private val logoutUseCase: LogoutUseCase,
 ) : BaseViewModel<MainUiState, MainUiEvent>(MainUiState()) {
 
     init {
-        getCategoryUseCase()
-            .onEach { categoryList ->
-                uiState = uiState.copy(categoryList = categoryList)
+        getFoodUseCase()
+            .onEach { foodList ->
+                uiState = uiState.copy(foodList = foodList)
             }
             .launchIn(viewModelScope)
     }

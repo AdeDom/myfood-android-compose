@@ -4,13 +4,15 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.adedom.main.domain.models.CategoryModel
+import com.adedom.main.domain.models.FoodModel
 import com.adedom.main.presentation.event.MainUiEvent
 import com.adedom.main.presentation.view_model.MainViewModel
 import com.adedom.ui_components.components.AppErrorAlertDialog
@@ -60,7 +62,7 @@ fun MainScreen(
             }
 
             if (state.mainContent != null) {
-                MainContent(viewModel, state.categoryList)
+                MainContent(viewModel, state.foodList)
             }
         }
     }
@@ -69,7 +71,7 @@ fun MainScreen(
 @Composable
 private fun MainContent(
     viewModel: MainViewModel,
-    categoryList: List<CategoryModel>,
+    foodList: List<FoodModel>,
 ) {
     Box(
         modifier = Modifier.fillMaxSize(),
@@ -105,11 +107,11 @@ private fun MainContent(
             }
         }
 
-        Column(
+        LazyColumn(
             modifier = Modifier.align(Alignment.Center),
         ) {
-            categoryList.forEach { category ->
-                Text("categoryName : ${category.categoryName}\n")
+            items(foodList) { food ->
+                Text("Food Name : ${food.foodId} ${food.foodName}")
             }
         }
     }
