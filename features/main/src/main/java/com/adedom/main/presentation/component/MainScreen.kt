@@ -7,7 +7,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
@@ -19,16 +18,24 @@ import org.kodein.di.compose.rememberInstance
 
 @Composable
 fun MainScreen(
+    mainSaveState: MainUiEvent.SaveState?,
     onNavigate: (MainUiEvent) -> Unit,
 ) {
     val viewModel: MainViewModel by rememberInstance()
 
     val state = viewModel.uiState
-    val userProfile = viewModel.userProfile.collectAsState(initial = null)
 
     LaunchedEffect(viewModel.uiEvent) {
         viewModel.uiEvent.collect { uiEvent ->
             onNavigate(uiEvent)
+        }
+    }
+
+    LaunchedEffect(key1 = viewModel) {
+        if (mainSaveState?.userProfile != null && mainSaveState.mainContent != null) {
+            viewModel.setInitState(mainSaveState.userProfile, mainSaveState.mainContent)
+        } else {
+            viewModel.callMainContent()
         }
     }
 
@@ -52,8 +59,8 @@ fun MainScreen(
                 )
             }
 
-            state.mainContent?.let {
-                MainContent(viewModel, userProfile.value!!)
+            if (state.userProfile != null && state.mainContent != null) {
+                MainContent(viewModel, state.userProfile)
             }
         }
     }

@@ -118,8 +118,9 @@ fun NavGraphBuilder.mainGraph(navController: NavController) {
         startDestination = Screen.Main.Init.route,
         route = Screen.Main.route,
     ) {
+        var mainSaveState: MainUiEvent.SaveState? = null
         composable(Screen.Main.Init.route) {
-            MainScreen { uiEvent ->
+            MainScreen(mainSaveState) { uiEvent ->
                 when (uiEvent) {
                     MainUiEvent.Logout -> {
                         navController.navigate(Screen.Welcome.route) {
@@ -130,6 +131,9 @@ fun NavGraphBuilder.mainGraph(navController: NavController) {
                     }
                     is MainUiEvent.FoodDetail -> {
                         navController.navigate(Screen.Main.FoodDetail.arguments(uiEvent.foodId))
+                    }
+                    is MainUiEvent.SaveState -> {
+                        mainSaveState = uiEvent
                     }
                 }
             }
