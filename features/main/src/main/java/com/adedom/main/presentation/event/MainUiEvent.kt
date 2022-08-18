@@ -8,7 +8,7 @@ sealed interface MainUiEvent {
     object Logout : MainUiEvent
 
     data class FoodDetail(
-        val foodId: Int,
+        val foodId: Long,
     ) : MainUiEvent
 
     data class SaveState(

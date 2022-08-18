@@ -106,27 +106,11 @@ fun MainContent(viewModel: MainViewModel) {
                     text = food.foodName,
                     modifier = Modifier
                         .fillParentMaxWidth()
-                        .padding(8.dp),
+                        .padding(8.dp)
+                        .clickable {
+                            viewModel.onFoodDetailEvent(food.foodId)
+                        },
                 )
-            }
-        }
-
-        Column(
-            modifier = Modifier.align(Alignment.BottomCenter),
-        ) {
-            Button(
-                onClick = {
-                    viewModel.onFoodDetailEvent(11)
-                },
-            ) {
-                Text(text = "Tom Yum Goong")
-            }
-            Button(
-                onClick = {
-                    viewModel.onFoodDetailEvent(31)
-                },
-            ) {
-                Text(text = "Som Tam")
             }
         }
     }

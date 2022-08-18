@@ -28,7 +28,7 @@ sealed class Screen(
             "foodDetail/{foodId}",
             listOf(navArgument("foodId") { type = NavType.IntType }),
         ) {
-            fun arguments(foodId: Int): String {
+            fun arguments(foodId: Long): String {
                 return "foodDetail/$foodId"
             }
         }

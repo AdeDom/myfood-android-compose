@@ -130,7 +130,8 @@ fun NavGraphBuilder.mainGraph(navController: NavController) {
                         }
                     }
                     is MainUiEvent.FoodDetail -> {
-                        navController.navigate(Screen.Main.FoodDetail.arguments(uiEvent.foodId))
+                        val route = Screen.Main.FoodDetail.arguments(uiEvent.foodId)
+                        navController.navigate(route)
                     }
                     is MainUiEvent.SaveState -> {
                         mainSaveState = uiEvent
