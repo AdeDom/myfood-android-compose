@@ -92,4 +92,6 @@ dependencies {
     implementation "com.squareup.sqldelight:coroutines-extensions:$sqldelight_version"
 
     implementation "com.github.AdeDom:myfood-server:$myfood_version"
+
+    implementation "io.coil-kt:coil-compose:$coil_version"
 }

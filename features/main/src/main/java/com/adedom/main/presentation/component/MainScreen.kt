@@ -1,17 +1,19 @@
 package com.adedom.main.presentation.component
 
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import coil.compose.AsyncImage
 import com.adedom.main.presentation.event.MainUiEvent
 import com.adedom.main.presentation.view_model.MainViewModel
 import com.adedom.ui_components.components.AppErrorAlertDialog
@@ -74,13 +76,27 @@ fun MainScreen(
                 }
 
                 LazyColumn(
-                    modifier = Modifier.align(Alignment.Center),
+                    modifier = Modifier
+                        .align(Alignment.Center)
+                        .width(250.dp),
                 ) {
                     items(state.mainContent.categoryList) { category ->
-                        Text("Category Name : ${category.categoryId} ${category.categoryName}")
+                        TextCard(
+                            image = category.image,
+                            text = category.categoryName,
+                            modifier = Modifier
+                                .fillParentMaxWidth()
+                                .padding(8.dp),
+                        )
                     }
                     items(state.mainContent.foodList) { food ->
-                        Text("Food Name : ${food.foodId} ${food.foodName}")
+                        TextCard(
+                            image = food.image,
+                            text = food.foodName,
+                            modifier = Modifier
+                                .fillParentMaxWidth()
+                                .padding(8.dp),
+                        )
                     }
                 }
 
@@ -103,6 +119,39 @@ fun MainScreen(
                     }
                 }
             }
+        }
+    }
+}
+
+@Composable
+fun TextCard(
+    modifier: Modifier = Modifier,
+    image: String,
+    text: String,
+) {
+    Card(
+        elevation = 8.dp,
+        shape = RoundedCornerShape(8.dp),
+        modifier = modifier,
+    ) {
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+            AsyncImage(
+                model = image,
+                contentDescription = null,
+                contentScale = ContentScale.Crop,
+                modifier = Modifier.size(
+                    width = 64.dp,
+                    height = 64.dp,
+                )
+            )
+            Spacer(modifier = Modifier.width(8.dp))
+            Text(
+                text = text,
+                fontSize = 16.sp,
+                color = Color.Black,
+            )
         }
     }
 }
