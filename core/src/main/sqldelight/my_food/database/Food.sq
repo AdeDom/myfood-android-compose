@@ -18,6 +18,11 @@ getFoodList:
 SELECT *
 FROM FoodEntity;
 
+getFoodListByCategoryId:
+SELECT *
+FROM FoodEntity
+WHERE categoryId = ?;
+
 saveFood:
 INSERT OR REPLACE
 INTO FoodEntity

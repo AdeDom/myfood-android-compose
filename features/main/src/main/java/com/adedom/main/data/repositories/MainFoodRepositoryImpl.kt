@@ -33,6 +33,12 @@ class MainFoodRepositoryImpl(
         }
     }
 
+    override suspend fun getFoodListByCategoryId(categoryId: Long): List<FoodEntity> {
+        return withContext(ioDispatcher) {
+            foodLocalDataSource.getFoodListByCategoryId(categoryId)
+        }
+    }
+
     override suspend fun saveFoodAll(foodList: List<FoodEntity>) {
         return withContext(ioDispatcher) {
             foodLocalDataSource.saveFoodAll(foodList)

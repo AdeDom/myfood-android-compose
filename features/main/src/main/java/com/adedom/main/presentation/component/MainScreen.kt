@@ -1,5 +1,6 @@
 package com.adedom.main.presentation.component
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -93,7 +94,10 @@ fun MainContent(viewModel: MainViewModel) {
                     text = category.categoryName,
                     modifier = Modifier
                         .fillParentMaxWidth()
-                        .padding(8.dp),
+                        .padding(8.dp)
+                        .clickable {
+                            viewModel.getFoodListByCategoryId(category.categoryId)
+                        },
                 )
             }
             items(viewModel.uiState.foodList) { food ->

@@ -24,6 +24,10 @@ class FoodLocalDataSourceImpl(
         return queries.getFoodList().executeAsList()
     }
 
+    override suspend fun getFoodListByCategoryId(categoryId: Long): List<FoodEntity> {
+        return queries.getFoodListByCategoryId(categoryId).executeAsList()
+    }
+
     override suspend fun saveFoodAll(foodList: List<FoodEntity>) {
         return foodList.forEach { food ->
             queries.saveFood(

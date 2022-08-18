@@ -3,6 +3,7 @@ package com.adedom.main.presentation.view_model
 import com.adedom.core.utils.Resource
 import com.adedom.main.domain.models.CategoryModel
 import com.adedom.main.domain.models.FoodModel
+import com.adedom.main.domain.use_cases.GetFoodListByCategoryIdUseCase
 import com.adedom.main.domain.use_cases.LogoutUseCase
 import com.adedom.main.domain.use_cases.MainContentUseCase
 import com.adedom.main.presentation.event.MainUiEvent
@@ -13,6 +14,7 @@ import kotlinx.coroutines.launch
 
 class MainViewModel(
     private val mainContentUseCase: MainContentUseCase,
+    private val getFoodListByCategoryIdUseCase: GetFoodListByCategoryIdUseCase,
     private val logoutUseCase: LogoutUseCase,
 ) : BaseViewModel<MainUiState, MainUiEvent>(MainUiState()) {
 
@@ -38,6 +40,7 @@ class MainViewModel(
                         foodList = resource.data.foodList,
                     )
                     _uiEvent.emit(event)
+
                     uiState.copy(
                         isLoading = false,
                         categoryList = resource.data.categoryList,
@@ -51,6 +54,19 @@ class MainViewModel(
                     )
                 }
             }
+        }
+    }
+
+    fun getFoodListByCategoryId(categoryId: Long) {
+        launch {
+            val foodList = getFoodListByCategoryIdUseCase(categoryId)
+            uiState = uiState.copy(foodList = foodList)
+
+            val event = MainUiEvent.SaveState(
+                categoryList = uiState.categoryList,
+                foodList = foodList,
+            )
+            _uiEvent.emit(event)
         }
     }
 
