@@ -1,7 +1,9 @@
 package com.adedom.main.data.repositories
 
 import com.adedom.main.data.providers.local.food.FoodLocalDataSource
+import com.adedom.main.data.providers.remote.food.FoodRemoteDataSource
 import com.adedom.main.domain.repositories.MainFoodRepository
+import com.adedom.myfood.data.models.response.FoodDetailResponse
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
@@ -10,8 +12,16 @@ import myfood.database.FoodEntity
 
 class MainFoodRepositoryImpl(
     private val foodLocalDataSource: FoodLocalDataSource,
+    private val foodRemoteDataSource: FoodRemoteDataSource,
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO,
 ) : MainFoodRepository {
+
+    override suspend fun callFoodListByCategoryId(categoryId: Int): List<FoodDetailResponse> {
+        return withContext(ioDispatcher) {
+            val foodListResponse = foodRemoteDataSource.callFoodListByCategoryId(categoryId)
+            foodListResponse.result ?: emptyList()
+        }
+    }
 
     override fun getFoodListFlow(): Flow<List<FoodEntity>> {
         return foodLocalDataSource.getFoodListFlow()

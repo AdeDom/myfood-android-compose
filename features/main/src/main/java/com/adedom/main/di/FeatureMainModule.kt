@@ -14,8 +14,14 @@ import com.adedom.main.data.providers.remote.food.FoodRemoteDataSource
 import com.adedom.main.data.providers.remote.food.FoodRemoteDataSourceImpl
 import com.adedom.main.data.providers.remote.profile.ProfileRemoteDataSource
 import com.adedom.main.data.providers.remote.profile.ProfileRemoteDataSourceImpl
-import com.adedom.main.data.repositories.*
-import com.adedom.main.domain.repositories.*
+import com.adedom.main.data.repositories.AuthLogoutRepositoryImpl
+import com.adedom.main.data.repositories.MainCategoryRepositoryImpl
+import com.adedom.main.data.repositories.MainFoodRepositoryImpl
+import com.adedom.main.data.repositories.UserProfileRepositoryImpl
+import com.adedom.main.domain.repositories.AuthLogoutRepository
+import com.adedom.main.domain.repositories.MainCategoryRepository
+import com.adedom.main.domain.repositories.MainFoodRepository
+import com.adedom.main.domain.repositories.UserProfileRepository
 import com.adedom.main.domain.use_cases.*
 import com.adedom.main.presentation.view_model.MainViewModel
 import org.kodein.di.DI
@@ -48,18 +54,17 @@ val featureMainModule = DI.Module(name = "featureMainModule") {
     }
 
     bindSingleton<UserProfileRepository> { UserProfileRepositoryImpl(instance(), instance()) }
-    bindSingleton<HomeRepository> { HomeRepositoryImpl(instance()) }
     bindSingleton<AuthLogoutRepository> { AuthLogoutRepositoryImpl(instance(), instance()) }
     bindSingleton<MainCategoryRepository> { MainCategoryRepositoryImpl(instance(), instance()) }
-    bindSingleton<MainFoodRepository> { MainFoodRepositoryImpl(instance()) }
+    bindSingleton<MainFoodRepository> { MainFoodRepositoryImpl(instance(), instance()) }
 
     // domain
     bindProvider { GetUserProfileUseCase(instance()) }
-    bindProvider { MainContentUseCase(instance(), instance(), instance()) }
+    bindProvider { MainContentUseCase(instance(), instance()) }
     bindProvider { LogoutUseCase(instance(), instance()) }
     bindProvider { GetCategoryUseCase(instance()) }
     bindProvider { GetFoodUseCase(instance()) }
 
     //presentation
-    bindProvider { MainViewModel(instance(), instance(), instance()) }
+    bindProvider { MainViewModel(instance(), instance()) }
 }

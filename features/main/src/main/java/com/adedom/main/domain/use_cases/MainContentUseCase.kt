@@ -5,7 +5,6 @@ import com.adedom.core.utils.Resource
 import com.adedom.main.domain.models.CategoryModel
 import com.adedom.main.domain.models.FoodModel
 import com.adedom.main.domain.models.MainContentModel
-import com.adedom.main.domain.repositories.HomeRepository
 import com.adedom.main.domain.repositories.MainCategoryRepository
 import com.adedom.main.domain.repositories.MainFoodRepository
 import com.adedom.myfood.data.models.response.CategoryResponse
@@ -17,7 +16,6 @@ import myfood.database.CategoryEntity
 import myfood.database.FoodEntity
 
 class MainContentUseCase(
-    private val homeRepository: HomeRepository,
     private val mainCategoryRepository: MainCategoryRepository,
     private val mainFoodRepository: MainFoodRepository,
 ) {
@@ -25,8 +23,9 @@ class MainContentUseCase(
     suspend operator fun invoke(): Resource<MainContentModel> {
         return try {
             coroutineScope {
-                val categoryAll = mainCategoryRepository.callCategoryAll()
-                val categoryEntity = categoryAll.map { category ->
+                // category
+                val categoryList = mainCategoryRepository.callCategoryAll()
+                val categoryEntity = categoryList.map { category ->
                     CategoryEntity(
                         categoryId = category.categoryId.toLong(),
                         categoryName = category.categoryName,
@@ -39,19 +38,15 @@ class MainContentUseCase(
                 mainCategoryRepository.deleteCategoryAll()
                 mainCategoryRepository.saveCategoryAll(categoryEntity)
 
-                val categoryList = categoryAll.map { mapCategoryToCategoryModel(it) }
-
-                val foodList = categoryAll
+                // food
+                val foodList = categoryList
                     .map { category ->
                         async {
-                            homeRepository.callFoodListByCategoryId(
-                                categoryId = category.categoryId
-                            )
+                            mainFoodRepository.callFoodListByCategoryId(category.categoryId)
                         }
                     }
                     .awaitAll()
                     .flatten()
-
                 val foodEntity = foodList.map { food ->
                     FoodEntity(
                         alias = food.alias,
@@ -72,11 +67,12 @@ class MainContentUseCase(
                 mainFoodRepository.deleteFoodAll()
                 mainFoodRepository.saveFoodAll(foodEntity)
 
-                val mainContentModel = MainContentModel(
-                    categoryList = categoryList,
-                    foodList = foodList.map { mapFoodToFoodModel(it) },
+                val mainContent = MainContentModel(
+                    categoryList = categoryList.map { mapCategoryToCategoryModel(it) },
+                    foodList = foodList.filter { it.categoryId == CATEGORY_RECOMMEND }
+                        .map { mapFoodToFoodModel(it) },
                 )
-                Resource.Success(mainContentModel)
+                Resource.Success(mainContent)
             }
         } catch (exception: ApiServiceException) {
             val baseError = exception.toBaseError()
@@ -96,9 +92,9 @@ class MainContentUseCase(
         return FoodModel(
             foodId = food.foodId.toLong(),
             foodName = food.foodName,
-            alias = "alias",
+            alias = food.alias,
             image = food.image,
-            ratingScoreCount = "4.9",
+            ratingScoreCount = food.ratingScoreCount,
             categoryId = food.categoryId.toLong(),
         )
     }

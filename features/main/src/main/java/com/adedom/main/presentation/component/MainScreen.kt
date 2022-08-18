@@ -12,7 +12,6 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.adedom.main.domain.models.FoodModel
 import com.adedom.main.presentation.event.MainUiEvent
 import com.adedom.main.presentation.view_model.MainViewModel
 import com.adedom.ui_components.components.AppErrorAlertDialog
@@ -61,57 +60,48 @@ fun MainScreen(
                 )
             }
 
-            if (state.mainContent != null) {
-                MainContent(viewModel, state.foodList)
-            }
-        }
-    }
-}
+            state.mainContent?.let {
+                Button(
+                    onClick = {
+                        viewModel.callLogout()
+                        viewModel.onLogoutEvent()
+                    },
+                    modifier = Modifier
+                        .align(Alignment.TopEnd)
+                        .padding(16.dp),
+                ) {
+                    Text("Logout")
+                }
 
-@Composable
-private fun MainContent(
-    viewModel: MainViewModel,
-    foodList: List<FoodModel>,
-) {
-    Box(
-        modifier = Modifier.fillMaxSize(),
-    ) {
-        Button(
-            onClick = {
-                viewModel.callLogout()
-                viewModel.onLogoutEvent()
-            },
-            modifier = Modifier
-                .align(Alignment.TopEnd)
-                .padding(16.dp),
-        ) {
-            Text("Logout")
-        }
+                LazyColumn(
+                    modifier = Modifier.align(Alignment.Center),
+                ) {
+                    items(state.mainContent.categoryList) { category ->
+                        Text("Category Name : ${category.categoryId} ${category.categoryName}")
+                    }
+                    items(state.mainContent.foodList) { food ->
+                        Text("Food Name : ${food.foodId} ${food.foodName}")
+                    }
+                }
 
-        Column(
-            modifier = Modifier.align(Alignment.BottomCenter),
-        ) {
-            Button(
-                onClick = {
-                    viewModel.onFoodDetailEvent(11)
-                },
-            ) {
-                Text(text = "Tom Yum Goong")
-            }
-            Button(
-                onClick = {
-                    viewModel.onFoodDetailEvent(31)
-                },
-            ) {
-                Text(text = "Som Tam")
-            }
-        }
-
-        LazyColumn(
-            modifier = Modifier.align(Alignment.Center),
-        ) {
-            items(foodList) { food ->
-                Text("Food Name : ${food.foodId} ${food.foodName}")
+                Column(
+                    modifier = Modifier.align(Alignment.BottomCenter),
+                ) {
+                    Button(
+                        onClick = {
+                            viewModel.onFoodDetailEvent(11)
+                        },
+                    ) {
+                        Text(text = "Tom Yum Goong")
+                    }
+                    Button(
+                        onClick = {
+                            viewModel.onFoodDetailEvent(31)
+                        },
+                    ) {
+                        Text(text = "Som Tam")
+                    }
+                }
             }
         }
     }
