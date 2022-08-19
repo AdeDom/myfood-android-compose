@@ -28,8 +28,8 @@ class CategoryLocalDataSourceImpl(
         return queries.getCategoryNameByCategoryId(categoryId).executeAsOne()
     }
 
-    override suspend fun saveCategoryAll(categoryList: List<CategoryEntity>) {
-        return categoryList.forEach { category ->
+    override suspend fun saveCategoryAll(categories: List<CategoryEntity>) {
+        return categories.forEach { category ->
             queries.saveCategory(
                 categoryId = category.categoryId,
                 categoryName = category.categoryName,

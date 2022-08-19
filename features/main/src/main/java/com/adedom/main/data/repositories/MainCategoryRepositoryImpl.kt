@@ -39,9 +39,9 @@ class MainCategoryRepositoryImpl(
         }
     }
 
-    override suspend fun saveCategoryAll(categoryList: List<CategoryEntity>) {
+    override suspend fun saveCategoryAll(categories: List<CategoryEntity>) {
         return withContext(ioDispatcher) {
-            categoryLocalDataSource.saveCategoryAll(categoryList)
+            categoryLocalDataSource.saveCategoryAll(categories)
         }
     }
 

@@ -24,8 +24,8 @@ class MainContentUseCase(
         return try {
             coroutineScope {
                 // category
-                val categoryList = mainCategoryRepository.callCategoryAll()
-                val categoryEntity = categoryList.map { category ->
+                val categories = mainCategoryRepository.callCategoryAll()
+                val categoryEntity = categories.map { category ->
                     CategoryEntity(
                         categoryId = category.categoryId.toLong(),
                         categoryName = category.categoryName,
@@ -39,7 +39,7 @@ class MainContentUseCase(
                 mainCategoryRepository.saveCategoryAll(categoryEntity)
 
                 // food
-                val foodList = categoryList
+                val foods = categories
                     .map { category ->
                         async {
                             mainFoodRepository.callFoodListByCategoryId(category.categoryId)
@@ -47,7 +47,7 @@ class MainContentUseCase(
                     }
                     .awaitAll()
                     .flatten()
-                val foodEntity = foodList.map { food ->
+                val foodEntity = foods.map { food ->
                     FoodEntity(
                         alias = food.alias,
                         categoryId = food.categoryId.toLong(),
@@ -68,8 +68,8 @@ class MainContentUseCase(
                 mainFoodRepository.saveFoodAll(foodEntity)
 
                 val mainContent = MainContentModel(
-                    categoryList = categoryList.map { mapCategoryToCategoryModel(it) },
-                    foodList = foodList.filter { it.categoryId == CATEGORY_RECOMMEND }
+                    categories = categories.map { mapCategoryToCategoryModel(it) },
+                    foods = foods.filter { it.categoryId == CATEGORY_RECOMMEND }
                         .map { mapFoodToFoodModel(it) },
                 )
                 Resource.Success(mainContent)

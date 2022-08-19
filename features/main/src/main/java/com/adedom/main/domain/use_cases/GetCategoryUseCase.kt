@@ -11,8 +11,8 @@ class GetCategoryUseCase(
 
     operator fun invoke(): Flow<List<CategoryModel>> {
         return mainCategoryRepository.getCategoryListFlow()
-            .map { categoryList ->
-                categoryList.map { category ->
+            .map { categories ->
+                categories.map { category ->
                     CategoryModel(
                         categoryId = category.categoryId,
                         categoryName = category.categoryName,

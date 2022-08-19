@@ -47,9 +47,9 @@ fun MainScreen(
     LaunchedEffect(key1 = viewModel) {
         if (mainSaveState != null) {
             viewModel.setInitState(
-                mainSaveState.categoryList,
+                mainSaveState.categories,
                 mainSaveState.categoryName,
-                mainSaveState.foodList,
+                mainSaveState.foods,
             )
         } else {
             viewModel.callMainContent()
@@ -120,7 +120,7 @@ fun MainContent(viewModel: MainViewModel) {
 
             Spacer(modifier = Modifier.height(16.dp))
             LazyRow {
-                items(viewModel.uiState.categoryList) { category ->
+                items(viewModel.uiState.categories) { category ->
                     Box(
                         modifier = Modifier
                             .padding(8.dp)
@@ -160,7 +160,7 @@ fun MainContent(viewModel: MainViewModel) {
 
             Spacer(modifier = Modifier.height(16.dp))
             LazyColumn {
-                items(viewModel.uiState.foodList) { food ->
+                items(viewModel.uiState.foods) { food ->
                     Box(
                         modifier = Modifier
                             .fillMaxWidth()

@@ -11,7 +11,7 @@ interface CategoryLocalDataSource {
 
     suspend fun getCategoryNameByCategoryId(categoryId: Long): String
 
-    suspend fun saveCategoryAll(categoryList: List<CategoryEntity>)
+    suspend fun saveCategoryAll(categories: List<CategoryEntity>)
 
     suspend fun deleteCategoryAll()
 }

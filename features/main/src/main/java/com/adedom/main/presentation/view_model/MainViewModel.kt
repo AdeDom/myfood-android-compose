@@ -19,14 +19,14 @@ class MainViewModel(
 ) : BaseViewModel<MainUiState, MainUiEvent>(MainUiState()) {
 
     fun setInitState(
-        categoryList: List<CategoryModel>,
+        categories: List<CategoryModel>,
         categoryName: String,
-        foodList: List<FoodModel>,
+        foods: List<FoodModel>,
     ) {
         uiState = uiState.copy(
-            categoryList = categoryList,
+            categories = categories,
             categoryName = categoryName,
-            foodList = foodList,
+            foods = foods,
         )
     }
 
@@ -45,15 +45,15 @@ class MainViewModel(
             uiState = when (resource) {
                 is Resource.Success -> {
                     val event = MainUiEvent.SaveState(
-                        categoryList = resource.data.categoryList,
-                        foodList = resource.data.foodList,
+                        categories = resource.data.categories,
+                        foods = resource.data.foods,
                     )
                     _uiEvent.emit(event)
 
                     uiState.copy(
                         isLoading = false,
-                        categoryList = resource.data.categoryList,
-                        foodList = resource.data.foodList,
+                        categories = resource.data.categories,
+                        foods = resource.data.foods,
                     )
                 }
                 is Resource.Error -> {
@@ -68,16 +68,16 @@ class MainViewModel(
 
     fun getFoodListByCategoryId(categoryId: Long) {
         launch {
-            val (categoryName, foodList) = getFoodListByCategoryIdUseCase(categoryId)
+            val (categoryName, foods) = getFoodListByCategoryIdUseCase(categoryId)
             uiState = uiState.copy(
                 categoryName = categoryName,
-                foodList = foodList,
+                foods = foods,
             )
 
             val event = MainUiEvent.SaveState(
-                categoryList = uiState.categoryList,
+                categories = uiState.categories,
                 categoryName = categoryName,
-                foodList = foodList,
+                foods = foods,
             )
             _uiEvent.emit(event)
         }
