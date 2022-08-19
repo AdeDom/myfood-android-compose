@@ -12,8 +12,6 @@ import com.adedom.main.data.providers.remote.category.CategoryRemoteDataSource
 import com.adedom.main.data.providers.remote.category.CategoryRemoteDataSourceImpl
 import com.adedom.main.data.providers.remote.food.FoodRemoteDataSource
 import com.adedom.main.data.providers.remote.food.FoodRemoteDataSourceImpl
-import com.adedom.main.data.providers.remote.profile.ProfileRemoteDataSource
-import com.adedom.main.data.providers.remote.profile.ProfileRemoteDataSourceImpl
 import com.adedom.main.data.repositories.AuthLogoutRepositoryImpl
 import com.adedom.main.data.repositories.MainCategoryRepositoryImpl
 import com.adedom.main.data.repositories.MainFoodRepositoryImpl
@@ -36,13 +34,6 @@ val featureMainModule = DI.Module(name = "featureMainModule") {
     bindSingleton<CategoryLocalDataSource> { CategoryLocalDataSourceImpl(instance()) }
     bindSingleton<FoodLocalDataSource> { FoodLocalDataSourceImpl(instance()) }
 
-    bindSingleton<ProfileRemoteDataSource> {
-        ProfileRemoteDataSourceImpl(
-            instance(),
-            instance(),
-            instance(),
-        )
-    }
     bindSingleton<CategoryRemoteDataSource> { CategoryRemoteDataSourceImpl(instance(), instance()) }
     bindSingleton<FoodRemoteDataSource> { FoodRemoteDataSourceImpl(instance(), instance()) }
     bindSingleton<AuthRemoteDataSource> {
@@ -53,7 +44,7 @@ val featureMainModule = DI.Module(name = "featureMainModule") {
         )
     }
 
-    bindSingleton<UserProfileRepository> { UserProfileRepositoryImpl(instance(), instance()) }
+    bindSingleton<UserProfileRepository> { UserProfileRepositoryImpl(instance()) }
     bindSingleton<AuthLogoutRepository> { AuthLogoutRepositoryImpl(instance(), instance()) }
     bindSingleton<MainCategoryRepository> { MainCategoryRepositoryImpl(instance(), instance()) }
     bindSingleton<MainFoodRepository> { MainFoodRepositoryImpl(instance(), instance()) }
