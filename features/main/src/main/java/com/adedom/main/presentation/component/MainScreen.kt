@@ -3,20 +3,24 @@ package com.adedom.main.presentation.component
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.material.CircularProgressIndicator
-import androidx.compose.material.Icon
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Surface
+import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import coil.compose.AsyncImage
 import com.adedom.main.R
 import com.adedom.main.presentation.event.MainUiEvent
 import com.adedom.main.presentation.view_model.MainViewModel
 import com.adedom.ui_components.components.AppErrorAlertDialog
+import com.adedom.ui_components.components.AppText
 import com.adedom.ui_components.components.AppTextField
 import com.adedom.ui_components.components.AppTitleText
 import org.kodein.di.compose.rememberInstance
@@ -92,7 +96,7 @@ fun MainContent(viewModel: MainViewModel) {
                                 ),
                         )
                     }
-                    Spacer(modifier = Modifier.height(8.dp))
+                    Spacer(modifier = Modifier.height(16.dp))
                     AppTextField(
                         value = viewModel.uiState.search,
                         onValueChange = viewModel::setSearch,
@@ -105,6 +109,41 @@ fun MainContent(viewModel: MainViewModel) {
                         },
                         modifier = Modifier.fillMaxWidth(),
                     )
+                }
+            }
+
+            item {
+                Spacer(modifier = Modifier.height(16.dp))
+                LazyRow {
+                    items(viewModel.uiState.categoryList) { category ->
+                        Box(
+                            modifier = Modifier.padding(8.dp),
+                        ) {
+                            Card(
+                                shape = RoundedCornerShape(8.dp),
+                                elevation = 8.dp,
+                            ) {
+                                Column(
+                                    horizontalAlignment = Alignment.CenterHorizontally,
+                                ) {
+                                    AsyncImage(
+                                        model = category.image,
+                                        contentDescription = null,
+                                        contentScale = ContentScale.Crop,
+                                        modifier = Modifier.size(
+                                            width = 100.dp,
+                                            height = 100.dp,
+                                        )
+                                    )
+                                    Spacer(modifier = Modifier.height(4.dp))
+                                    AppText(
+                                        text = category.categoryName,
+                                        fontWeight = FontWeight.Bold,
+                                    )
+                                }
+                            }
+                        }
+                    }
                 }
             }
         }
