@@ -24,6 +24,10 @@ class CategoryLocalDataSourceImpl(
         return queries.getCategoryList().executeAsList()
     }
 
+    override suspend fun getCategoryNameByCategoryId(categoryId: Long): String {
+        return queries.getCategoryNameByCategoryId(categoryId).executeAsOne()
+    }
+
     override suspend fun saveCategoryAll(categoryList: List<CategoryEntity>) {
         return categoryList.forEach { category ->
             queries.saveCategory(

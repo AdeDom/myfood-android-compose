@@ -1,6 +1,7 @@
 package com.adedom.main.presentation.component
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
@@ -42,7 +43,11 @@ fun MainScreen(
 
     LaunchedEffect(key1 = viewModel) {
         if (mainSaveState != null) {
-            viewModel.setInitState(mainSaveState.categoryList, mainSaveState.foodList)
+            viewModel.setInitState(
+                mainSaveState.categoryList,
+                mainSaveState.categoryName,
+                mainSaveState.foodList,
+            )
         } else {
             viewModel.callMainContent()
         }
@@ -117,7 +122,11 @@ fun MainContent(viewModel: MainViewModel) {
                 LazyRow {
                     items(viewModel.uiState.categoryList) { category ->
                         Box(
-                            modifier = Modifier.padding(8.dp),
+                            modifier = Modifier
+                                .padding(8.dp)
+                                .clickable {
+                                    viewModel.getFoodListByCategoryId(category.categoryId)
+                                },
                         ) {
                             Card(
                                 shape = RoundedCornerShape(8.dp),
@@ -145,6 +154,11 @@ fun MainContent(viewModel: MainViewModel) {
                         }
                     }
                 }
+            }
+
+            item {
+                Spacer(modifier = Modifier.height(16.dp))
+                AppTitleText(text = viewModel.uiState.categoryName)
             }
         }
     }

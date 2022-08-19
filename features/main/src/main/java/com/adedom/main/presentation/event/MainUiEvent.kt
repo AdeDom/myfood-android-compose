@@ -13,6 +13,7 @@ sealed interface MainUiEvent {
 
     data class SaveState(
         val categoryList: List<CategoryModel> = emptyList(),
+        val categoryName: String = "",
         val foodList: List<FoodModel> = emptyList(),
     ) : MainUiEvent
 }

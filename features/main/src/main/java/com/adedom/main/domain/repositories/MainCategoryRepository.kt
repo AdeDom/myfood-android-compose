@@ -12,6 +12,8 @@ interface MainCategoryRepository {
 
     suspend fun getCategoryList(): List<CategoryEntity>
 
+    suspend fun getCategoryNameByCategoryId(categoryId: Long): String
+
     suspend fun saveCategoryAll(categoryList: List<CategoryEntity>)
 
     suspend fun deleteCategoryAll()

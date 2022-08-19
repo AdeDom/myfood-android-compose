@@ -8,6 +8,7 @@ data class MainUiState(
     val isLoading: Boolean = false,
     val error: BaseError? = null,
     val categoryList: List<CategoryModel> = emptyList(),
+    val categoryName: String = "",
     val foodList: List<FoodModel> = emptyList(),
     val search: String = "",
 )

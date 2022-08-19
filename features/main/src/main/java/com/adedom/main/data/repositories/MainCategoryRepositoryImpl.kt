@@ -33,6 +33,12 @@ class MainCategoryRepositoryImpl(
         }
     }
 
+    override suspend fun getCategoryNameByCategoryId(categoryId: Long): String {
+        return withContext(ioDispatcher) {
+            categoryLocalDataSource.getCategoryNameByCategoryId(categoryId)
+        }
+    }
+
     override suspend fun saveCategoryAll(categoryList: List<CategoryEntity>) {
         return withContext(ioDispatcher) {
             categoryLocalDataSource.saveCategoryAll(categoryList)

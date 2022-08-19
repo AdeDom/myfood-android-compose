@@ -18,9 +18,14 @@ class MainViewModel(
     private val logoutUseCase: LogoutUseCase,
 ) : BaseViewModel<MainUiState, MainUiEvent>(MainUiState()) {
 
-    fun setInitState(categoryList: List<CategoryModel>, foodList: List<FoodModel>) {
+    fun setInitState(
+        categoryList: List<CategoryModel>,
+        categoryName: String,
+        foodList: List<FoodModel>,
+    ) {
         uiState = uiState.copy(
             categoryList = categoryList,
+            categoryName = categoryName,
             foodList = foodList,
         )
     }
@@ -63,11 +68,15 @@ class MainViewModel(
 
     fun getFoodListByCategoryId(categoryId: Long) {
         launch {
-            val foodList = getFoodListByCategoryIdUseCase(categoryId)
-            uiState = uiState.copy(foodList = foodList)
+            val (categoryName, foodList) = getFoodListByCategoryIdUseCase(categoryId)
+            uiState = uiState.copy(
+                categoryName = categoryName,
+                foodList = foodList,
+            )
 
             val event = MainUiEvent.SaveState(
                 categoryList = uiState.categoryList,
+                categoryName = categoryName,
                 foodList = foodList,
             )
             _uiEvent.emit(event)

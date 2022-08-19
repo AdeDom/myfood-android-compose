@@ -11,6 +11,11 @@ getCategoryList:
 SELECT *
 FROM CategoryEntity;
 
+getCategoryNameByCategoryId:
+SELECT categoryName
+FROM CategoryEntity
+WHERE categoryId = ?;
+
 saveCategory:
 INSERT OR REPLACE
 INTO CategoryEntity
