@@ -83,133 +83,133 @@ fun MainScreen(
 
 @Composable
 fun MainContent(viewModel: MainViewModel) {
-    Box(
+    Column(
         modifier = Modifier
             .fillMaxSize()
             .padding(16.dp),
     ) {
-        Column {
-            Column {
-                Row {
-                    AppTitleText(text = "Food")
-                    Spacer(modifier = Modifier.weight(1f))
-                    Image(
-                        painter = painterResource(id = R.drawable.ic_logout_gray),
-                        contentDescription = null,
-                        modifier = Modifier
-                            .size(
-                                width = 24.dp,
-                                height = 24.dp,
-                            ),
+        Row {
+            AppTitleText(text = "Food")
+            Spacer(modifier = Modifier.weight(1f))
+            Image(
+                painter = painterResource(id = R.drawable.ic_logout_gray),
+                contentDescription = null,
+                modifier = Modifier
+                    .size(
+                        width = 24.dp,
+                        height = 24.dp,
                     )
-                }
-                Spacer(modifier = Modifier.height(16.dp))
-                AppTextField(
-                    value = viewModel.uiState.search,
-                    onValueChange = viewModel::setSearch,
-                    hint = "Search food",
-                    leadingIcon = {
-                        Icon(
-                            painter = painterResource(id = R.drawable.ic_search_black),
-                            contentDescription = null,
-                        )
+                    .clickable {
+                        viewModel.callLogout()
+                        viewModel.onLogoutEvent()
                     },
-                    modifier = Modifier.fillMaxWidth(),
+            )
+        }
+        Spacer(modifier = Modifier.height(16.dp))
+        AppTextField(
+            value = viewModel.uiState.search,
+            onValueChange = viewModel::setSearch,
+            hint = "Search food",
+            leadingIcon = {
+                Icon(
+                    painter = painterResource(id = R.drawable.ic_search_black),
+                    contentDescription = null,
                 )
-            }
+            },
+            modifier = Modifier.fillMaxWidth(),
+        )
 
-            Spacer(modifier = Modifier.height(16.dp))
-            LazyRow {
-                items(viewModel.uiState.categories) { category ->
-                    Box(
-                        modifier = Modifier
-                            .padding(8.dp)
-                            .clickable {
-                                viewModel.getFoodListByCategoryId(category.categoryId)
-                            },
+        Spacer(modifier = Modifier.height(16.dp))
+        LazyRow {
+            items(viewModel.uiState.categories) { category ->
+                Box(
+                    modifier = Modifier
+                        .padding(8.dp)
+                        .clickable {
+                            viewModel.getFoodListByCategoryId(category.categoryId)
+                        },
+                ) {
+                    Card(
+                        shape = RoundedCornerShape(8.dp),
+                        elevation = 8.dp,
                     ) {
-                        Card(
-                            shape = RoundedCornerShape(8.dp),
-                            elevation = 8.dp,
+                        Column(
+                            horizontalAlignment = Alignment.CenterHorizontally,
                         ) {
-                            Column(
-                                horizontalAlignment = Alignment.CenterHorizontally,
-                            ) {
-                                AsyncImage(
-                                    model = category.image,
-                                    contentDescription = null,
-                                    contentScale = ContentScale.Crop,
-                                    modifier = Modifier.size(
-                                        width = 100.dp,
-                                        height = 100.dp,
-                                    )
+                            AsyncImage(
+                                model = category.image,
+                                contentDescription = null,
+                                contentScale = ContentScale.Crop,
+                                modifier = Modifier.size(
+                                    width = 100.dp,
+                                    height = 100.dp,
                                 )
-                                Spacer(modifier = Modifier.height(4.dp))
-                                AppText(
-                                    text = category.categoryName,
-                                    fontWeight = FontWeight.Bold,
-                                )
-                            }
+                            )
+                            Spacer(modifier = Modifier.height(4.dp))
+                            AppText(
+                                text = category.categoryName,
+                                fontWeight = FontWeight.Bold,
+                            )
                         }
                     }
                 }
             }
+        }
 
-            Spacer(modifier = Modifier.height(16.dp))
-            AppTitleText(text = viewModel.uiState.categoryName)
+        Spacer(modifier = Modifier.height(16.dp))
+        AppTitleText(text = viewModel.uiState.categoryName)
 
-            Spacer(modifier = Modifier.height(16.dp))
-            LazyColumn {
-                items(viewModel.uiState.foods) { food ->
-                    Box(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(8.dp)
-                            .clickable {
-                                viewModel.onFoodDetailEvent(food.foodId)
-                            },
-                    ) {
-                        Row {
-                            AsyncImage(
-                                model = food.image,
-                                contentDescription = null,
-                                contentScale = ContentScale.Crop,
-                                modifier = Modifier
-                                    .size(
-                                        width = 100.dp,
-                                        height = 100.dp,
-                                    )
-                                    .clip(RoundedCornerShape(8.dp)),
-                            )
-                            Spacer(modifier = Modifier.width(16.dp))
-                            Column {
-                                AppText(
-                                    text = food.foodName,
-                                    fontWeight = FontWeight.Bold,
+        Spacer(modifier = Modifier.height(16.dp))
+        LazyColumn {
+            items(viewModel.uiState.foods) { food ->
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(8.dp)
+                        .clickable {
+                            viewModel.onFoodDetailEvent(food.foodId)
+                        },
+                ) {
+                    Row {
+                        AsyncImage(
+                            model = food.image,
+                            contentDescription = null,
+                            contentScale = ContentScale.Crop,
+                            modifier = Modifier
+                                .size(
+                                    width = 100.dp,
+                                    height = 100.dp,
                                 )
-                                food.alias?.let {
-                                    Spacer(modifier = Modifier.height(4.dp))
+                                .clip(RoundedCornerShape(8.dp)),
+                        )
+                        Spacer(modifier = Modifier.width(16.dp))
+                        Column {
+                            AppText(
+                                text = food.foodName,
+                                fontWeight = FontWeight.Bold,
+                            )
+                            food.alias?.let {
+                                Spacer(modifier = Modifier.height(4.dp))
+                                AppText(
+                                    text = food.alias,
+                                    color = Color.Gray,
+                                    fontSize = 14.sp,
+                                )
+                            }
+                            food.ratingScoreCount?.let {
+                                Spacer(modifier = Modifier.height(4.dp))
+                                Row {
+                                    Image(
+                                        painter = painterResource(id = R.drawable.ic_star_amber),
+                                        contentDescription = null,
+                                        modifier = Modifier.size(18.dp),
+                                    )
+                                    Spacer(modifier = Modifier.width(4.dp))
                                     AppText(
-                                        text = food.alias,
-                                        color = Color.Gray,
+                                        text = food.ratingScoreCount,
+                                        color = Color(0xFFFFC107),
                                         fontSize = 14.sp,
                                     )
-                                }
-                                food.ratingScoreCount?.let {
-                                    Spacer(modifier = Modifier.height(4.dp))
-                                    Row {
-                                        Image(
-                                            painter = painterResource(id = R.drawable.ic_star_amber),
-                                            contentDescription = null,
-                                            modifier = Modifier.size(18.dp),
-                                        )
-                                        Spacer(modifier = Modifier.width(4.dp))
-                                        AppText(
-                                            text = food.ratingScoreCount,
-                                            color = Color(0xFFFFC107),
-                                            fontSize = 14.sp,
-                                        )
-                                    }
                                 }
                             }
                         }
