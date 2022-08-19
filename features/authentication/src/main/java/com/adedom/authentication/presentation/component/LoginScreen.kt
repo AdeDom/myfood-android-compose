@@ -18,7 +18,7 @@ import org.kodein.di.compose.rememberInstance
 
 @Composable
 fun LoginScreen(
-    onNavigate: (LoginUiEvent) -> Unit,
+    onEvent: (LoginUiEvent) -> Unit,
 ) {
     val viewModel: LoginViewModel by rememberInstance()
 
@@ -26,7 +26,7 @@ fun LoginScreen(
 
     LaunchedEffect(viewModel.uiEvent) {
         viewModel.uiEvent.collect { uiEvent ->
-            onNavigate(uiEvent)
+            onEvent(uiEvent)
         }
     }
 

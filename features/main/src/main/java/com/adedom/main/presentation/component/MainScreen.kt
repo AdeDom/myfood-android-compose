@@ -23,7 +23,7 @@ import org.kodein.di.compose.rememberInstance
 @Composable
 fun MainScreen(
     mainSaveState: MainUiEvent.SaveState?,
-    onNavigate: (MainUiEvent) -> Unit,
+    onEvent: (MainUiEvent) -> Unit,
 ) {
     val viewModel: MainViewModel by rememberInstance()
 
@@ -31,7 +31,7 @@ fun MainScreen(
 
     LaunchedEffect(viewModel.uiEvent) {
         viewModel.uiEvent.collect { uiEvent ->
-            onNavigate(uiEvent)
+            onEvent(uiEvent)
         }
     }
 

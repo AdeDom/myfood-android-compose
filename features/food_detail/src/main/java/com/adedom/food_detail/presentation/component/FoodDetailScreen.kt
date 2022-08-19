@@ -29,7 +29,7 @@ import org.kodein.di.compose.rememberInstance
 @Composable
 fun FoodDetailScreen(
     foodId: Int?,
-    onNavigate: (FoodDetailUiEvent) -> Unit,
+    onEvent: (FoodDetailUiEvent) -> Unit,
 ) {
     val viewModel by rememberInstance<FoodDetailViewModel>()
 
@@ -39,7 +39,7 @@ fun FoodDetailScreen(
 
     LaunchedEffect(key1 = viewModel.uiEvent) {
         viewModel.uiEvent.collect { uiEvent ->
-            onNavigate(uiEvent)
+            onEvent(uiEvent)
         }
     }
 

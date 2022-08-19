@@ -30,13 +30,13 @@ import org.kodein.di.compose.rememberInstance
 
 @Composable
 fun WelcomeScreen(
-    onNavigate: (WelcomeUiEvent) -> Unit,
+    onEvent: (WelcomeUiEvent) -> Unit,
 ) {
     val viewModel: WelcomeViewModel by rememberInstance()
 
     LaunchedEffect(viewModel.uiEvent) {
         viewModel.uiEvent.collect { uiEvent ->
-            onNavigate(uiEvent)
+            onEvent(uiEvent)
         }
     }
 

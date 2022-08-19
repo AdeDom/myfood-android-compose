@@ -1,6 +1,9 @@
 package com.adedom.authentication.presentation.component
 
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
@@ -18,13 +21,13 @@ import org.kodein.di.compose.rememberInstance
 
 @Composable
 fun RegisterScreen(
-    onNavigate: (RegisterUiEvent) -> Unit,
+    onEvent: (RegisterUiEvent) -> Unit,
 ) {
     val viewModel: RegisterViewModel by rememberInstance()
 
     LaunchedEffect(viewModel.uiEvent) {
         viewModel.uiEvent.collect { uiEvent ->
-            onNavigate(uiEvent)
+            onEvent(uiEvent)
         }
     }
 

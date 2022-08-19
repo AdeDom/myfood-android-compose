@@ -16,12 +16,14 @@ import com.adedom.ui_components.components.LogoApp
 import org.kodein.di.compose.rememberInstance
 
 @Composable
-fun SplashScreen(onNavigate: (SplashScreenUiEvent) -> Unit) {
+fun SplashScreen(
+    onEvent: (SplashScreenUiEvent) -> Unit,
+) {
     val viewModel: SplashScreenViewModel by rememberInstance()
 
     LaunchedEffect(viewModel.uiEvent) {
         viewModel.uiEvent.collect { uiEvent ->
-            onNavigate(uiEvent)
+            onEvent(uiEvent)
         }
     }
 
