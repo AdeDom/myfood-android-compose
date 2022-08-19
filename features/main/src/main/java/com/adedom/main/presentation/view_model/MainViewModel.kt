@@ -25,6 +25,10 @@ class MainViewModel(
         )
     }
 
+    fun setSearch(search: String) {
+        uiState = uiState.copy(search = search)
+    }
+
     fun callMainContent() {
         launch {
             uiState = uiState.copy(

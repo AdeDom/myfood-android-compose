@@ -9,4 +9,5 @@ data class MainUiState(
     val error: BaseError? = null,
     val categoryList: List<CategoryModel> = emptyList(),
     val foodList: List<FoodModel> = emptyList(),
+    val search: String = "",
 )

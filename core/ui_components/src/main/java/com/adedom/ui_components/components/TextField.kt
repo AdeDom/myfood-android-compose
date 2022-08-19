@@ -24,6 +24,7 @@ fun AppTextField(
     onValueChange: (String) -> Unit,
     modifier: Modifier = Modifier,
     hint: String = "",
+    leadingIcon: @Composable (() -> Unit)? = null,
     keyboardType: KeyboardType = KeyboardType.Text,
     imeAction: ImeAction = ImeAction.Default,
     singleLine: Boolean = true,
@@ -45,6 +46,7 @@ fun AppTextField(
         placeholder = {
             Text(text = hint)
         },
+        leadingIcon = leadingIcon,
         visualTransformation = visualTransformation,
         keyboardOptions = KeyboardOptions(
             keyboardType = keyboardType,
