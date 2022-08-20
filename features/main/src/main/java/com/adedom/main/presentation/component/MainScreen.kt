@@ -118,49 +118,52 @@ fun MainContent(viewModel: MainViewModel) {
             },
             modifier = Modifier.fillMaxWidth(),
         )
-
         Spacer(modifier = Modifier.height(16.dp))
-        LazyRow {
-            items(viewModel.uiState.categories) { category ->
-                Box(
-                    modifier = Modifier
-                        .padding(8.dp)
-                        .clickable {
-                            viewModel.getFoodListByCategoryId(category.categoryId)
-                        },
-                ) {
-                    Card(
-                        shape = RoundedCornerShape(8.dp),
-                        elevation = 8.dp,
-                    ) {
-                        Column(
-                            horizontalAlignment = Alignment.CenterHorizontally,
+
+        LazyColumn {
+            item {
+                LazyRow {
+                    items(viewModel.uiState.categories) { category ->
+                        Box(
+                            modifier = Modifier
+                                .padding(8.dp)
+                                .clickable {
+                                    viewModel.getFoodListByCategoryId(category.categoryId)
+                                },
                         ) {
-                            AsyncImage(
-                                model = category.image,
-                                contentDescription = null,
-                                contentScale = ContentScale.Crop,
-                                modifier = Modifier.size(
-                                    width = 100.dp,
-                                    height = 100.dp,
-                                )
-                            )
-                            Spacer(modifier = Modifier.height(4.dp))
-                            AppText(
-                                text = category.categoryName,
-                                fontWeight = FontWeight.Bold,
-                            )
+                            Card(
+                                shape = RoundedCornerShape(8.dp),
+                                elevation = 8.dp,
+                            ) {
+                                Column(
+                                    horizontalAlignment = Alignment.CenterHorizontally,
+                                ) {
+                                    AsyncImage(
+                                        model = category.image,
+                                        contentDescription = null,
+                                        contentScale = ContentScale.Crop,
+                                        modifier = Modifier.size(
+                                            width = 100.dp,
+                                            height = 100.dp,
+                                        )
+                                    )
+                                    Spacer(modifier = Modifier.height(4.dp))
+                                    AppText(
+                                        text = category.categoryName,
+                                        fontWeight = FontWeight.Bold,
+                                    )
+                                }
+                            }
                         }
                     }
                 }
             }
-        }
 
-        Spacer(modifier = Modifier.height(16.dp))
-        AppTitleText(text = viewModel.uiState.categoryName)
+            item {
+                Spacer(modifier = Modifier.height(16.dp))
+                AppTitleText(text = viewModel.uiState.categoryName)
+            }
 
-        Spacer(modifier = Modifier.height(16.dp))
-        LazyColumn {
             items(viewModel.uiState.foods) { food ->
                 Box(
                     modifier = Modifier
