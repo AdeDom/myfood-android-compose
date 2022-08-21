@@ -1,6 +1,7 @@
 package com.adedom.main.presentation.component
 
 import android.widget.Toast
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -9,12 +10,16 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
 import androidx.compose.material.CircularProgressIndicator
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Search
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
@@ -68,12 +73,9 @@ fun MainScreen(
             viewModel.callLogout()
             viewModel.onLogoutEvent()
         },
-        onSearchChange = { search ->
-            viewModel.setSearch(search)
-            viewModel.onSearchFood(search)
-        },
         onCategoryClick = viewModel::getFoodListByCategoryId,
         onFoodClick = viewModel::onFoodDetailEvent,
+        onSearchFoodEvent = viewModel::onSearchFoodEvent,
         onErrorDismiss = viewModel::callMainContent,
     )
 }
@@ -82,9 +84,9 @@ fun MainScreen(
 fun MainContent(
     state: MainUiState,
     onLogoutClick: () -> Unit,
-    onSearchChange: (String) -> Unit,
     onCategoryClick: (Long) -> Unit,
     onFoodClick: (Long) -> Unit,
+    onSearchFoodEvent: () -> Unit,
     onErrorDismiss: () -> Unit,
 ) {
     Box(
@@ -114,11 +116,26 @@ fun MainContent(
                     )
                 }
                 Spacer(modifier = Modifier.height(16.dp))
-                SearchTextField(
-                    value = state.search,
-                    onSearchChange = onSearchChange,
-                    modifier = Modifier.fillMaxWidth(),
-                )
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(60.dp)
+                        .clip(RoundedCornerShape(32.dp))
+                        .background(Color.LightGray)
+                        .clickable(onClick = onSearchFoodEvent),
+                ) {
+                    Row(
+                        modifier = Modifier.align(Alignment.CenterStart),
+                    ) {
+                        Spacer(modifier = Modifier.width(16.dp))
+                        AppIcon(Icons.Default.Search)
+                        Spacer(modifier = Modifier.width(8.dp))
+                        AppText(
+                            text = "Search food",
+                            color = Color.Gray,
+                        )
+                    }
+                }
 
                 LazyColumn {
                     item {
@@ -222,14 +239,14 @@ fun MainContentPreview() {
             onLogoutClick = {
                 Toast.makeText(context, "onLogoutClick", Toast.LENGTH_SHORT).show()
             },
-            onSearchChange = {
-                Toast.makeText(context, "onSearchChange $it", Toast.LENGTH_SHORT).show()
-            },
             onCategoryClick = {
                 Toast.makeText(context, "onCategoryClick $it", Toast.LENGTH_SHORT).show()
             },
             onFoodClick = {
                 Toast.makeText(context, "onFoodClick $it", Toast.LENGTH_SHORT).show()
+            },
+            onSearchFoodEvent = {
+                Toast.makeText(context, "onSearchFoodEvent", Toast.LENGTH_SHORT).show()
             },
             onErrorDismiss = {
                 Toast.makeText(context, "onErrorDismiss", Toast.LENGTH_SHORT).show()

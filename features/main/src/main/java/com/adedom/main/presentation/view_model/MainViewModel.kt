@@ -36,10 +36,6 @@ class MainViewModel(
         )
     }
 
-    fun setSearch(search: String) {
-        uiState = uiState.copy(search = search)
-    }
-
     fun onSearchFood(search: String) {
         searchJob?.cancel()
         searchJob = launch {
@@ -107,6 +103,13 @@ class MainViewModel(
     fun onLogoutEvent() {
         launch {
             val event = MainUiEvent.Logout
+            _uiEvent.emit(event)
+        }
+    }
+
+    fun onSearchFoodEvent() {
+        launch {
+            val event = MainUiEvent.SearchFood
             _uiEvent.emit(event)
         }
     }

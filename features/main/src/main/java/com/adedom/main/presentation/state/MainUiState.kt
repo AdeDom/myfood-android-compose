@@ -11,5 +11,4 @@ data class MainUiState(
     val categoryName: String = "",
     val foods: List<FoodModel> = emptyList(),
     val searchList: List<FoodModel> = emptyList(),
-    val search: String = "",
 )
