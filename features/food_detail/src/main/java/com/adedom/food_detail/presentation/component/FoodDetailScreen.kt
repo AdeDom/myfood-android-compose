@@ -6,6 +6,8 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
 import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.Text
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Star
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
@@ -22,6 +24,7 @@ import com.adedom.food_detail.presentation.event.FoodDetailUiEvent
 import com.adedom.food_detail.presentation.state.FoodDetailUiState
 import com.adedom.food_detail.presentation.view_model.FoodDetailViewModel
 import com.adedom.ui_components.components.AppErrorAlertDialog
+import com.adedom.ui_components.components.AppIcon
 import com.adedom.ui_components.components.AppImage
 import com.adedom.ui_components.components.AppImageNetwork
 import com.adedom.ui_components.theme.MyFoodTheme
@@ -118,8 +121,9 @@ fun FoodDetailContent(
                                     Row(
                                         verticalAlignment = Alignment.Bottom,
                                     ) {
-                                        AppImage(
-                                            image = R.drawable.ic_star_amber,
+                                        AppIcon(
+                                            image = Icons.Default.Star,
+                                            color = Color(0xFFFFC107),
                                             modifier = Modifier.size(18.dp),
                                         )
                                         Spacer(modifier = Modifier.width(4.dp))

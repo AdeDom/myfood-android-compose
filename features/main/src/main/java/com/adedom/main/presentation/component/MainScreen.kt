@@ -9,7 +9,9 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
 import androidx.compose.material.CircularProgressIndicator
-import androidx.compose.material.Icon
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Search
+import androidx.compose.material.icons.filled.Star
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
@@ -17,7 +19,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -95,7 +96,7 @@ fun MainContent(
                 Row {
                     AppTitleText(text = "Food")
                     Spacer(modifier = Modifier.weight(1f))
-                    AppImage(
+                    AppIcon(
                         image = R.drawable.ic_logout_gray,
                         modifier = Modifier
                             .size(
@@ -111,10 +112,7 @@ fun MainContent(
                     onValueChange = onSearchChange,
                     hint = "Search food",
                     leadingIcon = {
-                        Icon(
-                            painter = painterResource(id = R.drawable.ic_search_black),
-                            contentDescription = null,
-                        )
+                        AppIcon(Icons.Default.Search)
                     },
                     modifier = Modifier.fillMaxWidth(),
                 )
@@ -197,8 +195,9 @@ fun MainContent(
                                     food.ratingScoreCount?.let {
                                         Spacer(modifier = Modifier.height(4.dp))
                                         Row {
-                                            AppImage(
-                                                image = R.drawable.ic_star_amber,
+                                            AppIcon(
+                                                image = Icons.Default.Star,
+                                                color = Color(0xFFFFC107),
                                                 modifier = Modifier.size(18.dp),
                                             )
                                             Spacer(modifier = Modifier.width(4.dp))

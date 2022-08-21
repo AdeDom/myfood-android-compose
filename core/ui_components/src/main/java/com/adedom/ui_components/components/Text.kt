@@ -16,10 +16,10 @@ import androidx.compose.ui.unit.sp
 @Composable
 fun AppText(
     text: String,
+    modifier: Modifier = Modifier,
     color: Color = Color.Black,
     fontSize: TextUnit = 16.sp,
     fontWeight: FontWeight? = null,
-    modifier: Modifier = Modifier,
 ) {
     Text(
         text = text,
