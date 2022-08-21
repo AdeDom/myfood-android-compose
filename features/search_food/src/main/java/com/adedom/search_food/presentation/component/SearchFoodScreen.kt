@@ -13,6 +13,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.adedom.core.domain.models.FoodModel
 import com.adedom.search_food.presentation.event.SearchFoodUiEvent
 import com.adedom.search_food.presentation.state.SearchFoodUiState
 import com.adedom.search_food.presentation.view_model.SearchFoodViewModel
@@ -99,7 +100,27 @@ fun SearchFoodContent(
 fun SearchFoodContentPreview() {
     MyFoodTheme {
         SearchFoodContent(
-            state = SearchFoodUiState(),
+            state = SearchFoodUiState(
+                search = "Abc",
+                searchList = listOf(
+                    FoodModel(
+                        foodId = 3,
+                        foodName = "foodName",
+                        alias = "alias",
+                        image = "",
+                        ratingScoreCount = "ratingScoreCount",
+                        categoryId = 2,
+                    ),
+                    FoodModel(
+                        foodId = 4,
+                        foodName = "foodName",
+                        alias = "alias",
+                        image = "",
+                        ratingScoreCount = "ratingScoreCount",
+                        categoryId = 2,
+                    ),
+                ),
+            ),
             onSearchChange = {},
             onFoodClick = {},
             onOnBackPressedEvent = {},

@@ -217,12 +217,13 @@ fun MainContentPreview() {
                         image = "",
                     ),
                 ),
+                categoryName = "categoryName",
                 foods = listOf(
                     FoodModel(
                         foodId = 3,
                         foodName = "foodName",
                         alias = "alias",
-                        image = "image",
+                        image = "",
                         ratingScoreCount = "ratingScoreCount",
                         categoryId = 2,
                     ),
@@ -230,7 +231,7 @@ fun MainContentPreview() {
                         foodId = 4,
                         foodName = "foodName",
                         alias = "alias",
-                        image = "image",
+                        image = "",
                         ratingScoreCount = "ratingScoreCount",
                         categoryId = 2,
                     ),

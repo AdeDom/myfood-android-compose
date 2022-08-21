@@ -10,5 +10,4 @@ data class MainUiState(
     val categories: List<CategoryModel> = emptyList(),
     val categoryName: String = "",
     val foods: List<FoodModel> = emptyList(),
-    val searchList: List<FoodModel> = emptyList(),
 )
