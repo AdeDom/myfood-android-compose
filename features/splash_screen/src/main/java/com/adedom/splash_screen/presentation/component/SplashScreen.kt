@@ -1,6 +1,5 @@
 package com.adedom.splash_screen.presentation.component
 
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -24,14 +23,12 @@ fun SplashScreen(
         }
     }
 
-    Box(
+    AppImage(
+        image = R.drawable.bg,
         modifier = Modifier.fillMaxSize(),
-    ) {
-        AppImage(
-            image = R.drawable.bg,
-            modifier = Modifier.fillMaxSize(),
-        )
+    )
 
-        LogoApp()
-    }
+    LogoApp(
+        modifier = Modifier.fillMaxSize(),
+    )
 }

@@ -61,7 +61,9 @@ private fun TopSection() {
             modifier = Modifier.fillMaxSize(),
         )
 
-        LogoApp()
+        LogoApp(
+            modifier = Modifier.fillMaxSize(),
+        )
     }
 }
 

@@ -2,7 +2,6 @@ package com.adedom.ui_components.components
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.width
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -11,9 +10,11 @@ import androidx.compose.ui.unit.dp
 import com.adedom.ui_components.R
 
 @Composable
-fun LogoApp() {
+fun LogoApp(
+    modifier: Modifier = Modifier,
+) {
     Box(
-        modifier = Modifier.fillMaxSize(),
+        modifier = modifier,
     ) {
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
