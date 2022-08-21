@@ -1,10 +1,11 @@
 package com.adedom.ui_components.components
 
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.width
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
@@ -74,27 +75,6 @@ fun AppBottomText(
             secondText,
             color = Color(0xFFFFD700),
             fontWeight = FontWeight.Bold,
-        )
-    }
-}
-
-@Composable
-fun AppErrorText(
-    errorText: String,
-    modifier: Modifier = Modifier,
-) {
-    Box(
-        modifier = modifier
-            .width(300.dp)
-            .height(20.dp),
-    ) {
-        AppText(
-            text = errorText,
-            color = Color.Red,
-            fontSize = 14.sp,
-            modifier = Modifier
-                .align(Alignment.CenterEnd)
-                .padding(end = 32.dp),
         )
     }
 }
