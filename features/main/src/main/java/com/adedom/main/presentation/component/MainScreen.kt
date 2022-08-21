@@ -1,5 +1,6 @@
 package com.adedom.main.presentation.component
 
+import android.widget.Toast
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -15,14 +16,20 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.adedom.main.R
+import com.adedom.main.domain.models.CategoryModel
+import com.adedom.main.domain.models.FoodModel
 import com.adedom.main.presentation.event.MainUiEvent
+import com.adedom.main.presentation.state.MainUiState
 import com.adedom.main.presentation.view_model.MainViewModel
 import com.adedom.ui_components.components.*
+import com.adedom.ui_components.theme.MyFoodTheme
 import org.kodein.di.compose.rememberInstance
 
 @Composable
@@ -52,6 +59,28 @@ fun MainScreen(
         }
     }
 
+    MainContent(
+        state = state,
+        onLogoutClick = {
+            viewModel.callLogout()
+            viewModel.onLogoutEvent()
+        },
+        onSearchChange = viewModel::setSearch,
+        onCategoryClick = viewModel::getFoodListByCategoryId,
+        onFoodClick = viewModel::onFoodDetailEvent,
+        onErrorDismiss = viewModel::callMainContent,
+    )
+}
+
+@Composable
+fun MainContent(
+    state: MainUiState,
+    onLogoutClick: () -> Unit,
+    onSearchChange: (String) -> Unit,
+    onCategoryClick: (Long) -> Unit,
+    onFoodClick: (Long) -> Unit,
+    onErrorDismiss: () -> Unit,
+) {
     Box(
         modifier = Modifier.fillMaxSize(),
     ) {
@@ -60,149 +89,198 @@ fun MainScreen(
                 modifier = Modifier.align(Alignment.Center),
             )
         } else {
-            MainContent(viewModel)
+            Column(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(16.dp),
+            ) {
+                Row {
+                    AppTitleText(text = "Food")
+                    Spacer(modifier = Modifier.weight(1f))
+                    AppImage(
+                        image = R.drawable.ic_logout_gray,
+                        modifier = Modifier
+                            .size(
+                                width = 24.dp,
+                                height = 24.dp,
+                            )
+                            .clickable(onClick = onLogoutClick),
+                    )
+                }
+                Spacer(modifier = Modifier.height(16.dp))
+                AppTextField(
+                    value = state.search,
+                    onValueChange = onSearchChange,
+                    hint = "Search food",
+                    leadingIcon = {
+                        Icon(
+                            painter = painterResource(id = R.drawable.ic_search_black),
+                            contentDescription = null,
+                        )
+                    },
+                    modifier = Modifier.fillMaxWidth(),
+                )
+
+                LazyColumn {
+                    item {
+                        LazyRow {
+                            items(state.categories) { category ->
+                                Box(
+                                    modifier = Modifier
+                                        .padding(8.dp)
+                                        .clickable {
+                                            onCategoryClick(category.categoryId)
+                                        },
+                                ) {
+                                    Card(
+                                        shape = RoundedCornerShape(8.dp),
+                                        elevation = 8.dp,
+                                    ) {
+                                        Column(
+                                            horizontalAlignment = Alignment.CenterHorizontally,
+                                        ) {
+                                            AppImageNetwork(
+                                                image = category.image,
+                                                modifier = Modifier.size(
+                                                    width = 100.dp,
+                                                    height = 100.dp,
+                                                ),
+                                            )
+                                            Spacer(modifier = Modifier.height(4.dp))
+                                            AppText(
+                                                text = category.categoryName,
+                                                fontWeight = FontWeight.Bold,
+                                            )
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                    item {
+                        Spacer(modifier = Modifier.height(16.dp))
+                        AppTitleText(text = state.categoryName)
+                    }
+
+                    items(state.foods) { food ->
+                        Box(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(8.dp)
+                                .clickable {
+                                    onFoodClick(food.foodId)
+                                },
+                        ) {
+                            Row {
+                                AppImageNetwork(
+                                    image = food.image,
+                                    modifier = Modifier
+                                        .size(
+                                            width = 100.dp,
+                                            height = 100.dp,
+                                        )
+                                        .clip(RoundedCornerShape(8.dp)),
+                                )
+                                Spacer(modifier = Modifier.width(16.dp))
+                                Column {
+                                    AppText(
+                                        text = food.foodName,
+                                        fontWeight = FontWeight.Bold,
+                                    )
+                                    food.alias?.let {
+                                        Spacer(modifier = Modifier.height(4.dp))
+                                        AppText(
+                                            text = food.alias,
+                                            color = Color.Gray,
+                                            fontSize = 14.sp,
+                                        )
+                                    }
+                                    food.ratingScoreCount?.let {
+                                        Spacer(modifier = Modifier.height(4.dp))
+                                        Row {
+                                            AppImage(
+                                                image = R.drawable.ic_star_amber,
+                                                modifier = Modifier.size(18.dp),
+                                            )
+                                            Spacer(modifier = Modifier.width(4.dp))
+                                            AppText(
+                                                text = food.ratingScoreCount,
+                                                color = Color(0xFFFFC107),
+                                                fontSize = 14.sp,
+                                            )
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         }
 
         if (state.error != null) {
             AppErrorAlertDialog(
                 error = state.error,
-                onDismiss = viewModel::callMainContent,
+                onDismiss = onErrorDismiss,
             )
         }
     }
 }
 
 @Composable
-fun MainContent(viewModel: MainViewModel) {
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(16.dp),
-    ) {
-        Row {
-            AppTitleText(text = "Food")
-            Spacer(modifier = Modifier.weight(1f))
-            AppImage(
-                image = R.drawable.ic_logout_gray,
-                modifier = Modifier
-                    .size(
-                        width = 24.dp,
-                        height = 24.dp,
-                    )
-                    .clickable {
-                        viewModel.callLogout()
-                        viewModel.onLogoutEvent()
-                    },
-            )
-        }
-        Spacer(modifier = Modifier.height(16.dp))
-        AppTextField(
-            value = viewModel.uiState.search,
-            onValueChange = viewModel::setSearch,
-            hint = "Search food",
-            leadingIcon = {
-                Icon(
-                    painter = painterResource(id = R.drawable.ic_search_black),
-                    contentDescription = null,
-                )
+@Preview(showBackground = true)
+fun MainContentPreview() {
+    val context = LocalContext.current
+    MyFoodTheme {
+        MainContent(
+            state = MainUiState(
+                categories = listOf(
+                    CategoryModel(
+                        categoryId = 1,
+                        categoryName = "Category 1",
+                        image = "",
+                    ),
+                    CategoryModel(
+                        categoryId = 2,
+                        categoryName = "Category 2",
+                        image = "",
+                    ),
+                ),
+                foods = listOf(
+                    FoodModel(
+                        foodId = 3,
+                        foodName = "foodName",
+                        alias = "alias",
+                        image = "image",
+                        ratingScoreCount = "ratingScoreCount",
+                        categoryId = 2,
+                    ),
+                    FoodModel(
+                        foodId = 4,
+                        foodName = "foodName",
+                        alias = "alias",
+                        image = "image",
+                        ratingScoreCount = "ratingScoreCount",
+                        categoryId = 2,
+                    ),
+                ),
+            ),
+            onLogoutClick = {
+                Toast.makeText(context, "onLogoutClick", Toast.LENGTH_SHORT).show()
             },
-            modifier = Modifier.fillMaxWidth(),
+            onSearchChange = {
+                Toast.makeText(context, "onSearchChange $it", Toast.LENGTH_SHORT).show()
+            },
+            onCategoryClick = {
+                Toast.makeText(context, "onCategoryClick $it", Toast.LENGTH_SHORT).show()
+            },
+            onFoodClick = {
+                Toast.makeText(context, "onFoodClick $it", Toast.LENGTH_SHORT).show()
+            },
+            onErrorDismiss = {
+                Toast.makeText(context, "onErrorDismiss", Toast.LENGTH_SHORT).show()
+            },
         )
-
-        LazyColumn {
-            item {
-                LazyRow {
-                    items(viewModel.uiState.categories) { category ->
-                        Box(
-                            modifier = Modifier
-                                .padding(8.dp)
-                                .clickable {
-                                    viewModel.getFoodListByCategoryId(category.categoryId)
-                                },
-                        ) {
-                            Card(
-                                shape = RoundedCornerShape(8.dp),
-                                elevation = 8.dp,
-                            ) {
-                                Column(
-                                    horizontalAlignment = Alignment.CenterHorizontally,
-                                ) {
-                                    AppImageNetwork(
-                                        image = category.image,
-                                        modifier = Modifier.size(
-                                            width = 100.dp,
-                                            height = 100.dp,
-                                        ),
-                                    )
-                                    Spacer(modifier = Modifier.height(4.dp))
-                                    AppText(
-                                        text = category.categoryName,
-                                        fontWeight = FontWeight.Bold,
-                                    )
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-
-            item {
-                Spacer(modifier = Modifier.height(16.dp))
-                AppTitleText(text = viewModel.uiState.categoryName)
-            }
-
-            items(viewModel.uiState.foods) { food ->
-                Box(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(8.dp)
-                        .clickable {
-                            viewModel.onFoodDetailEvent(food.foodId)
-                        },
-                ) {
-                    Row {
-                        AppImageNetwork(
-                            image = food.image,
-                            modifier = Modifier
-                                .size(
-                                    width = 100.dp,
-                                    height = 100.dp,
-                                )
-                                .clip(RoundedCornerShape(8.dp)),
-                        )
-                        Spacer(modifier = Modifier.width(16.dp))
-                        Column {
-                            AppText(
-                                text = food.foodName,
-                                fontWeight = FontWeight.Bold,
-                            )
-                            food.alias?.let {
-                                Spacer(modifier = Modifier.height(4.dp))
-                                AppText(
-                                    text = food.alias,
-                                    color = Color.Gray,
-                                    fontSize = 14.sp,
-                                )
-                            }
-                            food.ratingScoreCount?.let {
-                                Spacer(modifier = Modifier.height(4.dp))
-                                Row {
-                                    AppImage(
-                                        image = R.drawable.ic_star_amber,
-                                        modifier = Modifier.size(18.dp),
-                                    )
-                                    Spacer(modifier = Modifier.width(4.dp))
-                                    AppText(
-                                        text = food.ratingScoreCount,
-                                        color = Color(0xFFFFC107),
-                                        fontSize = 14.sp,
-                                    )
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
     }
 }
