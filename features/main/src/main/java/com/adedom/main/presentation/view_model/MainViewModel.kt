@@ -45,7 +45,7 @@ class MainViewModel(
         searchJob = launch {
             delay(500)
             val foods = searchFoodUseCase(search)
-            uiState = uiState.copy(foods = foods)
+            uiState = uiState.copy(searchList = foods)
         }
     }
 

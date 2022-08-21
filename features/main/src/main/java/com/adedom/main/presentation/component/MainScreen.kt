@@ -9,22 +9,16 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
 import androidx.compose.material.CircularProgressIndicator
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Search
-import androidx.compose.material.icons.filled.Star
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import com.adedom.main.R
 import com.adedom.main.domain.models.CategoryModel
 import com.adedom.main.domain.models.FoodModel
@@ -120,13 +114,9 @@ fun MainContent(
                     )
                 }
                 Spacer(modifier = Modifier.height(16.dp))
-                AppTextField(
+                SearchTextField(
                     value = state.search,
-                    onValueChange = onSearchChange,
-                    hint = "Search food",
-                    leadingIcon = {
-                        AppIcon(Icons.Default.Search)
-                    },
+                    onSearchChange = onSearchChange,
                     modifier = Modifier.fillMaxWidth(),
                 )
 
@@ -173,57 +163,10 @@ fun MainContent(
                     }
 
                     items(state.foods) { food ->
-                        Box(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(8.dp)
-                                .clickable {
-                                    onFoodClick(food.foodId)
-                                },
-                        ) {
-                            Row {
-                                AppImageNetwork(
-                                    image = food.image,
-                                    modifier = Modifier
-                                        .size(
-                                            width = 100.dp,
-                                            height = 100.dp,
-                                        )
-                                        .clip(RoundedCornerShape(8.dp)),
-                                )
-                                Spacer(modifier = Modifier.width(16.dp))
-                                Column {
-                                    AppText(
-                                        text = food.foodName,
-                                        fontWeight = FontWeight.Bold,
-                                    )
-                                    food.alias?.let {
-                                        Spacer(modifier = Modifier.height(4.dp))
-                                        AppText(
-                                            text = food.alias,
-                                            color = Color.Gray,
-                                            fontSize = 14.sp,
-                                        )
-                                    }
-                                    food.ratingScoreCount?.let {
-                                        Spacer(modifier = Modifier.height(4.dp))
-                                        Row {
-                                            AppIcon(
-                                                image = Icons.Default.Star,
-                                                color = Color(0xFFFFC107),
-                                                modifier = Modifier.size(18.dp),
-                                            )
-                                            Spacer(modifier = Modifier.width(4.dp))
-                                            AppText(
-                                                text = food.ratingScoreCount,
-                                                color = Color(0xFFFFC107),
-                                                fontSize = 14.sp,
-                                            )
-                                        }
-                                    }
-                                }
-                            }
-                        }
+                        FoodBoxItem(
+                            food = food,
+                            onFoodClick = onFoodClick,
+                        )
                     }
                 }
             }
