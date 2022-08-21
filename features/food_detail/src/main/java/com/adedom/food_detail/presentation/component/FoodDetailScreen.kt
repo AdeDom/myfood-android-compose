@@ -10,19 +10,18 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import coil.compose.AsyncImage
 import com.adedom.food_detail.R
 import com.adedom.food_detail.domain.models.FoodDetailModel
 import com.adedom.food_detail.presentation.event.FoodDetailUiEvent
 import com.adedom.food_detail.presentation.view_model.FoodDetailViewModel
 import com.adedom.ui_components.components.AppErrorAlertDialog
+import com.adedom.ui_components.components.AppImageNetwork
 import com.adedom.ui_components.theme.MyFoodTheme
 import org.kodein.di.compose.rememberInstance
 
@@ -80,13 +79,11 @@ fun FoodDetailContent(
     val screenWidthDp = configuration.screenWidthDp.dp
     val screenHeightDp = configuration.screenHeightDp.dp
 
-    AsyncImage(
-        model = foodDetail.image,
-        contentDescription = null,
+    AppImageNetwork(
+        image = foodDetail.image,
         modifier = Modifier
             .fillMaxWidth()
             .height(screenHeightDp / 2),
-        contentScale = ContentScale.Crop,
     )
     LazyColumn {
         item {

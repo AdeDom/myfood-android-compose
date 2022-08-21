@@ -14,19 +14,14 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import coil.compose.AsyncImage
 import com.adedom.main.R
 import com.adedom.main.presentation.event.MainUiEvent
 import com.adedom.main.presentation.view_model.MainViewModel
-import com.adedom.ui_components.components.AppErrorAlertDialog
-import com.adedom.ui_components.components.AppText
-import com.adedom.ui_components.components.AppTextField
-import com.adedom.ui_components.components.AppTitleText
+import com.adedom.ui_components.components.*
 import org.kodein.di.compose.rememberInstance
 
 @Composable
@@ -138,14 +133,12 @@ fun MainContent(viewModel: MainViewModel) {
                                 Column(
                                     horizontalAlignment = Alignment.CenterHorizontally,
                                 ) {
-                                    AsyncImage(
-                                        model = category.image,
-                                        contentDescription = null,
-                                        contentScale = ContentScale.Crop,
+                                    AppImageNetwork(
+                                        image = category.image,
                                         modifier = Modifier.size(
                                             width = 100.dp,
                                             height = 100.dp,
-                                        )
+                                        ),
                                     )
                                     Spacer(modifier = Modifier.height(4.dp))
                                     AppText(
@@ -174,10 +167,8 @@ fun MainContent(viewModel: MainViewModel) {
                         },
                 ) {
                     Row {
-                        AsyncImage(
-                            model = food.image,
-                            contentDescription = null,
-                            contentScale = ContentScale.Crop,
+                        AppImageNetwork(
+                            image = food.image,
                             modifier = Modifier
                                 .size(
                                     width = 100.dp,

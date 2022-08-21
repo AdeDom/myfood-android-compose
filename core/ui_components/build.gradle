@@ -77,4 +77,6 @@ dependencies {
     implementation "androidx.lifecycle:lifecycle-viewmodel-savedstate:$lifecycle_version"
 
     implementation "com.github.AdeDom:myfood-server:$myfood_version"
+
+    implementation "io.coil-kt:coil-compose:$coil_version"
 }
