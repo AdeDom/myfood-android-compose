@@ -1,16 +1,19 @@
 package com.adedom.search_food.presentation.component
 
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.adedom.search_food.presentation.event.SearchFoodUiEvent
 import com.adedom.search_food.presentation.state.SearchFoodUiState
 import com.adedom.search_food.presentation.view_model.SearchFoodViewModel
 import com.adedom.ui_components.components.AppIcon
@@ -20,8 +23,20 @@ import com.adedom.ui_components.theme.MyFoodTheme
 import org.kodein.di.compose.rememberInstance
 
 @Composable
-fun SearchFoodScreen() {
+fun SearchFoodScreen(
+    onEvent: (SearchFoodUiEvent) -> Unit,
+) {
     val viewModel: SearchFoodViewModel by rememberInstance()
+
+    LaunchedEffect(viewModel.uiEvent) {
+        viewModel.uiEvent.collect { uiEvent ->
+            onEvent(uiEvent)
+        }
+    }
+
+    LaunchedEffect(Unit) {
+        viewModel.onSearchFood("")
+    }
 
     SearchFoodContent(
         state = viewModel.uiState,
@@ -30,6 +45,7 @@ fun SearchFoodScreen() {
             viewModel.onSearchFood(search)
         },
         onFoodClick = viewModel::onFoodDetailEvent,
+        onOnBackPressedEvent = viewModel::onOnBackPressedEvent,
     )
 }
 
@@ -38,6 +54,7 @@ fun SearchFoodContent(
     state: SearchFoodUiState,
     onSearchChange: (String) -> Unit,
     onFoodClick: (Long) -> Unit,
+    onOnBackPressedEvent: () -> Unit,
 ) {
     LazyColumn(
         modifier = Modifier
@@ -45,15 +62,27 @@ fun SearchFoodContent(
             .padding(16.dp),
     ) {
         item {
-            AppTextField(
-                value = state.search,
-                onValueChange = onSearchChange,
-                hint = "Search food",
-                leadingIcon = {
-                    AppIcon(Icons.Default.Search)
-                },
-                modifier = Modifier.fillMaxWidth(),
-            )
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+            ) {
+                Column {
+                    AppIcon(
+                        image = Icons.Default.ArrowBack,
+                        modifier = Modifier.clickable(onClick = onOnBackPressedEvent),
+                    )
+                    Spacer(modifier = Modifier.height(20.dp))
+                }
+                Spacer(modifier = Modifier.width(8.dp))
+                AppTextField(
+                    value = state.search,
+                    onValueChange = onSearchChange,
+                    hint = "Search food",
+                    leadingIcon = {
+                        AppIcon(Icons.Default.Search)
+                    },
+                    modifier = Modifier.fillMaxWidth(),
+                )
+            }
         }
 
         items(state.searchList) { food ->
@@ -73,6 +102,7 @@ fun SearchFoodContentPreview() {
             state = SearchFoodUiState(),
             onSearchChange = {},
             onFoodClick = {},
+            onOnBackPressedEvent = {},
         )
     }
 }

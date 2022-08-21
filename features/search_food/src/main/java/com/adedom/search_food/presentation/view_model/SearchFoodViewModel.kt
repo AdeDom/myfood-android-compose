@@ -32,4 +32,11 @@ class SearchFoodViewModel(
             _uiEvent.emit(event)
         }
     }
+
+    fun onOnBackPressedEvent() {
+        launch {
+            val event = SearchFoodUiEvent.OnBackPressed
+            _uiEvent.emit(event)
+        }
+    }
 }

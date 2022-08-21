@@ -5,4 +5,6 @@ sealed interface SearchFoodUiEvent {
     data class FoodDetail(
         val foodId: Long,
     ) : SearchFoodUiEvent
+
+    object OnBackPressed : SearchFoodUiEvent
 }
