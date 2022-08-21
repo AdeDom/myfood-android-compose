@@ -3,7 +3,9 @@ package com.adedom.food_detail.presentation.component
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.*
+import androidx.compose.material.Card
+import androidx.compose.material.CircularProgressIndicator
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
@@ -43,29 +45,24 @@ fun FoodDetailScreen(
 
     val state = viewModel.uiState
 
-    Surface(
+    Box(
         modifier = Modifier.fillMaxSize(),
-        color = MaterialTheme.colors.background,
     ) {
-        Box(
-            modifier = Modifier.fillMaxSize(),
-        ) {
-            if (state.isLoading) {
-                CircularProgressIndicator(
-                    modifier = Modifier.align(Alignment.Center),
-                )
-            }
+        if (state.isLoading) {
+            CircularProgressIndicator(
+                modifier = Modifier.align(Alignment.Center),
+            )
+        }
 
-            if (state.error != null) {
-                AppErrorAlertDialog(
-                    error = state.error,
-                    onDismiss = viewModel::setOnBackPressedEvent,
-                )
-            }
+        if (state.error != null) {
+            AppErrorAlertDialog(
+                error = state.error,
+                onDismiss = viewModel::setOnBackPressedEvent,
+            )
+        }
 
-            state.foodDetail?.let { foodDetail ->
-                FoodDetailContent(foodDetail)
-            }
+        state.foodDetail?.let { foodDetail ->
+            FoodDetailContent(foodDetail)
         }
     }
 }

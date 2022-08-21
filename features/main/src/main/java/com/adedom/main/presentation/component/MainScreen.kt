@@ -6,7 +6,9 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.*
+import androidx.compose.material.Card
+import androidx.compose.material.CircularProgressIndicator
+import androidx.compose.material.Icon
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
@@ -50,27 +52,22 @@ fun MainScreen(
         }
     }
 
-    Surface(
+    Box(
         modifier = Modifier.fillMaxSize(),
-        color = MaterialTheme.colors.background,
     ) {
-        Box(
-            modifier = Modifier.fillMaxSize(),
-        ) {
-            if (state.isLoading) {
-                CircularProgressIndicator(
-                    modifier = Modifier.align(Alignment.Center),
-                )
-            } else {
-                MainContent(viewModel)
-            }
+        if (state.isLoading) {
+            CircularProgressIndicator(
+                modifier = Modifier.align(Alignment.Center),
+            )
+        } else {
+            MainContent(viewModel)
+        }
 
-            if (state.error != null) {
-                AppErrorAlertDialog(
-                    error = state.error,
-                    onDismiss = viewModel::callMainContent,
-                )
-            }
+        if (state.error != null) {
+            AppErrorAlertDialog(
+                error = state.error,
+                onDismiss = viewModel::callMainContent,
+            )
         }
     }
 }
