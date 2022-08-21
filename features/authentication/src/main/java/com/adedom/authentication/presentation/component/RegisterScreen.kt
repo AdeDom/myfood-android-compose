@@ -11,8 +11,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.adedom.authentication.presentation.event.RegisterUiEvent
+import com.adedom.authentication.presentation.state.RegisterUiState
 import com.adedom.authentication.presentation.view_model.RegisterViewModel
 import com.adedom.ui_components.components.*
 import org.kodein.di.compose.rememberInstance
@@ -23,12 +25,39 @@ fun RegisterScreen(
 ) {
     val viewModel: RegisterViewModel by rememberInstance()
 
+    val state = viewModel.uiState
+
     LaunchedEffect(viewModel.uiEvent) {
         viewModel.uiEvent.collect { uiEvent ->
             onEvent(uiEvent)
         }
     }
 
+    RegisterContent(
+        state = state,
+        onNameChange = viewModel::setName,
+        onEmailChange = viewModel::setEmail,
+        onMobileNoChange = viewModel::setMobileNo,
+        onAddressChange = viewModel::setAddress,
+        onPasswordChange = viewModel::setPassword,
+        onConfirmPasswordChange = viewModel::setConfirmPassword,
+        onRegisterClick = viewModel::onRegisterEvent,
+        onLoginClick = viewModel::onLoginEvent,
+    )
+}
+
+@Composable
+fun RegisterContent(
+    state: RegisterUiState,
+    onNameChange: (String) -> Unit,
+    onEmailChange: (String) -> Unit,
+    onMobileNoChange: (String) -> Unit,
+    onAddressChange: (String) -> Unit,
+    onPasswordChange: (String) -> Unit,
+    onConfirmPasswordChange: (String) -> Unit,
+    onRegisterClick: () -> Unit,
+    onLoginClick: () -> Unit,
+) {
     LazyColumn(
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = Modifier.fillMaxSize(),
@@ -42,38 +71,38 @@ fun RegisterScreen(
             AppSubTitleText("Add your details to sign up")
             Spacer(modifier = Modifier.height(20.dp))
             AppTextField(
-                value = viewModel.uiState.name,
-                onValueChange = viewModel::setName,
+                value = state.name,
+                onValueChange = onNameChange,
                 hint = "Name",
                 imeAction = ImeAction.Next,
             )
             AppTextField(
-                value = viewModel.uiState.email,
-                onValueChange = viewModel::setEmail,
+                value = state.email,
+                onValueChange = onEmailChange,
                 hint = "Email",
                 imeAction = ImeAction.Next,
             )
             AppTextField(
-                value = viewModel.uiState.mobileNo,
-                onValueChange = viewModel::setMobileNo,
+                value = state.mobileNo,
+                onValueChange = onMobileNoChange,
                 hint = "Mobile No",
                 imeAction = ImeAction.Next,
             )
             AppTextField(
-                value = viewModel.uiState.address,
-                onValueChange = viewModel::setAddress,
+                value = state.address,
+                onValueChange = onAddressChange,
                 hint = "Address",
                 imeAction = ImeAction.Next,
             )
             AppTextField(
-                value = viewModel.uiState.password,
-                onValueChange = viewModel::setPassword,
+                value = state.password,
+                onValueChange = onPasswordChange,
                 hint = "Password",
                 imeAction = ImeAction.Next,
             )
             AppTextField(
-                value = viewModel.uiState.confirmPassword,
-                onValueChange = viewModel::setConfirmPassword,
+                value = state.confirmPassword,
+                onValueChange = onConfirmPasswordChange,
                 hint = "Confirm Password",
                 imeAction = ImeAction.Next,
             )
@@ -81,15 +110,31 @@ fun RegisterScreen(
                 text = "Sign Up",
                 backgroundColor = Color(0xFFFFD700),
                 borderColor = Color(0xFFFFD700),
-                onClick = viewModel::onRegisterEvent,
+                onClick = onRegisterClick,
             )
             Spacer(modifier = Modifier.height(20.dp))
             AppBottomText(
                 firstText = "Already have an Account?",
                 secondText = "Login",
-                onClick = viewModel::onLoginEvent,
+                onClick = onLoginClick,
                 modifier = Modifier.padding(bottom = 16.dp),
             )
         }
     }
+}
+
+@Composable
+@Preview(showBackground = true)
+fun RegisterContentPreview() {
+    RegisterContent(
+        state = RegisterUiState(),
+        onNameChange = {},
+        onEmailChange = {},
+        onMobileNoChange = {},
+        onAddressChange = {},
+        onPasswordChange = {},
+        onConfirmPasswordChange = {},
+        onRegisterClick = {},
+        onLoginClick = {},
+    )
 }
