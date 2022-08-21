@@ -8,8 +8,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.adedom.authentication.presentation.event.LoginUiEvent
+import com.adedom.authentication.presentation.state.LoginUiState
 import com.adedom.authentication.presentation.view_model.LoginViewModel
 import com.adedom.ui_components.components.*
 import org.kodein.di.compose.rememberInstance
@@ -28,6 +30,31 @@ fun LoginScreen(
         }
     }
 
+    LoginContent(
+        state,
+        onHideErrorDialog = viewModel::onHideErrorDialog,
+        onEmailChange = { email ->
+            viewModel.setEmail(email)
+            viewModel.onValidateEmail()
+        },
+        onPasswordChange = { password ->
+            viewModel.setPassword(password)
+            viewModel.onValidatePassword()
+        },
+        onLoginClick = viewModel::onLoginEvent,
+        onRegisterClick = viewModel::onRegisterEvent,
+    )
+}
+
+@Composable
+fun LoginContent(
+    state: LoginUiState,
+    onHideErrorDialog: () -> Unit,
+    onEmailChange: (String) -> Unit,
+    onPasswordChange: (String) -> Unit,
+    onLoginClick: () -> Unit,
+    onRegisterClick: () -> Unit,
+) {
     Box(
         modifier = Modifier.fillMaxSize(),
     ) {
@@ -38,7 +65,7 @@ fun LoginScreen(
         state.error?.let { error ->
             AppErrorAlertDialog(
                 error = error,
-                onDismiss = viewModel::onHideErrorDialog,
+                onDismiss = onHideErrorDialog,
             )
         }
 
@@ -56,10 +83,7 @@ fun LoginScreen(
             Spacer(modifier = Modifier.height(20.dp))
             AppTextField(
                 value = state.email,
-                onValueChange = { email ->
-                    viewModel.setEmail(email)
-                    viewModel.onValidateEmail()
-                },
+                onValueChange = onEmailChange,
                 hint = "Your Email",
                 error = if (state.isErrorEmail) "Email is incorrect" else null,
                 keyboardType = KeyboardType.Email,
@@ -67,10 +91,7 @@ fun LoginScreen(
             )
             AppTextField(
                 value = state.password,
-                onValueChange = { password ->
-                    viewModel.setPassword(password)
-                    viewModel.onValidatePassword()
-                },
+                onValueChange = onPasswordChange,
                 hint = "Password",
                 error = if (state.isErrorPassword) "Password is incorrect" else null,
                 keyboardType = KeyboardType.Password,
@@ -81,7 +102,7 @@ fun LoginScreen(
                 backgroundColor = if (state.isLogin) Color(0xFFFFD700) else Color.Gray,
                 borderColor = if (state.isLogin) Color(0xFFFFD700) else Color.Gray,
                 enabled = state.isLogin,
-                onClick = viewModel::onLoginEvent,
+                onClick = onLoginClick,
             )
             Spacer(modifier = Modifier.height(20.dp))
             AppText(
@@ -93,10 +114,23 @@ fun LoginScreen(
         AppBottomText(
             firstText = "Don\'t have an Account?",
             secondText = "Sign Up",
-            onClick = viewModel::onRegisterEvent,
+            onClick = onRegisterClick,
             modifier = Modifier
                 .align(Alignment.BottomCenter)
                 .padding(bottom = 16.dp),
         )
     }
+}
+
+@Composable
+@Preview(showBackground = true)
+fun LoginContentPreview() {
+    LoginContent(
+        state = LoginUiState(),
+        onHideErrorDialog = {},
+        onEmailChange = {},
+        onPasswordChange = {},
+        onLoginClick = {},
+        onRegisterClick = {},
+    )
 }

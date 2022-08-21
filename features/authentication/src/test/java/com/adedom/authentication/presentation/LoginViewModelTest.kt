@@ -128,12 +128,12 @@ class LoginViewModelTest {
         val resourceError = Resource.Error(baseError)
         coEvery { loginUseCase(any(), any()) } returns resourceError
 
-        launch {
-            viewModel.onLoginEvent()
-        }
+        viewModel.onLoginEvent()
 
-        val result = viewModel.uiEvent.firstOrNull()
-        assertThat(result).isEqualTo(LoginUiEvent.LoginError(baseError))
+        val state = viewModel.uiState
+        assertThat(state.error).isEqualTo(baseError)
+        assertThat(state.isLoading).isFalse()
+        assertThat(state.isLogin).isTrue()
         coVerify { loginUseCase(any(), any()) }
     }
 
