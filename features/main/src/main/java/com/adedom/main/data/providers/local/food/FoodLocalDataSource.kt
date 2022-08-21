@@ -11,6 +11,8 @@ interface FoodLocalDataSource {
 
     suspend fun getFoodListByCategoryId(categoryId: Long): List<FoodEntity>
 
+    suspend fun getFoodListBySearch(search: String): List<FoodEntity>
+
     suspend fun saveFoodAll(foodList: List<FoodEntity>)
 
     suspend fun deleteFoodAll()

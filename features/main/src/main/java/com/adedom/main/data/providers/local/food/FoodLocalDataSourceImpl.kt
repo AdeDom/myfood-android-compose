@@ -8,6 +8,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import myfood.database.FoodEntity
 import myfood.database.FoodQueries
+import java.util.*
 
 class FoodLocalDataSourceImpl(
     db: MyFoodDatabase,
@@ -28,6 +29,10 @@ class FoodLocalDataSourceImpl(
         return queries.getFoodListByCategoryId(categoryId).executeAsList()
     }
 
+    override suspend fun getFoodListBySearch(search: String): List<FoodEntity> {
+        return queries.getFoodListBySearch(search).executeAsList()
+    }
+
     override suspend fun saveFoodAll(foodList: List<FoodEntity>) {
         return foodList.forEach { food ->
             queries.saveFood(
@@ -38,6 +43,7 @@ class FoodLocalDataSourceImpl(
                 favorite = food.favorite,
                 foodId = food.foodId,
                 foodName = food.foodName,
+                search = food.foodName.lowercase(Locale.getDefault()),
                 image = food.image,
                 price = food.price,
                 ratingScore = food.ratingScore,

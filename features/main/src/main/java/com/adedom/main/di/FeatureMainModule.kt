@@ -55,7 +55,8 @@ val featureMainModule = DI.Module(name = "featureMainModule") {
     bindProvider { LogoutUseCase(instance(), instance()) }
     bindProvider { GetCategoryUseCase(instance()) }
     bindProvider { GetFoodListByCategoryIdUseCase(instance(), instance()) }
+    bindProvider { SearchFoodUseCase(instance()) }
 
     //presentation
-    bindProvider { MainViewModel(instance(), instance(), instance()) }
+    bindProvider { MainViewModel(instance(), instance(), instance(), instance()) }
 }

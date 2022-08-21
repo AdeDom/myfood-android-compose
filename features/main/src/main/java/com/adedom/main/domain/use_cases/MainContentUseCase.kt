@@ -56,6 +56,7 @@ class MainContentUseCase(
                         favorite = food.favorite,
                         foodId = food.foodId.toLong(),
                         foodName = food.foodName,
+                        search = food.foodName,
                         image = food.image,
                         price = food.price,
                         ratingScore = food.ratingScore?.toDouble(),

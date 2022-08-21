@@ -74,7 +74,10 @@ fun MainScreen(
             viewModel.callLogout()
             viewModel.onLogoutEvent()
         },
-        onSearchChange = viewModel::setSearch,
+        onSearchChange = { search ->
+            viewModel.setSearch(search)
+            viewModel.onSearchFood(search)
+        },
         onCategoryClick = viewModel::getFoodListByCategoryId,
         onFoodClick = viewModel::onFoodDetailEvent,
         onErrorDismiss = viewModel::callMainContent,

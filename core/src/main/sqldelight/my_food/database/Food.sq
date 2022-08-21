@@ -6,6 +6,7 @@ CREATE TABLE FoodEntity(
     favorite INTEGER,
     foodId INTEGER NOT NULL PRIMARY KEY,
     foodName TEXT NOT NULL,
+    search TEXT NOT NULL,
     image TEXT NOT NULL,
     price REAL NOT NULL,
     ratingScore REAL,
@@ -23,10 +24,16 @@ SELECT *
 FROM FoodEntity
 WHERE categoryId = ?;
 
+getFoodListBySearch:
+SELECT *
+FROM FoodEntity
+WHERE search LIKE ('%' || :search)
+OR search LIKE (:search || '%');
+
 saveFood:
 INSERT OR REPLACE
 INTO FoodEntity
-VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
+VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
 
 deleteFoodAll:
 DELETE FROM FoodEntity;
