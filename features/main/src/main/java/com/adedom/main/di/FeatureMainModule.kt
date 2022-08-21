@@ -50,10 +50,8 @@ val featureMainModule = DI.Module(name = "featureMainModule") {
     bindSingleton<MainFoodRepository> { MainFoodRepositoryImpl(instance(), instance()) }
 
     // domain
-    bindProvider { GetUserProfileUseCase(instance()) }
     bindProvider { MainContentUseCase(instance(), instance()) }
     bindProvider { LogoutUseCase(instance(), instance()) }
-    bindProvider { GetCategoryUseCase(instance()) }
     bindProvider { GetFoodListByCategoryIdUseCase(instance(), instance()) }
     bindProvider { SearchFoodUseCase(instance()) }
 
