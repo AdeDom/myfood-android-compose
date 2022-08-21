@@ -22,8 +22,6 @@ fun LoginScreen(
 ) {
     val viewModel: LoginViewModel by rememberInstance()
 
-    val state = viewModel.uiState
-
     LaunchedEffect(viewModel.uiEvent) {
         viewModel.uiEvent.collect { uiEvent ->
             onEvent(uiEvent)
@@ -31,7 +29,7 @@ fun LoginScreen(
     }
 
     LoginContent(
-        state,
+        state = viewModel.uiState,
         onHideErrorDialog = viewModel::onHideErrorDialog,
         onEmailChange = { email ->
             viewModel.setEmail(email)

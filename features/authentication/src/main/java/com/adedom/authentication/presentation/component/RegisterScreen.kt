@@ -25,8 +25,6 @@ fun RegisterScreen(
 ) {
     val viewModel: RegisterViewModel by rememberInstance()
 
-    val state = viewModel.uiState
-
     LaunchedEffect(viewModel.uiEvent) {
         viewModel.uiEvent.collect { uiEvent ->
             onEvent(uiEvent)
@@ -34,7 +32,7 @@ fun RegisterScreen(
     }
 
     RegisterContent(
-        state = state,
+        state = viewModel.uiState,
         onNameChange = viewModel::setName,
         onEmailChange = viewModel::setEmail,
         onMobileNoChange = viewModel::setMobileNo,

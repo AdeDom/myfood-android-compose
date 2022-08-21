@@ -39,8 +39,6 @@ fun MainScreen(
 ) {
     val viewModel: MainViewModel by rememberInstance()
 
-    val state = viewModel.uiState
-
     LaunchedEffect(viewModel.uiEvent) {
         viewModel.uiEvent.collect { uiEvent ->
             onEvent(uiEvent)
@@ -60,7 +58,7 @@ fun MainScreen(
     }
 
     MainContent(
-        state = state,
+        state = viewModel.uiState,
         onLogoutClick = {
             viewModel.callLogout()
             viewModel.onLogoutEvent()

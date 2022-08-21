@@ -44,10 +44,8 @@ fun FoodDetailScreen(
         }
     }
 
-    val state = viewModel.uiState
-
     FoodDetailContent(
-        state = state,
+        state = viewModel.uiState,
         onErrorDismiss = viewModel::setOnBackPressedEvent,
     )
 }
