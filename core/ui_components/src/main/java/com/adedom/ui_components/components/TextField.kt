@@ -1,5 +1,7 @@
 package com.adedom.ui_components.components
 
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -24,6 +26,7 @@ fun AppTextField(
     onValueChange: (String) -> Unit,
     modifier: Modifier = Modifier,
     hint: String = "",
+    error: String? = null,
     leadingIcon: @Composable (() -> Unit)? = null,
     keyboardType: KeyboardType = KeyboardType.Text,
     imeAction: ImeAction = ImeAction.Default,
@@ -37,34 +40,41 @@ fun AppTextField(
         VisualTransformation.None
     }
 
-    TextField(
-        value = value,
-        onValueChange = onValueChange,
-        label = {
-            Text(hint)
-        },
-        placeholder = {
-            Text(text = hint)
-        },
-        leadingIcon = leadingIcon,
-        visualTransformation = visualTransformation,
-        keyboardOptions = KeyboardOptions(
-            keyboardType = keyboardType,
-            imeAction = imeAction,
-        ),
-        keyboardActions = KeyboardActions(
-            onDone = {
-                focusManager.clearFocus()
+    Column {
+        TextField(
+            value = value,
+            onValueChange = onValueChange,
+            label = {
+                Text(hint)
             },
-        ),
-        singleLine = singleLine,
-        colors = TextFieldDefaults.textFieldColors(
-            focusedIndicatorColor = Color.Transparent,
-            unfocusedIndicatorColor = Color.Transparent,
-        ),
-        shape = RoundedCornerShape(32.dp),
-        modifier = modifier
-            .width(300.dp)
-            .height(60.dp),
-    )
+            placeholder = {
+                Text(text = hint)
+            },
+            leadingIcon = leadingIcon,
+            visualTransformation = visualTransformation,
+            keyboardOptions = KeyboardOptions(
+                keyboardType = keyboardType,
+                imeAction = imeAction,
+            ),
+            keyboardActions = KeyboardActions(
+                onDone = {
+                    focusManager.clearFocus()
+                },
+            ),
+            singleLine = singleLine,
+            colors = TextFieldDefaults.textFieldColors(
+                focusedIndicatorColor = Color.Transparent,
+                unfocusedIndicatorColor = Color.Transparent,
+            ),
+            shape = RoundedCornerShape(32.dp),
+            modifier = modifier
+                .width(300.dp)
+                .height(60.dp),
+        )
+        if (error.isNullOrBlank()) {
+            Spacer(modifier = Modifier.height(20.dp))
+        } else {
+            AppErrorText(error)
+        }
+    }
 }

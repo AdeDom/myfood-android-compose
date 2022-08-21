@@ -61,14 +61,10 @@ fun LoginScreen(
                     viewModel.onValidateEmail()
                 },
                 hint = "Your Email",
+                error = if (state.isErrorEmail) "Email is incorrect" else null,
                 keyboardType = KeyboardType.Email,
                 imeAction = ImeAction.Next,
             )
-            if (state.isErrorEmail) {
-                AppErrorText("Email is incorrect")
-            } else {
-                Spacer(modifier = Modifier.height(20.dp))
-            }
             AppTextField(
                 value = state.password,
                 onValueChange = { password ->
@@ -76,14 +72,10 @@ fun LoginScreen(
                     viewModel.onValidatePassword()
                 },
                 hint = "Password",
+                error = if (state.isErrorPassword) "Password is incorrect" else null,
                 keyboardType = KeyboardType.Password,
                 imeAction = ImeAction.Done,
             )
-            if (state.isErrorPassword) {
-                AppErrorText("Password is incorrect")
-            } else {
-                Spacer(modifier = Modifier.height(20.dp))
-            }
             AppButton(
                 text = "Login",
                 backgroundColor = if (state.isLogin) Color(0xFFFFD700) else Color.Gray,
