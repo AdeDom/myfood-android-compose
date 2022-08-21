@@ -37,7 +37,7 @@ fun FoodDetailScreen(
 ) {
     val viewModel by rememberInstance<FoodDetailViewModel>()
 
-    LaunchedEffect(key1 = viewModel) {
+    LaunchedEffect(key1 = Unit) {
         viewModel.callFoodDetail(foodId)
     }
 
