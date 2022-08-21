@@ -78,6 +78,7 @@ dependencies {
     implementation project(path: ':features:authentication')
     implementation project(path: ':features:connectivity')
     implementation project(path: ':features:food_detail')
+    implementation project(path: ':features:search_food')
 
     implementation "org.kodein.di:kodein-di-framework-android-x:$kodein_version"
 

@@ -7,6 +7,7 @@ import com.adedom.core.di.coreModule
 import com.adedom.food_detail.di.featureFoodDetailModule
 import com.adedom.main.di.featureMainModule
 import com.adedom.myfood.di.appModule
+import com.adedom.search_food.di.featureSearchFoodModule
 import com.adedom.splash_screen.di.featureSplashScreenModule
 import com.adedom.welcome.di.featureWelcomeModule
 import org.kodein.di.DI
@@ -27,6 +28,7 @@ class MainApplication : Application(), DIAware {
             featureMainModule,
             featureConnectivityModule,
             featureFoodDetailModule,
+            featureSearchFoodModule,
         )
     }
 }

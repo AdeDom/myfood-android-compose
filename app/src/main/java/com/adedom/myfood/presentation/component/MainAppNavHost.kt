@@ -17,6 +17,7 @@ import com.adedom.food_detail.presentation.component.FoodDetailScreen
 import com.adedom.food_detail.presentation.event.FoodDetailUiEvent
 import com.adedom.main.presentation.component.MainScreen
 import com.adedom.main.presentation.event.MainUiEvent
+import com.adedom.search_food.presentation.component.SearchFoodScreen
 import com.adedom.splash_screen.presentation.component.SplashScreen
 import com.adedom.splash_screen.presentation.event.SplashScreenUiEvent
 import com.adedom.welcome.presentation.component.WelcomeScreen
@@ -132,9 +133,15 @@ fun NavGraphBuilder.mainGraph(navController: NavController) {
                         val route = Screen.Main.FoodDetail.arguments(uiEvent.foodId)
                         navController.navigate(route)
                     }
+                    MainUiEvent.SearchFood -> {
+                        navController.navigate(Screen.Main.SearchFood.route)
+                    }
                     else -> {}
                 }
             }
+        }
+        composable(Screen.Main.SearchFood.route) {
+            SearchFoodScreen()
         }
         composable(
             route = Screen.Main.FoodDetail.route,

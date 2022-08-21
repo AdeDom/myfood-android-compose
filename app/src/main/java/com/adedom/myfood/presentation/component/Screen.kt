@@ -24,6 +24,8 @@ sealed class Screen(
 
         object Init : Screen("initMain")
 
+        object SearchFood : Screen("searchFood")
+
         object FoodDetail : Screen(
             "foodDetail/{foodId}",
             listOf(navArgument("foodId") { type = NavType.IntType }),
