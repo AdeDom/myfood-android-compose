@@ -4,11 +4,13 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.Preview
 import com.adedom.splash_screen.R
 import com.adedom.splash_screen.presentation.event.SplashScreenUiEvent
 import com.adedom.splash_screen.presentation.view_model.SplashScreenViewModel
 import com.adedom.ui_components.components.AppImage
 import com.adedom.ui_components.components.LogoApp
+import com.adedom.ui_components.theme.MyFoodTheme
 import org.kodein.di.compose.rememberInstance
 
 @Composable
@@ -23,6 +25,11 @@ fun SplashScreen(
         }
     }
 
+    SplashScreenContent()
+}
+
+@Composable
+fun SplashScreenContent() {
     AppImage(
         image = R.drawable.bg,
         modifier = Modifier.fillMaxSize(),
@@ -31,4 +38,12 @@ fun SplashScreen(
     LogoApp(
         modifier = Modifier.fillMaxSize(),
     )
+}
+
+@Composable
+@Preview(showBackground = true)
+fun SplashScreenPreview() {
+    MyFoodTheme {
+        SplashScreenContent()
+    }
 }
