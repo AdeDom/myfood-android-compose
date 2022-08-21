@@ -1,7 +1,6 @@
 package com.adedom.welcome.presentation.component
 
 import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
@@ -14,15 +13,10 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalConfiguration
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import com.adedom.ui_components.components.AppBottomText
-import com.adedom.ui_components.components.AppButton
-import com.adedom.ui_components.components.AppText
-import com.adedom.ui_components.components.LogoApp
+import com.adedom.ui_components.components.*
 import com.adedom.welcome.R
 import com.adedom.welcome.presentation.event.WelcomeUiEvent
 import com.adedom.welcome.presentation.view_model.WelcomeViewModel
@@ -67,10 +61,8 @@ private fun TopSection() {
             .fillMaxWidth()
             .height((screenHeight / 2) - 64.dp),
     ) {
-        Image(
-            painter = painterResource(id = R.drawable.orange_top_shape),
-            contentDescription = null,
-            contentScale = ContentScale.Crop,
+        AppImage(
+            image = R.drawable.orange_top_shape,
             modifier = Modifier.fillMaxSize(),
         )
 

@@ -1,6 +1,5 @@
 package com.adedom.main.presentation.component
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -86,9 +85,8 @@ fun MainContent(viewModel: MainViewModel) {
         Row {
             AppTitleText(text = "Food")
             Spacer(modifier = Modifier.weight(1f))
-            Image(
-                painter = painterResource(id = R.drawable.ic_logout_gray),
-                contentDescription = null,
+            AppImage(
+                image = R.drawable.ic_logout_gray,
                 modifier = Modifier
                     .size(
                         width = 24.dp,
@@ -193,9 +191,8 @@ fun MainContent(viewModel: MainViewModel) {
                             food.ratingScoreCount?.let {
                                 Spacer(modifier = Modifier.height(4.dp))
                                 Row {
-                                    Image(
-                                        painter = painterResource(id = R.drawable.ic_star_amber),
-                                        contentDescription = null,
+                                    AppImage(
+                                        image = R.drawable.ic_star_amber,
                                         modifier = Modifier.size(18.dp),
                                     )
                                     Spacer(modifier = Modifier.width(4.dp))
