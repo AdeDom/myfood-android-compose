@@ -108,7 +108,6 @@ fun MainContent(viewModel: MainViewModel) {
             },
             modifier = Modifier.fillMaxWidth(),
         )
-        Spacer(modifier = Modifier.height(16.dp))
 
         LazyColumn {
             item {
