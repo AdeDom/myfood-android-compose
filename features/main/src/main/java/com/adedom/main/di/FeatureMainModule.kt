@@ -20,7 +20,9 @@ import com.adedom.main.domain.repositories.AuthLogoutRepository
 import com.adedom.main.domain.repositories.MainCategoryRepository
 import com.adedom.main.domain.repositories.MainFoodRepository
 import com.adedom.main.domain.repositories.UserProfileRepository
-import com.adedom.main.domain.use_cases.*
+import com.adedom.main.domain.use_cases.GetFoodListByCategoryIdUseCase
+import com.adedom.main.domain.use_cases.LogoutUseCase
+import com.adedom.main.domain.use_cases.MainContentUseCase
 import com.adedom.main.presentation.view_model.MainViewModel
 import org.kodein.di.DI
 import org.kodein.di.bindProvider
@@ -53,8 +55,7 @@ val featureMainModule = DI.Module(name = "featureMainModule") {
     bindProvider { MainContentUseCase(instance(), instance()) }
     bindProvider { LogoutUseCase(instance(), instance()) }
     bindProvider { GetFoodListByCategoryIdUseCase(instance(), instance()) }
-    bindProvider { SearchFoodUseCase(instance()) }
 
     //presentation
-    bindProvider { MainViewModel(instance(), instance(), instance(), instance()) }
+    bindProvider { MainViewModel(instance(), instance(), instance()) }
 }

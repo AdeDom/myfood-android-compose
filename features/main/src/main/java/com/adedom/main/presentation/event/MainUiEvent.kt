@@ -1,7 +1,7 @@
 package com.adedom.main.presentation.event
 
+import com.adedom.core.domain.models.FoodModel
 import com.adedom.main.domain.models.CategoryModel
-import com.adedom.main.domain.models.FoodModel
 
 sealed interface MainUiEvent {
 

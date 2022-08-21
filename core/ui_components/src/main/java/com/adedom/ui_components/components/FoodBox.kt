@@ -1,4 +1,4 @@
-package com.adedom.main.presentation.component
+package com.adedom.ui_components.components
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -12,10 +12,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.adedom.main.domain.models.FoodModel
-import com.adedom.ui_components.components.AppIcon
-import com.adedom.ui_components.components.AppImageNetwork
-import com.adedom.ui_components.components.AppText
+import com.adedom.core.domain.models.FoodModel
 
 @Composable
 fun FoodBoxItem(
@@ -46,15 +43,15 @@ fun FoodBoxItem(
                     text = food.foodName,
                     fontWeight = FontWeight.Bold,
                 )
-                food.alias?.let {
+                food.alias?.let { alias ->
                     Spacer(modifier = Modifier.height(4.dp))
                     AppText(
-                        text = food.alias,
+                        text = alias,
                         color = Color.Gray,
                         fontSize = 14.sp,
                     )
                 }
-                food.ratingScoreCount?.let {
+                food.ratingScoreCount?.let { ratingScoreCount ->
                     Spacer(modifier = Modifier.height(4.dp))
                     Row {
                         AppIcon(
@@ -64,7 +61,7 @@ fun FoodBoxItem(
                         )
                         Spacer(modifier = Modifier.width(4.dp))
                         AppText(
-                            text = food.ratingScoreCount,
+                            text = ratingScoreCount,
                             color = Color(0xFFFFC107),
                             fontSize = 14.sp,
                         )

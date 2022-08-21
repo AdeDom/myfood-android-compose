@@ -1,4 +1,4 @@
-package com.adedom.main.domain.models
+package com.adedom.core.domain.models
 
 data class FoodModel(
     val foodId: Long,

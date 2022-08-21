@@ -1,6 +1,6 @@
 package com.adedom.main.domain.use_cases
 
-import com.adedom.main.domain.models.FoodModel
+import com.adedom.core.domain.models.FoodModel
 import com.adedom.main.domain.repositories.MainCategoryRepository
 import com.adedom.main.domain.repositories.MainFoodRepository
 import kotlinx.coroutines.async

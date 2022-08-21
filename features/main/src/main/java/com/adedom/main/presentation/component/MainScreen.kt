@@ -24,9 +24,9 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.adedom.core.domain.models.FoodModel
 import com.adedom.main.R
 import com.adedom.main.domain.models.CategoryModel
-import com.adedom.main.domain.models.FoodModel
 import com.adedom.main.presentation.event.MainUiEvent
 import com.adedom.main.presentation.state.MainUiState
 import com.adedom.main.presentation.view_model.MainViewModel

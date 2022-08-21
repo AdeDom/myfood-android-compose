@@ -39,12 +39,6 @@ class MainFoodRepositoryImpl(
         }
     }
 
-    override suspend fun getFoodListBySearch(search: String): List<FoodEntity> {
-        return withContext(ioDispatcher) {
-            foodLocalDataSource.getFoodListBySearch(search)
-        }
-    }
-
     override suspend fun saveFoodAll(foodList: List<FoodEntity>) {
         return withContext(ioDispatcher) {
             foodLocalDataSource.saveFoodAll(foodList)

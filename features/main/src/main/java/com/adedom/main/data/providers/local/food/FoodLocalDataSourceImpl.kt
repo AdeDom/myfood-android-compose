@@ -29,10 +29,6 @@ class FoodLocalDataSourceImpl(
         return queries.getFoodListByCategoryId(categoryId).executeAsList()
     }
 
-    override suspend fun getFoodListBySearch(search: String): List<FoodEntity> {
-        return queries.getFoodListBySearch(search).executeAsList()
-    }
-
     override suspend fun saveFoodAll(foodList: List<FoodEntity>) {
         return foodList.forEach { food ->
             queries.saveFood(

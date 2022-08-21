@@ -1,28 +1,22 @@
 package com.adedom.main.presentation.view_model
 
+import com.adedom.core.domain.models.FoodModel
 import com.adedom.core.utils.Resource
 import com.adedom.main.domain.models.CategoryModel
-import com.adedom.main.domain.models.FoodModel
 import com.adedom.main.domain.use_cases.GetFoodListByCategoryIdUseCase
 import com.adedom.main.domain.use_cases.LogoutUseCase
 import com.adedom.main.domain.use_cases.MainContentUseCase
-import com.adedom.main.domain.use_cases.SearchFoodUseCase
 import com.adedom.main.presentation.event.MainUiEvent
 import com.adedom.main.presentation.state.MainUiState
 import com.adedom.ui_components.base.BaseViewModel
 import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 class MainViewModel(
     private val mainContentUseCase: MainContentUseCase,
     private val getFoodListByCategoryIdUseCase: GetFoodListByCategoryIdUseCase,
-    private val searchFoodUseCase: SearchFoodUseCase,
     private val logoutUseCase: LogoutUseCase,
 ) : BaseViewModel<MainUiState, MainUiEvent>(MainUiState()) {
-
-    private var searchJob: Job? = null
 
     fun setInitState(
         categories: List<CategoryModel>,
@@ -34,15 +28,6 @@ class MainViewModel(
             categoryName = categoryName,
             foods = foods,
         )
-    }
-
-    fun onSearchFood(search: String) {
-        searchJob?.cancel()
-        searchJob = launch {
-            delay(500)
-            val foods = searchFoodUseCase(search)
-            uiState = uiState.copy(searchList = foods)
-        }
     }
 
     fun callMainContent() {
