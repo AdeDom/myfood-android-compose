@@ -1,6 +1,9 @@
 package com.adedom.authentication.presentation.component
 
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -26,77 +29,73 @@ fun RegisterScreen(
         }
     }
 
-    Box(
+    LazyColumn(
+        horizontalAlignment = Alignment.CenterHorizontally,
         modifier = Modifier.fillMaxSize(),
     ) {
-        LazyColumn(
-            horizontalAlignment = Alignment.CenterHorizontally,
-            modifier = Modifier.fillMaxSize(),
-        ) {
-            item {
-                AppTitleText(
-                    text = "Sign Up",
-                    modifier = Modifier.padding(top = 64.dp),
-                )
-                Spacer(modifier = Modifier.height(20.dp))
-                AppSubTitleText("Add your details to sign up")
-                Spacer(modifier = Modifier.height(20.dp))
-                AppTextField(
-                    value = viewModel.uiState.name,
-                    onValueChange = viewModel::setName,
-                    hint = "Name",
-                    imeAction = ImeAction.Next,
-                )
-                Spacer(modifier = Modifier.height(20.dp))
-                AppTextField(
-                    value = viewModel.uiState.email,
-                    onValueChange = viewModel::setEmail,
-                    hint = "Email",
-                    imeAction = ImeAction.Next,
-                )
-                Spacer(modifier = Modifier.height(20.dp))
-                AppTextField(
-                    value = viewModel.uiState.mobileNo,
-                    onValueChange = viewModel::setMobileNo,
-                    hint = "Mobile No",
-                    imeAction = ImeAction.Next,
-                )
-                Spacer(modifier = Modifier.height(20.dp))
-                AppTextField(
-                    value = viewModel.uiState.address,
-                    onValueChange = viewModel::setAddress,
-                    hint = "Address",
-                    imeAction = ImeAction.Next,
-                )
-                Spacer(modifier = Modifier.height(20.dp))
-                AppTextField(
-                    value = viewModel.uiState.password,
-                    onValueChange = viewModel::setPassword,
-                    hint = "Password",
-                    imeAction = ImeAction.Next,
-                )
-                Spacer(modifier = Modifier.height(20.dp))
-                AppTextField(
-                    value = viewModel.uiState.confirmPassword,
-                    onValueChange = viewModel::setConfirmPassword,
-                    hint = "Confirm Password",
-                    imeAction = ImeAction.Next,
-                )
-                Spacer(modifier = Modifier.height(20.dp))
-                AppButton(
-                    text = "Sign Up",
-                    backgroundColor = Color(0xFFFFD700),
-                    borderColor = Color(0xFFFFD700),
-                    onClick = viewModel::onRegisterEvent,
-                )
-                Spacer(modifier = Modifier.height(20.dp))
-                AppBottomText(
-                    firstText = "Already have an Account?",
-                    secondText = "Login",
-                    onClick = viewModel::onLoginEvent,
-                    modifier = Modifier.padding(bottom = 16.dp),
-                )
-            }
+        item {
+            AppTitleText(
+                text = "Sign Up",
+                modifier = Modifier.padding(top = 64.dp),
+            )
+            Spacer(modifier = Modifier.height(20.dp))
+            AppSubTitleText("Add your details to sign up")
+            Spacer(modifier = Modifier.height(20.dp))
+            AppTextField(
+                value = viewModel.uiState.name,
+                onValueChange = viewModel::setName,
+                hint = "Name",
+                imeAction = ImeAction.Next,
+            )
+            Spacer(modifier = Modifier.height(20.dp))
+            AppTextField(
+                value = viewModel.uiState.email,
+                onValueChange = viewModel::setEmail,
+                hint = "Email",
+                imeAction = ImeAction.Next,
+            )
+            Spacer(modifier = Modifier.height(20.dp))
+            AppTextField(
+                value = viewModel.uiState.mobileNo,
+                onValueChange = viewModel::setMobileNo,
+                hint = "Mobile No",
+                imeAction = ImeAction.Next,
+            )
+            Spacer(modifier = Modifier.height(20.dp))
+            AppTextField(
+                value = viewModel.uiState.address,
+                onValueChange = viewModel::setAddress,
+                hint = "Address",
+                imeAction = ImeAction.Next,
+            )
+            Spacer(modifier = Modifier.height(20.dp))
+            AppTextField(
+                value = viewModel.uiState.password,
+                onValueChange = viewModel::setPassword,
+                hint = "Password",
+                imeAction = ImeAction.Next,
+            )
+            Spacer(modifier = Modifier.height(20.dp))
+            AppTextField(
+                value = viewModel.uiState.confirmPassword,
+                onValueChange = viewModel::setConfirmPassword,
+                hint = "Confirm Password",
+                imeAction = ImeAction.Next,
+            )
+            Spacer(modifier = Modifier.height(20.dp))
+            AppButton(
+                text = "Sign Up",
+                backgroundColor = Color(0xFFFFD700),
+                borderColor = Color(0xFFFFD700),
+                onClick = viewModel::onRegisterEvent,
+            )
+            Spacer(modifier = Modifier.height(20.dp))
+            AppBottomText(
+                firstText = "Already have an Account?",
+                secondText = "Login",
+                onClick = viewModel::onLoginEvent,
+                modifier = Modifier.padding(bottom = 16.dp),
+            )
         }
     }
 }
