@@ -1,9 +1,7 @@
 package com.adedom.main.presentation.view_model
 
 import androidx.lifecycle.viewModelScope
-import com.adedom.core.domain.models.FoodModel
 import com.adedom.core.utils.Resource
-import com.adedom.main.domain.models.CategoryModel
 import com.adedom.main.domain.use_cases.GetFoodListByCategoryIdUseCase
 import com.adedom.main.domain.use_cases.LogoutUseCase
 import com.adedom.main.domain.use_cases.MainContentUseCase
@@ -19,16 +17,8 @@ class MainViewModel(
     private val logoutUseCase: LogoutUseCase,
 ) : BaseViewModel<MainUiState, MainUiEvent>(MainUiState()) {
 
-    fun setInitState(
-        categories: List<CategoryModel>,
-        categoryName: String,
-        foods: List<FoodModel>,
-    ) {
-        uiState = uiState.copy(
-            categories = categories,
-            categoryName = categoryName,
-            foods = foods,
-        )
+    init {
+        callMainContent()
     }
 
     fun callMainContent() {
@@ -41,12 +31,6 @@ class MainViewModel(
             val resource = mainContentUseCase()
             uiState = when (resource) {
                 is Resource.Success -> {
-                    val event = MainUiEvent.SaveState(
-                        categories = resource.data.categories,
-                        foods = resource.data.foods,
-                    )
-                    _uiEvent.emit(event)
-
                     uiState.copy(
                         isLoading = false,
                         categories = resource.data.categories,
@@ -70,13 +54,6 @@ class MainViewModel(
                 categoryName = categoryName,
                 foods = foods,
             )
-
-            val event = MainUiEvent.SaveState(
-                categories = uiState.categories,
-                categoryName = categoryName,
-                foods = foods,
-            )
-            _uiEvent.emit(event)
         }
     }
 

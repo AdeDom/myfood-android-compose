@@ -14,8 +14,6 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -40,30 +38,9 @@ fun MainScreen(
 ) {
     val viewModel: MainViewModel = getViewModel()
 
-    val categories = rememberSaveable { mutableStateOf(emptyList<CategoryModel>()) }
-    val categoryName = rememberSaveable { mutableStateOf("") }
-    val foods = rememberSaveable { mutableStateOf(emptyList<FoodModel>()) }
-
     LaunchedEffect(viewModel.uiEvent) {
         viewModel.uiEvent.collect { uiEvent ->
-            when (uiEvent) {
-                is MainUiEvent.SaveState -> {
-                    categories.value = uiEvent.categories
-                    categoryName.value = uiEvent.categoryName
-                    foods.value = uiEvent.foods
-                }
-                else -> {
-                    onEvent(uiEvent)
-                }
-            }
-        }
-    }
-
-    LaunchedEffect(key1 = Unit) {
-        if (categories.value.isNotEmpty()) {
-            viewModel.setInitState(categories.value, categoryName.value, foods.value)
-        } else {
-            viewModel.callMainContent()
+            onEvent(uiEvent)
         }
     }
 
