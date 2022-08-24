@@ -17,13 +17,13 @@ import com.adedom.authentication.presentation.event.RegisterUiEvent
 import com.adedom.authentication.presentation.state.RegisterUiState
 import com.adedom.authentication.presentation.view_model.RegisterViewModel
 import com.adedom.ui_components.components.*
-import org.kodein.di.compose.rememberInstance
+import org.koin.androidx.compose.getViewModel
 
 @Composable
 fun RegisterScreen(
     onEvent: (RegisterUiEvent) -> Unit,
 ) {
-    val viewModel: RegisterViewModel by rememberInstance()
+    val viewModel: RegisterViewModel = getViewModel()
 
     LaunchedEffect(viewModel.uiEvent) {
         viewModel.uiEvent.collect { uiEvent ->

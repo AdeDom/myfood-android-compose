@@ -14,13 +14,13 @@ import com.adedom.authentication.presentation.event.LoginUiEvent
 import com.adedom.authentication.presentation.state.LoginUiState
 import com.adedom.authentication.presentation.view_model.LoginViewModel
 import com.adedom.ui_components.components.*
-import org.kodein.di.compose.rememberInstance
+import org.koin.androidx.compose.getViewModel
 
 @Composable
 fun LoginScreen(
     onEvent: (LoginUiEvent) -> Unit,
 ) {
-    val viewModel: LoginViewModel by rememberInstance()
+    val viewModel: LoginViewModel = getViewModel()
 
     LaunchedEffect(viewModel.uiEvent) {
         viewModel.uiEvent.collect { uiEvent ->

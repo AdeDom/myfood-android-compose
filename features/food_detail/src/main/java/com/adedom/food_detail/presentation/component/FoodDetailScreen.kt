@@ -28,14 +28,14 @@ import com.adedom.ui_components.components.AppIcon
 import com.adedom.ui_components.components.AppImage
 import com.adedom.ui_components.components.AppImageNetwork
 import com.adedom.ui_components.theme.MyFoodTheme
-import org.kodein.di.compose.rememberInstance
+import org.koin.androidx.compose.getViewModel
 
 @Composable
 fun FoodDetailScreen(
     foodId: Int?,
     onEvent: (FoodDetailUiEvent) -> Unit,
 ) {
-    val viewModel by rememberInstance<FoodDetailViewModel>()
+    val viewModel = getViewModel<FoodDetailViewModel>()
 
     LaunchedEffect(key1 = Unit) {
         viewModel.callFoodDetail(foodId)

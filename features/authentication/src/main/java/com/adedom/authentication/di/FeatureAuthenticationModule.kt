@@ -15,33 +15,26 @@ import com.adedom.authentication.domain.use_cases.ValidateEmailUseCase
 import com.adedom.authentication.domain.use_cases.ValidatePasswordUseCase
 import com.adedom.authentication.presentation.view_model.LoginViewModel
 import com.adedom.authentication.presentation.view_model.RegisterViewModel
-import org.kodein.di.DI
-import org.kodein.di.bindProvider
-import org.kodein.di.instance
+import org.koin.androidx.viewmodel.dsl.viewModel
+import org.koin.dsl.module
 
-val featureAuthenticationModule = DI.Module(name = "featureAuthenticationModule") {
+val featureAuthenticationModule = module {
 
     // data
-    bindProvider<UserProfileLocalDataSource> { UserProfileLocalDataSourceImpl(instance()) }
+    factory<UserProfileLocalDataSource> { UserProfileLocalDataSourceImpl(get()) }
 
-    bindProvider<AuthRemoteDataSource> { AuthRemoteDataSourceImpl(instance(), instance()) }
-    bindProvider<ProfileRemoteDataSource> {
-        ProfileRemoteDataSourceImpl(
-            instance(),
-            instance(),
-            instance(),
-        )
-    }
+    factory<AuthRemoteDataSource> { AuthRemoteDataSourceImpl(get(), get()) }
+    factory<ProfileRemoteDataSource> { ProfileRemoteDataSourceImpl(get(), get(), get(),) }
 
-    bindProvider<UserProfileRepository> { UserProfileRepositoryImpl(instance(), instance()) }
-    bindProvider<AuthLoginRepository> { AuthLoginRepositoryImpl(instance(), instance()) }
+    factory<UserProfileRepository> { UserProfileRepositoryImpl(get(), get()) }
+    factory<AuthLoginRepository> { AuthLoginRepositoryImpl(get(), get()) }
 
     // domain
-    bindProvider { ValidateEmailUseCase() }
-    bindProvider { ValidatePasswordUseCase() }
-    bindProvider { LoginUseCase(instance(), instance()) }
+    factory { ValidateEmailUseCase() }
+    factory { ValidatePasswordUseCase() }
+    factory { LoginUseCase(get(), get()) }
 
     // presentation
-    bindProvider { LoginViewModel(instance(), instance(), instance()) }
-    bindProvider { RegisterViewModel() }
+    viewModel { LoginViewModel(get(), get(), get()) }
+    viewModel { RegisterViewModel() }
 }

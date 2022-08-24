@@ -6,21 +6,19 @@ import com.adedom.connectivity.data.repositories.ConnectivityRepositoryImpl
 import com.adedom.connectivity.domain.repositories.ConnectivityRepository
 import com.adedom.connectivity.domain.use_cases.GetConnectivityStatusUseCase
 import com.adedom.connectivity.presentation.view_model.ConnectivityViewModel
-import org.kodein.di.DI
-import org.kodein.di.bindProvider
-import org.kodein.di.bindSingleton
-import org.kodein.di.instance
+import org.koin.androidx.viewmodel.dsl.viewModel
+import org.koin.dsl.module
 
-val featureConnectivityModule = DI.Module(name = "featureConnectivityModule") {
+val featureConnectivityModule = module {
 
     // data
-    bindSingleton<ConnectivityObserver> { NetworkConnectivityObserver(instance()) }
+    single<ConnectivityObserver> { NetworkConnectivityObserver(get()) }
 
-    bindSingleton<ConnectivityRepository> { ConnectivityRepositoryImpl(instance()) }
+    single<ConnectivityRepository> { ConnectivityRepositoryImpl(get()) }
 
     // domain
-    bindProvider { GetConnectivityStatusUseCase(instance()) }
+    factory { GetConnectivityStatusUseCase(get()) }
 
     // view model
-    bindProvider { ConnectivityViewModel(instance()) }
+    viewModel { ConnectivityViewModel(get()) }
 }

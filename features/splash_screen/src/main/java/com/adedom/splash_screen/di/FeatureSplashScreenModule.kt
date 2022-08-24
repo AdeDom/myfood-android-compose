@@ -4,18 +4,17 @@ import com.adedom.splash_screen.data.repositories.SplashScreenRepositoryImpl
 import com.adedom.splash_screen.domain.repositories.SplashScreenRepository
 import com.adedom.splash_screen.domain.use_cases.GetIsAuthUseCase
 import com.adedom.splash_screen.presentation.view_model.SplashScreenViewModel
-import org.kodein.di.DI
-import org.kodein.di.bindProvider
-import org.kodein.di.instance
+import org.koin.androidx.viewmodel.dsl.viewModel
+import org.koin.dsl.module
 
-val featureSplashScreenModule = DI.Module(name = "featureSplashScreenModule") {
+val featureSplashScreenModule = module {
 
     // data
-    bindProvider<SplashScreenRepository> { SplashScreenRepositoryImpl(instance()) }
+    factory<SplashScreenRepository> { SplashScreenRepositoryImpl(get()) }
 
     // domain
-    bindProvider { GetIsAuthUseCase(instance()) }
+    factory { GetIsAuthUseCase(get()) }
 
     // presentation
-    bindProvider { SplashScreenViewModel(instance()) }
+    viewModel { SplashScreenViewModel(get()) }
 }

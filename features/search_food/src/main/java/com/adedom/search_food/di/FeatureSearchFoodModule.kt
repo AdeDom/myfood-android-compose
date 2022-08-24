@@ -6,21 +6,19 @@ import com.adedom.search_food.data.repositories.SearchFoodRepositoryImpl
 import com.adedom.search_food.domain.repositories.SearchFoodRepository
 import com.adedom.search_food.domain.use_cases.SearchFoodUseCase
 import com.adedom.search_food.presentation.view_model.SearchFoodViewModel
-import org.kodein.di.DI
-import org.kodein.di.bindProvider
-import org.kodein.di.bindSingleton
-import org.kodein.di.instance
+import org.koin.androidx.viewmodel.dsl.viewModel
+import org.koin.dsl.module
 
-val featureSearchFoodModule = DI.Module(name = "featureSearchFoodModule") {
+val featureSearchFoodModule = module {
 
     // data
-    bindSingleton<FoodLocalDataSource> { FoodLocalDataSourceImpl(instance()) }
+    single<FoodLocalDataSource> { FoodLocalDataSourceImpl(get()) }
 
-    bindSingleton<SearchFoodRepository> { SearchFoodRepositoryImpl(instance()) }
+    single<SearchFoodRepository> { SearchFoodRepositoryImpl(get()) }
 
     // domain
-    bindProvider { SearchFoodUseCase(instance()) }
+    factory { SearchFoodUseCase(get()) }
 
     // presentation
-    bindProvider { SearchFoodViewModel(instance()) }
+    viewModel { SearchFoodViewModel(get()) }
 }

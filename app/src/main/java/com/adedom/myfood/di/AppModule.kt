@@ -6,18 +6,16 @@ import androidx.datastore.preferences.preferencesDataStoreFile
 import com.adedom.core.data.providers.data_store.AppDataStore
 import com.adedom.myfood.data.providers.data_store.AppDataStoreImpl
 import com.adedom.myfood.data.providers.database.MyFoodDatabaseDriverFactory
-import org.kodein.di.DI
-import org.kodein.di.bindSingleton
-import org.kodein.di.instance
+import org.koin.dsl.module
 
-val appModule = DI.Module(name = "app") {
+val appModule = module {
 
-    bindSingleton {
+    single {
         PreferenceDataStoreFactory.create {
-            instance<Context>().preferencesDataStoreFile("file")
+            get<Context>().preferencesDataStoreFile("file")
         }
     }
-    bindSingleton<AppDataStore> { AppDataStoreImpl(instance()) }
-    bindSingleton { MyFoodDatabaseDriverFactory(instance()) }
-    bindSingleton { instance<MyFoodDatabaseDriverFactory>().createDriver() }
+    single<AppDataStore> { AppDataStoreImpl(get()) }
+    single { MyFoodDatabaseDriverFactory(get()) }
+    single { get<MyFoodDatabaseDriverFactory>().createDriver() }
 }

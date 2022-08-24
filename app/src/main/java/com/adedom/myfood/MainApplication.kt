@@ -10,25 +10,28 @@ import com.adedom.myfood.di.appModule
 import com.adedom.search_food.di.featureSearchFoodModule
 import com.adedom.splash_screen.di.featureSplashScreenModule
 import com.adedom.welcome.di.featureWelcomeModule
-import org.kodein.di.DI
-import org.kodein.di.DIAware
-import org.kodein.di.android.x.androidXModule
+import org.koin.android.ext.koin.androidContext
+import org.koin.android.ext.koin.androidLogger
+import org.koin.core.context.startKoin
 
-class MainApplication : Application(), DIAware {
+class MainApplication : Application() {
 
-    override val di by DI.lazy {
-        import(androidXModule(this@MainApplication))
-
-        importAll(
-            appModule,
-            coreModule,
-            featureSplashScreenModule,
-            featureWelcomeModule,
-            featureAuthenticationModule,
-            featureMainModule,
-            featureConnectivityModule,
-            featureFoodDetailModule,
-            featureSearchFoodModule,
-        )
+    override fun onCreate() {
+        super.onCreate()
+        startKoin {
+            androidLogger()
+            androidContext(this@MainApplication)
+            modules(
+                appModule,
+                coreModule,
+                featureSplashScreenModule,
+                featureWelcomeModule,
+                featureAuthenticationModule,
+                featureMainModule,
+                featureConnectivityModule,
+                featureFoodDetailModule,
+                featureSearchFoodModule,
+            )
+        }
     }
 }

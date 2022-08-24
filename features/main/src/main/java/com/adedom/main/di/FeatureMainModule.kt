@@ -24,38 +24,30 @@ import com.adedom.main.domain.use_cases.GetFoodListByCategoryIdUseCase
 import com.adedom.main.domain.use_cases.LogoutUseCase
 import com.adedom.main.domain.use_cases.MainContentUseCase
 import com.adedom.main.presentation.view_model.MainViewModel
-import org.kodein.di.DI
-import org.kodein.di.bindProvider
-import org.kodein.di.bindSingleton
-import org.kodein.di.instance
+import org.koin.androidx.viewmodel.dsl.viewModel
+import org.koin.dsl.module
 
-val featureMainModule = DI.Module(name = "featureMainModule") {
+val featureMainModule = module {
 
     // data
-    bindSingleton<UserProfileLocalDataSource> { UserProfileLocalDataSourceImpl(instance()) }
-    bindSingleton<CategoryLocalDataSource> { CategoryLocalDataSourceImpl(instance()) }
-    bindSingleton<FoodLocalDataSource> { FoodLocalDataSourceImpl(instance()) }
+    single<UserProfileLocalDataSource> { UserProfileLocalDataSourceImpl(get()) }
+    single<CategoryLocalDataSource> { CategoryLocalDataSourceImpl(get()) }
+    single<FoodLocalDataSource> { FoodLocalDataSourceImpl(get()) }
 
-    bindSingleton<CategoryRemoteDataSource> { CategoryRemoteDataSourceImpl(instance(), instance()) }
-    bindSingleton<FoodRemoteDataSource> { FoodRemoteDataSourceImpl(instance(), instance()) }
-    bindSingleton<AuthRemoteDataSource> {
-        AuthRemoteDataSourceImpl(
-            instance(),
-            instance(),
-            instance(),
-        )
-    }
+    single<CategoryRemoteDataSource> { CategoryRemoteDataSourceImpl(get(), get()) }
+    single<FoodRemoteDataSource> { FoodRemoteDataSourceImpl(get(), get()) }
+    single<AuthRemoteDataSource> { AuthRemoteDataSourceImpl(get(), get(), get()) }
 
-    bindSingleton<UserProfileRepository> { UserProfileRepositoryImpl(instance()) }
-    bindSingleton<AuthLogoutRepository> { AuthLogoutRepositoryImpl(instance(), instance()) }
-    bindSingleton<MainCategoryRepository> { MainCategoryRepositoryImpl(instance(), instance()) }
-    bindSingleton<MainFoodRepository> { MainFoodRepositoryImpl(instance(), instance()) }
+    single<UserProfileRepository> { UserProfileRepositoryImpl(get()) }
+    single<AuthLogoutRepository> { AuthLogoutRepositoryImpl(get(), get()) }
+    single<MainCategoryRepository> { MainCategoryRepositoryImpl(get(), get()) }
+    single<MainFoodRepository> { MainFoodRepositoryImpl(get(), get()) }
 
     // domain
-    bindProvider { MainContentUseCase(instance(), instance()) }
-    bindProvider { LogoutUseCase(instance(), instance()) }
-    bindProvider { GetFoodListByCategoryIdUseCase(instance(), instance()) }
+    factory { MainContentUseCase(get(), get()) }
+    factory { LogoutUseCase(get(), get()) }
+    factory { GetFoodListByCategoryIdUseCase(get(), get()) }
 
     //presentation
-    bindProvider { MainViewModel(instance(), instance(), instance()) }
+    viewModel { MainViewModel(get(), get(), get()) }
 }

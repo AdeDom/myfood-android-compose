@@ -32,13 +32,13 @@ import com.adedom.main.presentation.state.MainUiState
 import com.adedom.main.presentation.view_model.MainViewModel
 import com.adedom.ui_components.components.*
 import com.adedom.ui_components.theme.MyFoodTheme
-import org.kodein.di.compose.rememberInstance
+import org.koin.androidx.compose.getViewModel
 
 @Composable
 fun MainScreen(
     onEvent: (MainUiEvent) -> Unit,
 ) {
-    val viewModel: MainViewModel by rememberInstance()
+    val viewModel: MainViewModel = getViewModel()
 
     val categories = rememberSaveable { mutableStateOf(emptyList<CategoryModel>()) }
     val categoryName = rememberSaveable { mutableStateOf("") }

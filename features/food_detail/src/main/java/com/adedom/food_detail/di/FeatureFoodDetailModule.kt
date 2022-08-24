@@ -6,21 +6,19 @@ import com.adedom.food_detail.data.repositories.FoodDetailRepositoryImpl
 import com.adedom.food_detail.domain.repositories.FoodDetailRepository
 import com.adedom.food_detail.domain.use_cases.GetFoodDetailUseCase
 import com.adedom.food_detail.presentation.view_model.FoodDetailViewModel
-import org.kodein.di.DI
-import org.kodein.di.bindProvider
-import org.kodein.di.bindSingleton
-import org.kodein.di.instance
+import org.koin.androidx.viewmodel.dsl.viewModel
+import org.koin.dsl.module
 
-val featureFoodDetailModule = DI.Module(name = "featureFoodDetailModule") {
+val featureFoodDetailModule = module {
 
     // data
-    bindSingleton<FoodRemoteDataSource> { FoodRemoteDataSourceImpl(instance(), instance()) }
+    single<FoodRemoteDataSource> { FoodRemoteDataSourceImpl(get(), get()) }
 
-    bindSingleton<FoodDetailRepository> { FoodDetailRepositoryImpl(instance()) }
+    single<FoodDetailRepository> { FoodDetailRepositoryImpl(get()) }
 
     // domain
-    bindProvider { GetFoodDetailUseCase(instance()) }
+    factory { GetFoodDetailUseCase(get()) }
 
     // view model
-    bindProvider { FoodDetailViewModel(instance()) }
+    viewModel { FoodDetailViewModel(get()) }
 }

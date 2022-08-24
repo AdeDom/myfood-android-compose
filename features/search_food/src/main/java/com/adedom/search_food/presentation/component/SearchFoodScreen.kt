@@ -21,13 +21,13 @@ import com.adedom.ui_components.components.AppIcon
 import com.adedom.ui_components.components.AppTextField
 import com.adedom.ui_components.components.FoodBoxItem
 import com.adedom.ui_components.theme.MyFoodTheme
-import org.kodein.di.compose.rememberInstance
+import org.koin.androidx.compose.getViewModel
 
 @Composable
 fun SearchFoodScreen(
     onEvent: (SearchFoodUiEvent) -> Unit,
 ) {
-    val viewModel: SearchFoodViewModel by rememberInstance()
+    val viewModel: SearchFoodViewModel = getViewModel()
 
     LaunchedEffect(viewModel.uiEvent) {
         viewModel.uiEvent.collect { uiEvent ->

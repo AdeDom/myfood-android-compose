@@ -4,13 +4,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import com.adedom.welcome.presentation.event.WelcomeUiEvent
 import com.adedom.welcome.presentation.view_model.WelcomeViewModel
-import org.kodein.di.compose.rememberInstance
+import org.koin.androidx.compose.getViewModel
 
 @Composable
 fun WelcomeScreen(
     onEvent: (WelcomeUiEvent) -> Unit,
 ) {
-    val viewModel: WelcomeViewModel by rememberInstance()
+    val viewModel: WelcomeViewModel = getViewModel()
 
     LaunchedEffect(viewModel.uiEvent) {
         viewModel.uiEvent.collect { uiEvent ->
