@@ -7,6 +7,4 @@ import com.adedom.myfood.data.models.response.TokenResponse
 interface AuthRemoteDataSource {
 
     suspend fun callLogin(loginRequest: LoginRequest): BaseResponse<TokenResponse>
-
-    suspend fun callLogout(): BaseResponse<String>
 }

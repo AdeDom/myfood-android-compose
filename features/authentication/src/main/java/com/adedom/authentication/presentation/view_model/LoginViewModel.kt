@@ -1,5 +1,6 @@
 package com.adedom.authentication.presentation.view_model
 
+import androidx.lifecycle.viewModelScope
 import com.adedom.authentication.domain.use_cases.LoginUseCase
 import com.adedom.authentication.domain.use_cases.ValidateEmailUseCase
 import com.adedom.authentication.domain.use_cases.ValidatePasswordUseCase
@@ -7,6 +8,7 @@ import com.adedom.authentication.presentation.event.LoginUiEvent
 import com.adedom.authentication.presentation.state.LoginUiState
 import com.adedom.core.utils.Resource
 import com.adedom.ui_components.base.BaseViewModel
+import kotlinx.coroutines.launch
 
 class LoginViewModel(
     private val validateEmailUseCase: ValidateEmailUseCase,
@@ -45,7 +47,7 @@ class LoginViewModel(
     }
 
     fun onLoginEvent() {
-        launch {
+        viewModelScope.launch(exceptionHandler) {
             uiState = uiState.copy(
                 isLoading = true,
                 isLogin = false,
@@ -72,7 +74,7 @@ class LoginViewModel(
     }
 
     fun onRegisterEvent() {
-        launch {
+        viewModelScope.launch {
             val event = LoginUiEvent.Register
             _uiEvent.emit(event)
         }

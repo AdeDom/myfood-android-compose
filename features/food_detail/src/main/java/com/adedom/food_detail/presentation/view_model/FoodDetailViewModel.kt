@@ -1,17 +1,19 @@
 package com.adedom.food_detail.presentation.view_model
 
+import androidx.lifecycle.viewModelScope
 import com.adedom.core.utils.Resource
 import com.adedom.food_detail.domain.use_cases.GetFoodDetailUseCase
 import com.adedom.food_detail.presentation.event.FoodDetailUiEvent
 import com.adedom.food_detail.presentation.state.FoodDetailUiState
 import com.adedom.ui_components.base.BaseViewModel
+import kotlinx.coroutines.launch
 
 class FoodDetailViewModel(
     private val getFoodDetailUseCase: GetFoodDetailUseCase,
 ) : BaseViewModel<FoodDetailUiState, FoodDetailUiEvent>(FoodDetailUiState()) {
 
     fun callFoodDetail(foodId: Int?) {
-        launch {
+        viewModelScope.launch {
             uiState = uiState.copy(
                 isLoading = true,
                 error = null,
@@ -36,7 +38,7 @@ class FoodDetailViewModel(
     }
 
     fun setOnBackPressedEvent() {
-        launch {
+        viewModelScope.launch {
             val event = FoodDetailUiEvent.OnBackPressed
             _uiEvent.emit(event)
         }

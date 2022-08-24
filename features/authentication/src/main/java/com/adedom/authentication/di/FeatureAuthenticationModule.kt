@@ -24,13 +24,7 @@ val featureAuthenticationModule = DI.Module(name = "featureAuthenticationModule"
     // data
     bindProvider<UserProfileLocalDataSource> { UserProfileLocalDataSourceImpl(instance()) }
 
-    bindProvider<AuthRemoteDataSource> {
-        AuthRemoteDataSourceImpl(
-            instance(),
-            instance(),
-            instance(),
-        )
-    }
+    bindProvider<AuthRemoteDataSource> { AuthRemoteDataSourceImpl(instance(), instance()) }
     bindProvider<ProfileRemoteDataSource> {
         ProfileRemoteDataSourceImpl(
             instance(),

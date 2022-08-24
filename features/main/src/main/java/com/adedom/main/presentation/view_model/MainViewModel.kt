@@ -1,5 +1,6 @@
 package com.adedom.main.presentation.view_model
 
+import androidx.lifecycle.viewModelScope
 import com.adedom.core.domain.models.FoodModel
 import com.adedom.core.utils.Resource
 import com.adedom.main.domain.models.CategoryModel
@@ -31,7 +32,7 @@ class MainViewModel(
     }
 
     fun callMainContent() {
-        launch {
+        viewModelScope.launch {
             uiState = uiState.copy(
                 isLoading = true,
                 error = null,
@@ -63,7 +64,7 @@ class MainViewModel(
     }
 
     fun getFoodListByCategoryId(categoryId: Long) {
-        launch {
+        viewModelScope.launch {
             val (categoryName, foods) = getFoodListByCategoryIdUseCase(categoryId)
             uiState = uiState.copy(
                 categoryName = categoryName,
@@ -86,21 +87,21 @@ class MainViewModel(
     }
 
     fun onLogoutEvent() {
-        launch {
+        viewModelScope.launch {
             val event = MainUiEvent.Logout
             _uiEvent.emit(event)
         }
     }
 
     fun onSearchFoodEvent() {
-        launch {
+        viewModelScope.launch {
             val event = MainUiEvent.SearchFood
             _uiEvent.emit(event)
         }
     }
 
     fun onFoodDetailEvent(foodId: Long) {
-        launch {
+        viewModelScope.launch {
             val event = MainUiEvent.FoodDetail(foodId)
             _uiEvent.emit(event)
         }

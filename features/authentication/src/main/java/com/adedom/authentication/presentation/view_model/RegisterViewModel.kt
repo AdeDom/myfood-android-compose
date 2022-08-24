@@ -1,8 +1,10 @@
 package com.adedom.authentication.presentation.view_model
 
+import androidx.lifecycle.viewModelScope
 import com.adedom.authentication.presentation.event.RegisterUiEvent
 import com.adedom.authentication.presentation.state.RegisterUiState
 import com.adedom.ui_components.base.BaseViewModel
+import kotlinx.coroutines.launch
 
 class RegisterViewModel : BaseViewModel<RegisterUiState, RegisterUiEvent>(RegisterUiState()) {
 
@@ -31,7 +33,7 @@ class RegisterViewModel : BaseViewModel<RegisterUiState, RegisterUiEvent>(Regist
     }
 
     fun onLoginEvent() {
-        launch {
+        viewModelScope.launch {
             val event = RegisterUiEvent.Login
             _uiEvent.emit(event)
         }
