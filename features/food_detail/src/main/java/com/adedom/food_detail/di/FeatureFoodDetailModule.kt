@@ -12,7 +12,7 @@ import org.koin.dsl.module
 val featureFoodDetailModule = module {
 
     // data
-    single<FoodRemoteDataSource> { FoodRemoteDataSourceImpl(get(), get()) }
+    single<FoodRemoteDataSource> { FoodRemoteDataSourceImpl(get()) }
 
     single<FoodDetailRepository> { FoodDetailRepositoryImpl(get()) }
 

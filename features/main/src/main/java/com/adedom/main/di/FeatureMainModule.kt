@@ -34,9 +34,9 @@ val featureMainModule = module {
     single<CategoryLocalDataSource> { CategoryLocalDataSourceImpl(get()) }
     single<FoodLocalDataSource> { FoodLocalDataSourceImpl(get()) }
 
-    single<CategoryRemoteDataSource> { CategoryRemoteDataSourceImpl(get(), get()) }
-    single<FoodRemoteDataSource> { FoodRemoteDataSourceImpl(get(), get()) }
-    single<AuthRemoteDataSource> { AuthRemoteDataSourceImpl(get(), get(), get()) }
+    single<CategoryRemoteDataSource> { CategoryRemoteDataSourceImpl(get()) }
+    single<FoodRemoteDataSource> { FoodRemoteDataSourceImpl(get()) }
+    single<AuthRemoteDataSource> { AuthRemoteDataSourceImpl(get(), get()) }
 
     single<UserProfileRepository> { UserProfileRepositoryImpl(get()) }
     single<AuthLogoutRepository> { AuthLogoutRepositoryImpl(get(), get()) }

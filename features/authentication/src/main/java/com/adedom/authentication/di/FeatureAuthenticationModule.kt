@@ -23,8 +23,8 @@ val featureAuthenticationModule = module {
     // data
     factory<UserProfileLocalDataSource> { UserProfileLocalDataSourceImpl(get()) }
 
-    factory<AuthRemoteDataSource> { AuthRemoteDataSourceImpl(get(), get()) }
-    factory<ProfileRemoteDataSource> { ProfileRemoteDataSourceImpl(get(), get(), get(),) }
+    factory<AuthRemoteDataSource> { AuthRemoteDataSourceImpl(get()) }
+    factory<ProfileRemoteDataSource> { ProfileRemoteDataSourceImpl(get(), get()) }
 
     factory<UserProfileRepository> { UserProfileRepositoryImpl(get(), get()) }
     factory<AuthLoginRepository> { AuthLoginRepositoryImpl(get(), get()) }
