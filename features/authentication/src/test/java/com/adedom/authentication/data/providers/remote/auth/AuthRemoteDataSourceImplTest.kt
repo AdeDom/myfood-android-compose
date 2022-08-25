@@ -1,33 +1,21 @@
 package com.adedom.authentication.data.providers.remote.auth
 
-import com.adedom.authentication.data.providers.data_store.FakeAppDataStore
-import com.adedom.core.data.providers.data_store.AppDataStore
-import com.adedom.core.data.providers.remote.DataSourceProvider
-import com.adedom.core.utils.ApiServiceException
 import com.adedom.myfood.data.models.base.BaseResponse
 import com.adedom.myfood.data.models.request.LoginRequest
 import com.adedom.myfood.data.models.response.TokenResponse
 import com.google.common.truth.Truth.assertThat
+import io.ktor.client.*
 import io.ktor.client.engine.mock.*
+import io.ktor.client.plugins.contentnegotiation.*
 import io.ktor.http.*
+import io.ktor.serialization.kotlinx.json.*
 import io.ktor.utils.io.*
 import kotlinx.coroutines.test.runTest
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
-import org.junit.Before
 import org.junit.Test
 
 class AuthRemoteDataSourceImplTest {
-
-    private lateinit var appDataStore: AppDataStore
-    private lateinit var dataSourceProvider: DataSourceProvider
-    private lateinit var dataSource: AuthRemoteDataSource
-
-    @Before
-    fun setUp() {
-        appDataStore = FakeAppDataStore()
-        dataSourceProvider = DataSourceProvider(appDataStore)
-    }
 
     @Test
     fun `call login should correct return success`() = runTest {
@@ -49,14 +37,18 @@ class AuthRemoteDataSourceImplTest {
             respond(
                 content = ByteReadChannel(jsonString),
                 status = HttpStatusCode.OK,
-                headers = headersOf(HttpHeaders.ContentType, "application/json")
+                headers = headersOf(
+                    HttpHeaders.ContentType,
+                    ContentType.Application.Json.toString(),
+                )
             )
         }
-        dataSource = AuthRemoteDataSourceImpl(
-            mockEngine,
-            appDataStore,
-            dataSourceProvider,
-        )
+        val httpClient = HttpClient(mockEngine) {
+            install(ContentNegotiation) {
+                json()
+            }
+        }
+        val dataSource = AuthRemoteDataSourceImpl(httpClient)
 
         val result = dataSource.callLogin(loginRequest)
 
@@ -64,7 +56,7 @@ class AuthRemoteDataSourceImplTest {
         assertThat(result).isEqualTo(response)
     }
 
-    @Test(expected = ApiServiceException::class)
+    @Test
     fun `call login should incorrect return error`() = runTest {
         val loginRequest = LoginRequest(
             email = "email",
@@ -83,15 +75,22 @@ class AuthRemoteDataSourceImplTest {
             respond(
                 content = ByteReadChannel(jsonString),
                 status = HttpStatusCode.BadRequest,
-                headers = headersOf(HttpHeaders.ContentType, "application/json")
+                headers = headersOf(
+                    HttpHeaders.ContentType,
+                    ContentType.Application.Json.toString(),
+                )
             )
         }
-        dataSource = AuthRemoteDataSourceImpl(
-            mockEngine,
-            appDataStore,
-            dataSourceProvider,
-        )
+        val httpClient = HttpClient(mockEngine) {
+            install(ContentNegotiation) {
+                json()
+            }
+        }
+        val dataSource = AuthRemoteDataSourceImpl(httpClient)
 
-        dataSource.callLogin(loginRequest)
+        val result = dataSource.callLogin(loginRequest)
+
+        val response = Json.decodeFromString<BaseResponse<TokenResponse>>(jsonString)
+        assertThat(result).isEqualTo(response)
     }
 }
