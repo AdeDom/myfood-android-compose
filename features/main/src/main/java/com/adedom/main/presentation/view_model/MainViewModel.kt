@@ -57,16 +57,11 @@ class MainViewModel(
         }
     }
 
-    fun callLogout() {
-        GlobalScope.launch {
-            logoutUseCase()
-        }
-    }
-
     fun onLogoutEvent() {
-        viewModelScope.launch {
+        GlobalScope.launch {
             val event = MainUiEvent.Logout
             _uiEvent.emit(event)
+            logoutUseCase()
         }
     }
 

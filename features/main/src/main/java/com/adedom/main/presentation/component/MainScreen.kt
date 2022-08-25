@@ -46,10 +46,7 @@ fun MainScreen(
 
     MainContent(
         state = viewModel.uiState,
-        onLogoutClick = {
-            viewModel.callLogout()
-            viewModel.onLogoutEvent()
-        },
+        onLogoutClick = viewModel::onLogoutEvent,
         onCategoryClick = viewModel::getFoodListByCategoryId,
         onFoodClick = viewModel::onFoodDetailEvent,
         onSearchFoodEvent = viewModel::onSearchFoodEvent,
