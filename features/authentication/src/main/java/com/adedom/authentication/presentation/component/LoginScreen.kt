@@ -124,7 +124,9 @@ fun LoginContent(
 @Preview(showBackground = true)
 fun LoginContentPreview() {
     LoginContent(
-        state = LoginUiState(),
+        state = LoginUiState(
+            isLoading = true,
+        ),
         onHideErrorDialog = {},
         onEmailChange = {},
         onPasswordChange = {},

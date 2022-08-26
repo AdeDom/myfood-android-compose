@@ -10,7 +10,6 @@ import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
-import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.runtime.Composable
@@ -70,7 +69,7 @@ fun MainContent(
         modifier = Modifier.fillMaxSize(),
     ) {
         if (state.isLoading) {
-            CircularProgressIndicator(
+            AppLoadingLottieAnimation(
                 modifier = Modifier.align(Alignment.Center),
             )
         } else {
