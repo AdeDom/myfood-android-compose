@@ -9,4 +9,8 @@ sealed interface MainUiEvent {
     data class FoodDetail(
         val foodId: Long,
     ) : MainUiEvent
+
+    object OnBackAlert : MainUiEvent
+
+    object OnBackPressed : MainUiEvent
 }

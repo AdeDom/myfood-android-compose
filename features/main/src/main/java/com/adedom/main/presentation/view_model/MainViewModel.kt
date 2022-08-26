@@ -9,6 +9,8 @@ import com.adedom.main.presentation.event.MainUiEvent
 import com.adedom.main.presentation.state.MainUiState
 import com.adedom.ui_components.base.BaseViewModel
 import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 class MainViewModel(
@@ -16,6 +18,9 @@ class MainViewModel(
     private val getFoodListByCategoryIdUseCase: GetFoodListByCategoryIdUseCase,
     private val logoutUseCase: LogoutUseCase,
 ) : BaseViewModel<MainUiState, MainUiEvent>(MainUiState()) {
+
+    private var isBackPressed = false
+    private var backPressedJob: Job? = null
 
     init {
         callMainContent()
@@ -76,6 +81,22 @@ class MainViewModel(
         viewModelScope.launch {
             val event = MainUiEvent.FoodDetail(foodId)
             _uiEvent.emit(event)
+        }
+    }
+
+    fun onBackHandler() {
+        backPressedJob?.cancel()
+        backPressedJob = viewModelScope.launch {
+            val event = if (isBackPressed) {
+                MainUiEvent.OnBackPressed
+            } else {
+                MainUiEvent.OnBackAlert
+            }
+            _uiEvent.emit(event)
+
+            isBackPressed = true
+            delay(2_000)
+            isBackPressed = false
         }
     }
 }

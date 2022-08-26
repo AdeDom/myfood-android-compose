@@ -1,6 +1,7 @@
 package com.adedom.main.presentation.component
 
 import android.widget.Toast
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -52,6 +53,8 @@ fun MainScreen(
         onSearchFoodEvent = viewModel::onSearchFoodEvent,
         onErrorDismiss = viewModel::callMainContent,
     )
+
+    BackHandler(onBack = viewModel::onBackHandler)
 }
 
 @Composable

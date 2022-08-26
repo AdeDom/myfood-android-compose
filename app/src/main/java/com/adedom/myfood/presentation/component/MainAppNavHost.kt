@@ -1,7 +1,10 @@
 package com.adedom.myfood.presentation.component
 
+import android.app.Activity
+import android.widget.Toast
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
@@ -121,6 +124,7 @@ fun NavGraphBuilder.mainGraph(navController: NavController) {
         route = Screen.Main.route,
     ) {
         composable(Screen.Main.Init.route) {
+            val context = LocalContext.current
             MainScreen { uiEvent ->
                 when (uiEvent) {
                     MainUiEvent.Logout -> {
@@ -137,7 +141,12 @@ fun NavGraphBuilder.mainGraph(navController: NavController) {
                     MainUiEvent.SearchFood -> {
                         navController.navigate(Screen.Main.SearchFood.route)
                     }
-                    else -> {}
+                    MainUiEvent.OnBackAlert -> {
+                        Toast.makeText(context, "Tap again to exit the app", Toast.LENGTH_SHORT).show()
+                    }
+                    MainUiEvent.OnBackPressed -> {
+                        (context as? Activity)?.finishAffinity()
+                    }
                 }
             }
         }
