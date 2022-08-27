@@ -17,7 +17,7 @@ import com.adedom.authentication.presentation.component.RegisterScreen
 import com.adedom.authentication.presentation.view_model.LoginUiEvent
 import com.adedom.authentication.presentation.view_model.RegisterUiEvent
 import com.adedom.food_detail.presentation.component.FoodDetailScreen
-import com.adedom.food_detail.presentation.event.FoodDetailUiEvent
+import com.adedom.food_detail.presentation.view_model.FoodDetailUiEvent
 import com.adedom.main.presentation.component.MainScreen
 import com.adedom.main.presentation.event.MainUiEvent
 import com.adedom.search_food.presentation.component.SearchFoodScreen

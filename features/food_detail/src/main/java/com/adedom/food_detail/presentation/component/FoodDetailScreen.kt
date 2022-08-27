@@ -19,8 +19,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.adedom.food_detail.R
 import com.adedom.food_detail.domain.models.FoodDetailModel
-import com.adedom.food_detail.presentation.event.FoodDetailUiEvent
-import com.adedom.food_detail.presentation.state.FoodDetailUiState
+import com.adedom.food_detail.presentation.view_model.FoodDetailUiAction
+import com.adedom.food_detail.presentation.view_model.FoodDetailUiEvent
+import com.adedom.food_detail.presentation.view_model.FoodDetailUiState
 import com.adedom.food_detail.presentation.view_model.FoodDetailViewModel
 import com.adedom.ui_components.components.*
 import com.adedom.ui_components.theme.MyFoodTheme
@@ -45,14 +46,14 @@ fun FoodDetailScreen(
 
     FoodDetailContent(
         state = viewModel.uiState,
-        onErrorDismiss = viewModel::setOnBackPressedEvent,
+        viewModel::dispatch,
     )
 }
 
 @Composable
 fun FoodDetailContent(
     state: FoodDetailUiState,
-    onErrorDismiss: () -> Unit,
+    dispatch: (FoodDetailUiAction) -> Unit,
 ) {
     val configuration = LocalConfiguration.current
     val screenWidthDp = configuration.screenWidthDp.dp
@@ -70,7 +71,7 @@ fun FoodDetailContent(
         if (state.error != null) {
             AppErrorAlertDialog(
                 error = state.error,
-                onDismiss = onErrorDismiss,
+                onDismiss = { dispatch(FoodDetailUiAction.OnBackPressed) },
             )
         }
 
@@ -185,7 +186,7 @@ fun FoodDetailContentPreview() {
                     ratingScoreCount = "4.9",
                 )
             ),
-            onErrorDismiss = {},
+            dispatch = {},
         )
     }
 }
