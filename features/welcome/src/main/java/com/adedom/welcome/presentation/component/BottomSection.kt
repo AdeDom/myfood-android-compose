@@ -16,12 +16,11 @@ import com.adedom.ui_components.components.AppBottomText
 import com.adedom.ui_components.components.AppButton
 import com.adedom.ui_components.components.AppText
 import com.adedom.ui_components.theme.MyFoodTheme
+import com.adedom.welcome.presentation.view_model.WelcomeUiAction
 
 @Composable
 fun BottomSection(
-    onClickLogin: () -> Unit,
-    onClickRegister: () -> Unit,
-    onClickSkip: () -> Unit,
+    dispatch: (WelcomeUiAction) -> Unit,
 ) {
     Column(
         verticalArrangement = Arrangement.Center,
@@ -31,19 +30,19 @@ fun BottomSection(
         AppButton(
             text = "Login",
             backgroundColor = Color(0xFFFFD700),
-            onClick = onClickLogin,
+            onClick = { dispatch(WelcomeUiAction.NavLogin) },
         )
         Spacer(modifier = Modifier.height(20.dp))
         AppButton(
             text = "Create an Account",
             backgroundColor = Color.White,
-            onClick = onClickRegister,
+            onClick = { dispatch(WelcomeUiAction.NavRegister) },
         )
         Spacer(modifier = Modifier.height(20.dp))
         AppBottomText(
             firstText = "Don\'t want login?",
             secondText = "Skip",
-            onClick = onClickSkip,
+            onClick = { dispatch(WelcomeUiAction.NavSkip) },
         )
         Spacer(modifier = Modifier.height(20.dp))
         Row(
@@ -93,9 +92,7 @@ fun BottomSection(
 fun BottomSectionPreview() {
     MyFoodTheme {
         BottomSection(
-            onClickLogin = {},
-            onClickRegister = {},
-            onClickSkip = {},
+            dispatch = {},
         )
     }
 }

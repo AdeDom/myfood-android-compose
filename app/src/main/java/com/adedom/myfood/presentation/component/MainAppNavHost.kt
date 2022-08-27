@@ -25,7 +25,7 @@ import com.adedom.search_food.presentation.event.SearchFoodUiEvent
 import com.adedom.splash_screen.presentation.component.SplashScreen
 import com.adedom.splash_screen.presentation.view_model.SplashScreenUiEvent
 import com.adedom.welcome.presentation.component.WelcomeScreen
-import com.adedom.welcome.presentation.event.WelcomeUiEvent
+import com.adedom.welcome.presentation.view_model.WelcomeUiEvent
 
 @Composable
 fun MainAppNavHost(
@@ -71,13 +71,13 @@ fun NavGraphBuilder.authGraph(navController: NavController) {
         composable(Screen.Welcome.Init.route) {
             WelcomeScreen { uiEvent ->
                 when (uiEvent) {
-                    WelcomeUiEvent.Login -> {
+                    WelcomeUiEvent.NavLogin -> {
                         navController.navigate(Screen.Welcome.Login.route)
                     }
-                    WelcomeUiEvent.Register -> {
+                    WelcomeUiEvent.NavRegister -> {
                         navController.navigate(Screen.Welcome.Register.route)
                     }
-                    is WelcomeUiEvent.Skip -> {
+                    is WelcomeUiEvent.NavSkip -> {
                         navController.navigate(Screen.Main.route) {
                             popUpTo(Screen.Welcome.route) {
                                 inclusive = true

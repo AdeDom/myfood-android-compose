@@ -2,7 +2,7 @@ package com.adedom.welcome.presentation.component
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import com.adedom.welcome.presentation.event.WelcomeUiEvent
+import com.adedom.welcome.presentation.view_model.WelcomeUiEvent
 import com.adedom.welcome.presentation.view_model.WelcomeViewModel
 import org.koin.androidx.compose.getViewModel
 
@@ -19,8 +19,6 @@ fun WelcomeScreen(
     }
 
     WelcomeContent(
-        onClickLogin = viewModel::onLoginEvent,
-        onClickRegister = viewModel::onRegisterEvent,
-        onClickSkip = viewModel::onSkipEvent,
+        viewModel::dispatch,
     )
 }
