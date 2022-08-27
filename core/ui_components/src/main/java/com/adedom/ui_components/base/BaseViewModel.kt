@@ -13,7 +13,7 @@ import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.launch
 
-abstract class BaseViewModel<S : Any, A : Any>(initialUiState: S) : ViewModel() {
+abstract class BaseViewModel<S : Any, E : Any>(initialUiState: S) : ViewModel() {
 
     protected val exceptionHandler = CoroutineExceptionHandler { _, throwable ->
         throwable.printStackTrace()
@@ -28,8 +28,8 @@ abstract class BaseViewModel<S : Any, A : Any>(initialUiState: S) : ViewModel() 
     var uiState by mutableStateOf(initialUiState)
         protected set
 
-    protected val _uiEvent = MutableSharedFlow<A>()
-    val uiEvent: SharedFlow<A> = _uiEvent.asSharedFlow()
+    protected val _uiEvent = MutableSharedFlow<E>()
+    val uiEvent: SharedFlow<E> = _uiEvent.asSharedFlow()
 
     private val _refreshTokenExpired = MutableSharedFlow<BaseError>()
     val refreshTokenExpired: SharedFlow<BaseError> = _refreshTokenExpired.asSharedFlow()

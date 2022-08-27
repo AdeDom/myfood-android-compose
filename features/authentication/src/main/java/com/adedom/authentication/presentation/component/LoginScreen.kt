@@ -10,8 +10,9 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.adedom.authentication.presentation.event.LoginUiEvent
-import com.adedom.authentication.presentation.state.LoginUiState
+import com.adedom.authentication.presentation.view_model.LoginUiAction
+import com.adedom.authentication.presentation.view_model.LoginUiEvent
+import com.adedom.authentication.presentation.view_model.LoginUiState
 import com.adedom.authentication.presentation.view_model.LoginViewModel
 import com.adedom.ui_components.components.*
 import org.koin.androidx.compose.getViewModel
@@ -30,28 +31,14 @@ fun LoginScreen(
 
     LoginContent(
         state = viewModel.uiState,
-        onHideErrorDialog = viewModel::onHideErrorDialog,
-        onEmailChange = { email ->
-            viewModel.setEmail(email)
-            viewModel.onValidateEmail()
-        },
-        onPasswordChange = { password ->
-            viewModel.setPassword(password)
-            viewModel.onValidatePassword()
-        },
-        onLoginClick = viewModel::onLoginEvent,
-        onRegisterClick = viewModel::onRegisterEvent,
+        viewModel::dispatch,
     )
 }
 
 @Composable
 fun LoginContent(
     state: LoginUiState,
-    onHideErrorDialog: () -> Unit,
-    onEmailChange: (String) -> Unit,
-    onPasswordChange: (String) -> Unit,
-    onLoginClick: () -> Unit,
-    onRegisterClick: () -> Unit,
+    dispatch: (LoginUiAction) -> Unit,
 ) {
     Box(
         modifier = Modifier.fillMaxSize(),
@@ -63,7 +50,7 @@ fun LoginContent(
         state.error?.let { error ->
             AppErrorAlertDialog(
                 error = error,
-                onDismiss = onHideErrorDialog,
+                onDismiss = { dispatch(LoginUiAction.HideErrorDialog) },
             )
         }
 
@@ -81,7 +68,7 @@ fun LoginContent(
             Spacer(modifier = Modifier.height(20.dp))
             AppTextField(
                 value = state.email,
-                onValueChange = onEmailChange,
+                onValueChange = { dispatch(LoginUiAction.SetEmail(it)) },
                 hint = "Your Email",
                 error = if (state.isErrorEmail) "Email is incorrect" else null,
                 keyboardType = KeyboardType.Email,
@@ -89,7 +76,7 @@ fun LoginContent(
             )
             AppTextField(
                 value = state.password,
-                onValueChange = onPasswordChange,
+                onValueChange = { dispatch(LoginUiAction.SetPassword(it)) },
                 hint = "Password",
                 error = if (state.isErrorPassword) "Password is incorrect" else null,
                 keyboardType = KeyboardType.Password,
@@ -100,7 +87,7 @@ fun LoginContent(
                 backgroundColor = if (state.isLogin) Color(0xFFFFD700) else Color.Gray,
                 borderColor = if (state.isLogin) Color(0xFFFFD700) else Color.Gray,
                 enabled = state.isLogin,
-                onClick = onLoginClick,
+                onClick = { dispatch(LoginUiAction.Submit) },
             )
             Spacer(modifier = Modifier.height(20.dp))
             AppText(
@@ -112,7 +99,7 @@ fun LoginContent(
         AppBottomText(
             firstText = "Don\'t have an Account?",
             secondText = "Sign Up",
-            onClick = onRegisterClick,
+            onClick = { dispatch(LoginUiAction.NavRegister) },
             modifier = Modifier
                 .align(Alignment.BottomCenter)
                 .padding(bottom = 16.dp),
@@ -127,10 +114,6 @@ fun LoginContentPreview() {
         state = LoginUiState(
             isLoading = true,
         ),
-        onHideErrorDialog = {},
-        onEmailChange = {},
-        onPasswordChange = {},
-        onLoginClick = {},
-        onRegisterClick = {},
+        dispatch = {},
     )
 }
