@@ -144,6 +144,19 @@ fun MainContent(
                                                     text = category.categoryName,
                                                     fontWeight = FontWeight.Bold,
                                                 )
+                                                Spacer(modifier = Modifier.height(4.dp))
+                                                if (category.categoryId == state.categoryIdClick) {
+                                                    Box(
+                                                        modifier = Modifier
+                                                            .background(Color(0xFFFFD700))
+                                                            .size(
+                                                                width = 64.dp,
+                                                                height = 4.dp,
+                                                            ),
+                                                    )
+                                                } else {
+                                                    Spacer(modifier = Modifier.height(4.dp))
+                                                }
                                             }
                                         }
                                     }
@@ -214,6 +227,7 @@ fun MainContentPreview() {
                         categoryId = 2,
                     ),
                 ),
+                categoryIdClick = 2,
             ),
             onLogoutClick = {
                 Toast.makeText(context, "onLogoutClick", Toast.LENGTH_SHORT).show()

@@ -20,6 +20,7 @@ data class MainUiState(
     val categories: List<CategoryModel> = emptyList(),
     val categoryName: String = "",
     val foods: List<FoodModel> = emptyList(),
+    val categoryIdClick: Long? = null,
 )
 
 sealed interface MainUiEvent {
@@ -69,12 +70,17 @@ class MainViewModel(
         val resource = mainContentUseCase()
         when (resource) {
             is Resource.Success -> {
+                val (categoryName, foods) = getFoodListByCategoryIdUseCase(
+                    categoryId = uiState.categoryIdClick ?: CATEGORY_RECOMMEND,
+                )
                 setState {
                     copy(
                         isLoading = false,
                         isRefreshing = false,
-                        categories = resource.data.categories,
-                        foods = resource.data.foods,
+                        categories = resource.data,
+                        categoryName = categoryName,
+                        foods = foods,
+                        categoryIdClick = uiState.categoryIdClick ?: CATEGORY_RECOMMEND
                     )
                 }
             }
@@ -106,6 +112,7 @@ class MainViewModel(
                         copy(
                             categoryName = categoryName,
                             foods = foods,
+                            categoryIdClick = action.categoryId,
                         )
                     }
                 }
@@ -138,5 +145,9 @@ class MainViewModel(
                 }
             }
         }
+    }
+
+    companion object {
+        const val CATEGORY_RECOMMEND = 1L
     }
 }

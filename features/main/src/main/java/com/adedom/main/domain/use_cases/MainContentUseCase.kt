@@ -1,14 +1,11 @@
 package com.adedom.main.domain.use_cases
 
-import com.adedom.core.domain.models.FoodModel
 import com.adedom.core.utils.ApiServiceException
 import com.adedom.core.utils.Resource
 import com.adedom.main.domain.models.CategoryModel
-import com.adedom.main.domain.models.MainContentModel
 import com.adedom.main.domain.repositories.MainCategoryRepository
 import com.adedom.main.domain.repositories.MainFoodRepository
 import com.adedom.myfood.data.models.response.CategoryResponse
-import com.adedom.myfood.data.models.response.FoodDetailResponse
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.coroutineScope
@@ -20,7 +17,7 @@ class MainContentUseCase(
     private val mainFoodRepository: MainFoodRepository,
 ) {
 
-    suspend operator fun invoke(): Resource<MainContentModel> {
+    suspend operator fun invoke(): Resource<List<CategoryModel>> {
         return try {
             coroutineScope {
                 // category
@@ -68,12 +65,8 @@ class MainContentUseCase(
                 mainFoodRepository.deleteFoodAll()
                 mainFoodRepository.saveFoodAll(foodEntity)
 
-                val mainContent = MainContentModel(
-                    categories = categories.map { mapCategoryToCategoryModel(it) },
-                    foods = foods.filter { it.categoryId == CATEGORY_RECOMMEND }
-                        .map { mapFoodToFoodModel(it) },
-                )
-                Resource.Success(mainContent)
+                val categoriesModel = categories.map { mapCategoryToCategoryModel(it) }
+                Resource.Success(categoriesModel)
             }
         } catch (exception: ApiServiceException) {
             val baseError = exception.toBaseError()
@@ -87,20 +80,5 @@ class MainContentUseCase(
             categoryName = category.categoryName,
             image = category.image,
         )
-    }
-
-    private fun mapFoodToFoodModel(food: FoodDetailResponse): FoodModel {
-        return FoodModel(
-            foodId = food.foodId.toLong(),
-            foodName = food.foodName,
-            alias = food.alias,
-            image = food.image,
-            ratingScoreCount = food.ratingScoreCount,
-            categoryId = food.categoryId.toLong(),
-        )
-    }
-
-    companion object {
-        const val CATEGORY_RECOMMEND = 1
     }
 }
