@@ -6,7 +6,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.adedom.splash_screen.R
-import com.adedom.splash_screen.presentation.event.SplashScreenUiEvent
+import com.adedom.splash_screen.presentation.view_model.SplashScreenUiEvent
 import com.adedom.splash_screen.presentation.view_model.SplashScreenViewModel
 import com.adedom.ui_components.components.AppImage
 import com.adedom.ui_components.components.LogoApp

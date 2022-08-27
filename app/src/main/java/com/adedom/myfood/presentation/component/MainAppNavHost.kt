@@ -23,7 +23,7 @@ import com.adedom.main.presentation.event.MainUiEvent
 import com.adedom.search_food.presentation.component.SearchFoodScreen
 import com.adedom.search_food.presentation.event.SearchFoodUiEvent
 import com.adedom.splash_screen.presentation.component.SplashScreen
-import com.adedom.splash_screen.presentation.event.SplashScreenUiEvent
+import com.adedom.splash_screen.presentation.view_model.SplashScreenUiEvent
 import com.adedom.welcome.presentation.component.WelcomeScreen
 import com.adedom.welcome.presentation.event.WelcomeUiEvent
 
@@ -41,14 +41,14 @@ fun MainAppNavHost(
         composable(Screen.SplashScreen.route) {
             SplashScreen { uiEvent ->
                 when (uiEvent) {
-                    SplashScreenUiEvent.Authentication -> {
+                    SplashScreenUiEvent.NavMain -> {
                         navController.navigate(Screen.Main.route) {
                             popUpTo(Screen.SplashScreen.route) {
                                 inclusive = true
                             }
                         }
                     }
-                    SplashScreenUiEvent.UnAuthentication -> {
+                    SplashScreenUiEvent.NavWelcome -> {
                         navController.navigate(Screen.Welcome.route) {
                             popUpTo(Screen.SplashScreen.route) {
                                 inclusive = true
