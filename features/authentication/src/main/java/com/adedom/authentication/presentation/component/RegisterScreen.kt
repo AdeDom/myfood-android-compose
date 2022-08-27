@@ -13,8 +13,9 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.adedom.authentication.presentation.event.RegisterUiEvent
-import com.adedom.authentication.presentation.state.RegisterUiState
+import com.adedom.authentication.presentation.view_model.RegisterUiAction
+import com.adedom.authentication.presentation.view_model.RegisterUiEvent
+import com.adedom.authentication.presentation.view_model.RegisterUiState
 import com.adedom.authentication.presentation.view_model.RegisterViewModel
 import com.adedom.ui_components.components.*
 import org.koin.androidx.compose.getViewModel
@@ -33,28 +34,14 @@ fun RegisterScreen(
 
     RegisterContent(
         state = viewModel.uiState,
-        onNameChange = viewModel::setName,
-        onEmailChange = viewModel::setEmail,
-        onMobileNoChange = viewModel::setMobileNo,
-        onAddressChange = viewModel::setAddress,
-        onPasswordChange = viewModel::setPassword,
-        onConfirmPasswordChange = viewModel::setConfirmPassword,
-        onRegisterClick = viewModel::onRegisterEvent,
-        onLoginClick = viewModel::onLoginEvent,
+        viewModel::dispatch,
     )
 }
 
 @Composable
 fun RegisterContent(
     state: RegisterUiState,
-    onNameChange: (String) -> Unit,
-    onEmailChange: (String) -> Unit,
-    onMobileNoChange: (String) -> Unit,
-    onAddressChange: (String) -> Unit,
-    onPasswordChange: (String) -> Unit,
-    onConfirmPasswordChange: (String) -> Unit,
-    onRegisterClick: () -> Unit,
-    onLoginClick: () -> Unit,
+    dispatch: (RegisterUiAction) -> Unit,
 ) {
     LazyColumn(
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -70,37 +57,37 @@ fun RegisterContent(
             Spacer(modifier = Modifier.height(20.dp))
             AppTextField(
                 value = state.name,
-                onValueChange = onNameChange,
+                onValueChange = { dispatch(RegisterUiAction.SetName(it)) },
                 hint = "Name",
                 imeAction = ImeAction.Next,
             )
             AppTextField(
                 value = state.email,
-                onValueChange = onEmailChange,
+                onValueChange = { dispatch(RegisterUiAction.SetEmail(it)) },
                 hint = "Email",
                 imeAction = ImeAction.Next,
             )
             AppTextField(
                 value = state.mobileNo,
-                onValueChange = onMobileNoChange,
+                onValueChange = { dispatch(RegisterUiAction.SetMobileNo(it)) },
                 hint = "Mobile No",
                 imeAction = ImeAction.Next,
             )
             AppTextField(
                 value = state.address,
-                onValueChange = onAddressChange,
+                onValueChange = { dispatch(RegisterUiAction.SetAddress(it)) },
                 hint = "Address",
                 imeAction = ImeAction.Next,
             )
             AppTextField(
                 value = state.password,
-                onValueChange = onPasswordChange,
+                onValueChange = { dispatch(RegisterUiAction.SetPassword(it)) },
                 hint = "Password",
                 imeAction = ImeAction.Next,
             )
             AppTextField(
                 value = state.confirmPassword,
-                onValueChange = onConfirmPasswordChange,
+                onValueChange = { dispatch(RegisterUiAction.SetConfirmPassword(it)) },
                 hint = "Confirm Password",
                 imeAction = ImeAction.Next,
             )
@@ -108,13 +95,13 @@ fun RegisterContent(
                 text = "Sign Up",
                 backgroundColor = Color(0xFFFFD700),
                 borderColor = Color(0xFFFFD700),
-                onClick = onRegisterClick,
+                onClick = { dispatch(RegisterUiAction.Submit) },
             )
             Spacer(modifier = Modifier.height(20.dp))
             AppBottomText(
                 firstText = "Already have an Account?",
                 secondText = "Login",
-                onClick = onLoginClick,
+                onClick = { dispatch(RegisterUiAction.NavLogin) },
                 modifier = Modifier.padding(bottom = 16.dp),
             )
         }
@@ -126,13 +113,6 @@ fun RegisterContent(
 fun RegisterContentPreview() {
     RegisterContent(
         state = RegisterUiState(),
-        onNameChange = {},
-        onEmailChange = {},
-        onMobileNoChange = {},
-        onAddressChange = {},
-        onPasswordChange = {},
-        onConfirmPasswordChange = {},
-        onRegisterClick = {},
-        onLoginClick = {},
+        dispatch = {},
     )
 }

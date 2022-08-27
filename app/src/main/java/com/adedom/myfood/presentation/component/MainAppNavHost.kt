@@ -14,8 +14,8 @@ import androidx.navigation.compose.navigation
 import androidx.navigation.compose.rememberNavController
 import com.adedom.authentication.presentation.component.LoginScreen
 import com.adedom.authentication.presentation.component.RegisterScreen
-import com.adedom.authentication.presentation.event.RegisterUiEvent
 import com.adedom.authentication.presentation.view_model.LoginUiEvent
+import com.adedom.authentication.presentation.view_model.RegisterUiEvent
 import com.adedom.food_detail.presentation.component.FoodDetailScreen
 import com.adedom.food_detail.presentation.event.FoodDetailUiEvent
 import com.adedom.main.presentation.component.MainScreen
@@ -107,11 +107,17 @@ fun NavGraphBuilder.authGraph(navController: NavController) {
         composable(Screen.Welcome.Register.route) {
             RegisterScreen { uiEvent ->
                 when (uiEvent) {
-                    RegisterUiEvent.Login -> {
+                    RegisterUiEvent.NavLogin -> {
                         navController.popBackStack()
                         navController.navigate(Screen.Welcome.Login.route)
                     }
-                    RegisterUiEvent.Register -> {}
+                    RegisterUiEvent.NavMain -> {
+                        navController.navigate(Screen.Main.route) {
+                            popUpTo(Screen.Welcome.route) {
+                                inclusive = true
+                            }
+                        }
+                    }
                 }
             }
         }

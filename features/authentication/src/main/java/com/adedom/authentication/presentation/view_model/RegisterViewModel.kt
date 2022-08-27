@@ -1,43 +1,64 @@
 package com.adedom.authentication.presentation.view_model
 
 import androidx.lifecycle.viewModelScope
-import com.adedom.authentication.presentation.event.RegisterUiEvent
-import com.adedom.authentication.presentation.state.RegisterUiState
 import com.adedom.ui_components.base.BaseViewModel
 import kotlinx.coroutines.launch
 
+data class RegisterUiState(
+    val name: String = "",
+    val email: String = "",
+    val mobileNo: String = "",
+    val address: String = "",
+    val password: String = "",
+    val confirmPassword: String = "",
+)
+
+sealed interface RegisterUiEvent {
+    object NavLogin : RegisterUiEvent
+    object NavMain : RegisterUiEvent
+}
+
+sealed interface RegisterUiAction {
+    data class SetName(val value: String) : RegisterUiAction
+    data class SetEmail(val value: String) : RegisterUiAction
+    data class SetMobileNo(val value: String) : RegisterUiAction
+    data class SetAddress(val value: String) : RegisterUiAction
+    data class SetPassword(val value: String) : RegisterUiAction
+    data class SetConfirmPassword(val value: String) : RegisterUiAction
+    object Submit : RegisterUiAction
+    object NavLogin : RegisterUiAction
+}
+
 class RegisterViewModel : BaseViewModel<RegisterUiState, RegisterUiEvent>(RegisterUiState()) {
 
-    fun setName(name: String) {
-        uiState = uiState.copy(name = name)
-    }
-
-    fun setEmail(email: String) {
-        uiState = uiState.copy(email = email)
-    }
-
-    fun setMobileNo(mobileNo: String) {
-        uiState = uiState.copy(mobileNo = mobileNo)
-    }
-
-    fun setAddress(address: String) {
-        uiState = uiState.copy(address = address)
-    }
-
-    fun setPassword(password: String) {
-        uiState = uiState.copy(password = password)
-    }
-
-    fun setConfirmPassword(confirmPassword: String) {
-        uiState = uiState.copy(confirmPassword = confirmPassword)
-    }
-
-    fun onLoginEvent() {
+    fun dispatch(action: RegisterUiAction) {
         viewModelScope.launch {
-            val event = RegisterUiEvent.Login
-            _uiEvent.emit(event)
+            when (action) {
+                is RegisterUiAction.SetName -> {
+                    uiState = uiState.copy(name = action.value)
+                }
+                is RegisterUiAction.SetEmail -> {
+                    uiState = uiState.copy(email = action.value)
+                }
+                is RegisterUiAction.SetMobileNo -> {
+                    uiState = uiState.copy(mobileNo = action.value)
+                }
+                is RegisterUiAction.SetAddress -> {
+                    uiState = uiState.copy(address = action.value)
+                }
+                is RegisterUiAction.SetPassword -> {
+                    uiState = uiState.copy(password = action.value)
+                }
+                is RegisterUiAction.SetConfirmPassword -> {
+                    uiState = uiState.copy(confirmPassword = action.value)
+                }
+                RegisterUiAction.Submit -> {
+                    _uiEvent.emit(RegisterUiEvent.NavMain)
+                }
+                RegisterUiAction.NavLogin -> {
+                    _uiEvent.emit(RegisterUiEvent.NavLogin)
+                }
+            }
         }
     }
-
-    fun onRegisterEvent() {}
 }
