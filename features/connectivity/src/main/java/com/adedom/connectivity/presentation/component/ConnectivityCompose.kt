@@ -14,7 +14,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Popup
 import com.adedom.connectivity.data.models.Status
-import com.adedom.connectivity.presentation.state.ConnectivityUiState
+import com.adedom.connectivity.presentation.view_model.ConnectivityUiAction
+import com.adedom.connectivity.presentation.view_model.ConnectivityUiState
 import com.adedom.connectivity.presentation.view_model.ConnectivityViewModel
 import com.adedom.ui_components.theme.MyFoodTheme
 import org.koin.androidx.compose.getViewModel
@@ -25,18 +26,18 @@ fun ConnectivityScreen() {
 
     ConnectivityContent(
         state = viewModel.uiState,
-        onDismissRequest = viewModel::onDismissRequest,
+        viewModel::dispatch,
     )
 }
 
 @Composable
 fun ConnectivityContent(
     state: ConnectivityUiState,
-    onDismissRequest: () -> Unit,
+    dispatch: (ConnectivityUiAction) -> Unit,
 ) {
     when (state.status) {
         Status.Available -> {
-            OnlineNetworkPopup(onDismissRequest)
+            OnlineNetworkPopup(dispatch)
         }
         Status.Unavailable -> {
             OfflineNetworkPopup()
@@ -53,10 +54,10 @@ fun ConnectivityContent(
 
 @Composable
 private fun OnlineNetworkPopup(
-    onDismissRequest: () -> Unit,
+    dispatch: (ConnectivityUiAction) -> Unit,
 ) {
     Popup(
-        onDismissRequest = onDismissRequest,
+        onDismissRequest = { dispatch(ConnectivityUiAction.DismissRequest) },
     ) {
         Box(
             modifier = Modifier
@@ -100,8 +101,12 @@ fun ConnectivityContentAvailablePreview() {
             state = ConnectivityUiState(
                 status = Status.Available,
             ),
-            onDismissRequest = {
-                Toast.makeText(context, "onDismissRequest", Toast.LENGTH_SHORT).show()
+            dispatch = { action ->
+                when (action) {
+                    ConnectivityUiAction.DismissRequest -> {
+                        Toast.makeText(context, "onDismissRequest", Toast.LENGTH_SHORT).show()
+                    }
+                }
             }
         )
     }
@@ -116,8 +121,12 @@ fun ConnectivityContentUnavailablePreview() {
             state = ConnectivityUiState(
                 status = Status.Unavailable,
             ),
-            onDismissRequest = {
-                Toast.makeText(context, "onDismissRequest", Toast.LENGTH_SHORT).show()
+            dispatch = { action ->
+                when (action) {
+                    ConnectivityUiAction.DismissRequest -> {
+                        Toast.makeText(context, "onDismissRequest", Toast.LENGTH_SHORT).show()
+                    }
+                }
             }
         )
     }
