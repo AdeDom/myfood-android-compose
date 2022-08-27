@@ -4,7 +4,8 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.adedom.authentication.domain.use_cases.LoginUseCase
 import com.adedom.authentication.domain.use_cases.ValidateEmailUseCase
 import com.adedom.authentication.domain.use_cases.ValidatePasswordUseCase
-import com.adedom.authentication.presentation.event.LoginUiEvent
+import com.adedom.authentication.presentation.view_model.LoginUiAction
+import com.adedom.authentication.presentation.view_model.LoginUiEvent
 import com.adedom.authentication.presentation.view_model.LoginViewModel
 import com.adedom.authentication.utils.MainCoroutineRule
 import com.adedom.core.utils.Resource
@@ -47,33 +48,14 @@ class LoginViewModelTest {
     }
 
     @Test
-    fun `set email on changed`() {
-        val email = "dom@gmail.com"
-
-        viewModel.setEmail(email)
-
-        val result = viewModel.uiState.email
-        assertThat(result).isEqualTo(email)
-    }
-
-    @Test
-    fun `set password on changed`() {
-        val password = "1234"
-
-        viewModel.setPassword(password)
-
-        val result = viewModel.uiState.password
-        assertThat(result).isEqualTo(password)
-    }
-
-    @Test
     fun `validate email on incorrect should be failed`() {
         val email = "dom"
-        viewModel.setEmail(email)
 
-        viewModel.onValidateEmail()
+        viewModel.dispatch(LoginUiAction.SetEmail(email))
 
         val result = viewModel.uiState
+        assertThat(result.email).isEqualTo(email)
+        assertThat(result.password).isEqualTo("")
         assertThat(result.isErrorEmail).isTrue()
         assertThat(result.isLogin).isFalse()
     }
@@ -82,12 +64,13 @@ class LoginViewModelTest {
     fun `validate email on correct should be success`() {
         val email = "dom6"
         val password = "1234"
-        viewModel.setEmail(email)
-        viewModel.setPassword(password)
 
-        viewModel.onValidateEmail()
+        viewModel.dispatch(LoginUiAction.SetEmail(email))
+        viewModel.dispatch(LoginUiAction.SetPassword(password))
 
         val result = viewModel.uiState
+        assertThat(result.email).isEqualTo(email)
+        assertThat(result.password).isEqualTo(password)
         assertThat(result.isErrorEmail).isFalse()
         assertThat(result.isLogin).isTrue()
     }
@@ -95,11 +78,12 @@ class LoginViewModelTest {
     @Test
     fun `validate password on incorrect should be failed`() {
         val password = "dom"
-        viewModel.setPassword(password)
 
-        viewModel.onValidatePassword()
+        viewModel.dispatch(LoginUiAction.SetPassword(password))
 
         val result = viewModel.uiState
+        assertThat(result.email).isEqualTo("")
+        assertThat(result.password).isEqualTo(password)
         assertThat(result.isErrorPassword).isTrue()
         assertThat(result.isLogin).isFalse()
     }
@@ -108,12 +92,13 @@ class LoginViewModelTest {
     fun `validate password on correct should be success`() {
         val email = "dom6"
         val password = "1234"
-        viewModel.setEmail(email)
-        viewModel.setPassword(password)
 
-        viewModel.onValidatePassword()
+        viewModel.dispatch(LoginUiAction.SetEmail(email))
+        viewModel.dispatch(LoginUiAction.SetPassword(password))
 
         val result = viewModel.uiState
+        assertThat(result.email).isEqualTo(email)
+        assertThat(result.password).isEqualTo(password)
         assertThat(result.isErrorPassword).isFalse()
         assertThat(result.isLogin).isTrue()
     }
@@ -122,13 +107,13 @@ class LoginViewModelTest {
     fun `call service login incorrect should be return error`() = runTest {
         val email = "dom6"
         val password = "1234"
-        viewModel.setEmail(email)
-        viewModel.setPassword(password)
         val baseError = BaseError(message = "Email or password is incorrect")
         val resourceError = Resource.Error(baseError)
         coEvery { loginUseCase(any(), any()) } returns resourceError
 
-        viewModel.onLoginEvent()
+        viewModel.dispatch(LoginUiAction.SetEmail(email))
+        viewModel.dispatch(LoginUiAction.SetPassword(password))
+        viewModel.dispatch(LoginUiAction.Submit)
 
         val state = viewModel.uiState
         assertThat(state.error).isEqualTo(baseError)
@@ -141,27 +126,35 @@ class LoginViewModelTest {
     fun `call service login correct should be return success`() = runTest {
         val email = "dom6"
         val password = "1234"
-        viewModel.setEmail(email)
-        viewModel.setPassword(password)
         val resourceError = Resource.Success(Unit)
         coEvery { loginUseCase(any(), any()) } returns resourceError
 
         launch {
-            viewModel.onLoginEvent()
+            viewModel.dispatch(LoginUiAction.SetEmail(email))
+            viewModel.dispatch(LoginUiAction.SetPassword(password))
+            viewModel.dispatch(LoginUiAction.Submit)
         }
 
         val result = viewModel.uiEvent.firstOrNull()
-        assertThat(result).isEqualTo(LoginUiEvent.LoginSuccess)
+        assertThat(result).isEqualTo(LoginUiEvent.NavMain)
         coVerify { loginUseCase(any(), any()) }
+    }
+
+    @Test
+    fun `set error null should be error return null`() {
+        viewModel.dispatch(LoginUiAction.HideErrorDialog)
+
+        val result = viewModel.uiState
+        assertThat(result.error).isNull()
     }
 
     @Test
     fun `on click register event`() = runTest {
         launch {
-            viewModel.onRegisterEvent()
+            viewModel.dispatch(LoginUiAction.NavRegister)
         }
 
         val result = viewModel.uiEvent.firstOrNull()
-        assertThat(result).isEqualTo(LoginUiEvent.Register)
+        assertThat(result).isEqualTo(LoginUiEvent.NavRegister)
     }
 }

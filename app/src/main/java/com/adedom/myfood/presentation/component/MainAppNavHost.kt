@@ -90,14 +90,14 @@ fun NavGraphBuilder.authGraph(navController: NavController) {
         composable(Screen.Welcome.Login.route) {
             LoginScreen { uiEvent ->
                 when (uiEvent) {
-                    LoginUiEvent.LoginSuccess -> {
+                    LoginUiEvent.NavMain -> {
                         navController.navigate(Screen.Main.route) {
                             popUpTo(Screen.Welcome.route) {
                                 inclusive = true
                             }
                         }
                     }
-                    LoginUiEvent.Register -> {
+                    LoginUiEvent.NavRegister -> {
                         navController.popBackStack()
                         navController.navigate(Screen.Welcome.Register.route)
                     }

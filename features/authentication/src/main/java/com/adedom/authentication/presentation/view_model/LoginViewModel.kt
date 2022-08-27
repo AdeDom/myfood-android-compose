@@ -20,8 +20,8 @@ data class LoginUiState(
 )
 
 sealed interface LoginUiEvent {
-    object Register : LoginUiEvent
-    object LoginSuccess : LoginUiEvent
+    object NavRegister : LoginUiEvent
+    object NavMain : LoginUiEvent
 }
 
 sealed interface LoginUiAction {
@@ -71,8 +71,7 @@ class LoginViewModel(
                     val resource = loginUseCase(email, password)
                     when (resource) {
                         is Resource.Success -> {
-                            val event = LoginUiEvent.LoginSuccess
-                            _uiEvent.emit(event)
+                            _uiEvent.emit(LoginUiEvent.NavMain)
                         }
                         is Resource.Error -> {
                             uiState = uiState.copy(
@@ -87,8 +86,7 @@ class LoginViewModel(
                     uiState = uiState.copy(error = null)
                 }
                 LoginUiAction.NavRegister -> {
-                    val event = LoginUiEvent.Register
-                    _uiEvent.emit(event)
+                    _uiEvent.emit(LoginUiEvent.NavRegister)
                 }
             }
         }
