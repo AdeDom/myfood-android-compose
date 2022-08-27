@@ -31,6 +31,8 @@ import com.adedom.main.presentation.view_model.MainUiState
 import com.adedom.main.presentation.view_model.MainViewModel
 import com.adedom.ui_components.components.*
 import com.adedom.ui_components.theme.MyFoodTheme
+import com.google.accompanist.swiperefresh.SwipeRefresh
+import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import org.koin.androidx.compose.getViewModel
 
 @Composable
@@ -108,51 +110,58 @@ fun MainContent(
                     }
                 }
 
-                LazyColumn {
-                    item {
-                        LazyRow {
-                            items(state.categories) { category ->
-                                Box(
-                                    modifier = Modifier
-                                        .padding(8.dp)
-                                        .clickable { dispatch(MainUiAction.CategoryClick(category.categoryId)) },
-                                ) {
-                                    Card(
-                                        shape = RoundedCornerShape(8.dp),
-                                        elevation = 8.dp,
+                SwipeRefresh(
+                    state = rememberSwipeRefreshState(state.isRefreshing),
+                    onRefresh = { dispatch(MainUiAction.Refreshing) },
+                ) {
+                    LazyColumn {
+                        item {
+                            LazyRow {
+                                items(state.categories) { category ->
+                                    Box(
+                                        modifier = Modifier
+                                            .padding(8.dp)
+                                            .clickable {
+                                                dispatch(MainUiAction.CategoryClick(category.categoryId))
+                                            },
                                     ) {
-                                        Column(
-                                            horizontalAlignment = Alignment.CenterHorizontally,
+                                        Card(
+                                            shape = RoundedCornerShape(8.dp),
+                                            elevation = 8.dp,
                                         ) {
-                                            AppImageNetwork(
-                                                image = category.image,
-                                                modifier = Modifier.size(
-                                                    width = 100.dp,
-                                                    height = 100.dp,
-                                                ),
-                                            )
-                                            Spacer(modifier = Modifier.height(4.dp))
-                                            AppText(
-                                                text = category.categoryName,
-                                                fontWeight = FontWeight.Bold,
-                                            )
+                                            Column(
+                                                horizontalAlignment = Alignment.CenterHorizontally,
+                                            ) {
+                                                AppImageNetwork(
+                                                    image = category.image,
+                                                    modifier = Modifier.size(
+                                                        width = 100.dp,
+                                                        height = 100.dp,
+                                                    ),
+                                                )
+                                                Spacer(modifier = Modifier.height(4.dp))
+                                                AppText(
+                                                    text = category.categoryName,
+                                                    fontWeight = FontWeight.Bold,
+                                                )
+                                            }
                                         }
                                     }
                                 }
                             }
                         }
-                    }
 
-                    item {
-                        Spacer(modifier = Modifier.height(16.dp))
-                        AppTitleText(text = state.categoryName)
-                    }
+                        item {
+                            Spacer(modifier = Modifier.height(16.dp))
+                            AppTitleText(text = state.categoryName)
+                        }
 
-                    items(state.foods) { food ->
-                        FoodBoxItem(
-                            food = food,
-                            onFoodClick = { dispatch(MainUiAction.FoodClick(it)) },
-                        )
+                        items(state.foods) { food ->
+                            FoodBoxItem(
+                                food = food,
+                                onFoodClick = { dispatch(MainUiAction.FoodClick(it)) },
+                            )
+                        }
                     }
                 }
             }
@@ -233,6 +242,9 @@ fun MainContentPreview() {
                     }
                     MainUiAction.BackHandler -> {
                         Toast.makeText(context, "BackHandler", Toast.LENGTH_SHORT).show()
+                    }
+                    MainUiAction.Refreshing -> {
+                        Toast.makeText(context, "Refreshing", Toast.LENGTH_SHORT).show()
                     }
                 }
             }

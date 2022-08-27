@@ -15,6 +15,7 @@ import kotlinx.coroutines.launch
 
 data class MainUiState(
     val isLoading: Boolean = false,
+    val isRefreshing: Boolean = false,
     val error: BaseError? = null,
     val categories: List<CategoryModel> = emptyList(),
     val categoryName: String = "",
@@ -34,6 +35,7 @@ sealed interface MainUiAction {
     data class FoodClick(val foodId: Long) : MainUiAction
     object NavSearch : MainUiAction
     object ErrorDismiss : MainUiAction
+    object Refreshing : MainUiAction
     object BackHandler : MainUiAction
 }
 
@@ -48,14 +50,18 @@ class MainViewModel(
 
     init {
         launch {
-            callMainContent()
+            callMainContent(isLoading = true)
         }
     }
 
-    private suspend fun callMainContent() {
+    private suspend fun callMainContent(
+        isLoading: Boolean = false,
+        isRefreshing: Boolean = false,
+    ) {
         setState {
             copy(
-                isLoading = true,
+                isLoading = isLoading,
+                isRefreshing = isRefreshing,
                 error = null,
             )
         }
@@ -66,6 +72,7 @@ class MainViewModel(
                 setState {
                     copy(
                         isLoading = false,
+                        isRefreshing = false,
                         categories = resource.data.categories,
                         foods = resource.data.foods,
                     )
@@ -75,6 +82,7 @@ class MainViewModel(
                 setState {
                     copy(
                         isLoading = false,
+                        isRefreshing = false,
                         error = resource.error,
                     )
                 }
@@ -108,7 +116,10 @@ class MainViewModel(
                     setEvent(MainUiEvent.SearchFood)
                 }
                 MainUiAction.ErrorDismiss -> {
-                    callMainContent()
+                    callMainContent(isLoading = true)
+                }
+                MainUiAction.Refreshing -> {
+                    callMainContent(isRefreshing = true)
                 }
                 MainUiAction.BackHandler -> {
                     backPressedJob?.cancel()
