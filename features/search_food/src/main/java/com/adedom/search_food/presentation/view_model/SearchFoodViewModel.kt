@@ -44,7 +44,7 @@ class SearchFoodViewModel(
                 is SearchFoodUiAction.SetSearch -> {
                     uiState = uiState.copy(search = action.value)
                     searchJob?.cancel()
-                    searchJob = viewModelScope.launch {
+                    searchJob = launch {
                         delay(500)
                         val foods = searchFoodUseCase(action.value)
                         uiState = uiState.copy(searchList = foods)

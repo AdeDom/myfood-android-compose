@@ -1,17 +1,42 @@
 package com.adedom.main.presentation.view_model
 
 import androidx.lifecycle.viewModelScope
+import com.adedom.core.domain.models.FoodModel
 import com.adedom.core.utils.Resource
+import com.adedom.main.domain.models.CategoryModel
 import com.adedom.main.domain.use_cases.GetFoodListByCategoryIdUseCase
 import com.adedom.main.domain.use_cases.LogoutUseCase
 import com.adedom.main.domain.use_cases.MainContentUseCase
-import com.adedom.main.presentation.event.MainUiEvent
-import com.adedom.main.presentation.state.MainUiState
+import com.adedom.myfood.data.models.base.BaseError
 import com.adedom.ui_components.base.BaseViewModel
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+
+data class MainUiState(
+    val isLoading: Boolean = false,
+    val error: BaseError? = null,
+    val categories: List<CategoryModel> = emptyList(),
+    val categoryName: String = "",
+    val foods: List<FoodModel> = emptyList(),
+)
+
+sealed interface MainUiEvent {
+    object Logout : MainUiEvent
+    object SearchFood : MainUiEvent
+    data class FoodDetail(val foodId: Long) : MainUiEvent
+    object OnBackAlert : MainUiEvent
+    object OnBackPressed : MainUiEvent
+}
+
+sealed interface MainUiAction {
+    data class CategoryClick(val categoryId: Long) : MainUiAction
+    data class FoodClick(val foodId: Long) : MainUiAction
+    object NavSearch : MainUiAction
+    object ErrorDismiss : MainUiAction
+    object BackHandler : MainUiAction
+}
 
 class MainViewModel(
     private val mainContentUseCase: MainContentUseCase,
@@ -23,80 +48,77 @@ class MainViewModel(
     private var backPressedJob: Job? = null
 
     init {
-        callMainContent()
-    }
-
-    fun callMainContent() {
         viewModelScope.launch {
-            uiState = uiState.copy(
-                isLoading = true,
-                error = null,
-            )
-
-            val resource = mainContentUseCase()
-            uiState = when (resource) {
-                is Resource.Success -> {
-                    uiState.copy(
-                        isLoading = false,
-                        categories = resource.data.categories,
-                        foods = resource.data.foods,
-                    )
-                }
-                is Resource.Error -> {
-                    uiState.copy(
-                        isLoading = false,
-                        error = resource.error,
-                    )
-                }
-            }
+            callMainContent()
         }
     }
 
-    fun getFoodListByCategoryId(categoryId: Long) {
-        viewModelScope.launch {
-            val (categoryName, foods) = getFoodListByCategoryIdUseCase(categoryId)
-            uiState = uiState.copy(
-                categoryName = categoryName,
-                foods = foods,
-            )
+    private suspend fun callMainContent() {
+        uiState = uiState.copy(
+            isLoading = true,
+            error = null,
+        )
+
+        val resource = mainContentUseCase()
+        uiState = when (resource) {
+            is Resource.Success -> {
+                uiState.copy(
+                    isLoading = false,
+                    categories = resource.data.categories,
+                    foods = resource.data.foods,
+                )
+            }
+            is Resource.Error -> {
+                uiState.copy(
+                    isLoading = false,
+                    error = resource.error,
+                )
+            }
         }
     }
 
     fun onLogoutEvent() {
         GlobalScope.launch {
-            val event = MainUiEvent.Logout
-            _uiEvent.emit(event)
+            _uiEvent.emit(MainUiEvent.Logout)
             logoutUseCase()
         }
     }
 
-    fun onSearchFoodEvent() {
+    fun dispatch(action: MainUiAction) {
         viewModelScope.launch {
-            val event = MainUiEvent.SearchFood
-            _uiEvent.emit(event)
-        }
-    }
+            when (action) {
+                is MainUiAction.CategoryClick -> {
+                    val (categoryName, foods) = getFoodListByCategoryIdUseCase(action.categoryId)
+                    uiState = uiState.copy(
+                        categoryName = categoryName,
+                        foods = foods,
+                    )
+                }
+                is MainUiAction.FoodClick -> {
+                    _uiEvent.emit(MainUiEvent.FoodDetail(action.foodId))
+                }
+                MainUiAction.NavSearch -> {
+                    _uiEvent.emit(MainUiEvent.SearchFood)
+                }
+                MainUiAction.ErrorDismiss -> {
+                    callMainContent()
+                }
+                MainUiAction.BackHandler -> {
+                    backPressedJob?.cancel()
+                    backPressedJob = launch {
+                        val event = if (isBackPressed) {
+                            MainUiEvent.OnBackPressed
+                        } else {
+                            MainUiEvent.OnBackAlert
+                        }
+                        _uiEvent.emit(event)
 
-    fun onFoodDetailEvent(foodId: Long) {
-        viewModelScope.launch {
-            val event = MainUiEvent.FoodDetail(foodId)
-            _uiEvent.emit(event)
-        }
-    }
-
-    fun onBackHandler() {
-        backPressedJob?.cancel()
-        backPressedJob = viewModelScope.launch {
-            val event = if (isBackPressed) {
-                MainUiEvent.OnBackPressed
-            } else {
-                MainUiEvent.OnBackAlert
+                        isBackPressed = true
+                        delay(2_000)
+                        isBackPressed = false
+                    }
+                }
             }
-            _uiEvent.emit(event)
-
-            isBackPressed = true
-            delay(2_000)
-            isBackPressed = false
         }
     }
 }

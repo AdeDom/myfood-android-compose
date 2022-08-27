@@ -25,8 +25,9 @@ import androidx.compose.ui.unit.dp
 import com.adedom.core.domain.models.FoodModel
 import com.adedom.main.R
 import com.adedom.main.domain.models.CategoryModel
-import com.adedom.main.presentation.event.MainUiEvent
-import com.adedom.main.presentation.state.MainUiState
+import com.adedom.main.presentation.view_model.MainUiAction
+import com.adedom.main.presentation.view_model.MainUiEvent
+import com.adedom.main.presentation.view_model.MainUiState
 import com.adedom.main.presentation.view_model.MainViewModel
 import com.adedom.ui_components.components.*
 import com.adedom.ui_components.theme.MyFoodTheme
@@ -47,23 +48,17 @@ fun MainScreen(
     MainContent(
         state = viewModel.uiState,
         onLogoutClick = viewModel::onLogoutEvent,
-        onCategoryClick = viewModel::getFoodListByCategoryId,
-        onFoodClick = viewModel::onFoodDetailEvent,
-        onSearchFoodEvent = viewModel::onSearchFoodEvent,
-        onErrorDismiss = viewModel::callMainContent,
+        viewModel::dispatch,
     )
 
-    BackHandler(onBack = viewModel::onBackHandler)
+    BackHandler(onBack = { viewModel.dispatch(MainUiAction.BackHandler) })
 }
 
 @Composable
 fun MainContent(
     state: MainUiState,
     onLogoutClick: () -> Unit,
-    onCategoryClick: (Long) -> Unit,
-    onFoodClick: (Long) -> Unit,
-    onSearchFoodEvent: () -> Unit,
-    onErrorDismiss: () -> Unit,
+    dispatch: (MainUiAction) -> Unit,
 ) {
     Box(
         modifier = Modifier.fillMaxSize(),
@@ -98,7 +93,7 @@ fun MainContent(
                         .height(60.dp)
                         .clip(RoundedCornerShape(32.dp))
                         .background(Color.LightGray)
-                        .clickable(onClick = onSearchFoodEvent),
+                        .clickable { dispatch(MainUiAction.NavSearch) },
                 ) {
                     Row(
                         modifier = Modifier.align(Alignment.CenterStart),
@@ -120,9 +115,7 @@ fun MainContent(
                                 Box(
                                     modifier = Modifier
                                         .padding(8.dp)
-                                        .clickable {
-                                            onCategoryClick(category.categoryId)
-                                        },
+                                        .clickable { dispatch(MainUiAction.CategoryClick(category.categoryId)) },
                                 ) {
                                     Card(
                                         shape = RoundedCornerShape(8.dp),
@@ -158,7 +151,7 @@ fun MainContent(
                     items(state.foods) { food ->
                         FoodBoxItem(
                             food = food,
-                            onFoodClick = onFoodClick,
+                            onFoodClick = { dispatch(MainUiAction.FoodClick(it)) },
                         )
                     }
                 }
@@ -168,7 +161,7 @@ fun MainContent(
         if (state.error != null) {
             AppErrorAlertDialog(
                 error = state.error,
-                onDismiss = onErrorDismiss,
+                onDismiss = { dispatch(MainUiAction.ErrorDismiss) },
             )
         }
     }
@@ -216,18 +209,33 @@ fun MainContentPreview() {
             onLogoutClick = {
                 Toast.makeText(context, "onLogoutClick", Toast.LENGTH_SHORT).show()
             },
-            onCategoryClick = {
-                Toast.makeText(context, "onCategoryClick $it", Toast.LENGTH_SHORT).show()
-            },
-            onFoodClick = {
-                Toast.makeText(context, "onFoodClick $it", Toast.LENGTH_SHORT).show()
-            },
-            onSearchFoodEvent = {
-                Toast.makeText(context, "onSearchFoodEvent", Toast.LENGTH_SHORT).show()
-            },
-            onErrorDismiss = {
-                Toast.makeText(context, "onErrorDismiss", Toast.LENGTH_SHORT).show()
-            },
+            dispatch = { action ->
+                when (action) {
+                    is MainUiAction.CategoryClick -> {
+                        Toast.makeText(
+                            context,
+                            "CategoryClick ${action.categoryId}",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+                    is MainUiAction.FoodClick -> {
+                        Toast.makeText(
+                            context,
+                            "FoodClick ${action.foodId}",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+                    MainUiAction.NavSearch -> {
+                        Toast.makeText(context, "NavSearch", Toast.LENGTH_SHORT).show()
+                    }
+                    MainUiAction.ErrorDismiss -> {
+                        Toast.makeText(context, "ErrorDismiss", Toast.LENGTH_SHORT).show()
+                    }
+                    MainUiAction.BackHandler -> {
+                        Toast.makeText(context, "BackHandler", Toast.LENGTH_SHORT).show()
+                    }
+                }
+            }
         )
     }
 }
