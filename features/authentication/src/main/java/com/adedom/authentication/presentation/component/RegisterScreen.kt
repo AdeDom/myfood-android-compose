@@ -1,9 +1,6 @@
 package com.adedom.authentication.presentation.component
 
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -60,36 +57,60 @@ fun RegisterContent(
                 onValueChange = { dispatch(RegisterUiAction.SetName(it)) },
                 hint = "Name",
                 imeAction = ImeAction.Next,
+                modifier = Modifier.size(
+                    width = 300.dp,
+                    height = 60.dp,
+                )
             )
             AppTextField(
                 value = state.email,
                 onValueChange = { dispatch(RegisterUiAction.SetEmail(it)) },
                 hint = "Email",
                 imeAction = ImeAction.Next,
+                modifier = Modifier.size(
+                    width = 300.dp,
+                    height = 60.dp,
+                )
             )
             AppTextField(
                 value = state.mobileNo,
                 onValueChange = { dispatch(RegisterUiAction.SetMobileNo(it)) },
                 hint = "Mobile No",
                 imeAction = ImeAction.Next,
+                modifier = Modifier.size(
+                    width = 300.dp,
+                    height = 60.dp,
+                )
             )
             AppTextField(
                 value = state.address,
                 onValueChange = { dispatch(RegisterUiAction.SetAddress(it)) },
                 hint = "Address",
                 imeAction = ImeAction.Next,
+                modifier = Modifier.size(
+                    width = 300.dp,
+                    height = 60.dp,
+                )
             )
             AppTextField(
                 value = state.password,
                 onValueChange = { dispatch(RegisterUiAction.SetPassword(it)) },
                 hint = "Password",
                 imeAction = ImeAction.Next,
+                modifier = Modifier.size(
+                    width = 300.dp,
+                    height = 60.dp,
+                )
             )
             AppTextField(
                 value = state.confirmPassword,
                 onValueChange = { dispatch(RegisterUiAction.SetConfirmPassword(it)) },
                 hint = "Confirm Password",
                 imeAction = ImeAction.Next,
+                modifier = Modifier.size(
+                    width = 300.dp,
+                    height = 60.dp,
+                )
             )
             AppButton(
                 text = "Sign Up",

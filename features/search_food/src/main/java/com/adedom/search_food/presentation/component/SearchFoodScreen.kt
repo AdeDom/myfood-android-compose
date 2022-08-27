@@ -9,8 +9,12 @@ import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
+import androidx.compose.ui.platform.LocalTextInputService
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.adedom.core.domain.models.FoodModel
@@ -28,7 +32,9 @@ import org.koin.androidx.compose.getViewModel
 fun SearchFoodScreen(
     onEvent: (SearchFoodUiEvent) -> Unit,
 ) {
+    val inputService = LocalTextInputService.current
     val viewModel: SearchFoodViewModel = getViewModel()
+    val focusRequester = remember { FocusRequester() }
 
     LaunchedEffect(viewModel.uiEvent) {
         viewModel.uiEvent.collect { uiEvent ->
@@ -36,9 +42,15 @@ fun SearchFoodScreen(
         }
     }
 
+    LaunchedEffect(Unit) {
+        focusRequester.requestFocus()
+        inputService?.showSoftwareKeyboard()
+    }
+
     SearchFoodContent(
         state = viewModel.uiState,
         viewModel::dispatch,
+        focusRequester,
     )
 }
 
@@ -46,6 +58,7 @@ fun SearchFoodScreen(
 fun SearchFoodContent(
     state: SearchFoodUiState,
     dispatch: (SearchFoodUiAction) -> Unit,
+    focusRequester: FocusRequester,
 ) {
     LazyColumn(
         modifier = Modifier
@@ -71,7 +84,9 @@ fun SearchFoodContent(
                     leadingIcon = {
                         AppIcon(Icons.Default.Search)
                     },
-                    modifier = Modifier.fillMaxWidth(),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .focusRequester(focusRequester),
                 )
             }
         }
@@ -89,6 +104,14 @@ fun SearchFoodContent(
 @Preview(showBackground = true)
 fun SearchFoodContentPreview() {
     MyFoodTheme {
+        val inputService = LocalTextInputService.current
+        val focusRequester = remember { FocusRequester() }
+
+        LaunchedEffect(Unit) {
+            focusRequester.requestFocus()
+            inputService?.showSoftwareKeyboard()
+        }
+
         SearchFoodContent(
             state = SearchFoodUiState(
                 search = "Abc",
@@ -112,6 +135,7 @@ fun SearchFoodContentPreview() {
                 ),
             ),
             dispatch = {},
+            focusRequester = focusRequester,
         )
     }
 }

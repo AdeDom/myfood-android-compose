@@ -66,19 +66,13 @@ fun AppTextField(
                 unfocusedIndicatorColor = Color.Transparent,
             ),
             shape = RoundedCornerShape(32.dp),
-            modifier = modifier.size(
-                width = 300.dp,
-                height = 60.dp,
-            ),
+            modifier = modifier,
         )
         if (error.isNullOrBlank()) {
             Spacer(modifier = Modifier.height(20.dp))
         } else {
             Box(
-                modifier = modifier.size(
-                    width = 300.dp,
-                    height = 20.dp,
-                ),
+                modifier = modifier,
             ) {
                 AppText(
                     text = error,
