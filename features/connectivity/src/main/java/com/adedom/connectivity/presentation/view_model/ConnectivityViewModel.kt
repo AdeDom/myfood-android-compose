@@ -1,6 +1,5 @@
 package com.adedom.connectivity.presentation.view_model
 
-import androidx.lifecycle.viewModelScope
 import com.adedom.connectivity.data.models.Status
 import com.adedom.connectivity.domain.use_cases.GetConnectivityStatusUseCase
 import com.adedom.ui_components.base.BaseViewModel
@@ -22,26 +21,28 @@ sealed interface ConnectivityUiAction {
 
 class ConnectivityViewModel(
     getConnectivityStatusUseCase: GetConnectivityStatusUseCase,
-) : BaseViewModel<ConnectivityUiState, ConnectivityUiEvent>(ConnectivityUiState()) {
+) : BaseViewModel<ConnectivityUiState, ConnectivityUiEvent, ConnectivityUiAction>(
+    ConnectivityUiState()
+) {
 
     init {
         getConnectivityStatusUseCase()
             .onEach { status ->
-                uiState = uiState.copy(status = status)
+                setState { copy(status = status) }
             }
             .filter { it == Status.Available }
             .onEach {
                 delay(3000)
                 dispatch(ConnectivityUiAction.DismissRequest)
             }
-            .launchIn(viewModelScope)
+            .launchIn(this)
     }
 
-    fun dispatch(action: ConnectivityUiAction) {
-        viewModelScope.launch {
+    override fun dispatch(action: ConnectivityUiAction) {
+        launch {
             when (action) {
                 ConnectivityUiAction.DismissRequest -> {
-                    uiState = uiState.copy(status = Status.Unknown)
+                    setState { copy(status = Status.Unknown) }
                 }
             }
         }

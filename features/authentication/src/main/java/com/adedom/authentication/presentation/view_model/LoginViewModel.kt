@@ -1,6 +1,5 @@
 package com.adedom.authentication.presentation.view_model
 
-import androidx.lifecycle.viewModelScope
 import com.adedom.authentication.domain.use_cases.LoginUseCase
 import com.adedom.authentication.domain.use_cases.ValidateEmailUseCase
 import com.adedom.authentication.domain.use_cases.ValidatePasswordUseCase
@@ -36,57 +35,65 @@ class LoginViewModel(
     private val validateEmailUseCase: ValidateEmailUseCase,
     private val validatePasswordUseCase: ValidatePasswordUseCase,
     private val loginUseCase: LoginUseCase,
-) : BaseViewModel<LoginUiState, LoginUiEvent>(LoginUiState()) {
+) : BaseViewModel<LoginUiState, LoginUiEvent, LoginUiAction>(LoginUiState()) {
 
-    fun dispatch(action: LoginUiAction) {
-        viewModelScope.launch(exceptionHandler) {
+    override fun dispatch(action: LoginUiAction) {
+        launch {
             when (action) {
                 is LoginUiAction.SetEmail -> {
                     val isValidateEmail = validateEmailUseCase(email = action.value)
                     val isValidatePassword = validatePasswordUseCase(uiState.password)
-                    uiState = uiState.copy(
-                        email = action.value,
-                        isErrorEmail = !isValidateEmail,
-                        isLogin = isValidateEmail && isValidatePassword,
-                    )
+                    setState {
+                        copy(
+                            email = action.value,
+                            isErrorEmail = !isValidateEmail,
+                            isLogin = isValidateEmail && isValidatePassword,
+                        )
+                    }
                 }
                 is LoginUiAction.SetPassword -> {
                     val isValidateEmail = validateEmailUseCase(uiState.email)
                     val isValidatePassword = validatePasswordUseCase(action.value)
-                    uiState = uiState.copy(
-                        password = action.value,
-                        isErrorPassword = !isValidatePassword,
-                        isLogin = isValidateEmail && isValidatePassword,
-                    )
+                    setState {
+                        copy(
+                            password = action.value,
+                            isErrorPassword = !isValidatePassword,
+                            isLogin = isValidateEmail && isValidatePassword,
+                        )
+                    }
                 }
                 LoginUiAction.Submit -> {
-                    uiState = uiState.copy(
-                        isLoading = true,
-                        isLogin = false,
-                        error = null,
-                    )
+                    setState {
+                        copy(
+                            isLoading = true,
+                            isLogin = false,
+                            error = null,
+                        )
+                    }
 
                     val email = uiState.email
                     val password = uiState.password
                     val resource = loginUseCase(email, password)
                     when (resource) {
                         is Resource.Success -> {
-                            _uiEvent.emit(LoginUiEvent.NavMain)
+                            setEvent(LoginUiEvent.NavMain)
                         }
                         is Resource.Error -> {
-                            uiState = uiState.copy(
-                                error = resource.error,
-                                isLoading = false,
-                                isLogin = true,
-                            )
+                            setState {
+                                copy(
+                                    error = resource.error,
+                                    isLoading = false,
+                                    isLogin = true,
+                                )
+                            }
                         }
                     }
                 }
                 LoginUiAction.HideErrorDialog -> {
-                    uiState = uiState.copy(error = null)
+                    setState { copy(error = null) }
                 }
                 LoginUiAction.NavRegister -> {
-                    _uiEvent.emit(LoginUiEvent.NavRegister)
+                    setEvent(LoginUiEvent.NavRegister)
                 }
             }
         }

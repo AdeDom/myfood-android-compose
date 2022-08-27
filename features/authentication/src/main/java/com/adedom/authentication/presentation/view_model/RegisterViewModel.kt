@@ -1,6 +1,5 @@
 package com.adedom.authentication.presentation.view_model
 
-import androidx.lifecycle.viewModelScope
 import com.adedom.ui_components.base.BaseViewModel
 import kotlinx.coroutines.launch
 
@@ -29,34 +28,36 @@ sealed interface RegisterUiAction {
     object NavLogin : RegisterUiAction
 }
 
-class RegisterViewModel : BaseViewModel<RegisterUiState, RegisterUiEvent>(RegisterUiState()) {
+class RegisterViewModel : BaseViewModel<RegisterUiState, RegisterUiEvent, RegisterUiAction>(
+    RegisterUiState()
+) {
 
-    fun dispatch(action: RegisterUiAction) {
-        viewModelScope.launch {
+    override fun dispatch(action: RegisterUiAction) {
+        launch {
             when (action) {
                 is RegisterUiAction.SetName -> {
-                    uiState = uiState.copy(name = action.value)
+                    setState { copy(name = action.value) }
                 }
                 is RegisterUiAction.SetEmail -> {
-                    uiState = uiState.copy(email = action.value)
+                    setState { copy(email = action.value) }
                 }
                 is RegisterUiAction.SetMobileNo -> {
-                    uiState = uiState.copy(mobileNo = action.value)
+                    setState { copy(mobileNo = action.value) }
                 }
                 is RegisterUiAction.SetAddress -> {
-                    uiState = uiState.copy(address = action.value)
+                    setState { copy(address = action.value) }
                 }
                 is RegisterUiAction.SetPassword -> {
-                    uiState = uiState.copy(password = action.value)
+                    setState { copy(password = action.value) }
                 }
                 is RegisterUiAction.SetConfirmPassword -> {
-                    uiState = uiState.copy(confirmPassword = action.value)
+                    setState { copy(confirmPassword = action.value) }
                 }
                 RegisterUiAction.Submit -> {
-                    _uiEvent.emit(RegisterUiEvent.NavMain)
+                    setEvent(RegisterUiEvent.NavMain)
                 }
                 RegisterUiAction.NavLogin -> {
-                    _uiEvent.emit(RegisterUiEvent.NavLogin)
+                    setEvent(RegisterUiEvent.NavLogin)
                 }
             }
         }

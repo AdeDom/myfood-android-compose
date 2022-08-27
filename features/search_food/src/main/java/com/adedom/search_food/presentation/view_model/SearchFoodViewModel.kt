@@ -1,6 +1,5 @@
 package com.adedom.search_food.presentation.view_model
 
-import androidx.lifecycle.viewModelScope
 import com.adedom.core.domain.models.FoodModel
 import com.adedom.search_food.domain.use_cases.SearchFoodUseCase
 import com.adedom.ui_components.base.BaseViewModel
@@ -26,35 +25,35 @@ sealed interface SearchFoodUiAction {
 
 class SearchFoodViewModel(
     private val searchFoodUseCase: SearchFoodUseCase,
-) : BaseViewModel<SearchFoodUiState, SearchFoodUiEvent>(SearchFoodUiState()) {
+) : BaseViewModel<SearchFoodUiState, SearchFoodUiEvent, SearchFoodUiAction>(SearchFoodUiState()) {
 
     private var searchJob: Job? = null
 
     init {
-        viewModelScope.launch {
+        launch {
             delay(1_000)
             val foods = searchFoodUseCase("")
-            uiState = uiState.copy(searchList = foods)
+            setState { copy(searchList = foods) }
         }
     }
 
-    fun dispatch(action: SearchFoodUiAction) {
-        viewModelScope.launch {
+    override fun dispatch(action: SearchFoodUiAction) {
+        launch {
             when (action) {
                 is SearchFoodUiAction.SetSearch -> {
-                    uiState = uiState.copy(search = action.value)
+                    setState { copy(search = action.value) }
                     searchJob?.cancel()
                     searchJob = launch {
                         delay(500)
                         val foods = searchFoodUseCase(action.value)
-                        uiState = uiState.copy(searchList = foods)
+                        setState { copy(searchList = foods) }
                     }
                 }
                 is SearchFoodUiAction.FoodDetail -> {
-                    _uiEvent.emit(SearchFoodUiEvent.FoodDetail(action.foodId))
+                    setEvent(SearchFoodUiEvent.FoodDetail(action.foodId))
                 }
                 SearchFoodUiAction.OnBackPressed -> {
-                    _uiEvent.emit(SearchFoodUiEvent.OnBackPressed)
+                    setEvent(SearchFoodUiEvent.OnBackPressed)
                 }
             }
         }

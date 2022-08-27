@@ -1,6 +1,5 @@
 package com.adedom.food_detail.presentation.view_model
 
-import androidx.lifecycle.viewModelScope
 import com.adedom.core.utils.Resource
 import com.adedom.food_detail.domain.models.FoodDetailModel
 import com.adedom.food_detail.domain.use_cases.GetFoodDetailUseCase
@@ -24,38 +23,44 @@ sealed interface FoodDetailUiAction {
 
 class FoodDetailViewModel(
     private val getFoodDetailUseCase: GetFoodDetailUseCase,
-) : BaseViewModel<FoodDetailUiState, FoodDetailUiEvent>(FoodDetailUiState()) {
+) : BaseViewModel<FoodDetailUiState, FoodDetailUiEvent, FoodDetailUiAction>(FoodDetailUiState()) {
 
     fun callFoodDetail(foodId: Int?) {
-        viewModelScope.launch {
-            uiState = uiState.copy(
-                isLoading = true,
-                error = null,
-            )
+        launch {
+            setState {
+                copy(
+                    isLoading = true,
+                    error = null,
+                )
+            }
 
             val resource = getFoodDetailUseCase(foodId)
-            uiState = when (resource) {
+            when (resource) {
                 is Resource.Success -> {
-                    uiState.copy(
-                        isLoading = false,
-                        foodDetail = resource.data,
-                    )
+                    setState {
+                        copy(
+                            isLoading = false,
+                            foodDetail = resource.data,
+                        )
+                    }
                 }
                 is Resource.Error -> {
-                    uiState.copy(
-                        isLoading = false,
-                        error = resource.error,
-                    )
+                    setState {
+                        copy(
+                            isLoading = false,
+                            error = resource.error,
+                        )
+                    }
                 }
             }
         }
     }
 
-    fun dispatch(action: FoodDetailUiAction) {
-        viewModelScope.launch {
+    override fun dispatch(action: FoodDetailUiAction) {
+        launch {
             when (action) {
                 FoodDetailUiAction.OnBackPressed -> {
-                    _uiEvent.emit(FoodDetailUiEvent.OnBackPressed)
+                    setEvent(FoodDetailUiEvent.OnBackPressed)
                 }
             }
         }

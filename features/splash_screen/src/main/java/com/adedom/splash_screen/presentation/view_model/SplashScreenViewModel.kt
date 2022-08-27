@@ -1,6 +1,5 @@
 package com.adedom.splash_screen.presentation.view_model
 
-import androidx.lifecycle.viewModelScope
 import com.adedom.splash_screen.domain.use_cases.GetIsAuthUseCase
 import com.adedom.ui_components.base.BaseViewModel
 import kotlinx.coroutines.delay
@@ -13,19 +12,25 @@ sealed interface SplashScreenUiEvent {
     object NavWelcome : SplashScreenUiEvent
 }
 
+sealed interface SplashScreenUiAction
+
 class SplashScreenViewModel(
     private val getIsAuthUseCase: GetIsAuthUseCase,
-) : BaseViewModel<SplashScreenUiState, SplashScreenUiEvent>(SplashScreenUiState) {
+) : BaseViewModel<SplashScreenUiState, SplashScreenUiEvent, SplashScreenUiAction>(
+    SplashScreenUiState
+) {
 
     init {
-        viewModelScope.launch {
+        launch {
             delay(2_000)
             val isAuth = getIsAuthUseCase()
             if (isAuth) {
-                _uiEvent.emit(SplashScreenUiEvent.NavMain)
+                setEvent(SplashScreenUiEvent.NavMain)
             } else {
-                _uiEvent.emit(SplashScreenUiEvent.NavWelcome)
+                setEvent(SplashScreenUiEvent.NavWelcome)
             }
         }
     }
+
+    override fun dispatch(action: SplashScreenUiAction) {}
 }

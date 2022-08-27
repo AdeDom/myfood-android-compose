@@ -1,6 +1,5 @@
 package com.adedom.main.presentation.view_model
 
-import androidx.lifecycle.viewModelScope
 import com.adedom.core.domain.models.FoodModel
 import com.adedom.core.utils.Resource
 import com.adedom.main.domain.models.CategoryModel
@@ -42,63 +41,71 @@ class MainViewModel(
     private val mainContentUseCase: MainContentUseCase,
     private val getFoodListByCategoryIdUseCase: GetFoodListByCategoryIdUseCase,
     private val logoutUseCase: LogoutUseCase,
-) : BaseViewModel<MainUiState, MainUiEvent>(MainUiState()) {
+) : BaseViewModel<MainUiState, MainUiEvent, MainUiAction>(MainUiState()) {
 
     private var isBackPressed = false
     private var backPressedJob: Job? = null
 
     init {
-        viewModelScope.launch {
+        launch {
             callMainContent()
         }
     }
 
     private suspend fun callMainContent() {
-        uiState = uiState.copy(
-            isLoading = true,
-            error = null,
-        )
+        setState {
+            copy(
+                isLoading = true,
+                error = null,
+            )
+        }
 
         val resource = mainContentUseCase()
-        uiState = when (resource) {
+        when (resource) {
             is Resource.Success -> {
-                uiState.copy(
-                    isLoading = false,
-                    categories = resource.data.categories,
-                    foods = resource.data.foods,
-                )
+                setState {
+                    copy(
+                        isLoading = false,
+                        categories = resource.data.categories,
+                        foods = resource.data.foods,
+                    )
+                }
             }
             is Resource.Error -> {
-                uiState.copy(
-                    isLoading = false,
-                    error = resource.error,
-                )
+                setState {
+                    copy(
+                        isLoading = false,
+                        error = resource.error,
+                    )
+                }
             }
         }
     }
 
     fun onLogoutEvent() {
         GlobalScope.launch {
-            _uiEvent.emit(MainUiEvent.Logout)
+            setEvent(MainUiEvent.Logout)
             logoutUseCase()
         }
     }
 
-    fun dispatch(action: MainUiAction) {
-        viewModelScope.launch {
+    override fun dispatch(action: MainUiAction) {
+        launch {
             when (action) {
                 is MainUiAction.CategoryClick -> {
                     val (categoryName, foods) = getFoodListByCategoryIdUseCase(action.categoryId)
-                    uiState = uiState.copy(
-                        categoryName = categoryName,
-                        foods = foods,
-                    )
+                    setState {
+                        copy(
+                            categoryName = categoryName,
+                            foods = foods,
+                        )
+                    }
                 }
                 is MainUiAction.FoodClick -> {
-                    _uiEvent.emit(MainUiEvent.FoodDetail(action.foodId))
+                    setEvent(MainUiEvent.FoodDetail(action.foodId))
                 }
                 MainUiAction.NavSearch -> {
-                    _uiEvent.emit(MainUiEvent.SearchFood)
+                    setEvent(MainUiEvent.SearchFood)
                 }
                 MainUiAction.ErrorDismiss -> {
                     callMainContent()
@@ -111,7 +118,7 @@ class MainViewModel(
                         } else {
                             MainUiEvent.OnBackAlert
                         }
-                        _uiEvent.emit(event)
+                        setEvent(event)
 
                         isBackPressed = true
                         delay(2_000)

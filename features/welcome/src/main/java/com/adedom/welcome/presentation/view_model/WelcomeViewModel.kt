@@ -1,6 +1,5 @@
 package com.adedom.welcome.presentation.view_model
 
-import androidx.lifecycle.viewModelScope
 import com.adedom.ui_components.base.BaseViewModel
 import com.adedom.welcome.domain.use_cases.WelcomeGuestRoleUseCase
 import kotlinx.coroutines.launch
@@ -21,19 +20,19 @@ sealed interface WelcomeUiAction {
 
 class WelcomeViewModel(
     private val welcomeGuestRoleUseCase: WelcomeGuestRoleUseCase,
-) : BaseViewModel<WelcomeUiState, WelcomeUiEvent>(WelcomeUiState) {
+) : BaseViewModel<WelcomeUiState, WelcomeUiEvent, WelcomeUiAction>(WelcomeUiState) {
 
-    fun dispatch(action: WelcomeUiAction) {
-        viewModelScope.launch {
+    override fun dispatch(action: WelcomeUiAction) {
+        launch {
             when (action) {
                 WelcomeUiAction.NavLogin -> {
-                    _uiEvent.emit(WelcomeUiEvent.NavLogin)
+                    setEvent(WelcomeUiEvent.NavLogin)
                 }
                 WelcomeUiAction.NavRegister -> {
-                    _uiEvent.emit(WelcomeUiEvent.NavRegister)
+                    setEvent(WelcomeUiEvent.NavRegister)
                 }
                 WelcomeUiAction.NavSkip -> {
-                    _uiEvent.emit(WelcomeUiEvent.NavSkip(welcomeGuestRoleUseCase()))
+                    setEvent(WelcomeUiEvent.NavSkip(welcomeGuestRoleUseCase()))
                 }
             }
         }
