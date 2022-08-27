@@ -14,8 +14,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.adedom.core.domain.models.FoodModel
-import com.adedom.search_food.presentation.event.SearchFoodUiEvent
-import com.adedom.search_food.presentation.state.SearchFoodUiState
+import com.adedom.search_food.presentation.view_model.SearchFoodUiAction
+import com.adedom.search_food.presentation.view_model.SearchFoodUiEvent
+import com.adedom.search_food.presentation.view_model.SearchFoodUiState
 import com.adedom.search_food.presentation.view_model.SearchFoodViewModel
 import com.adedom.ui_components.components.AppIcon
 import com.adedom.ui_components.components.AppTextField
@@ -35,27 +36,16 @@ fun SearchFoodScreen(
         }
     }
 
-    LaunchedEffect(Unit) {
-        viewModel.onSearchFood("")
-    }
-
     SearchFoodContent(
         state = viewModel.uiState,
-        onSearchChange = { search ->
-            viewModel.setSearch(search)
-            viewModel.onSearchFood(search)
-        },
-        onFoodClick = viewModel::onFoodDetailEvent,
-        onOnBackPressedEvent = viewModel::onOnBackPressedEvent,
+        viewModel::dispatch,
     )
 }
 
 @Composable
 fun SearchFoodContent(
     state: SearchFoodUiState,
-    onSearchChange: (String) -> Unit,
-    onFoodClick: (Long) -> Unit,
-    onOnBackPressedEvent: () -> Unit,
+    dispatch: (SearchFoodUiAction) -> Unit,
 ) {
     LazyColumn(
         modifier = Modifier
@@ -69,14 +59,14 @@ fun SearchFoodContent(
                 Column {
                     AppIcon(
                         image = Icons.Default.ArrowBack,
-                        modifier = Modifier.clickable(onClick = onOnBackPressedEvent),
+                        modifier = Modifier.clickable { dispatch(SearchFoodUiAction.OnBackPressed) },
                     )
                     Spacer(modifier = Modifier.height(20.dp))
                 }
                 Spacer(modifier = Modifier.width(8.dp))
                 AppTextField(
                     value = state.search,
-                    onValueChange = onSearchChange,
+                    onValueChange = { dispatch(SearchFoodUiAction.SetSearch(it)) },
                     hint = "Search food",
                     leadingIcon = {
                         AppIcon(Icons.Default.Search)
@@ -89,7 +79,7 @@ fun SearchFoodContent(
         items(state.searchList) { food ->
             FoodBoxItem(
                 food = food,
-                onFoodClick = onFoodClick,
+                onFoodClick = { dispatch(SearchFoodUiAction.FoodDetail(it)) },
             )
         }
     }
@@ -121,9 +111,7 @@ fun SearchFoodContentPreview() {
                     ),
                 ),
             ),
-            onSearchChange = {},
-            onFoodClick = {},
-            onOnBackPressedEvent = {},
+            dispatch = {},
         )
     }
 }

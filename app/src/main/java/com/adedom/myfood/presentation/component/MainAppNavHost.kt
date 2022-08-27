@@ -21,7 +21,7 @@ import com.adedom.food_detail.presentation.view_model.FoodDetailUiEvent
 import com.adedom.main.presentation.component.MainScreen
 import com.adedom.main.presentation.event.MainUiEvent
 import com.adedom.search_food.presentation.component.SearchFoodScreen
-import com.adedom.search_food.presentation.event.SearchFoodUiEvent
+import com.adedom.search_food.presentation.view_model.SearchFoodUiEvent
 import com.adedom.splash_screen.presentation.component.SplashScreen
 import com.adedom.splash_screen.presentation.view_model.SplashScreenUiEvent
 import com.adedom.welcome.presentation.component.WelcomeScreen
