@@ -24,6 +24,8 @@ sealed class Screen(
 
         object Init : Screen("initMain")
 
+        object UserProfile : Screen("userProfile")
+
         object SearchFood : Screen("searchFood")
 
         object FoodDetail : Screen(

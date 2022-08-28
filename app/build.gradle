@@ -79,6 +79,7 @@ dependencies {
     implementation project(path: ':features:connectivity')
     implementation project(path: ':features:food_detail')
     implementation project(path: ':features:search_food')
+    implementation project(path: ':features:user_profile')
 
     implementation "io.insert-koin:koin-core:$koin_version"
     implementation "io.insert-koin:koin-android:$koin_version"

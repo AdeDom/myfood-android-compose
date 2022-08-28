@@ -24,6 +24,8 @@ import com.adedom.search_food.presentation.component.SearchFoodScreen
 import com.adedom.search_food.presentation.view_model.SearchFoodUiEvent
 import com.adedom.splash_screen.presentation.component.SplashScreen
 import com.adedom.splash_screen.presentation.view_model.SplashScreenUiEvent
+import com.adedom.user_profile.presentation.component.UserProfileScreen
+import com.adedom.user_profile.presentation.view_model.UserProfileUiEvent
 import com.adedom.welcome.presentation.component.WelcomeScreen
 import com.adedom.welcome.presentation.view_model.WelcomeUiEvent
 
@@ -148,7 +150,7 @@ fun NavGraphBuilder.mainGraph(navController: NavController) {
                         navController.navigate(Screen.Main.SearchFood.route)
                     }
                     HomeUiEvent.NavUserProfile -> {
-                        Toast.makeText(context, "NavUserProfile", Toast.LENGTH_SHORT).show()
+                        navController.navigate(Screen.Main.UserProfile.route)
                     }
                     HomeUiEvent.NavInfo -> {
                         Toast.makeText(context, "NavInfo", Toast.LENGTH_SHORT).show()
@@ -158,6 +160,15 @@ fun NavGraphBuilder.mainGraph(navController: NavController) {
                     }
                     HomeUiEvent.OnBackPressed -> {
                         (context as? Activity)?.finishAffinity()
+                    }
+                }
+            }
+        }
+        composable(Screen.Main.UserProfile.route) {
+            UserProfileScreen { uiEvent ->
+                when (uiEvent) {
+                    UserProfileUiEvent.BackPressed -> {
+                        navController.popBackStack()
                     }
                 }
             }

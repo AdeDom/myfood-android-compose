@@ -9,6 +9,7 @@ import com.adedom.main.di.featureMainModule
 import com.adedom.myfood.di.appModule
 import com.adedom.search_food.di.featureSearchFoodModule
 import com.adedom.splash_screen.di.featureSplashScreenModule
+import com.adedom.user_profile.di.featureUserProfileModule
 import com.adedom.welcome.di.featureWelcomeModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
@@ -31,6 +32,7 @@ class MainApplication : Application() {
                 featureConnectivityModule,
                 featureFoodDetailModule,
                 featureSearchFoodModule,
+                featureUserProfileModule,
             )
         }
     }
