@@ -49,6 +49,7 @@ sealed interface HomeUiAction {
 
 class HomeViewModel(
     private val homeContentUseCase: HomeContentUseCase,
+    private val getImageProfileUseCase: GetImageProfileUseCase,
     private val getFoodListByCategoryIdUseCase: GetFoodListByCategoryIdUseCase,
     private val logoutUseCase: LogoutUseCase,
     private val getIsAuthRoleUseCase: GetIsAuthRoleUseCase,
@@ -60,7 +61,12 @@ class HomeViewModel(
 
     init {
         launch {
-            launchState { copy(isExitAuth = getIsAuthRoleUseCase()) }
+            coState {
+                copy(
+                    isExitAuth = getIsAuthRoleUseCase(),
+                    imageProfile = getImageProfileUseCase(),
+                )
+            }
             callHomeContent(isLoading = true)
         }
     }

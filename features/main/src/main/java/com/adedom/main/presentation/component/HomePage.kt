@@ -72,6 +72,7 @@ fun HomePage(
                                 ) {
                                     Row(
                                         verticalAlignment = Alignment.CenterVertically,
+                                        modifier = Modifier.align(Alignment.Center)
                                     ) {
                                         Spacer(modifier = Modifier.width(8.dp))
                                         IconButton(onClick = onMenuClick) {

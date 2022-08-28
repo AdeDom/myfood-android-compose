@@ -9,6 +9,8 @@ interface UserProfileLocalDataSource {
 
     suspend fun getUserProfile(): UserProfileEntity?
 
+    suspend fun getImageProfile(): String?
+
     suspend fun saveUserProfile(userProfile: UserProfileEntity)
 
     suspend fun deleteUserProfile()

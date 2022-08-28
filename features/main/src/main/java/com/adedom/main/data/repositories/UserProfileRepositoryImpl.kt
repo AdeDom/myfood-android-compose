@@ -23,6 +23,12 @@ class UserProfileRepositoryImpl(
         }
     }
 
+    override suspend fun getImageProfile(): String? {
+        return withContext(ioDispatcher) {
+            userProfileLocalDataSource.getImageProfile()
+        }
+    }
+
     override suspend fun saveUserProfile(userProfile: UserProfileEntity) {
         return withContext(ioDispatcher) {
             userProfileLocalDataSource.saveUserProfile(userProfile)
