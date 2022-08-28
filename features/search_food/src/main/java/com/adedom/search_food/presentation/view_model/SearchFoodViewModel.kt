@@ -8,6 +8,7 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 data class SearchFoodUiState(
+    val initial: Unit? = null,
     val search: String = "",
     val searchList: List<FoodModel> = emptyList(),
 )
@@ -18,6 +19,7 @@ sealed interface SearchFoodUiEvent {
 }
 
 sealed interface SearchFoodUiAction {
+    object Initial : SearchFoodUiAction
     data class SetSearch(val value: String) : SearchFoodUiAction
     data class FoodDetail(val foodId: Long) : SearchFoodUiAction
     object OnBackPressed : SearchFoodUiAction
@@ -29,17 +31,14 @@ class SearchFoodViewModel(
 
     private var searchJob: Job? = null
 
-    init {
-        launch {
-            delay(1_000)
-            val foods = searchFoodUseCase("")
-            setState { copy(searchList = foods) }
-        }
-    }
-
     override fun dispatch(action: SearchFoodUiAction) {
         launch {
             when (action) {
+                SearchFoodUiAction.Initial -> {
+                    delay(200)
+                    val foods = searchFoodUseCase("")
+                    setState { copy(searchList = foods) }
+                }
                 is SearchFoodUiAction.SetSearch -> {
                     setState { copy(search = action.value) }
                     searchJob?.cancel()
@@ -50,6 +49,7 @@ class SearchFoodViewModel(
                     }
                 }
                 is SearchFoodUiAction.FoodDetail -> {
+                    setState { copy(initial = Unit) }
                     setEvent(SearchFoodUiEvent.FoodDetail(action.foodId))
                 }
                 SearchFoodUiAction.OnBackPressed -> {

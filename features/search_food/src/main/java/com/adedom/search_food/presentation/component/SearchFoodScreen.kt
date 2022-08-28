@@ -43,8 +43,11 @@ fun SearchFoodScreen(
     }
 
     LaunchedEffect(Unit) {
-        focusRequester.requestFocus()
-        inputService?.showSoftwareKeyboard()
+        if (viewModel.uiState.initial == null) {
+            focusRequester.requestFocus()
+            inputService?.showSoftwareKeyboard()
+            viewModel.dispatch(SearchFoodUiAction.Initial)
+        }
     }
 
     SearchFoodContent(
