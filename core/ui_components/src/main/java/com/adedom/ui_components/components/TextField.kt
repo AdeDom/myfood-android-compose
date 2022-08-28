@@ -72,7 +72,10 @@ fun AppTextField(
             Spacer(modifier = Modifier.height(20.dp))
         } else {
             Box(
-                modifier = modifier,
+                modifier = Modifier.size(
+                    width = 300.dp,
+                    height = 20.dp,
+                ),
             ) {
                 AppText(
                     text = error,
