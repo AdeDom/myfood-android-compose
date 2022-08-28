@@ -88,7 +88,7 @@ fun MainContent(
                 DrawableItemMenu(
                     text = "Logout",
                     icon = { AppIcon(image = R.drawable.ic_logout_gray) },
-                    onClick = onLogoutClick,
+                    onClick = { dispatch(HomeUiAction.Logout(true)) },
                 )
             }
         }
@@ -101,6 +101,7 @@ fun MainContent(
                     scaffoldState.drawerState.open()
                 }
             },
+            onLogoutClick = onLogoutClick,
             modifier = Modifier
                 .fillMaxSize()
                 .padding(it),

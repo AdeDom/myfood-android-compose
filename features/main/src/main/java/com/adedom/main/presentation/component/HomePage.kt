@@ -37,6 +37,7 @@ fun HomePage(
     modifier: Modifier = Modifier,
     state: HomeUiState,
     onMenuClick: () -> Unit,
+    onLogoutClick: () -> Unit,
     dispatch: (HomeUiAction) -> Unit,
 ) {
     Box(
@@ -161,6 +162,16 @@ fun HomePage(
             }
         }
 
+        if (state.isLogoutDialog) {
+            AppInteractAlertDialog(
+                title = "Logout",
+                text = "Are you sure to logout the app?",
+                confirmButton = onLogoutClick,
+                dismissButton = { dispatch(HomeUiAction.Logout(false)) },
+                modifier = Modifier.wrapContentSize(),
+            )
+        }
+
         if (state.error != null) {
             AppErrorAlertDialog(
                 error = state.error,
@@ -211,6 +222,7 @@ fun HomePagePreview() {
                 categoryIdClick = 2,
             ),
             onMenuClick = {},
+            onLogoutClick = {},
             dispatch = { action ->
                 when (action) {
                     is HomeUiAction.CategoryClick -> {
@@ -239,6 +251,7 @@ fun HomePagePreview() {
                     HomeUiAction.Refreshing -> {
                         Toast.makeText(context, "Refreshing", Toast.LENGTH_SHORT).show()
                     }
+                    is HomeUiAction.Logout -> {}
                 }
             }
         )

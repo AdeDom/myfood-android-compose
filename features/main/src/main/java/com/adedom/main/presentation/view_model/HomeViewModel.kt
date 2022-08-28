@@ -21,6 +21,7 @@ data class HomeUiState(
     val categoryName: String = "",
     val foods: List<FoodModel> = emptyList(),
     val categoryIdClick: Long? = null,
+    val isLogoutDialog: Boolean = false,
 )
 
 sealed interface HomeUiEvent {
@@ -38,6 +39,7 @@ sealed interface HomeUiAction {
     object ErrorDismiss : HomeUiAction
     object Refreshing : HomeUiAction
     object BackHandler : HomeUiAction
+    data class Logout(val isLogoutDialog: Boolean) : HomeUiAction
 }
 
 class HomeViewModel(
@@ -142,6 +144,9 @@ class HomeViewModel(
                         delay(2_000)
                         isBackPressed = false
                     }
+                }
+                is HomeUiAction.Logout -> {
+                    setState { copy(isLogoutDialog = action.isLogoutDialog) }
                 }
             }
         }

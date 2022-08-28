@@ -65,3 +65,35 @@ fun AppErrorAlertDialog(
             .height(200.dp),
     )
 }
+
+@Composable
+fun AppInteractAlertDialog(
+    modifier: Modifier = Modifier,
+    title: String,
+    text: String? = null,
+    confirmButton: () -> Unit,
+    dismissButton: () -> Unit,
+) {
+    AlertDialog(
+        onDismissRequest = {},
+        confirmButton = {
+            AppText(
+                text = "OK",
+                modifier = Modifier.clickable(onClick = confirmButton),
+            )
+        },
+        dismissButton = {
+            AppText(
+                text = "Cancel",
+                modifier = Modifier.clickable(onClick = dismissButton),
+            )
+        },
+        title = {
+            AppTitleText(text = title)
+        },
+        text = {
+            AppText(text = text.orEmpty())
+        },
+        modifier = modifier,
+    )
+}
