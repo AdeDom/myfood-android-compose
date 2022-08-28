@@ -2,7 +2,7 @@ package com.adedom.main.data.repositories
 
 import com.adedom.main.data.providers.local.category.CategoryLocalDataSource
 import com.adedom.main.data.providers.remote.category.CategoryRemoteDataSource
-import com.adedom.main.domain.repositories.MainCategoryRepository
+import com.adedom.main.domain.repositories.HomeCategoryRepository
 import com.adedom.myfood.data.models.response.CategoryResponse
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
@@ -10,11 +10,11 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.withContext
 import myfood.database.CategoryEntity
 
-class MainCategoryRepositoryImpl(
+class HomeCategoryRepositoryImpl(
     private val categoryLocalDataSource: CategoryLocalDataSource,
     private val categoryRemoteDataSource: CategoryRemoteDataSource,
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO,
-) : MainCategoryRepository {
+) : HomeCategoryRepository {
 
     override suspend fun callCategoryAll(): List<CategoryResponse> {
         return withContext(ioDispatcher) {

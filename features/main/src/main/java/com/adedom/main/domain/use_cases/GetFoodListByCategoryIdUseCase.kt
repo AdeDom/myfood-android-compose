@@ -1,24 +1,24 @@
 package com.adedom.main.domain.use_cases
 
 import com.adedom.core.domain.models.FoodModel
-import com.adedom.main.domain.repositories.MainCategoryRepository
-import com.adedom.main.domain.repositories.MainFoodRepository
+import com.adedom.main.domain.repositories.HomeCategoryRepository
+import com.adedom.main.domain.repositories.HomeFoodRepository
 import kotlinx.coroutines.async
 import kotlinx.coroutines.coroutineScope
 
 class GetFoodListByCategoryIdUseCase(
-    private val mainCategoryRepository: MainCategoryRepository,
-    private val mainFoodRepository: MainFoodRepository,
+    private val homeCategoryRepository: HomeCategoryRepository,
+    private val homeFoodRepository: HomeFoodRepository,
 ) {
 
     suspend operator fun invoke(categoryId: Long): Pair<String, List<FoodModel>> {
         return coroutineScope {
             val categoryNameAsync = async {
-                mainCategoryRepository.getCategoryNameByCategoryId(categoryId)
+                homeCategoryRepository.getCategoryNameByCategoryId(categoryId)
             }
 
             val foodListAsync = async {
-                mainFoodRepository.getFoodListByCategoryId(categoryId).map { food ->
+                homeFoodRepository.getFoodListByCategoryId(categoryId).map { food ->
                     FoodModel(
                         foodId = food.foodId,
                         foodName = food.foodName,

@@ -4,7 +4,7 @@ import com.adedom.myfood.data.models.response.CategoryResponse
 import kotlinx.coroutines.flow.Flow
 import myfood.database.CategoryEntity
 
-interface MainCategoryRepository {
+interface HomeCategoryRepository {
 
     suspend fun callCategoryAll(): List<CategoryResponse>
 

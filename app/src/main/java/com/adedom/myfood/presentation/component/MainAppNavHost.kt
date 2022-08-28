@@ -19,7 +19,7 @@ import com.adedom.authentication.presentation.view_model.RegisterUiEvent
 import com.adedom.food_detail.presentation.component.FoodDetailScreen
 import com.adedom.food_detail.presentation.view_model.FoodDetailUiEvent
 import com.adedom.main.presentation.component.MainScreen
-import com.adedom.main.presentation.view_model.MainUiEvent
+import com.adedom.main.presentation.view_model.HomeUiEvent
 import com.adedom.search_food.presentation.component.SearchFoodScreen
 import com.adedom.search_food.presentation.view_model.SearchFoodUiEvent
 import com.adedom.splash_screen.presentation.component.SplashScreen
@@ -133,24 +133,24 @@ fun NavGraphBuilder.mainGraph(navController: NavController) {
             val context = LocalContext.current
             MainScreen { uiEvent ->
                 when (uiEvent) {
-                    MainUiEvent.Logout -> {
+                    HomeUiEvent.Logout -> {
                         navController.navigate(Screen.Welcome.route) {
                             popUpTo(Screen.Main.route) {
                                 inclusive = true
                             }
                         }
                     }
-                    is MainUiEvent.FoodDetail -> {
+                    is HomeUiEvent.FoodDetail -> {
                         val route = Screen.Main.FoodDetail.arguments(uiEvent.foodId)
                         navController.navigate(route)
                     }
-                    MainUiEvent.SearchFood -> {
+                    HomeUiEvent.SearchFood -> {
                         navController.navigate(Screen.Main.SearchFood.route)
                     }
-                    MainUiEvent.OnBackAlert -> {
+                    HomeUiEvent.OnBackAlert -> {
                         Toast.makeText(context, "Tap again to exit the app", Toast.LENGTH_SHORT).show()
                     }
-                    MainUiEvent.OnBackPressed -> {
+                    HomeUiEvent.OnBackPressed -> {
                         (context as? Activity)?.finishAffinity()
                     }
                 }

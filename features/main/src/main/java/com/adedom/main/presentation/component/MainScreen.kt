@@ -17,10 +17,10 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.adedom.main.R
-import com.adedom.main.presentation.view_model.MainUiAction
-import com.adedom.main.presentation.view_model.MainUiEvent
-import com.adedom.main.presentation.view_model.MainUiState
-import com.adedom.main.presentation.view_model.MainViewModel
+import com.adedom.main.presentation.view_model.HomeUiAction
+import com.adedom.main.presentation.view_model.HomeUiEvent
+import com.adedom.main.presentation.view_model.HomeUiState
+import com.adedom.main.presentation.view_model.HomeViewModel
 import com.adedom.ui_components.components.AppIcon
 import com.adedom.ui_components.components.AppTitleText
 import com.adedom.ui_components.theme.MyFoodTheme
@@ -29,9 +29,9 @@ import org.koin.androidx.compose.getViewModel
 
 @Composable
 fun MainScreen(
-    onEvent: (MainUiEvent) -> Unit,
+    onEvent: (HomeUiEvent) -> Unit,
 ) {
-    val viewModel: MainViewModel = getViewModel()
+    val viewModel: HomeViewModel = getViewModel()
 
     LaunchedEffect(viewModel.uiEvent) {
         viewModel.uiEvent.collect { uiEvent ->
@@ -45,14 +45,14 @@ fun MainScreen(
         viewModel::dispatch,
     )
 
-    BackHandler(onBack = { viewModel.dispatch(MainUiAction.BackHandler) })
+    BackHandler(onBack = { viewModel.dispatch(HomeUiAction.BackHandler) })
 }
 
 @Composable
 fun MainContent(
-    state: MainUiState,
+    state: HomeUiState,
     onLogoutClick: () -> Unit,
-    dispatch: (MainUiAction) -> Unit,
+    dispatch: (HomeUiAction) -> Unit,
 ) {
     val scaffoldState = rememberScaffoldState()
     val scope = rememberCoroutineScope()
@@ -135,7 +135,7 @@ private fun DrawableItemMenu(
 fun MainContentPreview() {
     MyFoodTheme {
         MainContent(
-            state = MainUiState(),
+            state = HomeUiState(),
             onLogoutClick = {},
             dispatch = {},
         )

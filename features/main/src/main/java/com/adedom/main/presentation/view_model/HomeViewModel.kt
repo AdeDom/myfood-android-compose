@@ -4,8 +4,8 @@ import com.adedom.core.domain.models.FoodModel
 import com.adedom.core.utils.Resource
 import com.adedom.main.domain.models.CategoryModel
 import com.adedom.main.domain.use_cases.GetFoodListByCategoryIdUseCase
+import com.adedom.main.domain.use_cases.HomeContentUseCase
 import com.adedom.main.domain.use_cases.LogoutUseCase
-import com.adedom.main.domain.use_cases.MainContentUseCase
 import com.adedom.myfood.data.models.base.BaseError
 import com.adedom.ui_components.base.BaseViewModel
 import kotlinx.coroutines.GlobalScope
@@ -13,7 +13,7 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
-data class MainUiState(
+data class HomeUiState(
     val isLoading: Boolean = false,
     val isRefreshing: Boolean = false,
     val error: BaseError? = null,
@@ -23,39 +23,39 @@ data class MainUiState(
     val categoryIdClick: Long? = null,
 )
 
-sealed interface MainUiEvent {
-    object Logout : MainUiEvent
-    object SearchFood : MainUiEvent
-    data class FoodDetail(val foodId: Long) : MainUiEvent
-    object OnBackAlert : MainUiEvent
-    object OnBackPressed : MainUiEvent
+sealed interface HomeUiEvent {
+    object Logout : HomeUiEvent
+    object SearchFood : HomeUiEvent
+    data class FoodDetail(val foodId: Long) : HomeUiEvent
+    object OnBackAlert : HomeUiEvent
+    object OnBackPressed : HomeUiEvent
 }
 
-sealed interface MainUiAction {
-    data class CategoryClick(val categoryId: Long) : MainUiAction
-    data class FoodClick(val foodId: Long) : MainUiAction
-    object NavSearch : MainUiAction
-    object ErrorDismiss : MainUiAction
-    object Refreshing : MainUiAction
-    object BackHandler : MainUiAction
+sealed interface HomeUiAction {
+    data class CategoryClick(val categoryId: Long) : HomeUiAction
+    data class FoodClick(val foodId: Long) : HomeUiAction
+    object NavSearch : HomeUiAction
+    object ErrorDismiss : HomeUiAction
+    object Refreshing : HomeUiAction
+    object BackHandler : HomeUiAction
 }
 
-class MainViewModel(
-    private val mainContentUseCase: MainContentUseCase,
+class HomeViewModel(
+    private val homeContentUseCase: HomeContentUseCase,
     private val getFoodListByCategoryIdUseCase: GetFoodListByCategoryIdUseCase,
     private val logoutUseCase: LogoutUseCase,
-) : BaseViewModel<MainUiState, MainUiEvent, MainUiAction>(MainUiState()) {
+) : BaseViewModel<HomeUiState, HomeUiEvent, HomeUiAction>(HomeUiState()) {
 
     private var isBackPressed = false
     private var backPressedJob: Job? = null
 
     init {
         launch {
-            callMainContent(isLoading = true)
+            callHomeContent(isLoading = true)
         }
     }
 
-    private suspend fun callMainContent(
+    private suspend fun callHomeContent(
         isLoading: Boolean = false,
         isRefreshing: Boolean = false,
     ) {
@@ -67,7 +67,7 @@ class MainViewModel(
             )
         }
 
-        val resource = mainContentUseCase()
+        val resource = homeContentUseCase()
         when (resource) {
             is Resource.Success -> {
                 val (categoryName, foods) = getFoodListByCategoryIdUseCase(
@@ -98,15 +98,15 @@ class MainViewModel(
 
     fun onLogoutEvent() {
         GlobalScope.launch {
-            setEvent(MainUiEvent.Logout)
+            setEvent(HomeUiEvent.Logout)
             logoutUseCase()
         }
     }
 
-    override fun dispatch(action: MainUiAction) {
+    override fun dispatch(action: HomeUiAction) {
         launch {
             when (action) {
-                is MainUiAction.CategoryClick -> {
+                is HomeUiAction.CategoryClick -> {
                     val (categoryName, foods) = getFoodListByCategoryIdUseCase(action.categoryId)
                     setState {
                         copy(
@@ -116,25 +116,25 @@ class MainViewModel(
                         )
                     }
                 }
-                is MainUiAction.FoodClick -> {
-                    setEvent(MainUiEvent.FoodDetail(action.foodId))
+                is HomeUiAction.FoodClick -> {
+                    setEvent(HomeUiEvent.FoodDetail(action.foodId))
                 }
-                MainUiAction.NavSearch -> {
-                    setEvent(MainUiEvent.SearchFood)
+                HomeUiAction.NavSearch -> {
+                    setEvent(HomeUiEvent.SearchFood)
                 }
-                MainUiAction.ErrorDismiss -> {
-                    callMainContent(isLoading = true)
+                HomeUiAction.ErrorDismiss -> {
+                    callHomeContent(isLoading = true)
                 }
-                MainUiAction.Refreshing -> {
-                    callMainContent(isRefreshing = true)
+                HomeUiAction.Refreshing -> {
+                    callHomeContent(isRefreshing = true)
                 }
-                MainUiAction.BackHandler -> {
+                HomeUiAction.BackHandler -> {
                     backPressedJob?.cancel()
                     backPressedJob = launch {
                         val event = if (isBackPressed) {
-                            MainUiEvent.OnBackPressed
+                            HomeUiEvent.OnBackPressed
                         } else {
-                            MainUiEvent.OnBackAlert
+                            HomeUiEvent.OnBackAlert
                         }
                         setEvent(event)
 

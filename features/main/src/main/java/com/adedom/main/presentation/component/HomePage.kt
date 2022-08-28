@@ -25,8 +25,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.adedom.core.domain.models.FoodModel
 import com.adedom.main.domain.models.CategoryModel
-import com.adedom.main.presentation.view_model.MainUiAction
-import com.adedom.main.presentation.view_model.MainUiState
+import com.adedom.main.presentation.view_model.HomeUiAction
+import com.adedom.main.presentation.view_model.HomeUiState
 import com.adedom.ui_components.components.*
 import com.adedom.ui_components.theme.MyFoodTheme
 import com.google.accompanist.swiperefresh.SwipeRefresh
@@ -35,9 +35,9 @@ import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 @Composable
 fun HomePage(
     modifier: Modifier = Modifier,
-    state: MainUiState,
+    state: HomeUiState,
     onMenuClick: () -> Unit,
-    dispatch: (MainUiAction) -> Unit,
+    dispatch: (HomeUiAction) -> Unit,
 ) {
     Box(
         modifier = modifier,
@@ -66,7 +66,7 @@ fun HomePage(
                             .height(60.dp)
                             .clip(RoundedCornerShape(32.dp))
                             .background(Color.LightGray)
-                            .clickable { dispatch(MainUiAction.NavSearch) },
+                            .clickable { dispatch(HomeUiAction.NavSearch) },
                     ) {
                         Row(
                             modifier = Modifier.align(Alignment.CenterStart),
@@ -84,7 +84,7 @@ fun HomePage(
 
                 SwipeRefresh(
                     state = rememberSwipeRefreshState(state.isRefreshing),
-                    onRefresh = { dispatch(MainUiAction.Refreshing) },
+                    onRefresh = { dispatch(HomeUiAction.Refreshing) },
                 ) {
                     LazyColumn {
                         item {
@@ -94,7 +94,7 @@ fun HomePage(
                                         modifier = Modifier
                                             .padding(8.dp)
                                             .clickable {
-                                                dispatch(MainUiAction.CategoryClick(category.categoryId))
+                                                dispatch(HomeUiAction.CategoryClick(category.categoryId))
                                             },
                                     ) {
                                         Card(
@@ -153,7 +153,7 @@ fun HomePage(
                         items(state.foods) { food ->
                             FoodBoxItem(
                                 food = food,
-                                onFoodClick = { dispatch(MainUiAction.FoodClick(it)) },
+                                onFoodClick = { dispatch(HomeUiAction.FoodClick(it)) },
                             )
                         }
                     }
@@ -164,7 +164,7 @@ fun HomePage(
         if (state.error != null) {
             AppErrorAlertDialog(
                 error = state.error,
-                onDismiss = { dispatch(MainUiAction.ErrorDismiss) },
+                onDismiss = { dispatch(HomeUiAction.ErrorDismiss) },
             )
         }
     }
@@ -176,7 +176,7 @@ fun HomePagePreview() {
     val context = LocalContext.current
     MyFoodTheme {
         HomePage(
-            state = MainUiState(
+            state = HomeUiState(
                 categories = listOf(
                     CategoryModel(
                         categoryId = 1,
@@ -213,30 +213,30 @@ fun HomePagePreview() {
             onMenuClick = {},
             dispatch = { action ->
                 when (action) {
-                    is MainUiAction.CategoryClick -> {
+                    is HomeUiAction.CategoryClick -> {
                         Toast.makeText(
                             context,
                             "CategoryClick ${action.categoryId}",
                             Toast.LENGTH_SHORT
                         ).show()
                     }
-                    is MainUiAction.FoodClick -> {
+                    is HomeUiAction.FoodClick -> {
                         Toast.makeText(
                             context,
                             "FoodClick ${action.foodId}",
                             Toast.LENGTH_SHORT
                         ).show()
                     }
-                    MainUiAction.NavSearch -> {
+                    HomeUiAction.NavSearch -> {
                         Toast.makeText(context, "NavSearch", Toast.LENGTH_SHORT).show()
                     }
-                    MainUiAction.ErrorDismiss -> {
+                    HomeUiAction.ErrorDismiss -> {
                         Toast.makeText(context, "ErrorDismiss", Toast.LENGTH_SHORT).show()
                     }
-                    MainUiAction.BackHandler -> {
+                    HomeUiAction.BackHandler -> {
                         Toast.makeText(context, "BackHandler", Toast.LENGTH_SHORT).show()
                     }
-                    MainUiAction.Refreshing -> {
+                    HomeUiAction.Refreshing -> {
                         Toast.makeText(context, "Refreshing", Toast.LENGTH_SHORT).show()
                     }
                 }

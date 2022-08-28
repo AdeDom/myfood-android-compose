@@ -13,17 +13,17 @@ import com.adedom.main.data.providers.remote.category.CategoryRemoteDataSourceIm
 import com.adedom.main.data.providers.remote.food.FoodRemoteDataSource
 import com.adedom.main.data.providers.remote.food.FoodRemoteDataSourceImpl
 import com.adedom.main.data.repositories.AuthLogoutRepositoryImpl
-import com.adedom.main.data.repositories.MainCategoryRepositoryImpl
-import com.adedom.main.data.repositories.MainFoodRepositoryImpl
+import com.adedom.main.data.repositories.HomeCategoryRepositoryImpl
+import com.adedom.main.data.repositories.HomeFoodRepositoryImpl
 import com.adedom.main.data.repositories.UserProfileRepositoryImpl
 import com.adedom.main.domain.repositories.AuthLogoutRepository
-import com.adedom.main.domain.repositories.MainCategoryRepository
-import com.adedom.main.domain.repositories.MainFoodRepository
+import com.adedom.main.domain.repositories.HomeCategoryRepository
+import com.adedom.main.domain.repositories.HomeFoodRepository
 import com.adedom.main.domain.repositories.UserProfileRepository
 import com.adedom.main.domain.use_cases.GetFoodListByCategoryIdUseCase
+import com.adedom.main.domain.use_cases.HomeContentUseCase
 import com.adedom.main.domain.use_cases.LogoutUseCase
-import com.adedom.main.domain.use_cases.MainContentUseCase
-import com.adedom.main.presentation.view_model.MainViewModel
+import com.adedom.main.presentation.view_model.HomeViewModel
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
@@ -40,14 +40,14 @@ val featureMainModule = module {
 
     single<UserProfileRepository> { UserProfileRepositoryImpl(get()) }
     single<AuthLogoutRepository> { AuthLogoutRepositoryImpl(get(), get()) }
-    single<MainCategoryRepository> { MainCategoryRepositoryImpl(get(), get()) }
-    single<MainFoodRepository> { MainFoodRepositoryImpl(get(), get()) }
+    single<HomeCategoryRepository> { HomeCategoryRepositoryImpl(get(), get()) }
+    single<HomeFoodRepository> { HomeFoodRepositoryImpl(get(), get()) }
 
     // domain
-    factory { MainContentUseCase(get(), get()) }
+    factory { HomeContentUseCase(get(), get()) }
     factory { LogoutUseCase(get(), get()) }
     factory { GetFoodListByCategoryIdUseCase(get(), get()) }
 
     //presentation
-    viewModel { MainViewModel(get(), get(), get()) }
+    viewModel { HomeViewModel(get(), get(), get()) }
 }

@@ -3,8 +3,8 @@ package com.adedom.main.domain.use_cases
 import com.adedom.core.utils.ApiServiceException
 import com.adedom.core.utils.Resource
 import com.adedom.main.domain.models.CategoryModel
-import com.adedom.main.domain.repositories.MainCategoryRepository
-import com.adedom.main.domain.repositories.MainFoodRepository
+import com.adedom.main.domain.repositories.HomeCategoryRepository
+import com.adedom.main.domain.repositories.HomeFoodRepository
 import com.adedom.myfood.data.models.response.CategoryResponse
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
@@ -12,16 +12,16 @@ import kotlinx.coroutines.coroutineScope
 import myfood.database.CategoryEntity
 import myfood.database.FoodEntity
 
-class MainContentUseCase(
-    private val mainCategoryRepository: MainCategoryRepository,
-    private val mainFoodRepository: MainFoodRepository,
+class HomeContentUseCase(
+    private val homeCategoryRepository: HomeCategoryRepository,
+    private val homeFoodRepository: HomeFoodRepository,
 ) {
 
     suspend operator fun invoke(): Resource<List<CategoryModel>> {
         return try {
             coroutineScope {
                 // category
-                val categories = mainCategoryRepository.callCategoryAll()
+                val categories = homeCategoryRepository.callCategoryAll()
                 val categoryEntity = categories.map { category ->
                     CategoryEntity(
                         categoryId = category.categoryId.toLong(),
@@ -32,14 +32,14 @@ class MainContentUseCase(
                         updated = category.updated,
                     )
                 }
-                mainCategoryRepository.deleteCategoryAll()
-                mainCategoryRepository.saveCategoryAll(categoryEntity)
+                homeCategoryRepository.deleteCategoryAll()
+                homeCategoryRepository.saveCategoryAll(categoryEntity)
 
                 // food
                 val foods = categories
                     .map { category ->
                         async {
-                            mainFoodRepository.callFoodListByCategoryId(category.categoryId)
+                            homeFoodRepository.callFoodListByCategoryId(category.categoryId)
                         }
                     }
                     .awaitAll()
@@ -62,8 +62,8 @@ class MainContentUseCase(
                         updated = food.updated,
                     )
                 }
-                mainFoodRepository.deleteFoodAll()
-                mainFoodRepository.saveFoodAll(foodEntity)
+                homeFoodRepository.deleteFoodAll()
+                homeFoodRepository.saveFoodAll(foodEntity)
 
                 val categoriesModel = categories.map { mapCategoryToCategoryModel(it) }
                 Resource.Success(categoriesModel)
