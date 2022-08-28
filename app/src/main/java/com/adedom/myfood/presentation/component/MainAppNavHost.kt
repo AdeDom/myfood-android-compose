@@ -133,19 +133,22 @@ fun NavGraphBuilder.mainGraph(navController: NavController) {
             val context = LocalContext.current
             MainScreen { uiEvent ->
                 when (uiEvent) {
-                    HomeUiEvent.Logout -> {
+                    HomeUiEvent.NavLogout -> {
                         navController.navigate(Screen.Welcome.route) {
                             popUpTo(Screen.Main.route) {
                                 inclusive = true
                             }
                         }
                     }
-                    is HomeUiEvent.FoodDetail -> {
+                    is HomeUiEvent.NavFoodDetail -> {
                         val route = Screen.Main.FoodDetail.arguments(uiEvent.foodId)
                         navController.navigate(route)
                     }
-                    HomeUiEvent.SearchFood -> {
+                    HomeUiEvent.NavSearchFood -> {
                         navController.navigate(Screen.Main.SearchFood.route)
+                    }
+                    HomeUiEvent.NavUserProfile -> {
+                        Toast.makeText(context, "NavUserProfile", Toast.LENGTH_SHORT).show()
                     }
                     HomeUiEvent.OnBackAlert -> {
                         Toast.makeText(context, "Tap again to exit the app", Toast.LENGTH_SHORT).show()

@@ -17,6 +17,7 @@ data class HomeUiState(
     val isLoading: Boolean = false,
     val isRefreshing: Boolean = false,
     val error: BaseError? = null,
+    val imageProfile: String? = null,
     val categories: List<CategoryModel> = emptyList(),
     val categoryName: String = "",
     val foods: List<FoodModel> = emptyList(),
@@ -25,17 +26,19 @@ data class HomeUiState(
 )
 
 sealed interface HomeUiEvent {
-    object Logout : HomeUiEvent
-    object SearchFood : HomeUiEvent
-    data class FoodDetail(val foodId: Long) : HomeUiEvent
+    object NavLogout : HomeUiEvent
+    object NavSearchFood : HomeUiEvent
+    object NavUserProfile : HomeUiEvent
+    data class NavFoodDetail(val foodId: Long) : HomeUiEvent
     object OnBackAlert : HomeUiEvent
     object OnBackPressed : HomeUiEvent
 }
 
 sealed interface HomeUiAction {
     data class CategoryClick(val categoryId: Long) : HomeUiAction
-    data class FoodClick(val foodId: Long) : HomeUiAction
-    object NavSearch : HomeUiAction
+    data class NavFoodDetail(val foodId: Long) : HomeUiAction
+    object NavSearchFood : HomeUiAction
+    object NavUserProfile : HomeUiAction
     object ErrorDismiss : HomeUiAction
     object Refreshing : HomeUiAction
     object BackHandler : HomeUiAction
@@ -100,7 +103,7 @@ class HomeViewModel(
 
     fun onLogoutEvent() {
         GlobalScope.launch {
-            setEvent(HomeUiEvent.Logout)
+            setEvent(HomeUiEvent.NavLogout)
             logoutUseCase()
         }
     }
@@ -118,11 +121,14 @@ class HomeViewModel(
                         )
                     }
                 }
-                is HomeUiAction.FoodClick -> {
-                    setEvent(HomeUiEvent.FoodDetail(action.foodId))
+                is HomeUiAction.NavFoodDetail -> {
+                    setEvent(HomeUiEvent.NavFoodDetail(action.foodId))
                 }
-                HomeUiAction.NavSearch -> {
-                    setEvent(HomeUiEvent.SearchFood)
+                HomeUiAction.NavSearchFood -> {
+                    setEvent(HomeUiEvent.NavSearchFood)
+                }
+                HomeUiAction.NavUserProfile -> {
+                    setEvent(HomeUiEvent.NavUserProfile)
                 }
                 HomeUiAction.ErrorDismiss -> {
                     callHomeContent(isLoading = true)

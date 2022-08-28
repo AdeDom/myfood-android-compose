@@ -7,13 +7,13 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Menu
-import androidx.compose.material.icons.filled.Search
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -51,43 +51,61 @@ fun HomePage(
             Column(
                 modifier = Modifier.fillMaxSize(),
             ) {
-                Row(
-                    verticalAlignment = Alignment.CenterVertically,
-                    modifier = Modifier.padding(4.dp),
-                ) {
-                    IconButton(onClick = onMenuClick) {
-                        Icon(
-                            imageVector = Icons.Default.Menu,
-                            contentDescription = null,
-                        )
-                    }
-                    Box(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .height(60.dp)
-                            .clip(RoundedCornerShape(32.dp))
-                            .background(Color.LightGray)
-                            .clickable { dispatch(HomeUiAction.NavSearch) },
-                    ) {
-                        Row(
-                            modifier = Modifier.align(Alignment.CenterStart),
-                        ) {
-                            Spacer(modifier = Modifier.width(16.dp))
-                            AppIcon(Icons.Default.Search)
-                            Spacer(modifier = Modifier.width(8.dp))
-                            AppText(
-                                text = "Search food",
-                                color = Color.Gray,
-                            )
-                        }
-                    }
-                }
-
                 SwipeRefresh(
                     state = rememberSwipeRefreshState(state.isRefreshing),
                     onRefresh = { dispatch(HomeUiAction.Refreshing) },
                 ) {
                     LazyColumn {
+                        item {
+                            Box(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .height(60.dp)
+                                    .padding(4.dp),
+                            ) {
+                                Box(
+                                    modifier = Modifier
+                                        .fillMaxSize()
+                                        .clip(RoundedCornerShape(32.dp))
+                                        .background(Color.LightGray)
+                                        .clickable { dispatch(HomeUiAction.NavSearchFood) }
+                                ) {
+                                    Row(
+                                        verticalAlignment = Alignment.CenterVertically,
+                                    ) {
+                                        Spacer(modifier = Modifier.width(8.dp))
+                                        IconButton(onClick = onMenuClick) {
+                                            Icon(
+                                                imageVector = Icons.Default.Menu,
+                                                contentDescription = null,
+                                            )
+                                        }
+                                        Spacer(modifier = Modifier.width(8.dp))
+                                        AppText(
+                                            text = "Search food",
+                                            color = Color.Gray,
+                                            modifier = Modifier.weight(1f),
+                                        )
+                                        state.imageProfile?.let {
+                                            AppImageNetwork(
+                                                image = state.imageProfile,
+                                                modifier = Modifier
+                                                    .size(
+                                                        width = 40.dp,
+                                                        height = 40.dp,
+                                                    )
+                                                    .clip(CircleShape)
+                                                    .clickable {
+                                                        dispatch(HomeUiAction.NavUserProfile)
+                                                    },
+                                            )
+                                        }
+                                        Spacer(modifier = Modifier.width(8.dp))
+                                    }
+                                }
+                            }
+                        }
+
                         item {
                             LazyRow {
                                 items(state.categories) { category ->
@@ -154,7 +172,7 @@ fun HomePage(
                         items(state.foods) { food ->
                             FoodBoxItem(
                                 food = food,
-                                onFoodClick = { dispatch(HomeUiAction.FoodClick(it)) },
+                                onFoodClick = { dispatch(HomeUiAction.NavFoodDetail(it)) },
                             )
                         }
                     }
@@ -199,6 +217,21 @@ fun HomePagePreview() {
                         categoryName = "Category 2",
                         image = "",
                     ),
+                    CategoryModel(
+                        categoryId = 3,
+                        categoryName = "Category 3",
+                        image = "",
+                    ),
+                    CategoryModel(
+                        categoryId = 4,
+                        categoryName = "Category 4",
+                        image = "",
+                    ),
+                    CategoryModel(
+                        categoryId = 5,
+                        categoryName = "Category 5",
+                        image = "",
+                    ),
                 ),
                 categoryName = "categoryName",
                 foods = listOf(
@@ -212,6 +245,54 @@ fun HomePagePreview() {
                     ),
                     FoodModel(
                         foodId = 4,
+                        foodName = "foodName",
+                        alias = "alias",
+                        image = "",
+                        ratingScoreCount = "ratingScoreCount",
+                        categoryId = 2,
+                    ),
+                    FoodModel(
+                        foodId = 5,
+                        foodName = "foodName",
+                        alias = "alias",
+                        image = "",
+                        ratingScoreCount = "ratingScoreCount",
+                        categoryId = 2,
+                    ),
+                    FoodModel(
+                        foodId = 6,
+                        foodName = "foodName",
+                        alias = "alias",
+                        image = "",
+                        ratingScoreCount = "ratingScoreCount",
+                        categoryId = 2,
+                    ),
+                    FoodModel(
+                        foodId = 7,
+                        foodName = "foodName",
+                        alias = "alias",
+                        image = "",
+                        ratingScoreCount = "ratingScoreCount",
+                        categoryId = 2,
+                    ),
+                    FoodModel(
+                        foodId = 8,
+                        foodName = "foodName",
+                        alias = "alias",
+                        image = "",
+                        ratingScoreCount = "ratingScoreCount",
+                        categoryId = 2,
+                    ),
+                    FoodModel(
+                        foodId = 9,
+                        foodName = "foodName",
+                        alias = "alias",
+                        image = "",
+                        ratingScoreCount = "ratingScoreCount",
+                        categoryId = 2,
+                    ),
+                    FoodModel(
+                        foodId = 10,
                         foodName = "foodName",
                         alias = "alias",
                         image = "",
@@ -232,14 +313,14 @@ fun HomePagePreview() {
                             Toast.LENGTH_SHORT
                         ).show()
                     }
-                    is HomeUiAction.FoodClick -> {
+                    is HomeUiAction.NavFoodDetail -> {
                         Toast.makeText(
                             context,
                             "FoodClick ${action.foodId}",
                             Toast.LENGTH_SHORT
                         ).show()
                     }
-                    HomeUiAction.NavSearch -> {
+                    HomeUiAction.NavSearchFood -> {
                         Toast.makeText(context, "NavSearch", Toast.LENGTH_SHORT).show()
                     }
                     HomeUiAction.ErrorDismiss -> {
@@ -252,6 +333,7 @@ fun HomePagePreview() {
                         Toast.makeText(context, "Refreshing", Toast.LENGTH_SHORT).show()
                     }
                     is HomeUiAction.Logout -> {}
+                    HomeUiAction.NavUserProfile -> {}
                 }
             }
         )
