@@ -29,6 +29,7 @@ sealed interface HomeUiEvent {
     object NavLogout : HomeUiEvent
     object NavSearchFood : HomeUiEvent
     object NavUserProfile : HomeUiEvent
+    object NavInfo : HomeUiEvent
     data class NavFoodDetail(val foodId: Long) : HomeUiEvent
     object OnBackAlert : HomeUiEvent
     object OnBackPressed : HomeUiEvent
@@ -39,6 +40,7 @@ sealed interface HomeUiAction {
     data class NavFoodDetail(val foodId: Long) : HomeUiAction
     object NavSearchFood : HomeUiAction
     object NavUserProfile : HomeUiAction
+    object NavInfo : HomeUiAction
     object ErrorDismiss : HomeUiAction
     object Refreshing : HomeUiAction
     object BackHandler : HomeUiAction
@@ -129,6 +131,9 @@ class HomeViewModel(
                 }
                 HomeUiAction.NavUserProfile -> {
                     setEvent(HomeUiEvent.NavUserProfile)
+                }
+                HomeUiAction.NavInfo -> {
+                    setEvent(HomeUiEvent.NavInfo)
                 }
                 HomeUiAction.ErrorDismiss -> {
                     callHomeContent(isLoading = true)

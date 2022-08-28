@@ -6,8 +6,8 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.AccountCircle
 import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -80,9 +80,9 @@ fun MainContent(
                     },
                 )
                 DrawableItemMenu(
-                    text = "User profile",
-                    icon = { AppIcon(image = Icons.Default.AccountCircle) },
-                    onClick = {},
+                    text = "Info",
+                    icon = { AppIcon(image = Icons.Default.Info) },
+                    onClick = { dispatch(HomeUiAction.NavInfo) },
                 )
                 Spacer(modifier = Modifier.weight(1f))
                 DrawableItemMenu(

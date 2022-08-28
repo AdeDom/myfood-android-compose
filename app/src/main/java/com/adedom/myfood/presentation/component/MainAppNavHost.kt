@@ -150,6 +150,9 @@ fun NavGraphBuilder.mainGraph(navController: NavController) {
                     HomeUiEvent.NavUserProfile -> {
                         Toast.makeText(context, "NavUserProfile", Toast.LENGTH_SHORT).show()
                     }
+                    HomeUiEvent.NavInfo -> {
+                        Toast.makeText(context, "NavInfo", Toast.LENGTH_SHORT).show()
+                    }
                     HomeUiEvent.OnBackAlert -> {
                         Toast.makeText(context, "Tap again to exit the app", Toast.LENGTH_SHORT).show()
                     }
