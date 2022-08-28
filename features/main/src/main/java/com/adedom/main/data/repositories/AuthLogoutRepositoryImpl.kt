@@ -21,6 +21,12 @@ class AuthLogoutRepositoryImpl(
         }
     }
 
+    override suspend fun getAuthRole(): AuthRole {
+        return withContext(ioDispatcher) {
+            appDataStore.getAuthRole()
+        }
+    }
+
     override suspend fun setUnAuthRole() {
         return withContext(ioDispatcher) {
             val authRole = AuthRole.UnAuth

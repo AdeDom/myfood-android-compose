@@ -3,9 +3,7 @@ package com.adedom.main.presentation.view_model
 import com.adedom.core.domain.models.FoodModel
 import com.adedom.core.utils.Resource
 import com.adedom.main.domain.models.CategoryModel
-import com.adedom.main.domain.use_cases.GetFoodListByCategoryIdUseCase
-import com.adedom.main.domain.use_cases.HomeContentUseCase
-import com.adedom.main.domain.use_cases.LogoutUseCase
+import com.adedom.main.domain.use_cases.*
 import com.adedom.myfood.data.models.base.BaseError
 import com.adedom.ui_components.base.BaseViewModel
 import kotlinx.coroutines.GlobalScope
@@ -22,6 +20,7 @@ data class HomeUiState(
     val categoryName: String = "",
     val foods: List<FoodModel> = emptyList(),
     val categoryIdClick: Long? = null,
+    val isExitAuth: Boolean = false,
     val isLogoutDialog: Boolean = false,
 )
 
@@ -41,6 +40,7 @@ sealed interface HomeUiAction {
     object NavSearchFood : HomeUiAction
     object NavUserProfile : HomeUiAction
     object NavInfo : HomeUiAction
+    object NavLogout : HomeUiAction
     object ErrorDismiss : HomeUiAction
     object Refreshing : HomeUiAction
     object BackHandler : HomeUiAction
@@ -51,6 +51,8 @@ class HomeViewModel(
     private val homeContentUseCase: HomeContentUseCase,
     private val getFoodListByCategoryIdUseCase: GetFoodListByCategoryIdUseCase,
     private val logoutUseCase: LogoutUseCase,
+    private val getIsAuthRoleUseCase: GetIsAuthRoleUseCase,
+    private val saveUnAuthRoleUseCase: SaveUnAuthRoleUseCase,
 ) : BaseViewModel<HomeUiState, HomeUiEvent, HomeUiAction>(HomeUiState()) {
 
     private var isBackPressed = false
@@ -58,6 +60,7 @@ class HomeViewModel(
 
     init {
         launch {
+            launchState { copy(isExitAuth = getIsAuthRoleUseCase()) }
             callHomeContent(isLoading = true)
         }
     }
@@ -134,6 +137,10 @@ class HomeViewModel(
                 }
                 HomeUiAction.NavInfo -> {
                     setEvent(HomeUiEvent.NavInfo)
+                }
+                HomeUiAction.NavLogout -> {
+                    saveUnAuthRoleUseCase()
+                    setEvent(HomeUiEvent.NavLogout)
                 }
                 HomeUiAction.ErrorDismiss -> {
                     callHomeContent(isLoading = true)

@@ -47,6 +47,10 @@ abstract class BaseViewModel<S : Any, E : Any, A : Any>(
         uiState = uiState.reducer()
     }
 
+    protected suspend fun launchState(reducer: suspend S.() -> S) {
+        uiState = uiState.reducer()
+    }
+
     protected fun setEvent(event: E) {
         launch {
             _uiEvent.emit(event)

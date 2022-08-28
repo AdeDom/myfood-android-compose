@@ -335,6 +335,7 @@ fun HomePagePreview() {
                     is HomeUiAction.Logout -> {}
                     HomeUiAction.NavUserProfile -> {}
                     HomeUiAction.NavInfo -> {}
+                    HomeUiAction.NavLogout -> {}
                 }
             }
         )

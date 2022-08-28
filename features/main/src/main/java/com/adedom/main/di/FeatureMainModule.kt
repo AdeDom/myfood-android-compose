@@ -20,9 +20,7 @@ import com.adedom.main.domain.repositories.AuthLogoutRepository
 import com.adedom.main.domain.repositories.HomeCategoryRepository
 import com.adedom.main.domain.repositories.HomeFoodRepository
 import com.adedom.main.domain.repositories.UserProfileRepository
-import com.adedom.main.domain.use_cases.GetFoodListByCategoryIdUseCase
-import com.adedom.main.domain.use_cases.HomeContentUseCase
-import com.adedom.main.domain.use_cases.LogoutUseCase
+import com.adedom.main.domain.use_cases.*
 import com.adedom.main.presentation.view_model.HomeViewModel
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
@@ -46,8 +44,10 @@ val featureMainModule = module {
     // domain
     factory { HomeContentUseCase(get(), get()) }
     factory { LogoutUseCase(get(), get()) }
+    factory { GetIsAuthRoleUseCase(get()) }
+    factory { SaveUnAuthRoleUseCase(get()) }
     factory { GetFoodListByCategoryIdUseCase(get(), get()) }
 
     //presentation
-    viewModel { HomeViewModel(get(), get(), get()) }
+    viewModel { HomeViewModel(get(), get(), get(), get(), get()) }
 }

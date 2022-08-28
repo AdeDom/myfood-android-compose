@@ -85,11 +85,19 @@ fun MainContent(
                     onClick = { dispatch(HomeUiAction.NavInfo) },
                 )
                 Spacer(modifier = Modifier.weight(1f))
-                DrawableItemMenu(
-                    text = "Logout",
-                    icon = { AppIcon(image = R.drawable.ic_logout_gray) },
-                    onClick = { dispatch(HomeUiAction.Logout(true)) },
-                )
+                if (state.isExitAuth) {
+                    DrawableItemMenu(
+                        text = "Logout",
+                        icon = { AppIcon(image = R.drawable.ic_logout_gray) },
+                        onClick = { dispatch(HomeUiAction.Logout(true)) },
+                    )
+                } else {
+                    DrawableItemMenu(
+                        text = "Back to the welcome",
+                        icon = { AppIcon(image = R.drawable.ic_logout_gray) },
+                        onClick = { dispatch(HomeUiAction.NavLogout) },
+                    )
+                }
             }
         }
     ) {
