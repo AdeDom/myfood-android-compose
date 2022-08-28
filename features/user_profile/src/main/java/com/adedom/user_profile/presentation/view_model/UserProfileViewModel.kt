@@ -19,6 +19,7 @@ sealed interface UserProfileUiEvent {
 
 sealed interface UserProfileUiAction {
     object BackPressed : UserProfileUiAction
+    object DismissErrorDialog : UserProfileUiAction
 }
 
 class UserProfileViewModel(
@@ -58,6 +59,9 @@ class UserProfileViewModel(
             when (action) {
                 UserProfileUiAction.BackPressed -> {
                     setEvent(UserProfileUiEvent.BackPressed)
+                }
+                UserProfileUiAction.DismissErrorDialog -> {
+                    setState { copy(error = null) }
                 }
             }
         }
