@@ -11,7 +11,6 @@ import com.adedom.myfood.data.models.request.TokenRequest
 import com.adedom.myfood.data.models.response.TokenResponse
 import io.ktor.client.*
 import io.ktor.client.call.*
-import io.ktor.client.engine.cio.*
 import io.ktor.client.plugins.*
 import io.ktor.client.plugins.auth.*
 import io.ktor.client.plugins.auth.providers.*
@@ -24,11 +23,12 @@ import io.ktor.serialization.kotlinx.json.*
 import kotlinx.serialization.json.Json
 
 class DataProviderRemote(
+    private val appHttpClientEngine: AppHttpClientEngine,
     private val appDataStore: AppDataStore,
 ) {
 
     fun getHttpClient(): HttpClient {
-        return HttpClient(CIO) {
+        return HttpClient(appHttpClientEngine.engine) {
             install(ContentNegotiation) {
                 json(Json {
                     ignoreUnknownKeys = true
