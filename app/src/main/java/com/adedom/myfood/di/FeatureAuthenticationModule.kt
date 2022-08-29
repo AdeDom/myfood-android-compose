@@ -1,4 +1,4 @@
-package com.adedom.authentication.di
+package com.adedom.myfood.di
 
 import com.adedom.authentication.data.providers.local.user_profile.UserProfileLocalDataSource
 import com.adedom.authentication.data.providers.local.user_profile.UserProfileLocalDataSourceImpl

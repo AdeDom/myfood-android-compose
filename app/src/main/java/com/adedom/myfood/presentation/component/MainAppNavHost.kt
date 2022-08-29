@@ -15,19 +15,28 @@ import androidx.navigation.compose.rememberNavController
 import com.adedom.authentication.presentation.component.LoginScreen
 import com.adedom.authentication.presentation.component.RegisterScreen
 import com.adedom.authentication.presentation.view_model.LoginUiEvent
+import com.adedom.authentication.presentation.view_model.LoginViewModel
 import com.adedom.authentication.presentation.view_model.RegisterUiEvent
+import com.adedom.authentication.presentation.view_model.RegisterViewModel
 import com.adedom.food_detail.presentation.component.FoodDetailScreen
 import com.adedom.food_detail.presentation.view_model.FoodDetailUiEvent
+import com.adedom.food_detail.presentation.view_model.FoodDetailViewModel
 import com.adedom.main.presentation.component.MainScreen
 import com.adedom.main.presentation.view_model.HomeUiEvent
+import com.adedom.main.presentation.view_model.HomeViewModel
 import com.adedom.search_food.presentation.component.SearchFoodScreen
 import com.adedom.search_food.presentation.view_model.SearchFoodUiEvent
+import com.adedom.search_food.presentation.view_model.SearchFoodViewModel
 import com.adedom.splash_screen.presentation.component.SplashScreen
 import com.adedom.splash_screen.presentation.view_model.SplashScreenUiEvent
+import com.adedom.splash_screen.presentation.view_model.SplashScreenViewModel
 import com.adedom.user_profile.presentation.component.UserProfileScreen
 import com.adedom.user_profile.presentation.view_model.UserProfileUiEvent
+import com.adedom.user_profile.presentation.view_model.UserProfileViewModel
 import com.adedom.welcome.presentation.component.WelcomeScreen
 import com.adedom.welcome.presentation.view_model.WelcomeUiEvent
+import com.adedom.welcome.presentation.view_model.WelcomeViewModel
+import org.koin.androidx.compose.getViewModel
 
 @Composable
 fun MainAppNavHost(
@@ -41,7 +50,8 @@ fun MainAppNavHost(
         startDestination = startDestination,
     ) {
         composable(Screen.SplashScreen.route) {
-            SplashScreen { uiEvent ->
+            val viewModel: SplashScreenViewModel = getViewModel()
+            SplashScreen(viewModel) { uiEvent ->
                 when (uiEvent) {
                     SplashScreenUiEvent.NavMain -> {
                         navController.navigate(Screen.Main.route) {
@@ -71,7 +81,8 @@ fun NavGraphBuilder.authGraph(navController: NavController) {
         route = Screen.Welcome.route,
     ) {
         composable(Screen.Welcome.Init.route) {
-            WelcomeScreen { uiEvent ->
+            val viewModel: WelcomeViewModel = getViewModel()
+            WelcomeScreen(viewModel) { uiEvent ->
                 when (uiEvent) {
                     WelcomeUiEvent.NavLogin -> {
                         navController.navigate(Screen.Welcome.Login.route)
@@ -90,7 +101,8 @@ fun NavGraphBuilder.authGraph(navController: NavController) {
             }
         }
         composable(Screen.Welcome.Login.route) {
-            LoginScreen { uiEvent ->
+            val viewModel: LoginViewModel = getViewModel()
+            LoginScreen(viewModel) { uiEvent ->
                 when (uiEvent) {
                     LoginUiEvent.NavMain -> {
                         navController.navigate(Screen.Main.route) {
@@ -107,7 +119,8 @@ fun NavGraphBuilder.authGraph(navController: NavController) {
             }
         }
         composable(Screen.Welcome.Register.route) {
-            RegisterScreen { uiEvent ->
+            val viewModel: RegisterViewModel = getViewModel()
+            RegisterScreen(viewModel) { uiEvent ->
                 when (uiEvent) {
                     RegisterUiEvent.NavLogin -> {
                         navController.popBackStack()
@@ -133,7 +146,8 @@ fun NavGraphBuilder.mainGraph(navController: NavController) {
     ) {
         composable(Screen.Main.Init.route) {
             val context = LocalContext.current
-            MainScreen { uiEvent ->
+            val viewModel: HomeViewModel = getViewModel()
+            MainScreen(viewModel) { uiEvent ->
                 when (uiEvent) {
                     HomeUiEvent.NavLogout -> {
                         navController.navigate(Screen.Welcome.route) {
@@ -165,7 +179,8 @@ fun NavGraphBuilder.mainGraph(navController: NavController) {
             }
         }
         composable(Screen.Main.UserProfile.route) {
-            UserProfileScreen { uiEvent ->
+            val viewModel: UserProfileViewModel = getViewModel()
+            UserProfileScreen(viewModel) { uiEvent ->
                 when (uiEvent) {
                     UserProfileUiEvent.BackPressed -> {
                         navController.popBackStack()
@@ -174,7 +189,8 @@ fun NavGraphBuilder.mainGraph(navController: NavController) {
             }
         }
         composable(Screen.Main.SearchFood.route) {
-            SearchFoodScreen { uiEvent ->
+            val viewModel: SearchFoodViewModel = getViewModel()
+            SearchFoodScreen(viewModel) { uiEvent ->
                 when (uiEvent) {
                     is SearchFoodUiEvent.FoodDetail -> {
                         val route = Screen.Main.FoodDetail.arguments(uiEvent.foodId)
@@ -190,8 +206,9 @@ fun NavGraphBuilder.mainGraph(navController: NavController) {
             route = Screen.Main.FoodDetail.route,
             arguments = Screen.Main.FoodDetail.arguments,
         ) { backStackEntry ->
+            val viewModel: FoodDetailViewModel = getViewModel()
             val foodId = backStackEntry.arguments?.getInt("foodId")
-            FoodDetailScreen(foodId) { uiEvent ->
+            FoodDetailScreen(viewModel, foodId) { uiEvent ->
                 when (uiEvent) {
                     FoodDetailUiEvent.OnBackPressed -> {
                         navController.popBackStack()

@@ -18,12 +18,11 @@ import com.adedom.connectivity.presentation.view_model.ConnectivityUiAction
 import com.adedom.connectivity.presentation.view_model.ConnectivityUiState
 import com.adedom.connectivity.presentation.view_model.ConnectivityViewModel
 import com.adedom.ui_components.theme.MyFoodTheme
-import org.koin.androidx.compose.getViewModel
 
 @Composable
-fun ConnectivityScreen() {
-    val viewModel = getViewModel<ConnectivityViewModel>()
-
+fun ConnectivityScreen(
+    viewModel: ConnectivityViewModel,
+) {
     ConnectivityContent(
         state = viewModel.uiState,
         viewModel::dispatch,

@@ -11,14 +11,12 @@ import com.adedom.splash_screen.presentation.view_model.SplashScreenViewModel
 import com.adedom.ui_components.components.AppImage
 import com.adedom.ui_components.components.LogoApp
 import com.adedom.ui_components.theme.MyFoodTheme
-import org.koin.androidx.compose.getViewModel
 
 @Composable
 fun SplashScreen(
+    viewModel: SplashScreenViewModel,
     onEvent: (SplashScreenUiEvent) -> Unit,
 ) {
-    val viewModel: SplashScreenViewModel = getViewModel()
-
     LaunchedEffect(viewModel.uiEvent) {
         viewModel.uiEvent.collect { uiEvent ->
             onEvent(uiEvent)

@@ -26,14 +26,13 @@ import com.adedom.ui_components.components.AppIcon
 import com.adedom.ui_components.components.AppTextField
 import com.adedom.ui_components.components.FoodBoxItem
 import com.adedom.ui_components.theme.MyFoodTheme
-import org.koin.androidx.compose.getViewModel
 
 @Composable
 fun SearchFoodScreen(
+    viewModel: SearchFoodViewModel,
     onEvent: (SearchFoodUiEvent) -> Unit,
 ) {
     val inputService = LocalTextInputService.current
-    val viewModel: SearchFoodViewModel = getViewModel()
     val focusRequester = remember { FocusRequester() }
 
     LaunchedEffect(viewModel.uiEvent) {

@@ -1,4 +1,4 @@
-package com.adedom.food_detail.di
+package com.adedom.myfood.di
 
 import com.adedom.food_detail.data.providers.remote.FoodRemoteDataSource
 import com.adedom.food_detail.data.providers.remote.FoodRemoteDataSourceImpl

@@ -1,20 +1,20 @@
 package com.adedom.authentication.data.providers.remote.auth
 
 import com.adedom.authentication.BuildConfig
+import com.adedom.core.data.providers.remote.DataProviderRemote
 import com.adedom.myfood.data.models.base.BaseResponse
 import com.adedom.myfood.data.models.request.LoginRequest
 import com.adedom.myfood.data.models.response.TokenResponse
-import io.ktor.client.*
 import io.ktor.client.call.*
 import io.ktor.client.request.*
 import io.ktor.http.*
 
 class AuthRemoteDataSourceImpl(
-    private val httpClient: HttpClient,
+    private val dataProviderRemote: DataProviderRemote,
 ) : AuthRemoteDataSource {
 
     override suspend fun callLogin(loginRequest: LoginRequest): BaseResponse<TokenResponse> {
-        return httpClient
+        return dataProviderRemote.getHttpClient()
             .post(BuildConfig.BASE_URL + "api/auth/login") {
                 contentType(ContentType.Application.Json)
                 setBody(loginRequest)

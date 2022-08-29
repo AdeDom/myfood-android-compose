@@ -25,14 +25,12 @@ import com.adedom.ui_components.components.AppIcon
 import com.adedom.ui_components.components.AppTitleText
 import com.adedom.ui_components.theme.MyFoodTheme
 import kotlinx.coroutines.launch
-import org.koin.androidx.compose.getViewModel
 
 @Composable
 fun MainScreen(
+    viewModel: HomeViewModel,
     onEvent: (HomeUiEvent) -> Unit,
 ) {
-    val viewModel: HomeViewModel = getViewModel()
-
     LaunchedEffect(viewModel.uiEvent) {
         viewModel.uiEvent.collect { uiEvent ->
             onEvent(uiEvent)

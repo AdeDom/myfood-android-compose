@@ -1,4 +1,4 @@
-package com.adedom.user_profile.di
+package com.adedom.myfood.di
 
 import com.adedom.user_profile.data.providers.local.user_profile.UserProfileLocalDataSource
 import com.adedom.user_profile.data.providers.local.user_profile.UserProfileLocalDataSourceImpl

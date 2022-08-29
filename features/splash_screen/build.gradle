@@ -73,7 +73,4 @@ dependencies {
     androidTestImplementation "androidx.compose.ui:ui-test-junit4:$compose_version"
     debugImplementation "androidx.compose.ui:ui-tooling:$compose_version"
     debugImplementation "androidx.compose.ui:ui-test-manifest:$compose_version"
-
-    implementation "io.insert-koin:koin-core:$koin_version"
-    implementation "io.insert-koin:koin-androidx-compose:$koin_version"
 }

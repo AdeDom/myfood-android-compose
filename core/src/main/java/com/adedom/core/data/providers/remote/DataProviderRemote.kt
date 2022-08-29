@@ -1,12 +1,10 @@
-package com.adedom.core.di
+package com.adedom.core.data.providers.remote
 
 import com.adedom.core.BuildConfig
 import com.adedom.core.data.providers.data_store.AppDataStore
-import com.adedom.core.data.providers.remote.decodeApiServiceResponseFromString
 import com.adedom.core.utils.ApiServiceException
 import com.adedom.core.utils.AuthRole
 import com.adedom.core.utils.RefreshTokenExpiredException
-import com.adedom.myfood.MyFoodDatabase
 import com.adedom.myfood.data.models.base.BaseError
 import com.adedom.myfood.data.models.base.BaseResponse
 import com.adedom.myfood.data.models.request.TokenRequest
@@ -24,14 +22,13 @@ import io.ktor.client.statement.*
 import io.ktor.http.*
 import io.ktor.serialization.kotlinx.json.*
 import kotlinx.serialization.json.Json
-import org.koin.dsl.module
 
-val coreModule = module {
+class DataProviderRemote(
+    private val appDataStore: AppDataStore,
+) {
 
-    single {
-        val appDataStore = get<AppDataStore>()
-
-        HttpClient(CIO) {
+    fun getHttpClient(): HttpClient {
+        return HttpClient(CIO) {
             install(ContentNegotiation) {
                 json(Json {
                     ignoreUnknownKeys = true
@@ -118,5 +115,4 @@ val coreModule = module {
             }
         }
     }
-    single { MyFoodDatabase(get()) }
 }

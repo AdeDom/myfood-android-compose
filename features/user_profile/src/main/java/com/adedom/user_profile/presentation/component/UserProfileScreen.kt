@@ -26,14 +26,12 @@ import com.adedom.user_profile.presentation.view_model.UserProfileUiAction
 import com.adedom.user_profile.presentation.view_model.UserProfileUiEvent
 import com.adedom.user_profile.presentation.view_model.UserProfileUiState
 import com.adedom.user_profile.presentation.view_model.UserProfileViewModel
-import org.koin.androidx.compose.getViewModel
 
 @Composable
 fun UserProfileScreen(
+    viewModel: UserProfileViewModel,
     onNavigate: (UserProfileUiEvent) -> Unit,
 ) {
-    val viewModel: UserProfileViewModel = getViewModel()
-
     LaunchedEffect(key1 = viewModel.uiEvent) {
         viewModel.uiEvent.collect { uiEvent ->
             onNavigate(uiEvent)

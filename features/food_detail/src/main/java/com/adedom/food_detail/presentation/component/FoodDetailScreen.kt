@@ -25,15 +25,13 @@ import com.adedom.food_detail.presentation.view_model.FoodDetailUiState
 import com.adedom.food_detail.presentation.view_model.FoodDetailViewModel
 import com.adedom.ui_components.components.*
 import com.adedom.ui_components.theme.MyFoodTheme
-import org.koin.androidx.compose.getViewModel
 
 @Composable
 fun FoodDetailScreen(
+    viewModel: FoodDetailViewModel,
     foodId: Int?,
     onEvent: (FoodDetailUiEvent) -> Unit,
 ) {
-    val viewModel = getViewModel<FoodDetailViewModel>()
-
     LaunchedEffect(key1 = Unit) {
         viewModel.callFoodDetail(foodId)
     }

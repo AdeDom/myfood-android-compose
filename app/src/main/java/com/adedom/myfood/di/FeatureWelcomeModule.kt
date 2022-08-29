@@ -1,4 +1,4 @@
-package com.adedom.welcome.di
+package com.adedom.myfood.di
 
 import com.adedom.welcome.data.repositories.WelcomeRepositoryImpl
 import com.adedom.welcome.domain.repositories.WelcomeRepository
