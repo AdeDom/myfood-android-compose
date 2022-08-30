@@ -7,6 +7,7 @@ import com.adedom.core.utils.AuthRole
 import com.adedom.core.utils.RefreshTokenExpiredException
 import com.adedom.myfood.data.models.base.BaseError
 import com.adedom.myfood.data.models.base.BaseResponse
+import com.adedom.myfood.data.models.base.ErrorResponse
 import com.adedom.myfood.data.models.request.TokenRequest
 import com.adedom.myfood.data.models.response.TokenResponse
 import io.ktor.client.*
@@ -50,8 +51,14 @@ class DataProviderRemote(
             install(Auth) {
                 bearer {
                     loadTokens {
-                        val accessToken = appDataStore.getAccessToken().orEmpty()
-                        val refreshToken = appDataStore.getRefreshToken().orEmpty()
+                        val baseError = BaseError(
+                            code = ErrorResponse.RefreshTokenError.code,
+                            message = ErrorResponse.RefreshTokenError.message,
+                        )
+                        val accessToken = appDataStore.getAccessToken()
+                            ?: throw RefreshTokenExpiredException(baseError)
+                        val refreshToken = appDataStore.getRefreshToken()
+                            ?: throw RefreshTokenExpiredException(baseError)
                         BearerTokens(accessToken, refreshToken)
                     }
 
@@ -66,8 +73,14 @@ class DataProviderRemote(
                                 setBody(tokenRequest)
                             }
                             .body()
-                        val accessToken = tokenResponse.result?.accessToken.orEmpty()
-                        val refreshToken = tokenResponse.result?.refreshToken.orEmpty()
+                        val baseError = BaseError(
+                            code = ErrorResponse.RefreshTokenError.code,
+                            message = ErrorResponse.RefreshTokenError.message,
+                        )
+                        val accessToken = tokenResponse.result?.accessToken
+                            ?: throw RefreshTokenExpiredException(baseError)
+                        val refreshToken = tokenResponse.result?.refreshToken
+                            ?: throw RefreshTokenExpiredException(baseError)
                         appDataStore.setAccessToken(accessToken)
                         appDataStore.setRefreshToken(refreshToken)
                         BearerTokens(accessToken, refreshToken)
