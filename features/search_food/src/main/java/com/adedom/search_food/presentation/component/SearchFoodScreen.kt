@@ -65,7 +65,7 @@ fun SearchFoodContent(
     LazyColumn(
         modifier = Modifier
             .fillMaxSize()
-            .padding(16.dp),
+            .padding(4.dp),
     ) {
         item {
             Row(

@@ -22,7 +22,7 @@ fun FoodBoxItem(
     Box(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(8.dp)
+            .padding(4.dp)
             .clickable {
                 onFoodClick(food.foodId)
             },

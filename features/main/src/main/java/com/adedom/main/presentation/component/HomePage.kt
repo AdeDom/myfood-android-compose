@@ -112,7 +112,7 @@ fun HomePage(
                                 items(state.categories) { category ->
                                     Box(
                                         modifier = Modifier
-                                            .padding(8.dp)
+                                            .padding(4.dp)
                                             .clickable {
                                                 dispatch(HomeUiAction.CategoryClick(category.categoryId))
                                             },
