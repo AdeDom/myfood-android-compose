@@ -170,11 +170,19 @@ fun HomePage(
                             }
                         }
 
-                        items(state.foods) { food ->
-                            FoodBoxItem(
-                                food = food,
-                                onFoodClick = { dispatch(HomeUiAction.NavFoodDetail(it)) },
-                            )
+                        if (state.isEmptyData) {
+                            item {
+                                AppEmptyData(
+                                    modifier = Modifier.fillMaxWidth(),
+                                )
+                            }
+                        } else {
+                            items(state.foods) { food ->
+                                FoodBoxItem(
+                                    food = food,
+                                    onFoodClick = { dispatch(HomeUiAction.NavFoodDetail(it)) },
+                                )
+                            }
                         }
                     }
                 }
@@ -302,6 +310,7 @@ fun HomePagePreview() {
                     ),
                 ),
                 categoryIdClick = 2,
+//                isEmptyData = true,
             ),
             onMenuClick = {},
             onLogoutClick = {},
