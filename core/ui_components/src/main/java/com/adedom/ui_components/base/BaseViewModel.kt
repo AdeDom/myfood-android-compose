@@ -26,7 +26,7 @@ abstract class BaseViewModel<S : Any, E : Any, A : Any>(
         throwable.printStackTrace()
         launch {
             if (throwable is RefreshTokenExpiredException) {
-                _refreshTokenExpired.emit(throwable.toBaseError())
+                refreshTokenExpired = throwable.toBaseError()
             }
         }
     }
@@ -37,8 +37,8 @@ abstract class BaseViewModel<S : Any, E : Any, A : Any>(
     private val _uiEvent = MutableSharedFlow<E>()
     val uiEvent: SharedFlow<E> = _uiEvent.asSharedFlow()
 
-    private val _refreshTokenExpired = MutableSharedFlow<BaseError>()
-    val refreshTokenExpired: SharedFlow<BaseError> = _refreshTokenExpired.asSharedFlow()
+    var refreshTokenExpired by mutableStateOf<BaseError?>(null)
+        private set
 
     override val coroutineContext: CoroutineContext
         get() = job + Dispatchers.Main + exceptionHandler

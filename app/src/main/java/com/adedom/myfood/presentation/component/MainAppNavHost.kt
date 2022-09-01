@@ -185,6 +185,13 @@ fun NavGraphBuilder.mainGraph(navController: NavController) {
                     UserProfileUiEvent.BackPressed -> {
                         navController.popBackStack()
                     }
+                    UserProfileUiEvent.RefreshTokenExpired -> {
+                        navController.navigate(Screen.Welcome.route) {
+                            popUpTo(Screen.Main.route) {
+                                inclusive = true
+                            }
+                        }
+                    }
                 }
             }
         }

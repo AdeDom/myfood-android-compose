@@ -15,11 +15,13 @@ data class UserProfileUiState(
 
 sealed interface UserProfileUiEvent {
     object BackPressed : UserProfileUiEvent
+    object RefreshTokenExpired : UserProfileUiEvent
 }
 
 sealed interface UserProfileUiAction {
     object BackPressed : UserProfileUiAction
     object DismissErrorDialog : UserProfileUiAction
+    object RefreshTokenExpired : UserProfileUiAction
 }
 
 class UserProfileViewModel(
@@ -62,6 +64,9 @@ class UserProfileViewModel(
                 }
                 UserProfileUiAction.DismissErrorDialog -> {
                     setState { copy(error = null) }
+                }
+                UserProfileUiAction.RefreshTokenExpired -> {
+                    setEvent(UserProfileUiEvent.RefreshTokenExpired)
                 }
             }
         }

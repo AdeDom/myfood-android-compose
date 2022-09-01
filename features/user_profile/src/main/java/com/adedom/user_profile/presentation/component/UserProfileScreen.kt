@@ -15,6 +15,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.adedom.myfood.data.models.base.BaseError
 import com.adedom.ui_components.components.AppButton
 import com.adedom.ui_components.components.AppErrorAlertDialog
 import com.adedom.ui_components.components.AppIcon
@@ -40,6 +41,7 @@ fun UserProfileScreen(
 
     UserProfileContent(
         viewModel.uiState,
+        viewModel.refreshTokenExpired,
         viewModel::dispatch,
     )
 }
@@ -47,6 +49,7 @@ fun UserProfileScreen(
 @Composable
 fun UserProfileContent(
     state: UserProfileUiState,
+    refreshTokenExpired: BaseError?,
     dispatch: (UserProfileUiAction) -> Unit,
 ) {
     Box(
@@ -118,6 +121,13 @@ fun UserProfileContent(
                 onDismiss = { dispatch(UserProfileUiAction.DismissErrorDialog) },
             )
         }
+
+        refreshTokenExpired?.let { error ->
+            AppErrorAlertDialog(
+                error = error,
+                onDismiss = { dispatch(UserProfileUiAction.RefreshTokenExpired) },
+            )
+        }
     }
 }
 
@@ -138,6 +148,7 @@ fun UserProfileContentPreview() {
                 ),
 //                error = BaseError(),
             ),
+            refreshTokenExpired = null,
             dispatch = { action ->
                 when (action) {
                     UserProfileUiAction.BackPressed -> {
@@ -145,6 +156,9 @@ fun UserProfileContentPreview() {
                     }
                     UserProfileUiAction.DismissErrorDialog -> {
                         Toast.makeText(context, "DismissErrorDialog", Toast.LENGTH_SHORT).show()
+                    }
+                    is UserProfileUiAction.RefreshTokenExpired -> {
+                        Toast.makeText(context, "RefreshTokenExpired", Toast.LENGTH_SHORT).show()
                     }
                 }
             },
