@@ -22,6 +22,7 @@ import com.adedom.search_food.presentation.view_model.SearchFoodUiAction
 import com.adedom.search_food.presentation.view_model.SearchFoodUiEvent
 import com.adedom.search_food.presentation.view_model.SearchFoodUiState
 import com.adedom.search_food.presentation.view_model.SearchFoodViewModel
+import com.adedom.ui_components.components.AppEmptyData
 import com.adedom.ui_components.components.AppIcon
 import com.adedom.ui_components.components.AppTextField
 import com.adedom.ui_components.components.FoodBoxItem
@@ -63,13 +64,12 @@ fun SearchFoodContent(
     focusRequester: FocusRequester,
 ) {
     LazyColumn(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(4.dp),
+        modifier = Modifier.fillMaxSize(),
     ) {
         item {
             Row(
                 verticalAlignment = Alignment.CenterVertically,
+                modifier = Modifier.padding(4.dp),
             ) {
                 Column {
                     AppIcon(
@@ -93,11 +93,19 @@ fun SearchFoodContent(
             }
         }
 
-        items(state.searchList) { food ->
-            FoodBoxItem(
-                food = food,
-                onFoodClick = { dispatch(SearchFoodUiAction.FoodDetail(it)) },
-            )
+        if (state.isEmptyData) {
+            item {
+                AppEmptyData(
+                    modifier = Modifier.fillMaxWidth(),
+                )
+            }
+        } else {
+            items(state.searchList) { food ->
+                FoodBoxItem(
+                    food = food,
+                    onFoodClick = { dispatch(SearchFoodUiAction.FoodDetail(it)) },
+                )
+            }
         }
     }
 }
@@ -119,6 +127,22 @@ fun SearchFoodContentPreview() {
                 search = "Abc",
                 searchList = listOf(
                     FoodModel(
+                        foodId = 1,
+                        foodName = "foodName",
+                        alias = "alias",
+                        image = "",
+                        ratingScoreCount = "ratingScoreCount",
+                        categoryId = 2,
+                    ),
+                    FoodModel(
+                        foodId = 2,
+                        foodName = "foodName",
+                        alias = "alias",
+                        image = "",
+                        ratingScoreCount = "ratingScoreCount",
+                        categoryId = 2,
+                    ),
+                    FoodModel(
                         foodId = 3,
                         foodName = "foodName",
                         alias = "alias",
@@ -134,7 +158,56 @@ fun SearchFoodContentPreview() {
                         ratingScoreCount = "ratingScoreCount",
                         categoryId = 2,
                     ),
+                    FoodModel(
+                        foodId = 5,
+                        foodName = "foodName",
+                        alias = "alias",
+                        image = "",
+                        ratingScoreCount = "ratingScoreCount",
+                        categoryId = 2,
+                    ),
+                    FoodModel(
+                        foodId = 6,
+                        foodName = "foodName",
+                        alias = "alias",
+                        image = "",
+                        ratingScoreCount = "ratingScoreCount",
+                        categoryId = 2,
+                    ),
+                    FoodModel(
+                        foodId = 7,
+                        foodName = "foodName",
+                        alias = "alias",
+                        image = "",
+                        ratingScoreCount = "ratingScoreCount",
+                        categoryId = 2,
+                    ),
+                    FoodModel(
+                        foodId = 8,
+                        foodName = "foodName",
+                        alias = "alias",
+                        image = "",
+                        ratingScoreCount = "ratingScoreCount",
+                        categoryId = 2,
+                    ),
+                    FoodModel(
+                        foodId = 9,
+                        foodName = "foodName",
+                        alias = "alias",
+                        image = "",
+                        ratingScoreCount = "ratingScoreCount",
+                        categoryId = 2,
+                    ),
+                    FoodModel(
+                        foodId = 10,
+                        foodName = "foodName",
+                        alias = "alias",
+                        image = "",
+                        ratingScoreCount = "ratingScoreCount",
+                        categoryId = 2,
+                    ),
                 ),
+//                isEmptyData = true,
             ),
             dispatch = {},
             focusRequester = focusRequester,

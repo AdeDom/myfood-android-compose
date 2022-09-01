@@ -22,6 +22,7 @@ data class HomeUiState(
     val categoryIdClick: Long? = null,
     val isExitAuth: Boolean = false,
     val isLogoutDialog: Boolean = false,
+    val isEmptyData: Boolean = false,
 )
 
 sealed interface HomeUiEvent {
@@ -96,7 +97,8 @@ class HomeViewModel(
                         categories = resource.data,
                         categoryName = categoryName,
                         foods = foods,
-                        categoryIdClick = uiState.categoryIdClick ?: CATEGORY_RECOMMEND
+                        categoryIdClick = uiState.categoryIdClick ?: CATEGORY_RECOMMEND,
+                        isEmptyData = foods.isEmpty(),
                     )
                 }
             }
@@ -129,6 +131,7 @@ class HomeViewModel(
                             categoryName = categoryName,
                             foods = foods,
                             categoryIdClick = action.categoryId,
+                            isEmptyData = foods.isEmpty(),
                         )
                     }
                 }
