@@ -63,13 +63,12 @@ fun SearchFoodContent(
     focusRequester: FocusRequester,
 ) {
     LazyColumn(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(4.dp),
+        modifier = Modifier.fillMaxSize(),
     ) {
         item {
             Row(
                 verticalAlignment = Alignment.CenterVertically,
+                modifier = Modifier.padding(4.dp),
             ) {
                 Column {
                     AppIcon(
@@ -119,6 +118,22 @@ fun SearchFoodContentPreview() {
                 search = "Abc",
                 searchList = listOf(
                     FoodModel(
+                        foodId = 1,
+                        foodName = "foodName",
+                        alias = "alias",
+                        image = "",
+                        ratingScoreCount = "ratingScoreCount",
+                        categoryId = 2,
+                    ),
+                    FoodModel(
+                        foodId = 2,
+                        foodName = "foodName",
+                        alias = "alias",
+                        image = "",
+                        ratingScoreCount = "ratingScoreCount",
+                        categoryId = 2,
+                    ),
+                    FoodModel(
                         foodId = 3,
                         foodName = "foodName",
                         alias = "alias",
@@ -128,6 +143,54 @@ fun SearchFoodContentPreview() {
                     ),
                     FoodModel(
                         foodId = 4,
+                        foodName = "foodName",
+                        alias = "alias",
+                        image = "",
+                        ratingScoreCount = "ratingScoreCount",
+                        categoryId = 2,
+                    ),
+                    FoodModel(
+                        foodId = 5,
+                        foodName = "foodName",
+                        alias = "alias",
+                        image = "",
+                        ratingScoreCount = "ratingScoreCount",
+                        categoryId = 2,
+                    ),
+                    FoodModel(
+                        foodId = 6,
+                        foodName = "foodName",
+                        alias = "alias",
+                        image = "",
+                        ratingScoreCount = "ratingScoreCount",
+                        categoryId = 2,
+                    ),
+                    FoodModel(
+                        foodId = 7,
+                        foodName = "foodName",
+                        alias = "alias",
+                        image = "",
+                        ratingScoreCount = "ratingScoreCount",
+                        categoryId = 2,
+                    ),
+                    FoodModel(
+                        foodId = 8,
+                        foodName = "foodName",
+                        alias = "alias",
+                        image = "",
+                        ratingScoreCount = "ratingScoreCount",
+                        categoryId = 2,
+                    ),
+                    FoodModel(
+                        foodId = 9,
+                        foodName = "foodName",
+                        alias = "alias",
+                        image = "",
+                        ratingScoreCount = "ratingScoreCount",
+                        categoryId = 2,
+                    ),
+                    FoodModel(
+                        foodId = 10,
                         foodName = "foodName",
                         alias = "alias",
                         image = "",

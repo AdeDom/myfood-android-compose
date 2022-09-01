@@ -118,7 +118,7 @@ fun LoginContent(
 fun LoginContentPreview() {
     LoginContent(
         state = LoginUiState(
-            isLoading = true,
+//            isLoading = true,
         ),
         dispatch = {},
     )

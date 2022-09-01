@@ -60,12 +60,12 @@ fun UserProfileContent(
                 elevation = 8.dp,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(8.dp),
+                    .padding(4.dp),
             ) {
                 Column(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(8.dp),
+                        .padding(4.dp),
                 ) {
                     AppImageNetwork(
                         image = userProfile.image,
