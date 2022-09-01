@@ -22,6 +22,7 @@ import com.adedom.search_food.presentation.view_model.SearchFoodUiAction
 import com.adedom.search_food.presentation.view_model.SearchFoodUiEvent
 import com.adedom.search_food.presentation.view_model.SearchFoodUiState
 import com.adedom.search_food.presentation.view_model.SearchFoodViewModel
+import com.adedom.ui_components.components.AppEmptyData
 import com.adedom.ui_components.components.AppIcon
 import com.adedom.ui_components.components.AppTextField
 import com.adedom.ui_components.components.FoodBoxItem
@@ -92,11 +93,19 @@ fun SearchFoodContent(
             }
         }
 
-        items(state.searchList) { food ->
-            FoodBoxItem(
-                food = food,
-                onFoodClick = { dispatch(SearchFoodUiAction.FoodDetail(it)) },
-            )
+        if (state.isEmptyData) {
+            item {
+                AppEmptyData(
+                    modifier = Modifier.fillMaxWidth(),
+                )
+            }
+        } else {
+            items(state.searchList) { food ->
+                FoodBoxItem(
+                    food = food,
+                    onFoodClick = { dispatch(SearchFoodUiAction.FoodDetail(it)) },
+                )
+            }
         }
     }
 }
@@ -198,6 +207,7 @@ fun SearchFoodContentPreview() {
                         categoryId = 2,
                     ),
                 ),
+//                isEmptyData = true,
             ),
             dispatch = {},
             focusRequester = focusRequester,

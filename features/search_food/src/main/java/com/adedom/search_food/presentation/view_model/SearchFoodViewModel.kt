@@ -11,6 +11,7 @@ data class SearchFoodUiState(
     val initial: Unit? = null,
     val search: String = "",
     val searchList: List<FoodModel> = emptyList(),
+    val isEmptyData: Boolean = false,
 )
 
 sealed interface SearchFoodUiEvent {
@@ -37,7 +38,12 @@ class SearchFoodViewModel(
                 SearchFoodUiAction.Initial -> {
                     delay(200)
                     val foods = searchFoodUseCase("")
-                    setState { copy(searchList = foods) }
+                    setState {
+                        copy(
+                            searchList = foods,
+                            isEmptyData = foods.isEmpty(),
+                        )
+                    }
                 }
                 is SearchFoodUiAction.SetSearch -> {
                     setState { copy(search = action.value) }
@@ -45,7 +51,12 @@ class SearchFoodViewModel(
                     searchJob = launch {
                         delay(500)
                         val foods = searchFoodUseCase(action.value)
-                        setState { copy(searchList = foods) }
+                        setState {
+                            copy(
+                                searchList = foods,
+                                isEmptyData = foods.isEmpty(),
+                            )
+                        }
                     }
                 }
                 is SearchFoodUiAction.FoodDetail -> {
