@@ -170,7 +170,7 @@ fun HomePage(
                             }
                         }
 
-                        if (state.isEmptyData) {
+                        if (state.foods.isEmpty()) {
                             item {
                                 AppEmptyData(
                                     modifier = Modifier.fillMaxWidth(),
@@ -310,7 +310,6 @@ fun HomePagePreview() {
                     ),
                 ),
                 categoryIdClick = 2,
-//                isEmptyData = true,
             ),
             onMenuClick = {},
             onLogoutClick = {},

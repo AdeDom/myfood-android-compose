@@ -93,7 +93,7 @@ fun SearchFoodContent(
             }
         }
 
-        if (state.isEmptyData) {
+        if (state.searchList.isEmpty()) {
             item {
                 AppEmptyData(
                     modifier = Modifier.fillMaxWidth(),
@@ -207,7 +207,6 @@ fun SearchFoodContentPreview() {
                         categoryId = 2,
                     ),
                 ),
-//                isEmptyData = true,
             ),
             dispatch = {},
             focusRequester = focusRequester,
