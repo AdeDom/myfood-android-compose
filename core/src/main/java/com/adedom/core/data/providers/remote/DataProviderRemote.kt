@@ -51,15 +51,13 @@ class DataProviderRemote(
             install(Auth) {
                 bearer {
                     loadTokens {
-                        val baseError = BaseError(
-                            code = ErrorResponse.RefreshTokenError.code,
-                            message = ErrorResponse.RefreshTokenError.message,
-                        )
                         val accessToken = appDataStore.getAccessToken()
-                            ?: throw RefreshTokenExpiredException(baseError)
                         val refreshToken = appDataStore.getRefreshToken()
-                            ?: throw RefreshTokenExpiredException(baseError)
-                        BearerTokens(accessToken, refreshToken)
+                        if (accessToken != null && refreshToken != null) {
+                            BearerTokens(accessToken, refreshToken)
+                        } else {
+                            null
+                        }
                     }
 
                     refreshTokens {
