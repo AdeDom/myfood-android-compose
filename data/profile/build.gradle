@@ -1,0 +1,74 @@
+plugins {
+    id 'com.android.library'
+    id 'org.jetbrains.kotlin.android'
+}
+
+android {
+    compileSdk target_and_compile_version
+
+    defaultConfig {
+        minSdk min_sdk_version
+        targetSdk target_and_compile_version
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles "consumer-rules.pro"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    productFlavors {
+        flavorDimensions "develop"
+        develop {
+            buildConfigField "Boolean", "IS_DEVELOP_MODE", "true"
+            buildConfigField "String", "BASE_URL", "\"https://myfood-server.herokuapp.com/\""
+            buildConfigField "String", "HOST", "\"myfood-server.herokuapp.com\""
+            versionNameSuffix "-Dev"
+        }
+
+        flavorDimensions "production"
+        production {
+            buildConfigField "Boolean", "IS_DEVELOP_MODE", "false"
+            buildConfigField "String", "BASE_URL", "\"https://myfood-server.herokuapp.com/\""
+            buildConfigField "String", "HOST", "\"myfood-server.herokuapp.com\""
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+    packagingOptions {
+        exclude 'META-INF/io.netty.versions.properties'
+        exclude 'META-INF/INDEX.LIST'
+    }
+}
+
+dependencies {
+
+    implementation "androidx.core:core-ktx:$core_ktx_version"
+    implementation project(path: ':core')
+
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutine_version"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutine_version"
+
+    implementation "io.ktor:ktor-client-core:$ktor_version"
+    implementation "io.ktor:ktor-client-cio:$ktor_version"
+    implementation "io.ktor:ktor-client-logging:$ktor_version"
+    implementation "io.ktor:ktor-client-content-negotiation:$ktor_version"
+    implementation "io.ktor:ktor-serialization-kotlinx-json:$ktor_version"
+    implementation "io.ktor:ktor-client-auth:$ktor_version"
+
+    implementation "com.squareup.sqldelight:coroutines-extensions:$sqldelight_version"
+
+    implementation "com.github.AdeDom:myfood-server:$myfood_version"
+
+    testImplementation "junit:junit:$junit_version"
+}

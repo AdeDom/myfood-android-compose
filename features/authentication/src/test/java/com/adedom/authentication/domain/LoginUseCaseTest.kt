@@ -2,13 +2,9 @@ package com.adedom.authentication.domain
 
 import com.adedom.authentication.data.providers.data_store.FakeAppDataStore
 import com.adedom.authentication.data.providers.local.FakeUserProfileLocalDataSource
-import com.adedom.authentication.data.providers.local.user_profile.UserProfileLocalDataSource
 import com.adedom.authentication.data.providers.remote.auth.AuthRemoteDataSource
-import com.adedom.authentication.data.providers.remote.profile.ProfileRemoteDataSource
 import com.adedom.authentication.data.repositories.AuthLoginRepositoryImpl
-import com.adedom.authentication.data.repositories.UserProfileRepositoryImpl
 import com.adedom.authentication.domain.repositories.AuthLoginRepository
-import com.adedom.authentication.domain.repositories.UserProfileRepository
 import com.adedom.authentication.domain.use_cases.LoginUseCase
 import com.adedom.core.data.models.error.AppErrorCode
 import com.adedom.core.data.providers.data_store.AppDataStore
@@ -19,6 +15,10 @@ import com.adedom.myfood.data.models.base.BaseError
 import com.adedom.myfood.data.models.base.BaseResponse
 import com.adedom.myfood.data.models.response.TokenResponse
 import com.adedom.myfood.data.models.response.UserProfileResponse
+import com.adedom.profile.providers.local.UserProfileLocalDataSource
+import com.adedom.profile.providers.remote.ProfileRemoteDataSource
+import com.adedom.profile.repositories.UserProfileRepository
+import com.adedom.profile.repositories.UserProfileRepositoryImpl
 import com.google.common.truth.Truth.assertThat
 import io.mockk.coEvery
 import io.mockk.coVerify

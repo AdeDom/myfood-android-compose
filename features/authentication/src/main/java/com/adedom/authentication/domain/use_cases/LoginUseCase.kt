@@ -1,13 +1,13 @@
 package com.adedom.authentication.domain.use_cases
 
 import com.adedom.authentication.domain.repositories.AuthLoginRepository
-import com.adedom.authentication.domain.repositories.UserProfileRepository
 import com.adedom.core.data.models.error.AppErrorCode
 import com.adedom.core.utils.ApiServiceException
 import com.adedom.core.utils.Resource
 import com.adedom.myfood.data.models.base.BaseError
 import com.adedom.myfood.data.models.request.LoginRequest
 import com.adedom.myfood.data.models.response.UserProfileResponse
+import com.adedom.profile.repositories.UserProfileRepository
 import myfood.database.UserProfileEntity
 
 class LoginUseCase(
