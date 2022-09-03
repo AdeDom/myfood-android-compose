@@ -4,8 +4,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
-import com.adedom.core.utils.RefreshTokenExpiredException
-import com.adedom.myfood.data.models.base.BaseError
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharedFlow
@@ -24,11 +22,6 @@ abstract class BaseViewModel<S : Any, E : Any, A : Any>(
     private val job = SupervisorJob()
     private val exceptionHandler = CoroutineExceptionHandler { _, throwable ->
         throwable.printStackTrace()
-        launch {
-            if (throwable is RefreshTokenExpiredException) {
-                refreshTokenExpired = throwable.toBaseError()
-            }
-        }
     }
 
     var uiState by mutableStateOf(initialUiState)
@@ -36,9 +29,6 @@ abstract class BaseViewModel<S : Any, E : Any, A : Any>(
 
     private val _uiEvent = MutableSharedFlow<E>()
     val uiEvent: SharedFlow<E> = _uiEvent.asSharedFlow()
-
-    var refreshTokenExpired by mutableStateOf<BaseError?>(null)
-        private set
 
     override val coroutineContext: CoroutineContext
         get() = job + Dispatchers.Main + exceptionHandler

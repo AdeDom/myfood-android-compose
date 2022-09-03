@@ -15,7 +15,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.adedom.myfood.data.models.base.BaseError
 import com.adedom.ui_components.components.AppButton
 import com.adedom.ui_components.components.AppErrorAlertDialog
 import com.adedom.ui_components.components.AppIcon
@@ -41,7 +40,6 @@ fun UserProfileScreen(
 
     UserProfileContent(
         viewModel.uiState,
-        viewModel.refreshTokenExpired,
         viewModel::dispatch,
     )
 }
@@ -49,7 +47,6 @@ fun UserProfileScreen(
 @Composable
 fun UserProfileContent(
     state: UserProfileUiState,
-    refreshTokenExpired: BaseError?,
     dispatch: (UserProfileUiAction) -> Unit,
 ) {
     Box(
@@ -122,7 +119,7 @@ fun UserProfileContent(
             )
         }
 
-        refreshTokenExpired?.let { error ->
+        state.refreshTokenExpired?.let { error ->
             AppErrorAlertDialog(
                 error = error,
                 onDismiss = { dispatch(UserProfileUiAction.RefreshTokenExpired) },
@@ -148,7 +145,6 @@ fun UserProfileContentPreview() {
                 ),
 //                error = BaseError(),
             ),
-            refreshTokenExpired = null,
             dispatch = { action ->
                 when (action) {
                     UserProfileUiAction.BackPressed -> {

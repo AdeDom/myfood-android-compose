@@ -1,6 +1,6 @@
 package com.adedom.user_profile.presentation.view_model
 
-import com.adedom.core.utils.Resource
+import com.adedom.core.utils.Resource2
 import com.adedom.myfood.data.models.base.BaseError
 import com.adedom.ui_components.base.BaseViewModel
 import com.adedom.user_profile.domain.models.UserProfileModel
@@ -11,6 +11,7 @@ import kotlinx.coroutines.launch
 data class UserProfileUiState(
     val userProfile: UserProfileModel? = null,
     val error: BaseError? = null,
+    val refreshTokenExpired: BaseError? = null,
 )
 
 sealed interface UserProfileUiEvent {
@@ -48,9 +49,12 @@ class UserProfileViewModel(
         launch {
             val resource = fetchUserProfileUseCase()
             when (resource) {
-                is Resource.Success -> {}
-                is Resource.Error -> {
+                is Resource2.Success -> {}
+                is Resource2.Error -> {
                     setState { copy(error = resource.error) }
+                }
+                is Resource2.RefreshTokenExpired -> {
+                    setState { copy(refreshTokenExpired = resource.error) }
                 }
             }
         }
