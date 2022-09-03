@@ -64,7 +64,7 @@ android {
 
 dependencies {
 
-    implementation 'androidx.core:core-ktx:1.8.0'
+    implementation "androidx.core:core-ktx:$core_ktx_version"
     implementation project(path: ':core')
     implementation project(path: ':core:ui_components')
     implementation project(path: ':features:splash_screen')
