@@ -1,6 +1,6 @@
 package com.adedom.main.domain.use_cases
 
-import com.adedom.main.domain.repositories.UserProfileRepository
+import com.adedom.profile.repositories.UserProfileRepository
 
 class GetImageProfileUseCase(
     private val userProfileRepository: UserProfileRepository,

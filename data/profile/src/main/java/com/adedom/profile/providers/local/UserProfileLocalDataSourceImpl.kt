@@ -1,4 +1,4 @@
-package com.adedom.main.data.providers.local.user_profile
+package com.adedom.profile.providers.local
 
 import com.adedom.myfood.MyFoodDatabase
 import com.squareup.sqldelight.runtime.coroutines.asFlow

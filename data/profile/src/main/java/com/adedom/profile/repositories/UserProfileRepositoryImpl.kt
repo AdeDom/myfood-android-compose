@@ -1,9 +1,8 @@
-package com.adedom.user_profile.data.repositories
+package com.adedom.profile.repositories
 
 import com.adedom.myfood.data.models.response.UserProfileResponse
-import com.adedom.user_profile.data.providers.local.user_profile.UserProfileLocalDataSource
-import com.adedom.user_profile.data.providers.remote.profile.ProfileRemoteDataSource
-import com.adedom.user_profile.domain.repositories.UserProfileRepository
+import com.adedom.profile.providers.local.UserProfileLocalDataSource
+import com.adedom.profile.providers.remote.ProfileRemoteDataSource
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
@@ -30,6 +29,12 @@ class UserProfileRepositoryImpl(
     override suspend fun getUserProfile(): UserProfileEntity? {
         return withContext(ioDispatcher) {
             userProfileLocalDataSource.getUserProfile()
+        }
+    }
+
+    override suspend fun getImageProfile(): String? {
+        return withContext(ioDispatcher) {
+            userProfileLocalDataSource.getImageProfile()
         }
     }
 

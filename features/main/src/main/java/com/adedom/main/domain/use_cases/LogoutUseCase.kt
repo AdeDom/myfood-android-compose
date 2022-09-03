@@ -3,7 +3,7 @@ package com.adedom.main.domain.use_cases
 import com.adedom.core.utils.ApiServiceException
 import com.adedom.core.utils.Resource
 import com.adedom.main.domain.repositories.AuthLogoutRepository
-import com.adedom.main.domain.repositories.UserProfileRepository
+import com.adedom.profile.repositories.UserProfileRepository
 
 class LogoutUseCase(
     private val authLogoutRepository: AuthLogoutRepository,

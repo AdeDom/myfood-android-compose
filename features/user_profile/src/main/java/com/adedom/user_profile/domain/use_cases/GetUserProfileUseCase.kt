@@ -1,7 +1,7 @@
 package com.adedom.user_profile.domain.use_cases
 
+import com.adedom.profile.repositories.UserProfileRepository
 import com.adedom.user_profile.domain.models.UserProfileModel
-import com.adedom.user_profile.domain.repositories.UserProfileRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 

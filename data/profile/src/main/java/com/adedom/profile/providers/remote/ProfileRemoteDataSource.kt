@@ -1,4 +1,4 @@
-package com.adedom.user_profile.data.providers.remote.profile
+package com.adedom.profile.providers.remote
 
 import com.adedom.myfood.data.models.base.BaseResponse
 import com.adedom.myfood.data.models.response.UserProfileResponse

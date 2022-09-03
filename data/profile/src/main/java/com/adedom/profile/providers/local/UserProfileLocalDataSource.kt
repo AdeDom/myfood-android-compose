@@ -1,16 +1,15 @@
-package com.adedom.authentication.domain.repositories
+package com.adedom.profile.providers.local
 
-import com.adedom.myfood.data.models.response.UserProfileResponse
 import kotlinx.coroutines.flow.Flow
 import myfood.database.UserProfileEntity
 
-interface UserProfileRepository {
-
-    suspend fun callUserProfile(): UserProfileResponse?
+interface UserProfileLocalDataSource {
 
     fun getUserProfileFlow(): Flow<UserProfileEntity?>
 
     suspend fun getUserProfile(): UserProfileEntity?
+
+    suspend fun getImageProfile(): String?
 
     suspend fun saveUserProfile(userProfile: UserProfileEntity)
 

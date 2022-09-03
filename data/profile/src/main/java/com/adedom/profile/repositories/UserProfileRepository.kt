@@ -1,4 +1,4 @@
-package com.adedom.user_profile.domain.repositories
+package com.adedom.profile.repositories
 
 import com.adedom.myfood.data.models.response.UserProfileResponse
 import kotlinx.coroutines.flow.Flow
@@ -11,6 +11,8 @@ interface UserProfileRepository {
     fun getUserProfileFlow(): Flow<UserProfileEntity?>
 
     suspend fun getUserProfile(): UserProfileEntity?
+
+    suspend fun getImageProfile(): String?
 
     suspend fun saveUserProfile(userProfile: UserProfileEntity)
 

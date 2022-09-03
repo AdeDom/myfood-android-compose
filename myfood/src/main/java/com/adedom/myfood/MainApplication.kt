@@ -24,6 +24,7 @@ class MainApplication : Application() {
                 featureFoodDetailModule,
                 featureSearchFoodModule,
                 featureUserProfileModule,
+                dataProfileModule,
             )
         }
     }
