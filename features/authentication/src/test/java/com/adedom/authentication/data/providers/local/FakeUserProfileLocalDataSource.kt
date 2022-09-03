@@ -1,6 +1,6 @@
 package com.adedom.authentication.data.providers.local
 
-import com.adedom.authentication.data.providers.local.user_profile.UserProfileLocalDataSource
+import com.adedom.profile.providers.local.UserProfileLocalDataSource
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import myfood.database.UserProfileEntity
@@ -17,6 +17,10 @@ class FakeUserProfileLocalDataSource : UserProfileLocalDataSource {
 
     override suspend fun getUserProfile(): UserProfileEntity? {
         return userProfileEntity
+    }
+
+    override suspend fun getImageProfile(): String? {
+        return userProfileEntity?.image
     }
 
     override suspend fun saveUserProfile(userProfile: UserProfileEntity) {
