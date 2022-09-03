@@ -1,7 +1,6 @@
 plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
-    id 'kotlin-android'
 }
 
 android {
@@ -51,10 +50,6 @@ android {
     kotlinOptions {
         jvmTarget = '1.8'
     }
-    testOptions.unitTests {
-        includeAndroidResources = true
-        returnDefaultValues = true
-    }
     buildFeatures {
         compose true
     }
@@ -62,8 +57,11 @@ android {
         kotlinCompilerExtensionVersion compose_version
     }
     packagingOptions {
-        exclude 'META-INF/io.netty.versions.properties'
-        exclude 'META-INF/INDEX.LIST'
+        resources {
+            excludes += '/META-INF/{AL2.0,LGPL2.1}'
+            excludes += 'META-INF/io.netty.versions.properties'
+            excludes += 'META-INF/INDEX.LIST'
+        }
     }
 }
 
@@ -72,7 +70,4 @@ dependencies {
     implementation 'androidx.core:core-ktx:1.8.0'
     implementation project(path: ':myfood')
     implementation 'androidx.activity:activity-compose:1.5.1'
-    testImplementation "junit:junit:$junit_version"
-    androidTestImplementation 'androidx.test.ext:junit:1.1.3'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
 }
