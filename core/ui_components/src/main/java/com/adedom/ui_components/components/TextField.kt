@@ -7,7 +7,7 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.Text
 import androidx.compose.material.TextField
 import androidx.compose.material.TextFieldDefaults
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -16,8 +16,10 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.adedom.ui_components.theme.MyFoodTheme
 
 @Composable
 fun AppTextField(
@@ -72,6 +74,7 @@ fun AppTextField(
             Spacer(modifier = Modifier.height(20.dp))
         } else {
             Box(
+                contentAlignment = Alignment.CenterEnd,
                 modifier = Modifier.size(
                     width = 300.dp,
                     height = 20.dp,
@@ -81,11 +84,25 @@ fun AppTextField(
                     text = error,
                     color = Color.Red,
                     fontSize = 14.sp,
-                    modifier = Modifier
-                        .align(Alignment.CenterEnd)
-                        .padding(end = 32.dp),
+                    modifier = Modifier.padding(end = 32.dp),
                 )
             }
         }
+    }
+}
+
+@Composable
+@Preview(showBackground = true)
+fun TextFieldPreview() {
+    MyFoodTheme {
+        var text by remember { mutableStateOf("") }
+        AppTextField(
+            value = text,
+            onValueChange = {
+                text = it
+            },
+            hint = "Text",
+            error = if (text.isEmpty()) "Text is empty" else null,
+        )
     }
 }
