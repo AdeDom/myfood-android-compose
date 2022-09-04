@@ -14,11 +14,11 @@ fun LogoApp(
     modifier: Modifier = Modifier,
 ) {
     Box(
+        contentAlignment = Alignment.Center,
         modifier = modifier,
     ) {
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
-            modifier = Modifier.align(Alignment.Center),
         ) {
             AppImage(
                 image = R.drawable.logo_black,

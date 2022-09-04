@@ -61,9 +61,7 @@ fun FoodDetailContent(
         modifier = Modifier.fillMaxSize(),
     ) {
         if (state.isLoading) {
-            AppLoadingLottieAnimation(
-                modifier = Modifier.align(Alignment.Center),
-            )
+            AppLoadingLottieAnimation()
         }
 
         if (state.error != null) {
@@ -176,13 +174,14 @@ fun FoodDetailContentPreview() {
     MyFoodTheme {
         FoodDetailContent(
             state = FoodDetailUiState(
+//                isLoading = true,
                 foodDetail = FoodDetailModel(
                     foodName = "foodName",
                     image = "",
                     price = 99.0,
                     description = "description",
                     ratingScoreCount = "4.9",
-                )
+                ),
             ),
             dispatch = {},
         )

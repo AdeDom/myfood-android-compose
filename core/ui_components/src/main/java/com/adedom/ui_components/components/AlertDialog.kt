@@ -7,8 +7,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.adedom.myfood.data.models.base.BaseError
+import com.adedom.ui_components.theme.MyFoodTheme
 
 @Composable
 fun AppLoadingAlertDialog() {
@@ -19,9 +21,7 @@ fun AppLoadingAlertDialog() {
             Box(
                 modifier = Modifier.fillMaxSize(),
             ) {
-                AppLoadingLottieAnimation(
-                    modifier = Modifier.align(Alignment.Center),
-                )
+                AppLoadingLottieAnimation()
             }
         },
         modifier = Modifier
@@ -96,4 +96,12 @@ fun AppInteractAlertDialog(
         },
         modifier = modifier,
     )
+}
+
+@Composable
+@Preview(showBackground = true)
+fun AlertDialogPreview() {
+    MyFoodTheme {
+        AppLoadingAlertDialog()
+    }
 }
