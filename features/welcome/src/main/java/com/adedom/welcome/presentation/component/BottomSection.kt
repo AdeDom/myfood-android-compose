@@ -58,6 +58,7 @@ fun BottomSection(
                 ),
         ) {
             Box(
+                contentAlignment = Alignment.Center,
                 modifier = Modifier
                     .width(40.dp)
                     .height(32.dp)
@@ -70,18 +71,15 @@ fun BottomSection(
                     text = "TH",
                     fontWeight = FontWeight.Bold,
                     color = Color.White,
-                    modifier = Modifier.align(Alignment.Center),
                 )
             }
             Box(
+                contentAlignment = Alignment.Center,
                 modifier = Modifier
                     .width(40.dp)
                     .height(32.dp),
             ) {
-                AppText(
-                    text = "EN",
-                    modifier = Modifier.align(Alignment.Center),
-                )
+                AppText(text = "EN")
             }
         }
     }

@@ -59,6 +59,7 @@ private fun OnlineNetworkPopup(
         onDismissRequest = { dispatch(ConnectivityUiAction.DismissRequest) },
     ) {
         Box(
+            contentAlignment = Alignment.Center,
             modifier = Modifier
                 .fillMaxWidth()
                 .background(Color.Green),
@@ -67,7 +68,6 @@ private fun OnlineNetworkPopup(
                 text = "Online",
                 color = Color.Black,
                 fontSize = 16.sp,
-                modifier = Modifier.align(Alignment.Center),
             )
         }
     }
@@ -77,6 +77,7 @@ private fun OnlineNetworkPopup(
 private fun OfflineNetworkPopup() {
     Popup {
         Box(
+            contentAlignment = Alignment.Center,
             modifier = Modifier
                 .fillMaxWidth()
                 .background(Color.Red),
@@ -85,7 +86,6 @@ private fun OfflineNetworkPopup() {
                 text = "Offline",
                 color = Color.Black,
                 fontSize = 16.sp,
-                modifier = Modifier.align(Alignment.Center),
             )
         }
     }

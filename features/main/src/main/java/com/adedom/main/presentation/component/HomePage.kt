@@ -44,9 +44,7 @@ fun HomePage(
         modifier = modifier,
     ) {
         if (state.isLoading) {
-            AppLoadingLottieAnimation(
-                modifier = Modifier.align(Alignment.Center),
-            )
+            AppLoadingLottieAnimation()
         } else {
             Column(
                 modifier = Modifier.fillMaxSize(),
@@ -64,6 +62,7 @@ fun HomePage(
                                     .padding(4.dp),
                             ) {
                                 Box(
+                                    contentAlignment = Alignment.Center,
                                     modifier = Modifier
                                         .fillMaxSize()
                                         .clip(RoundedCornerShape(32.dp))
@@ -72,7 +71,6 @@ fun HomePage(
                                 ) {
                                     Row(
                                         verticalAlignment = Alignment.CenterVertically,
-                                        modifier = Modifier.align(Alignment.Center)
                                     ) {
                                         Spacer(modifier = Modifier.width(8.dp))
                                         IconButton(onClick = onMenuClick) {
@@ -215,6 +213,7 @@ fun HomePagePreview() {
     MyFoodTheme {
         HomePage(
             state = HomeUiState(
+//                isLoading = true,
                 categories = listOf(
                     CategoryModel(
                         categoryId = 1,
@@ -310,6 +309,7 @@ fun HomePagePreview() {
                     ),
                 ),
                 categoryIdClick = 2,
+                imageProfile = "",
             ),
             onMenuClick = {},
             onLogoutClick = {},
