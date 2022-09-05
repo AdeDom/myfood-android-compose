@@ -28,7 +28,6 @@ import com.adedom.main.presentation.view_model.HomeViewModel
 import com.adedom.search_food.presentation.component.SearchFoodScreen
 import com.adedom.search_food.presentation.view_model.SearchFoodViewModel
 import com.adedom.splash_screen.presentation.component.SplashScreen
-import com.adedom.splash_screen.presentation.view_model.SplashScreenUiEvent
 import com.adedom.splash_screen.presentation.view_model.SplashScreenViewModel
 import com.adedom.ui_components.theme.MyFoodTheme
 import com.adedom.user_profile.presentation.component.UserProfileScreen
@@ -60,24 +59,23 @@ fun MainAppNavHost(
     ) {
         composable(Screen.SplashScreen.route) {
             val viewModel: SplashScreenViewModel = getViewModel()
-            SplashScreen(viewModel) { uiEvent ->
-                when (uiEvent) {
-                    SplashScreenUiEvent.NavMain -> {
-                        navController.navigate(Screen.Main.route) {
-                            popUpTo(Screen.SplashScreen.route) {
-                                inclusive = true
-                            }
+            SplashScreen(
+                viewModel = viewModel,
+                openMainPage = {
+                    navController.navigate(Screen.Main.route) {
+                        popUpTo(Screen.SplashScreen.route) {
+                            inclusive = true
                         }
                     }
-                    SplashScreenUiEvent.NavWelcome -> {
-                        navController.navigate(Screen.Welcome.route) {
-                            popUpTo(Screen.SplashScreen.route) {
-                                inclusive = true
-                            }
+                },
+                openWelcomePage = {
+                    navController.navigate(Screen.Welcome.route) {
+                        popUpTo(Screen.SplashScreen.route) {
+                            inclusive = true
                         }
                     }
-                }
-            }
+                },
+            )
         }
         authGraph(navController)
         mainGraph(navController)
