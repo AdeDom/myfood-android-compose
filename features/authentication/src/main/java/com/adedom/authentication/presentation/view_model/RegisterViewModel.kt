@@ -1,6 +1,6 @@
 package com.adedom.authentication.presentation.view_model
 
-import com.adedom.ui_components.base.BaseViewModel
+import com.adedom.ui_components.base.BaseMvi
 import kotlinx.coroutines.launch
 
 data class RegisterUiState(
@@ -12,11 +12,6 @@ data class RegisterUiState(
     val confirmPassword: String = "",
 )
 
-sealed interface RegisterUiEvent {
-    object NavLogin : RegisterUiEvent
-    object NavMain : RegisterUiEvent
-}
-
 sealed interface RegisterUiAction {
     data class SetName(val value: String) : RegisterUiAction
     data class SetEmail(val value: String) : RegisterUiAction
@@ -24,13 +19,9 @@ sealed interface RegisterUiAction {
     data class SetAddress(val value: String) : RegisterUiAction
     data class SetPassword(val value: String) : RegisterUiAction
     data class SetConfirmPassword(val value: String) : RegisterUiAction
-    object Submit : RegisterUiAction
-    object NavLogin : RegisterUiAction
 }
 
-class RegisterViewModel : BaseViewModel<RegisterUiState, RegisterUiEvent, RegisterUiAction>(
-    RegisterUiState()
-) {
+class RegisterViewModel : BaseMvi<RegisterUiState, RegisterUiAction>(RegisterUiState()) {
 
     override fun dispatch(action: RegisterUiAction) {
         launch {
@@ -52,12 +43,6 @@ class RegisterViewModel : BaseViewModel<RegisterUiState, RegisterUiEvent, Regist
                 }
                 is RegisterUiAction.SetConfirmPassword -> {
                     setState { copy(confirmPassword = action.value) }
-                }
-                RegisterUiAction.Submit -> {
-                    setEvent(RegisterUiEvent.NavMain)
-                }
-                RegisterUiAction.NavLogin -> {
-                    setEvent(RegisterUiEvent.NavLogin)
                 }
             }
         }

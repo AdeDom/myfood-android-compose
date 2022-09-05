@@ -16,7 +16,6 @@ import com.adedom.authentication.presentation.component.LoginScreen
 import com.adedom.authentication.presentation.component.RegisterScreen
 import com.adedom.authentication.presentation.view_model.LoginUiEvent
 import com.adedom.authentication.presentation.view_model.LoginViewModel
-import com.adedom.authentication.presentation.view_model.RegisterUiEvent
 import com.adedom.authentication.presentation.view_model.RegisterViewModel
 import com.adedom.connectivity.presentation.component.ConnectivityScreen
 import com.adedom.food_detail.presentation.component.FoodDetailScreen
@@ -125,21 +124,20 @@ fun NavGraphBuilder.authGraph(navController: NavController) {
         }
         composable(Screen.Welcome.Register.route) {
             val viewModel: RegisterViewModel = getViewModel()
-            RegisterScreen(viewModel) { uiEvent ->
-                when (uiEvent) {
-                    RegisterUiEvent.NavLogin -> {
-                        navController.popBackStack()
-                        navController.navigate(Screen.Welcome.Login.route)
-                    }
-                    RegisterUiEvent.NavMain -> {
-                        navController.navigate(Screen.Main.route) {
-                            popUpTo(Screen.Welcome.route) {
-                                inclusive = true
-                            }
+            RegisterScreen(
+                viewModel = viewModel,
+                openLoginPage = {
+                    navController.popBackStack()
+                    navController.navigate(Screen.Welcome.Login.route)
+                },
+                openMainPage = {
+                    navController.navigate(Screen.Main.route) {
+                        popUpTo(Screen.Welcome.route) {
+                            inclusive = true
                         }
                     }
-                }
-            }
+                },
+            )
         }
     }
 }
