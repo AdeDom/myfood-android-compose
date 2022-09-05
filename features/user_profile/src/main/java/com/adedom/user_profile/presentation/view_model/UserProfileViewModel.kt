@@ -15,22 +15,13 @@ data class UserProfileUiState(
 )
 
 sealed interface UserProfileUiEvent {
-    object BackPressed : UserProfileUiEvent
-    object RefreshTokenExpired : UserProfileUiEvent
-}
-
-sealed interface UserProfileUiAction {
-    object BackPressed : UserProfileUiAction
-    object DismissErrorDialog : UserProfileUiAction
-    object RefreshTokenExpired : UserProfileUiAction
+    object DismissErrorDialog : UserProfileUiEvent
 }
 
 class UserProfileViewModel(
     private val fetchUserProfileUseCase: FetchUserProfileUseCase,
     private val getUserProfileUseCase: GetUserProfileUseCase,
-) : BaseViewModel<UserProfileUiState, UserProfileUiEvent, UserProfileUiAction>(
-    UserProfileUiState()
-) {
+) : BaseViewModel<UserProfileUiEvent, UserProfileUiState>(UserProfileUiState()) {
 
     init {
         initUserProfile()
@@ -60,17 +51,11 @@ class UserProfileViewModel(
         }
     }
 
-    override fun dispatch(action: UserProfileUiAction) {
+    override fun dispatch(event: UserProfileUiEvent) {
         launch {
-            when (action) {
-                UserProfileUiAction.BackPressed -> {
-                    setEvent(UserProfileUiEvent.BackPressed)
-                }
-                UserProfileUiAction.DismissErrorDialog -> {
+            when (event) {
+                UserProfileUiEvent.DismissErrorDialog -> {
                     setState { copy(error = null) }
-                }
-                UserProfileUiAction.RefreshTokenExpired -> {
-                    setEvent(UserProfileUiEvent.RefreshTokenExpired)
                 }
             }
         }

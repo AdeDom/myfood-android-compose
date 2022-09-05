@@ -22,6 +22,8 @@ sealed class Screen(
 
     object Main : Screen("main") {
 
+        const val FOOD_ID = "foodId"
+
         object Init : Screen("initMain")
 
         object UserProfile : Screen("userProfile")
@@ -29,8 +31,8 @@ sealed class Screen(
         object SearchFood : Screen("searchFood")
 
         object FoodDetail : Screen(
-            "foodDetail/{foodId}",
-            listOf(navArgument("foodId") { type = NavType.IntType }),
+            "foodDetail/{$FOOD_ID}",
+            listOf(navArgument(FOOD_ID) { type = NavType.IntType }),
         ) {
             fun arguments(foodId: Long): String {
                 return "foodDetail/$foodId"

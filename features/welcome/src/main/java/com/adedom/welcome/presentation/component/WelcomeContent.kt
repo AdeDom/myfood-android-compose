@@ -9,18 +9,24 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.adedom.ui_components.theme.MyFoodTheme
-import com.adedom.welcome.presentation.view_model.WelcomeUiAction
+import com.adedom.welcome.presentation.view_model.WelcomeUiEvent
 
 @Composable
 fun WelcomeContent(
-    dispatch: (WelcomeUiAction) -> Unit,
+    dispatch: (WelcomeUiEvent) -> Unit,
+    openLoginPage: () -> Unit,
+    openRegisterPage: () -> Unit,
 ) {
     Column(
         modifier = Modifier.fillMaxSize(),
     ) {
         TopSection()
         Spacer(modifier = Modifier.height(64.dp))
-        BottomSection(dispatch)
+        BottomSection(
+            dispatch,
+            openLoginPage,
+            openRegisterPage,
+        )
     }
 }
 
@@ -30,6 +36,8 @@ fun WelcomeContentPreview() {
     MyFoodTheme {
         WelcomeContent(
             dispatch = {},
+            openLoginPage = {},
+            openRegisterPage = {},
         )
     }
 }

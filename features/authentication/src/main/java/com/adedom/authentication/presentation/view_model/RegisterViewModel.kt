@@ -13,51 +13,36 @@ data class RegisterUiState(
 )
 
 sealed interface RegisterUiEvent {
-    object NavLogin : RegisterUiEvent
-    object NavMain : RegisterUiEvent
+    data class SetName(val value: String) : RegisterUiEvent
+    data class SetEmail(val value: String) : RegisterUiEvent
+    data class SetMobileNo(val value: String) : RegisterUiEvent
+    data class SetAddress(val value: String) : RegisterUiEvent
+    data class SetPassword(val value: String) : RegisterUiEvent
+    data class SetConfirmPassword(val value: String) : RegisterUiEvent
 }
 
-sealed interface RegisterUiAction {
-    data class SetName(val value: String) : RegisterUiAction
-    data class SetEmail(val value: String) : RegisterUiAction
-    data class SetMobileNo(val value: String) : RegisterUiAction
-    data class SetAddress(val value: String) : RegisterUiAction
-    data class SetPassword(val value: String) : RegisterUiAction
-    data class SetConfirmPassword(val value: String) : RegisterUiAction
-    object Submit : RegisterUiAction
-    object NavLogin : RegisterUiAction
-}
+class RegisterViewModel : BaseViewModel<RegisterUiEvent, RegisterUiState>(RegisterUiState()) {
 
-class RegisterViewModel : BaseViewModel<RegisterUiState, RegisterUiEvent, RegisterUiAction>(
-    RegisterUiState()
-) {
-
-    override fun dispatch(action: RegisterUiAction) {
+    override fun dispatch(event: RegisterUiEvent) {
         launch {
-            when (action) {
-                is RegisterUiAction.SetName -> {
-                    setState { copy(name = action.value) }
+            when (event) {
+                is RegisterUiEvent.SetName -> {
+                    setState { copy(name = event.value) }
                 }
-                is RegisterUiAction.SetEmail -> {
-                    setState { copy(email = action.value) }
+                is RegisterUiEvent.SetEmail -> {
+                    setState { copy(email = event.value) }
                 }
-                is RegisterUiAction.SetMobileNo -> {
-                    setState { copy(mobileNo = action.value) }
+                is RegisterUiEvent.SetMobileNo -> {
+                    setState { copy(mobileNo = event.value) }
                 }
-                is RegisterUiAction.SetAddress -> {
-                    setState { copy(address = action.value) }
+                is RegisterUiEvent.SetAddress -> {
+                    setState { copy(address = event.value) }
                 }
-                is RegisterUiAction.SetPassword -> {
-                    setState { copy(password = action.value) }
+                is RegisterUiEvent.SetPassword -> {
+                    setState { copy(password = event.value) }
                 }
-                is RegisterUiAction.SetConfirmPassword -> {
-                    setState { copy(confirmPassword = action.value) }
-                }
-                RegisterUiAction.Submit -> {
-                    setEvent(RegisterUiEvent.NavMain)
-                }
-                RegisterUiAction.NavLogin -> {
-                    setEvent(RegisterUiEvent.NavLogin)
+                is RegisterUiEvent.SetConfirmPassword -> {
+                    setState { copy(confirmPassword = event.value) }
                 }
             }
         }

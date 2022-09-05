@@ -13,17 +13,11 @@ data class FoodDetailUiState(
     val error: BaseError? = null,
 )
 
-sealed interface FoodDetailUiEvent {
-    object OnBackPressed : FoodDetailUiEvent
-}
-
-sealed interface FoodDetailUiAction {
-    object OnBackPressed : FoodDetailUiAction
-}
+sealed interface FoodDetailUiEvent
 
 class FoodDetailViewModel(
     private val getFoodDetailUseCase: GetFoodDetailUseCase,
-) : BaseViewModel<FoodDetailUiState, FoodDetailUiEvent, FoodDetailUiAction>(FoodDetailUiState()) {
+) : BaseViewModel<FoodDetailUiEvent, FoodDetailUiState>(FoodDetailUiState()) {
 
     fun callFoodDetail(foodId: Int?) {
         launch {
@@ -56,13 +50,5 @@ class FoodDetailViewModel(
         }
     }
 
-    override fun dispatch(action: FoodDetailUiAction) {
-        launch {
-            when (action) {
-                FoodDetailUiAction.OnBackPressed -> {
-                    setEvent(FoodDetailUiEvent.OnBackPressed)
-                }
-            }
-        }
-    }
+    override fun dispatch(event: FoodDetailUiEvent) {}
 }

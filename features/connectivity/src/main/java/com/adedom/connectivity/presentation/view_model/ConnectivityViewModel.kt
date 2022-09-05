@@ -13,17 +13,13 @@ data class ConnectivityUiState(
     val status: Status = Status.Unknown,
 )
 
-sealed interface ConnectivityUiEvent
-
-sealed interface ConnectivityUiAction {
-    object DismissRequest : ConnectivityUiAction
+sealed interface ConnectivityUiEvent {
+    object DismissRequest : ConnectivityUiEvent
 }
 
 class ConnectivityViewModel(
     getConnectivityStatusUseCase: GetConnectivityStatusUseCase,
-) : BaseViewModel<ConnectivityUiState, ConnectivityUiEvent, ConnectivityUiAction>(
-    ConnectivityUiState()
-) {
+) : BaseViewModel<ConnectivityUiEvent, ConnectivityUiState>(ConnectivityUiState()) {
 
     init {
         getConnectivityStatusUseCase()
@@ -33,15 +29,15 @@ class ConnectivityViewModel(
             .filter { it == Status.Available }
             .onEach {
                 delay(3000)
-                dispatch(ConnectivityUiAction.DismissRequest)
+                dispatch(ConnectivityUiEvent.DismissRequest)
             }
             .launchIn(this)
     }
 
-    override fun dispatch(action: ConnectivityUiAction) {
+    override fun dispatch(event: ConnectivityUiEvent) {
         launch {
-            when (action) {
-                ConnectivityUiAction.DismissRequest -> {
+            when (event) {
+                ConnectivityUiEvent.DismissRequest -> {
                     setState { copy(status = Status.Unknown) }
                 }
             }

@@ -11,7 +11,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.tooling.preview.Preview
 import com.adedom.splash_screen.R
-import com.adedom.splash_screen.presentation.view_model.SplashScreenUiEvent
 import com.adedom.splash_screen.presentation.view_model.SplashScreenViewModel
 import com.adedom.ui_components.components.AppImage
 import com.adedom.ui_components.components.LogoApp
@@ -20,11 +19,16 @@ import com.adedom.ui_components.theme.MyFoodTheme
 @Composable
 fun SplashScreen(
     viewModel: SplashScreenViewModel,
-    onEvent: (SplashScreenUiEvent) -> Unit,
+    openMainPage: () -> Unit,
+    openWelcomePage: () -> Unit,
 ) {
-    LaunchedEffect(viewModel.uiEvent) {
-        viewModel.uiEvent.collect { uiEvent ->
-            onEvent(uiEvent)
+    LaunchedEffect(key1 = Unit) {
+        viewModel.nav.collect { isAuth ->
+            if (isAuth) {
+                openMainPage()
+            } else {
+                openWelcomePage()
+            }
         }
     }
 

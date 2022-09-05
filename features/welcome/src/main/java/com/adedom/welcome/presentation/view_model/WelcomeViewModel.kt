@@ -2,37 +2,29 @@ package com.adedom.welcome.presentation.view_model
 
 import com.adedom.ui_components.base.BaseViewModel
 import com.adedom.welcome.domain.use_cases.WelcomeGuestRoleUseCase
+import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
 
 object WelcomeUiState
 
 sealed interface WelcomeUiEvent {
-    object NavLogin : WelcomeUiEvent
-    object NavRegister : WelcomeUiEvent
-    data class NavSkip(val value: Unit) : WelcomeUiEvent
-}
-
-sealed interface WelcomeUiAction {
-    object NavLogin : WelcomeUiAction
-    object NavRegister : WelcomeUiAction
-    object NavSkip : WelcomeUiAction
+    object NavSkip : WelcomeUiEvent
 }
 
 class WelcomeViewModel(
     private val welcomeGuestRoleUseCase: WelcomeGuestRoleUseCase,
-) : BaseViewModel<WelcomeUiState, WelcomeUiEvent, WelcomeUiAction>(WelcomeUiState) {
+) : BaseViewModel<WelcomeUiEvent, WelcomeUiState>(WelcomeUiState) {
 
-    override fun dispatch(action: WelcomeUiAction) {
+    private val _nav = Channel<Unit>()
+    val nav: Flow<Unit> = _nav.receiveAsFlow()
+
+    override fun dispatch(event: WelcomeUiEvent) {
         launch {
-            when (action) {
-                WelcomeUiAction.NavLogin -> {
-                    setEvent(WelcomeUiEvent.NavLogin)
-                }
-                WelcomeUiAction.NavRegister -> {
-                    setEvent(WelcomeUiEvent.NavRegister)
-                }
-                WelcomeUiAction.NavSkip -> {
-                    setEvent(WelcomeUiEvent.NavSkip(welcomeGuestRoleUseCase()))
+            when (event) {
+                WelcomeUiEvent.NavSkip -> {
+                    _nav.send(welcomeGuestRoleUseCase())
                 }
             }
         }

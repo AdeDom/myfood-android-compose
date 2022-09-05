@@ -8,7 +8,10 @@ import com.adedom.myfood.data.models.base.BaseError
 import com.adedom.ui_components.base.BaseViewModel
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
 
 data class HomeUiState(
@@ -25,26 +28,18 @@ data class HomeUiState(
 )
 
 sealed interface HomeUiEvent {
+    data class CategoryClick(val categoryId: Long) : HomeUiEvent
     object NavLogout : HomeUiEvent
-    object NavSearchFood : HomeUiEvent
-    object NavUserProfile : HomeUiEvent
-    object NavInfo : HomeUiEvent
-    data class NavFoodDetail(val foodId: Long) : HomeUiEvent
-    object OnBackAlert : HomeUiEvent
-    object OnBackPressed : HomeUiEvent
+    object ErrorDismiss : HomeUiEvent
+    object Refreshing : HomeUiEvent
+    object BackHandler : HomeUiEvent
+    data class Logout(val isLogoutDialog: Boolean) : HomeUiEvent
 }
 
-sealed interface HomeUiAction {
-    data class CategoryClick(val categoryId: Long) : HomeUiAction
-    data class NavFoodDetail(val foodId: Long) : HomeUiAction
-    object NavSearchFood : HomeUiAction
-    object NavUserProfile : HomeUiAction
-    object NavInfo : HomeUiAction
-    object NavLogout : HomeUiAction
-    object ErrorDismiss : HomeUiAction
-    object Refreshing : HomeUiAction
-    object BackHandler : HomeUiAction
-    data class Logout(val isLogoutDialog: Boolean) : HomeUiAction
+sealed interface HomeChannel {
+    object Logout : HomeChannel
+    object OnBackPressed : HomeChannel
+    object OnBackAlert : HomeChannel
 }
 
 class HomeViewModel(
@@ -54,10 +49,13 @@ class HomeViewModel(
     private val logoutUseCase: LogoutUseCase,
     private val getIsAuthRoleUseCase: GetIsAuthRoleUseCase,
     private val saveUnAuthRoleUseCase: SaveUnAuthRoleUseCase,
-) : BaseViewModel<HomeUiState, HomeUiEvent, HomeUiAction>(HomeUiState()) {
+) : BaseViewModel<HomeUiEvent, HomeUiState>(HomeUiState()) {
 
     private var isBackPressed = false
     private var backPressedJob: Job? = null
+
+    private val _channel = Channel<HomeChannel>()
+    val channel: Flow<HomeChannel> = _channel.receiveAsFlow()
 
     init {
         launch {
@@ -114,63 +112,50 @@ class HomeViewModel(
 
     fun onLogoutEvent() {
         GlobalScope.launch {
-            setEvent(HomeUiEvent.NavLogout)
+            _channel.send(HomeChannel.Logout)
             logoutUseCase()
         }
     }
 
-    override fun dispatch(action: HomeUiAction) {
+    override fun dispatch(event: HomeUiEvent) {
         launch {
-            when (action) {
-                is HomeUiAction.CategoryClick -> {
-                    val (categoryName, foods) = getFoodListByCategoryIdUseCase(action.categoryId)
+            when (event) {
+                is HomeUiEvent.CategoryClick -> {
+                    val (categoryName, foods) = getFoodListByCategoryIdUseCase(event.categoryId)
                     setState {
                         copy(
                             categoryName = categoryName,
                             foods = foods,
-                            categoryIdClick = action.categoryId,
+                            categoryIdClick = event.categoryId,
                         )
                     }
                 }
-                is HomeUiAction.NavFoodDetail -> {
-                    setEvent(HomeUiEvent.NavFoodDetail(action.foodId))
-                }
-                HomeUiAction.NavSearchFood -> {
-                    setEvent(HomeUiEvent.NavSearchFood)
-                }
-                HomeUiAction.NavUserProfile -> {
-                    setEvent(HomeUiEvent.NavUserProfile)
-                }
-                HomeUiAction.NavInfo -> {
-                    setEvent(HomeUiEvent.NavInfo)
-                }
-                HomeUiAction.NavLogout -> {
+                HomeUiEvent.NavLogout -> {
                     saveUnAuthRoleUseCase()
-                    setEvent(HomeUiEvent.NavLogout)
+                    _channel.send(HomeChannel.Logout)
                 }
-                HomeUiAction.ErrorDismiss -> {
+                HomeUiEvent.ErrorDismiss -> {
                     callHomeContent(isLoading = true)
                 }
-                HomeUiAction.Refreshing -> {
+                HomeUiEvent.Refreshing -> {
                     callHomeContent(isRefreshing = true)
                 }
-                HomeUiAction.BackHandler -> {
+                HomeUiEvent.BackHandler -> {
                     backPressedJob?.cancel()
                     backPressedJob = launch {
-                        val event = if (isBackPressed) {
-                            HomeUiEvent.OnBackPressed
+                        if (isBackPressed) {
+                            _channel.send(HomeChannel.OnBackPressed)
                         } else {
-                            HomeUiEvent.OnBackAlert
+                            _channel.send(HomeChannel.OnBackAlert)
                         }
-                        setEvent(event)
 
                         isBackPressed = true
                         delay(2_000)
                         isBackPressed = false
                     }
                 }
-                is HomeUiAction.Logout -> {
-                    setState { copy(isLogoutDialog = action.isLogoutDialog) }
+                is HomeUiEvent.Logout -> {
+                    setState { copy(isLogoutDialog = event.isLogoutDialog) }
                 }
             }
         }

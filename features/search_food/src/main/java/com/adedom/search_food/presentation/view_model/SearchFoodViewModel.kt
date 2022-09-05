@@ -14,46 +14,37 @@ data class SearchFoodUiState(
 )
 
 sealed interface SearchFoodUiEvent {
-    data class FoodDetail(val foodId: Long) : SearchFoodUiEvent
-    object OnBackPressed : SearchFoodUiEvent
-}
-
-sealed interface SearchFoodUiAction {
-    object Initial : SearchFoodUiAction
-    data class SetSearch(val value: String) : SearchFoodUiAction
-    data class FoodDetail(val foodId: Long) : SearchFoodUiAction
-    object OnBackPressed : SearchFoodUiAction
+    object Initial : SearchFoodUiEvent
+    data class SetSearch(val value: String) : SearchFoodUiEvent
 }
 
 class SearchFoodViewModel(
     private val searchFoodUseCase: SearchFoodUseCase,
-) : BaseViewModel<SearchFoodUiState, SearchFoodUiEvent, SearchFoodUiAction>(SearchFoodUiState()) {
+) : BaseViewModel<SearchFoodUiEvent, SearchFoodUiState>(SearchFoodUiState()) {
 
     private var searchJob: Job? = null
 
-    override fun dispatch(action: SearchFoodUiAction) {
+    override fun dispatch(event: SearchFoodUiEvent) {
         launch {
-            when (action) {
-                SearchFoodUiAction.Initial -> {
+            when (event) {
+                SearchFoodUiEvent.Initial -> {
                     delay(200)
                     val foods = searchFoodUseCase("")
-                    setState { copy(searchList = foods) }
+                    setState {
+                        copy(
+                            initial = Unit,
+                            searchList = foods,
+                        )
+                    }
                 }
-                is SearchFoodUiAction.SetSearch -> {
-                    setState { copy(search = action.value) }
+                is SearchFoodUiEvent.SetSearch -> {
+                    setState { copy(search = event.value) }
                     searchJob?.cancel()
                     searchJob = launch {
                         delay(500)
-                        val foods = searchFoodUseCase(action.value)
+                        val foods = searchFoodUseCase(event.value)
                         setState { copy(searchList = foods) }
                     }
-                }
-                is SearchFoodUiAction.FoodDetail -> {
-                    setState { copy(initial = Unit) }
-                    setEvent(SearchFoodUiEvent.FoodDetail(action.foodId))
-                }
-                SearchFoodUiAction.OnBackPressed -> {
-                    setEvent(SearchFoodUiEvent.OnBackPressed)
                 }
             }
         }
