@@ -2,7 +2,7 @@ package com.adedom.connectivity.presentation.view_model
 
 import com.adedom.connectivity.data.models.Status
 import com.adedom.connectivity.domain.use_cases.GetConnectivityStatusUseCase
-import com.adedom.ui_components.base.BaseViewModel
+import com.adedom.ui_components.base.BaseMvi
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.launchIn
@@ -13,17 +13,13 @@ data class ConnectivityUiState(
     val status: Status = Status.Unknown,
 )
 
-sealed interface ConnectivityUiEvent
-
 sealed interface ConnectivityUiAction {
     object DismissRequest : ConnectivityUiAction
 }
 
 class ConnectivityViewModel(
     getConnectivityStatusUseCase: GetConnectivityStatusUseCase,
-) : BaseViewModel<ConnectivityUiState, ConnectivityUiEvent, ConnectivityUiAction>(
-    ConnectivityUiState()
-) {
+) : BaseMvi<ConnectivityUiState, ConnectivityUiAction>(ConnectivityUiState()) {
 
     init {
         getConnectivityStatusUseCase()
