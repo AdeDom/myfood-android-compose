@@ -2,7 +2,7 @@ package com.adedom.user_profile.presentation.view_model
 
 import com.adedom.core.utils.Resource2
 import com.adedom.myfood.data.models.base.BaseError
-import com.adedom.ui_components.base.BaseViewModel
+import com.adedom.ui_components.base.BaseMvi
 import com.adedom.user_profile.domain.models.UserProfileModel
 import com.adedom.user_profile.domain.use_cases.FetchUserProfileUseCase
 import com.adedom.user_profile.domain.use_cases.GetUserProfileUseCase
@@ -14,23 +14,14 @@ data class UserProfileUiState(
     val refreshTokenExpired: BaseError? = null,
 )
 
-sealed interface UserProfileUiEvent {
-    object BackPressed : UserProfileUiEvent
-    object RefreshTokenExpired : UserProfileUiEvent
-}
-
 sealed interface UserProfileUiAction {
-    object BackPressed : UserProfileUiAction
     object DismissErrorDialog : UserProfileUiAction
-    object RefreshTokenExpired : UserProfileUiAction
 }
 
 class UserProfileViewModel(
     private val fetchUserProfileUseCase: FetchUserProfileUseCase,
     private val getUserProfileUseCase: GetUserProfileUseCase,
-) : BaseViewModel<UserProfileUiState, UserProfileUiEvent, UserProfileUiAction>(
-    UserProfileUiState()
-) {
+) : BaseMvi<UserProfileUiState, UserProfileUiAction>(UserProfileUiState()) {
 
     init {
         initUserProfile()
@@ -63,14 +54,8 @@ class UserProfileViewModel(
     override fun dispatch(action: UserProfileUiAction) {
         launch {
             when (action) {
-                UserProfileUiAction.BackPressed -> {
-                    setEvent(UserProfileUiEvent.BackPressed)
-                }
                 UserProfileUiAction.DismissErrorDialog -> {
                     setState { copy(error = null) }
-                }
-                UserProfileUiAction.RefreshTokenExpired -> {
-                    setEvent(UserProfileUiEvent.RefreshTokenExpired)
                 }
             }
         }

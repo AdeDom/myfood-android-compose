@@ -28,7 +28,6 @@ import com.adedom.splash_screen.presentation.component.SplashScreen
 import com.adedom.splash_screen.presentation.view_model.SplashScreenViewModel
 import com.adedom.ui_components.theme.MyFoodTheme
 import com.adedom.user_profile.presentation.component.UserProfileScreen
-import com.adedom.user_profile.presentation.view_model.UserProfileUiEvent
 import com.adedom.user_profile.presentation.view_model.UserProfileViewModel
 import com.adedom.welcome.presentation.component.WelcomeScreen
 import com.adedom.welcome.presentation.view_model.WelcomeViewModel
@@ -180,20 +179,19 @@ fun NavGraphBuilder.mainGraph(navController: NavController) {
         }
         composable(Screen.Main.UserProfile.route) {
             val viewModel: UserProfileViewModel = getViewModel()
-            UserProfileScreen(viewModel) { uiEvent ->
-                when (uiEvent) {
-                    UserProfileUiEvent.BackPressed -> {
-                        navController.popBackStack()
-                    }
-                    UserProfileUiEvent.RefreshTokenExpired -> {
-                        navController.navigate(Screen.Welcome.route) {
-                            popUpTo(Screen.Main.route) {
-                                inclusive = true
-                            }
+            UserProfileScreen(
+                viewModel = viewModel,
+                onBackPressed = {
+                    navController.popBackStack()
+                },
+                refreshTokenExpired = {
+                    navController.navigate(Screen.Welcome.route) {
+                        popUpTo(Screen.Main.route) {
+                            inclusive = true
                         }
                     }
-                }
-            }
+                },
+            )
         }
         composable(Screen.Main.SearchFood.route) {
             val viewModel: SearchFoodViewModel = getViewModel()

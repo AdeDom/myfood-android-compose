@@ -7,7 +7,6 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -23,24 +22,20 @@ import com.adedom.ui_components.theme.MyFoodTheme
 import com.adedom.user_profile.R
 import com.adedom.user_profile.domain.models.UserProfileModel
 import com.adedom.user_profile.presentation.view_model.UserProfileUiAction
-import com.adedom.user_profile.presentation.view_model.UserProfileUiEvent
 import com.adedom.user_profile.presentation.view_model.UserProfileUiState
 import com.adedom.user_profile.presentation.view_model.UserProfileViewModel
 
 @Composable
 fun UserProfileScreen(
     viewModel: UserProfileViewModel,
-    onNavigate: (UserProfileUiEvent) -> Unit,
+    onBackPressed: () -> Unit,
+    refreshTokenExpired: () -> Unit,
 ) {
-    LaunchedEffect(key1 = viewModel.uiEvent) {
-        viewModel.uiEvent.collect { uiEvent ->
-            onNavigate(uiEvent)
-        }
-    }
-
     UserProfileContent(
         viewModel.uiState,
         viewModel::dispatch,
+        onBackPressed,
+        refreshTokenExpired,
     )
 }
 
@@ -48,6 +43,8 @@ fun UserProfileScreen(
 fun UserProfileContent(
     state: UserProfileUiState,
     dispatch: (UserProfileUiAction) -> Unit,
+    onBackPressed: () -> Unit,
+    refreshTokenExpired: () -> Unit,
 ) {
     Box(
         modifier = Modifier
@@ -108,7 +105,7 @@ fun UserProfileContent(
         AppButton(
             text = "Back",
             backgroundColor = Color(0xFFFFD700),
-            onClick = { dispatch(UserProfileUiAction.BackPressed) },
+            onClick = onBackPressed,
             modifier = Modifier.align(Alignment.BottomCenter),
         )
 
@@ -122,7 +119,7 @@ fun UserProfileContent(
         state.refreshTokenExpired?.let { error ->
             AppErrorAlertDialog(
                 error = error,
-                onDismiss = { dispatch(UserProfileUiAction.RefreshTokenExpired) },
+                onDismiss = refreshTokenExpired,
             )
         }
     }
@@ -147,17 +144,13 @@ fun UserProfileContentPreview() {
             ),
             dispatch = { action ->
                 when (action) {
-                    UserProfileUiAction.BackPressed -> {
-                        Toast.makeText(context, "BackPressed", Toast.LENGTH_SHORT).show()
-                    }
                     UserProfileUiAction.DismissErrorDialog -> {
                         Toast.makeText(context, "DismissErrorDialog", Toast.LENGTH_SHORT).show()
                     }
-                    is UserProfileUiAction.RefreshTokenExpired -> {
-                        Toast.makeText(context, "RefreshTokenExpired", Toast.LENGTH_SHORT).show()
-                    }
                 }
             },
+            onBackPressed = {},
+            refreshTokenExpired = {},
         )
     }
 }
