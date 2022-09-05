@@ -19,7 +19,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.adedom.core.domain.models.FoodModel
 import com.adedom.search_food.presentation.view_model.SearchFoodUiAction
-import com.adedom.search_food.presentation.view_model.SearchFoodUiEvent
 import com.adedom.search_food.presentation.view_model.SearchFoodUiState
 import com.adedom.search_food.presentation.view_model.SearchFoodViewModel
 import com.adedom.ui_components.components.AppEmptyData
@@ -31,16 +30,11 @@ import com.adedom.ui_components.theme.MyFoodTheme
 @Composable
 fun SearchFoodScreen(
     viewModel: SearchFoodViewModel,
-    onEvent: (SearchFoodUiEvent) -> Unit,
+    openFoodDetailPage: (Long) -> Unit,
+    onBackPressed: () -> Unit,
 ) {
     val inputService = LocalTextInputService.current
     val focusRequester = remember { FocusRequester() }
-
-    LaunchedEffect(viewModel.uiEvent) {
-        viewModel.uiEvent.collect { uiEvent ->
-            onEvent(uiEvent)
-        }
-    }
 
     LaunchedEffect(Unit) {
         if (viewModel.uiState.initial == null) {
@@ -54,6 +48,8 @@ fun SearchFoodScreen(
         state = viewModel.uiState,
         viewModel::dispatch,
         focusRequester,
+        openFoodDetailPage,
+        onBackPressed,
     )
 }
 
@@ -62,6 +58,8 @@ fun SearchFoodContent(
     state: SearchFoodUiState,
     dispatch: (SearchFoodUiAction) -> Unit,
     focusRequester: FocusRequester,
+    openFoodDetailPage: (Long) -> Unit,
+    onBackPressed: () -> Unit,
 ) {
     LazyColumn(
         modifier = Modifier.fillMaxSize(),
@@ -74,7 +72,7 @@ fun SearchFoodContent(
                 Column {
                     AppIcon(
                         image = Icons.Default.ArrowBack,
-                        modifier = Modifier.clickable { dispatch(SearchFoodUiAction.OnBackPressed) },
+                        modifier = Modifier.clickable(onClick = onBackPressed),
                     )
                     Spacer(modifier = Modifier.height(20.dp))
                 }
@@ -103,7 +101,7 @@ fun SearchFoodContent(
             items(state.searchList) { food ->
                 FoodBoxItem(
                     food = food,
-                    onFoodClick = { dispatch(SearchFoodUiAction.FoodDetail(it)) },
+                    onFoodClick = openFoodDetailPage,
                 )
             }
         }
@@ -210,6 +208,8 @@ fun SearchFoodContentPreview() {
             ),
             dispatch = {},
             focusRequester = focusRequester,
+            openFoodDetailPage = {},
+            onBackPressed = {},
         )
     }
 }

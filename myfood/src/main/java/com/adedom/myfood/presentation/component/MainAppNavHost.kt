@@ -26,7 +26,6 @@ import com.adedom.main.presentation.component.MainScreen
 import com.adedom.main.presentation.view_model.HomeUiEvent
 import com.adedom.main.presentation.view_model.HomeViewModel
 import com.adedom.search_food.presentation.component.SearchFoodScreen
-import com.adedom.search_food.presentation.view_model.SearchFoodUiEvent
 import com.adedom.search_food.presentation.view_model.SearchFoodViewModel
 import com.adedom.splash_screen.presentation.component.SplashScreen
 import com.adedom.splash_screen.presentation.view_model.SplashScreenUiEvent
@@ -207,17 +206,16 @@ fun NavGraphBuilder.mainGraph(navController: NavController) {
         }
         composable(Screen.Main.SearchFood.route) {
             val viewModel: SearchFoodViewModel = getViewModel()
-            SearchFoodScreen(viewModel) { uiEvent ->
-                when (uiEvent) {
-                    is SearchFoodUiEvent.FoodDetail -> {
-                        val route = Screen.Main.FoodDetail.arguments(uiEvent.foodId)
-                        navController.navigate(route)
-                    }
-                    SearchFoodUiEvent.OnBackPressed -> {
-                        navController.popBackStack()
-                    }
-                }
-            }
+            SearchFoodScreen(
+                viewModel = viewModel,
+                openFoodDetailPage = { foodId ->
+                    val route = Screen.Main.FoodDetail.arguments(foodId)
+                    navController.navigate(route)
+                },
+                onBackPressed = {
+                    navController.popBackStack()
+                },
+            )
         }
         composable(
             route = Screen.Main.FoodDetail.route,
