@@ -18,7 +18,6 @@ import com.adedom.authentication.presentation.view_model.LoginViewModel
 import com.adedom.authentication.presentation.view_model.RegisterViewModel
 import com.adedom.connectivity.presentation.component.ConnectivityScreen
 import com.adedom.food_detail.presentation.component.FoodDetailScreen
-import com.adedom.food_detail.presentation.view_model.FoodDetailUiEvent
 import com.adedom.food_detail.presentation.view_model.FoodDetailViewModel
 import com.adedom.main.presentation.component.MainScreen
 import com.adedom.main.presentation.view_model.HomeUiEvent
@@ -215,13 +214,13 @@ fun NavGraphBuilder.mainGraph(navController: NavController) {
         ) { backStackEntry ->
             val viewModel: FoodDetailViewModel = getViewModel()
             val foodId = backStackEntry.arguments?.getInt("foodId")
-            FoodDetailScreen(viewModel, foodId) { uiEvent ->
-                when (uiEvent) {
-                    FoodDetailUiEvent.OnBackPressed -> {
-                        navController.popBackStack()
-                    }
-                }
-            }
+            FoodDetailScreen(
+                viewModel = viewModel,
+                foodId = foodId,
+                onBackPressed = {
+                    navController.popBackStack()
+                },
+            )
         }
     }
 }
