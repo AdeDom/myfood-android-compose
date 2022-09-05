@@ -11,7 +11,6 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.adedom.authentication.presentation.view_model.LoginUiAction
-import com.adedom.authentication.presentation.view_model.LoginUiEvent
 import com.adedom.authentication.presentation.view_model.LoginUiState
 import com.adedom.authentication.presentation.view_model.LoginViewModel
 import com.adedom.ui_components.components.*
@@ -19,17 +18,19 @@ import com.adedom.ui_components.components.*
 @Composable
 fun LoginScreen(
     viewModel: LoginViewModel,
-    onEvent: (LoginUiEvent) -> Unit,
+    openRegisterPage: () -> Unit,
+    openMainPage: () -> Unit,
 ) {
-    LaunchedEffect(viewModel.uiEvent) {
-        viewModel.uiEvent.collect { uiEvent ->
-            onEvent(uiEvent)
+    LaunchedEffect(key1 = Unit) {
+        viewModel.nav.collect {
+            openMainPage()
         }
     }
 
     LoginContent(
         state = viewModel.uiState,
         viewModel::dispatch,
+        openRegisterPage,
     )
 }
 
@@ -37,6 +38,7 @@ fun LoginScreen(
 fun LoginContent(
     state: LoginUiState,
     dispatch: (LoginUiAction) -> Unit,
+    openRegisterPage: () -> Unit,
 ) {
     Box(
         modifier = Modifier.fillMaxSize(),
@@ -105,7 +107,7 @@ fun LoginContent(
         AppBottomText(
             firstText = "Don\'t have an Account?",
             secondText = "Sign Up",
-            onClick = { dispatch(LoginUiAction.NavRegister) },
+            onClick = openRegisterPage,
             modifier = Modifier
                 .align(Alignment.BottomCenter)
                 .padding(bottom = 16.dp),
@@ -121,5 +123,6 @@ fun LoginContentPreview() {
 //            isLoading = true,
         ),
         dispatch = {},
+        openRegisterPage = {},
     )
 }

@@ -14,7 +14,6 @@ import androidx.navigation.compose.navigation
 import androidx.navigation.compose.rememberNavController
 import com.adedom.authentication.presentation.component.LoginScreen
 import com.adedom.authentication.presentation.component.RegisterScreen
-import com.adedom.authentication.presentation.view_model.LoginUiEvent
 import com.adedom.authentication.presentation.view_model.LoginViewModel
 import com.adedom.authentication.presentation.view_model.RegisterViewModel
 import com.adedom.connectivity.presentation.component.ConnectivityScreen
@@ -106,21 +105,20 @@ fun NavGraphBuilder.authGraph(navController: NavController) {
         }
         composable(Screen.Welcome.Login.route) {
             val viewModel: LoginViewModel = getViewModel()
-            LoginScreen(viewModel) { uiEvent ->
-                when (uiEvent) {
-                    LoginUiEvent.NavMain -> {
-                        navController.navigate(Screen.Main.route) {
-                            popUpTo(Screen.Welcome.route) {
-                                inclusive = true
-                            }
+            LoginScreen(
+                viewModel = viewModel,
+                openMainPage = {
+                    navController.navigate(Screen.Main.route) {
+                        popUpTo(Screen.Welcome.route) {
+                            inclusive = true
                         }
                     }
-                    LoginUiEvent.NavRegister -> {
-                        navController.popBackStack()
-                        navController.navigate(Screen.Welcome.Register.route)
-                    }
-                }
-            }
+                },
+                openRegisterPage = {
+                    navController.popBackStack()
+                    navController.navigate(Screen.Welcome.Register.route)
+                },
+            )
         }
         composable(Screen.Welcome.Register.route) {
             val viewModel: RegisterViewModel = getViewModel()

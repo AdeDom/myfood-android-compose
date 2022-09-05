@@ -5,7 +5,10 @@ import com.adedom.authentication.domain.use_cases.ValidateEmailUseCase
 import com.adedom.authentication.domain.use_cases.ValidatePasswordUseCase
 import com.adedom.core.utils.Resource
 import com.adedom.myfood.data.models.base.BaseError
-import com.adedom.ui_components.base.BaseViewModel
+import com.adedom.ui_components.base.BaseMvi
+import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
 
 data class LoginUiState(
@@ -18,24 +21,21 @@ data class LoginUiState(
     val password: String = "",
 )
 
-sealed interface LoginUiEvent {
-    object NavRegister : LoginUiEvent
-    object NavMain : LoginUiEvent
-}
-
 sealed interface LoginUiAction {
     data class SetEmail(val value: String) : LoginUiAction
     data class SetPassword(val value: String) : LoginUiAction
     object Submit : LoginUiAction
     object HideErrorDialog : LoginUiAction
-    object NavRegister : LoginUiAction
 }
 
 class LoginViewModel(
     private val validateEmailUseCase: ValidateEmailUseCase,
     private val validatePasswordUseCase: ValidatePasswordUseCase,
     private val loginUseCase: LoginUseCase,
-) : BaseViewModel<LoginUiState, LoginUiEvent, LoginUiAction>(LoginUiState()) {
+) : BaseMvi<LoginUiState, LoginUiAction>(LoginUiState()) {
+
+    private val _nav = Channel<Unit>()
+    val nav: Flow<Unit> = _nav.receiveAsFlow()
 
     override fun dispatch(action: LoginUiAction) {
         launch {
@@ -76,7 +76,7 @@ class LoginViewModel(
                     val resource = loginUseCase(email, password)
                     when (resource) {
                         is Resource.Success -> {
-                            setEvent(LoginUiEvent.NavMain)
+                            _nav.send(resource.data)
                         }
                         is Resource.Error -> {
                             setState {
@@ -91,9 +91,6 @@ class LoginViewModel(
                 }
                 LoginUiAction.HideErrorDialog -> {
                     setState { copy(error = null) }
-                }
-                LoginUiAction.NavRegister -> {
-                    setEvent(LoginUiEvent.NavRegister)
                 }
             }
         }
