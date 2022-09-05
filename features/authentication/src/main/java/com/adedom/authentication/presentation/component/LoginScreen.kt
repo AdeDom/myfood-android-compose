@@ -10,7 +10,7 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.adedom.authentication.presentation.view_model.LoginUiAction
+import com.adedom.authentication.presentation.view_model.LoginUiEvent
 import com.adedom.authentication.presentation.view_model.LoginUiState
 import com.adedom.authentication.presentation.view_model.LoginViewModel
 import com.adedom.ui_components.components.*
@@ -37,7 +37,7 @@ fun LoginScreen(
 @Composable
 fun LoginContent(
     state: LoginUiState,
-    dispatch: (LoginUiAction) -> Unit,
+    dispatch: (LoginUiEvent) -> Unit,
     openRegisterPage: () -> Unit,
 ) {
     Box(
@@ -50,7 +50,7 @@ fun LoginContent(
         state.error?.let { error ->
             AppErrorAlertDialog(
                 error = error,
-                onDismiss = { dispatch(LoginUiAction.HideErrorDialog) },
+                onDismiss = { dispatch(LoginUiEvent.HideErrorDialog) },
             )
         }
 
@@ -68,7 +68,7 @@ fun LoginContent(
             Spacer(modifier = Modifier.height(20.dp))
             AppTextField(
                 value = state.email,
-                onValueChange = { dispatch(LoginUiAction.SetEmail(it)) },
+                onValueChange = { dispatch(LoginUiEvent.SetEmail(it)) },
                 hint = "Your Email",
                 error = if (state.isErrorEmail) "Email is incorrect" else null,
                 keyboardType = KeyboardType.Email,
@@ -80,7 +80,7 @@ fun LoginContent(
             )
             AppTextField(
                 value = state.password,
-                onValueChange = { dispatch(LoginUiAction.SetPassword(it)) },
+                onValueChange = { dispatch(LoginUiEvent.SetPassword(it)) },
                 hint = "Password",
                 error = if (state.isErrorPassword) "Password is incorrect" else null,
                 keyboardType = KeyboardType.Password,
@@ -95,7 +95,7 @@ fun LoginContent(
                 backgroundColor = if (state.isLogin) Color(0xFFFFD700) else Color.Gray,
                 borderColor = if (state.isLogin) Color(0xFFFFD700) else Color.Gray,
                 enabled = state.isLogin,
-                onClick = { dispatch(LoginUiAction.Submit) },
+                onClick = { dispatch(LoginUiEvent.Submit) },
             )
             Spacer(modifier = Modifier.height(20.dp))
             AppText(

@@ -1,7 +1,7 @@
 package com.adedom.splash_screen.presentation.view_model
 
 import com.adedom.splash_screen.domain.use_cases.GetIsAuthUseCase
-import com.adedom.ui_components.base.BaseMvi
+import com.adedom.ui_components.base.BaseViewModel
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
@@ -10,11 +10,11 @@ import kotlinx.coroutines.launch
 
 object SplashScreenUiState
 
-sealed interface SplashScreenUiAction
+sealed interface SplashScreenUiEvent
 
 class SplashScreenViewModel(
     private val getIsAuthUseCase: GetIsAuthUseCase,
-) : BaseMvi<SplashScreenUiState, SplashScreenUiAction>(SplashScreenUiState) {
+) : BaseViewModel<SplashScreenUiEvent, SplashScreenUiState>(SplashScreenUiState) {
 
     private val _nav = Channel<Boolean>()
     val nav: Flow<Boolean> = _nav.receiveAsFlow()
@@ -27,5 +27,5 @@ class SplashScreenViewModel(
         }
     }
 
-    override fun dispatch(action: SplashScreenUiAction) {}
+    override fun dispatch(action: SplashScreenUiEvent) {}
 }

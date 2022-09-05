@@ -5,7 +5,7 @@ import com.adedom.authentication.domain.use_cases.ValidateEmailUseCase
 import com.adedom.authentication.domain.use_cases.ValidatePasswordUseCase
 import com.adedom.core.utils.Resource
 import com.adedom.myfood.data.models.base.BaseError
-import com.adedom.ui_components.base.BaseMvi
+import com.adedom.ui_components.base.BaseViewModel
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.receiveAsFlow
@@ -21,26 +21,26 @@ data class LoginUiState(
     val password: String = "",
 )
 
-sealed interface LoginUiAction {
-    data class SetEmail(val value: String) : LoginUiAction
-    data class SetPassword(val value: String) : LoginUiAction
-    object Submit : LoginUiAction
-    object HideErrorDialog : LoginUiAction
+sealed interface LoginUiEvent {
+    data class SetEmail(val value: String) : LoginUiEvent
+    data class SetPassword(val value: String) : LoginUiEvent
+    object Submit : LoginUiEvent
+    object HideErrorDialog : LoginUiEvent
 }
 
 class LoginViewModel(
     private val validateEmailUseCase: ValidateEmailUseCase,
     private val validatePasswordUseCase: ValidatePasswordUseCase,
     private val loginUseCase: LoginUseCase,
-) : BaseMvi<LoginUiState, LoginUiAction>(LoginUiState()) {
+) : BaseViewModel<LoginUiEvent, LoginUiState>(LoginUiState()) {
 
     private val _nav = Channel<Unit>()
     val nav: Flow<Unit> = _nav.receiveAsFlow()
 
-    override fun dispatch(action: LoginUiAction) {
+    override fun dispatch(action: LoginUiEvent) {
         launch {
             when (action) {
-                is LoginUiAction.SetEmail -> {
+                is LoginUiEvent.SetEmail -> {
                     val isValidateEmail = validateEmailUseCase(email = action.value)
                     val isValidatePassword = validatePasswordUseCase(uiState.password)
                     setState {
@@ -51,7 +51,7 @@ class LoginViewModel(
                         )
                     }
                 }
-                is LoginUiAction.SetPassword -> {
+                is LoginUiEvent.SetPassword -> {
                     val isValidateEmail = validateEmailUseCase(uiState.email)
                     val isValidatePassword = validatePasswordUseCase(action.value)
                     setState {
@@ -62,7 +62,7 @@ class LoginViewModel(
                         )
                     }
                 }
-                LoginUiAction.Submit -> {
+                LoginUiEvent.Submit -> {
                     setState {
                         copy(
                             isLoading = true,
@@ -89,7 +89,7 @@ class LoginViewModel(
                         }
                     }
                 }
-                LoginUiAction.HideErrorDialog -> {
+                LoginUiEvent.HideErrorDialog -> {
                     setState { copy(error = null) }
                 }
             }

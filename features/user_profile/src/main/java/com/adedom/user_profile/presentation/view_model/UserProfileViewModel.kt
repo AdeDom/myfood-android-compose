@@ -2,7 +2,7 @@ package com.adedom.user_profile.presentation.view_model
 
 import com.adedom.core.utils.Resource2
 import com.adedom.myfood.data.models.base.BaseError
-import com.adedom.ui_components.base.BaseMvi
+import com.adedom.ui_components.base.BaseViewModel
 import com.adedom.user_profile.domain.models.UserProfileModel
 import com.adedom.user_profile.domain.use_cases.FetchUserProfileUseCase
 import com.adedom.user_profile.domain.use_cases.GetUserProfileUseCase
@@ -14,14 +14,14 @@ data class UserProfileUiState(
     val refreshTokenExpired: BaseError? = null,
 )
 
-sealed interface UserProfileUiAction {
-    object DismissErrorDialog : UserProfileUiAction
+sealed interface UserProfileUiEvent {
+    object DismissErrorDialog : UserProfileUiEvent
 }
 
 class UserProfileViewModel(
     private val fetchUserProfileUseCase: FetchUserProfileUseCase,
     private val getUserProfileUseCase: GetUserProfileUseCase,
-) : BaseMvi<UserProfileUiState, UserProfileUiAction>(UserProfileUiState()) {
+) : BaseViewModel<UserProfileUiEvent, UserProfileUiState>(UserProfileUiState()) {
 
     init {
         initUserProfile()
@@ -51,10 +51,10 @@ class UserProfileViewModel(
         }
     }
 
-    override fun dispatch(action: UserProfileUiAction) {
+    override fun dispatch(action: UserProfileUiEvent) {
         launch {
             when (action) {
-                UserProfileUiAction.DismissErrorDialog -> {
+                UserProfileUiEvent.DismissErrorDialog -> {
                     setState { copy(error = null) }
                 }
             }

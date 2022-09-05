@@ -14,7 +14,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Popup
 import com.adedom.connectivity.data.models.Status
-import com.adedom.connectivity.presentation.view_model.ConnectivityUiAction
+import com.adedom.connectivity.presentation.view_model.ConnectivityUiEvent
 import com.adedom.connectivity.presentation.view_model.ConnectivityUiState
 import com.adedom.connectivity.presentation.view_model.ConnectivityViewModel
 import com.adedom.ui_components.theme.MyFoodTheme
@@ -32,7 +32,7 @@ fun ConnectivityScreen(
 @Composable
 fun ConnectivityContent(
     state: ConnectivityUiState,
-    dispatch: (ConnectivityUiAction) -> Unit,
+    dispatch: (ConnectivityUiEvent) -> Unit,
 ) {
     when (state.status) {
         Status.Available -> {
@@ -53,10 +53,10 @@ fun ConnectivityContent(
 
 @Composable
 private fun OnlineNetworkPopup(
-    dispatch: (ConnectivityUiAction) -> Unit,
+    dispatch: (ConnectivityUiEvent) -> Unit,
 ) {
     Popup(
-        onDismissRequest = { dispatch(ConnectivityUiAction.DismissRequest) },
+        onDismissRequest = { dispatch(ConnectivityUiEvent.DismissRequest) },
     ) {
         Box(
             contentAlignment = Alignment.Center,
@@ -102,7 +102,7 @@ fun ConnectivityContentAvailablePreview() {
             ),
             dispatch = { action ->
                 when (action) {
-                    ConnectivityUiAction.DismissRequest -> {
+                    ConnectivityUiEvent.DismissRequest -> {
                         Toast.makeText(context, "onDismissRequest", Toast.LENGTH_SHORT).show()
                     }
                 }
@@ -122,7 +122,7 @@ fun ConnectivityContentUnavailablePreview() {
             ),
             dispatch = { action ->
                 when (action) {
-                    ConnectivityUiAction.DismissRequest -> {
+                    ConnectivityUiEvent.DismissRequest -> {
                         Toast.makeText(context, "onDismissRequest", Toast.LENGTH_SHORT).show()
                     }
                 }

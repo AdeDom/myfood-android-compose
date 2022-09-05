@@ -25,7 +25,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.adedom.core.domain.models.FoodModel
 import com.adedom.main.domain.models.CategoryModel
-import com.adedom.main.presentation.view_model.HomeUiAction
+import com.adedom.main.presentation.view_model.HomeUiEvent
 import com.adedom.main.presentation.view_model.HomeUiState
 import com.adedom.ui_components.components.*
 import com.adedom.ui_components.theme.MyFoodTheme
@@ -38,7 +38,7 @@ fun HomePage(
     state: HomeUiState,
     onMenuClick: () -> Unit,
     onLogoutClick: () -> Unit,
-    dispatch: (HomeUiAction) -> Unit,
+    dispatch: (HomeUiEvent) -> Unit,
     openFoodDetailPage: (Long) -> Unit,
     openSearchFoodPage: () -> Unit,
     openUserProfilePage: () -> Unit,
@@ -54,7 +54,7 @@ fun HomePage(
             ) {
                 SwipeRefresh(
                     state = rememberSwipeRefreshState(state.isRefreshing),
-                    onRefresh = { dispatch(HomeUiAction.Refreshing) },
+                    onRefresh = { dispatch(HomeUiEvent.Refreshing) },
                 ) {
                     LazyColumn {
                         item {
@@ -113,7 +113,7 @@ fun HomePage(
                                         modifier = Modifier
                                             .padding(4.dp)
                                             .clickable {
-                                                dispatch(HomeUiAction.CategoryClick(category.categoryId))
+                                                dispatch(HomeUiEvent.CategoryClick(category.categoryId))
                                             },
                                     ) {
                                         Card(
@@ -193,7 +193,7 @@ fun HomePage(
                 title = "Logout",
                 text = "Are you sure to logout the app?",
                 confirmButton = onLogoutClick,
-                dismissButton = { dispatch(HomeUiAction.Logout(false)) },
+                dismissButton = { dispatch(HomeUiEvent.Logout(false)) },
                 modifier = Modifier.wrapContentSize(),
             )
         }
@@ -201,7 +201,7 @@ fun HomePage(
         if (state.error != null) {
             AppErrorAlertDialog(
                 error = state.error,
-                onDismiss = { dispatch(HomeUiAction.ErrorDismiss) },
+                onDismiss = { dispatch(HomeUiEvent.ErrorDismiss) },
             )
         }
     }
@@ -316,24 +316,24 @@ fun HomePagePreview() {
             onLogoutClick = {},
             dispatch = { action ->
                 when (action) {
-                    is HomeUiAction.CategoryClick -> {
+                    is HomeUiEvent.CategoryClick -> {
                         Toast.makeText(
                             context,
                             "CategoryClick ${action.categoryId}",
                             Toast.LENGTH_SHORT
                         ).show()
                     }
-                    HomeUiAction.ErrorDismiss -> {
+                    HomeUiEvent.ErrorDismiss -> {
                         Toast.makeText(context, "ErrorDismiss", Toast.LENGTH_SHORT).show()
                     }
-                    HomeUiAction.BackHandler -> {
+                    HomeUiEvent.BackHandler -> {
                         Toast.makeText(context, "BackHandler", Toast.LENGTH_SHORT).show()
                     }
-                    HomeUiAction.Refreshing -> {
+                    HomeUiEvent.Refreshing -> {
                         Toast.makeText(context, "Refreshing", Toast.LENGTH_SHORT).show()
                     }
-                    is HomeUiAction.Logout -> {}
-                    HomeUiAction.NavLogout -> {}
+                    is HomeUiEvent.Logout -> {}
+                    HomeUiEvent.NavLogout -> {}
                 }
             },
             openFoodDetailPage = {},

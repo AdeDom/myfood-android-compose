@@ -4,7 +4,7 @@ import com.adedom.core.utils.Resource
 import com.adedom.food_detail.domain.models.FoodDetailModel
 import com.adedom.food_detail.domain.use_cases.GetFoodDetailUseCase
 import com.adedom.myfood.data.models.base.BaseError
-import com.adedom.ui_components.base.BaseMvi
+import com.adedom.ui_components.base.BaseViewModel
 import kotlinx.coroutines.launch
 
 data class FoodDetailUiState(
@@ -13,11 +13,11 @@ data class FoodDetailUiState(
     val error: BaseError? = null,
 )
 
-sealed interface FoodDetailUiAction
+sealed interface FoodDetailUiEvent
 
 class FoodDetailViewModel(
     private val getFoodDetailUseCase: GetFoodDetailUseCase,
-) : BaseMvi<FoodDetailUiState, FoodDetailUiAction>(FoodDetailUiState()) {
+) : BaseViewModel<FoodDetailUiEvent, FoodDetailUiState>(FoodDetailUiState()) {
 
     fun callFoodDetail(foodId: Int?) {
         launch {
@@ -50,5 +50,5 @@ class FoodDetailViewModel(
         }
     }
 
-    override fun dispatch(action: FoodDetailUiAction) {}
+    override fun dispatch(action: FoodDetailUiEvent) {}
 }

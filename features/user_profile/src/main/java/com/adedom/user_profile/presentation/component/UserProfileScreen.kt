@@ -21,7 +21,7 @@ import com.adedom.ui_components.components.AppImageNetwork
 import com.adedom.ui_components.theme.MyFoodTheme
 import com.adedom.user_profile.R
 import com.adedom.user_profile.domain.models.UserProfileModel
-import com.adedom.user_profile.presentation.view_model.UserProfileUiAction
+import com.adedom.user_profile.presentation.view_model.UserProfileUiEvent
 import com.adedom.user_profile.presentation.view_model.UserProfileUiState
 import com.adedom.user_profile.presentation.view_model.UserProfileViewModel
 
@@ -42,7 +42,7 @@ fun UserProfileScreen(
 @Composable
 fun UserProfileContent(
     state: UserProfileUiState,
-    dispatch: (UserProfileUiAction) -> Unit,
+    dispatch: (UserProfileUiEvent) -> Unit,
     onBackPressed: () -> Unit,
     refreshTokenExpired: () -> Unit,
 ) {
@@ -112,7 +112,7 @@ fun UserProfileContent(
         state.error?.let {
             AppErrorAlertDialog(
                 error = state.error,
-                onDismiss = { dispatch(UserProfileUiAction.DismissErrorDialog) },
+                onDismiss = { dispatch(UserProfileUiEvent.DismissErrorDialog) },
             )
         }
 
@@ -144,7 +144,7 @@ fun UserProfileContentPreview() {
             ),
             dispatch = { action ->
                 when (action) {
-                    UserProfileUiAction.DismissErrorDialog -> {
+                    UserProfileUiEvent.DismissErrorDialog -> {
                         Toast.makeText(context, "DismissErrorDialog", Toast.LENGTH_SHORT).show()
                     }
                 }

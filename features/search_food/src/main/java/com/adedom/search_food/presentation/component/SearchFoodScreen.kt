@@ -18,7 +18,7 @@ import androidx.compose.ui.platform.LocalTextInputService
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.adedom.core.domain.models.FoodModel
-import com.adedom.search_food.presentation.view_model.SearchFoodUiAction
+import com.adedom.search_food.presentation.view_model.SearchFoodUiEvent
 import com.adedom.search_food.presentation.view_model.SearchFoodUiState
 import com.adedom.search_food.presentation.view_model.SearchFoodViewModel
 import com.adedom.ui_components.components.AppEmptyData
@@ -40,7 +40,7 @@ fun SearchFoodScreen(
         if (viewModel.uiState.initial == null) {
             focusRequester.requestFocus()
             inputService?.showSoftwareKeyboard()
-            viewModel.dispatch(SearchFoodUiAction.Initial)
+            viewModel.dispatch(SearchFoodUiEvent.Initial)
         }
     }
 
@@ -56,7 +56,7 @@ fun SearchFoodScreen(
 @Composable
 fun SearchFoodContent(
     state: SearchFoodUiState,
-    dispatch: (SearchFoodUiAction) -> Unit,
+    dispatch: (SearchFoodUiEvent) -> Unit,
     focusRequester: FocusRequester,
     openFoodDetailPage: (Long) -> Unit,
     onBackPressed: () -> Unit,
@@ -79,7 +79,7 @@ fun SearchFoodContent(
                 Spacer(modifier = Modifier.width(8.dp))
                 AppTextField(
                     value = state.search,
-                    onValueChange = { dispatch(SearchFoodUiAction.SetSearch(it)) },
+                    onValueChange = { dispatch(SearchFoodUiEvent.SetSearch(it)) },
                     hint = "Search food",
                     leadingIcon = {
                         AppIcon(Icons.Default.Search)

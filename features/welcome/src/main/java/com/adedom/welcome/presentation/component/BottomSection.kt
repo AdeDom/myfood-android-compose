@@ -16,11 +16,11 @@ import com.adedom.ui_components.components.AppBottomText
 import com.adedom.ui_components.components.AppButton
 import com.adedom.ui_components.components.AppText
 import com.adedom.ui_components.theme.MyFoodTheme
-import com.adedom.welcome.presentation.view_model.WelcomeUiAction
+import com.adedom.welcome.presentation.view_model.WelcomeUiEvent
 
 @Composable
 fun BottomSection(
-    dispatch: (WelcomeUiAction) -> Unit,
+    dispatch: (WelcomeUiEvent) -> Unit,
     openLoginPage: () -> Unit,
     openRegisterPage: () -> Unit,
 ) {
@@ -44,7 +44,7 @@ fun BottomSection(
         AppBottomText(
             firstText = "Don\'t want login?",
             secondText = "Skip",
-            onClick = { dispatch(WelcomeUiAction.NavSkip) },
+            onClick = { dispatch(WelcomeUiEvent.NavSkip) },
         )
         Spacer(modifier = Modifier.height(20.dp))
         Row(

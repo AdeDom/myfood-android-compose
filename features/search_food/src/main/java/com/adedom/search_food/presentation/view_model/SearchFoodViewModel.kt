@@ -2,7 +2,7 @@ package com.adedom.search_food.presentation.view_model
 
 import com.adedom.core.domain.models.FoodModel
 import com.adedom.search_food.domain.use_cases.SearchFoodUseCase
-import com.adedom.ui_components.base.BaseMvi
+import com.adedom.ui_components.base.BaseViewModel
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -13,21 +13,21 @@ data class SearchFoodUiState(
     val searchList: List<FoodModel> = emptyList(),
 )
 
-sealed interface SearchFoodUiAction {
-    object Initial : SearchFoodUiAction
-    data class SetSearch(val value: String) : SearchFoodUiAction
+sealed interface SearchFoodUiEvent {
+    object Initial : SearchFoodUiEvent
+    data class SetSearch(val value: String) : SearchFoodUiEvent
 }
 
 class SearchFoodViewModel(
     private val searchFoodUseCase: SearchFoodUseCase,
-) : BaseMvi<SearchFoodUiState, SearchFoodUiAction>(SearchFoodUiState()) {
+) : BaseViewModel<SearchFoodUiEvent, SearchFoodUiState>(SearchFoodUiState()) {
 
     private var searchJob: Job? = null
 
-    override fun dispatch(action: SearchFoodUiAction) {
+    override fun dispatch(action: SearchFoodUiEvent) {
         launch {
             when (action) {
-                SearchFoodUiAction.Initial -> {
+                SearchFoodUiEvent.Initial -> {
                     delay(200)
                     val foods = searchFoodUseCase("")
                     setState {
@@ -37,7 +37,7 @@ class SearchFoodViewModel(
                         )
                     }
                 }
-                is SearchFoodUiAction.SetSearch -> {
+                is SearchFoodUiEvent.SetSearch -> {
                     setState { copy(search = action.value) }
                     searchJob?.cancel()
                     searchJob = launch {

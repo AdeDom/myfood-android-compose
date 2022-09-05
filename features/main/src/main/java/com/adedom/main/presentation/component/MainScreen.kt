@@ -18,7 +18,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.adedom.main.R
 import com.adedom.main.presentation.view_model.HomeChannel
-import com.adedom.main.presentation.view_model.HomeUiAction
+import com.adedom.main.presentation.view_model.HomeUiEvent
 import com.adedom.main.presentation.view_model.HomeUiState
 import com.adedom.main.presentation.view_model.HomeViewModel
 import com.adedom.ui_components.components.AppIcon
@@ -63,14 +63,14 @@ fun MainScreen(
         openInfoPage,
     )
 
-    BackHandler(onBack = { viewModel.dispatch(HomeUiAction.BackHandler) })
+    BackHandler(onBack = { viewModel.dispatch(HomeUiEvent.BackHandler) })
 }
 
 @Composable
 fun MainContent(
     state: HomeUiState,
     onLogoutClick: () -> Unit,
-    dispatch: (HomeUiAction) -> Unit,
+    dispatch: (HomeUiEvent) -> Unit,
     openFoodDetailPage: (Long) -> Unit,
     openSearchFoodPage: () -> Unit,
     openUserProfilePage: () -> Unit,
@@ -111,13 +111,13 @@ fun MainContent(
                     DrawableItemMenu(
                         text = "Logout",
                         icon = { AppIcon(image = R.drawable.ic_logout_gray) },
-                        onClick = { dispatch(HomeUiAction.Logout(true)) },
+                        onClick = { dispatch(HomeUiEvent.Logout(true)) },
                     )
                 } else {
                     DrawableItemMenu(
                         text = "Back to the welcome",
                         icon = { AppIcon(image = R.drawable.ic_logout_gray) },
-                        onClick = { dispatch(HomeUiAction.NavLogout) },
+                        onClick = { dispatch(HomeUiEvent.NavLogout) },
                     )
                 }
             }
