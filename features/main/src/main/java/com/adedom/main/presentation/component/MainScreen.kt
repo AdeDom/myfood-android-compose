@@ -17,8 +17,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.adedom.main.R
+import com.adedom.main.presentation.view_model.HomeChannel
 import com.adedom.main.presentation.view_model.HomeUiAction
-import com.adedom.main.presentation.view_model.HomeUiEvent
 import com.adedom.main.presentation.view_model.HomeUiState
 import com.adedom.main.presentation.view_model.HomeViewModel
 import com.adedom.ui_components.components.AppIcon
@@ -29,11 +29,27 @@ import kotlinx.coroutines.launch
 @Composable
 fun MainScreen(
     viewModel: HomeViewModel,
-    onEvent: (HomeUiEvent) -> Unit,
+    onLogoutClick: () -> Unit,
+    openFoodDetailPage: (Long) -> Unit,
+    openSearchFoodPage: () -> Unit,
+    openUserProfilePage: () -> Unit,
+    openInfoPage: () -> Unit,
+    onBackAlert: () -> Unit,
+    onBackPressed: () -> Unit,
 ) {
-    LaunchedEffect(viewModel.uiEvent) {
-        viewModel.uiEvent.collect { uiEvent ->
-            onEvent(uiEvent)
+    LaunchedEffect(key1 = Unit) {
+        viewModel.channel.collect { homeChannel ->
+            when (homeChannel) {
+                HomeChannel.Logout -> {
+                    onLogoutClick()
+                }
+                HomeChannel.OnBackAlert -> {
+                    onBackAlert()
+                }
+                HomeChannel.OnBackPressed -> {
+                    onBackPressed()
+                }
+            }
         }
     }
 
@@ -41,6 +57,10 @@ fun MainScreen(
         state = viewModel.uiState,
         onLogoutClick = viewModel::onLogoutEvent,
         viewModel::dispatch,
+        openFoodDetailPage,
+        openSearchFoodPage,
+        openUserProfilePage,
+        openInfoPage,
     )
 
     BackHandler(onBack = { viewModel.dispatch(HomeUiAction.BackHandler) })
@@ -51,6 +71,10 @@ fun MainContent(
     state: HomeUiState,
     onLogoutClick: () -> Unit,
     dispatch: (HomeUiAction) -> Unit,
+    openFoodDetailPage: (Long) -> Unit,
+    openSearchFoodPage: () -> Unit,
+    openUserProfilePage: () -> Unit,
+    openInfoPage: () -> Unit,
 ) {
     val scaffoldState = rememberScaffoldState()
     val scope = rememberCoroutineScope()
@@ -80,7 +104,7 @@ fun MainContent(
                 DrawableItemMenu(
                     text = "Info",
                     icon = { AppIcon(image = Icons.Default.Info) },
-                    onClick = { dispatch(HomeUiAction.NavInfo) },
+                    onClick = openInfoPage,
                 )
                 Spacer(modifier = Modifier.weight(1f))
                 if (state.isExitAuth) {
@@ -108,6 +132,9 @@ fun MainContent(
                 }
             },
             onLogoutClick = onLogoutClick,
+            openFoodDetailPage = openFoodDetailPage,
+            openSearchFoodPage = openSearchFoodPage,
+            openUserProfilePage = openUserProfilePage,
             modifier = Modifier
                 .fillMaxSize()
                 .padding(it),
@@ -145,6 +172,10 @@ fun MainContentPreview() {
             state = HomeUiState(),
             onLogoutClick = {},
             dispatch = {},
+            openFoodDetailPage = {},
+            openSearchFoodPage = {},
+            openUserProfilePage = {},
+            openInfoPage = {},
         )
     }
 }

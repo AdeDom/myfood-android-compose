@@ -20,7 +20,6 @@ import com.adedom.connectivity.presentation.component.ConnectivityScreen
 import com.adedom.food_detail.presentation.component.FoodDetailScreen
 import com.adedom.food_detail.presentation.view_model.FoodDetailViewModel
 import com.adedom.main.presentation.component.MainScreen
-import com.adedom.main.presentation.view_model.HomeUiEvent
 import com.adedom.main.presentation.view_model.HomeViewModel
 import com.adedom.search_food.presentation.component.SearchFoodScreen
 import com.adedom.search_food.presentation.view_model.SearchFoodViewModel
@@ -146,36 +145,35 @@ fun NavGraphBuilder.mainGraph(navController: NavController) {
         composable(Screen.Main.Init.route) {
             val context = LocalContext.current
             val viewModel: HomeViewModel = getViewModel()
-            MainScreen(viewModel) { uiEvent ->
-                when (uiEvent) {
-                    HomeUiEvent.NavLogout -> {
-                        navController.navigate(Screen.Welcome.route) {
-                            popUpTo(Screen.Main.route) {
-                                inclusive = true
-                            }
+            MainScreen(
+                viewModel = viewModel,
+                onLogoutClick = {
+                    navController.navigate(Screen.Welcome.route) {
+                        popUpTo(Screen.Main.route) {
+                            inclusive = true
                         }
                     }
-                    is HomeUiEvent.NavFoodDetail -> {
-                        val route = Screen.Main.FoodDetail.arguments(uiEvent.foodId)
-                        navController.navigate(route)
-                    }
-                    HomeUiEvent.NavSearchFood -> {
-                        navController.navigate(Screen.Main.SearchFood.route)
-                    }
-                    HomeUiEvent.NavUserProfile -> {
-                        navController.navigate(Screen.Main.UserProfile.route)
-                    }
-                    HomeUiEvent.NavInfo -> {
-                        Toast.makeText(context, "NavInfo", Toast.LENGTH_SHORT).show()
-                    }
-                    HomeUiEvent.OnBackAlert -> {
-                        Toast.makeText(context, "Tap again to exit the app", Toast.LENGTH_SHORT).show()
-                    }
-                    HomeUiEvent.OnBackPressed -> {
-                        (context as? Activity)?.finishAffinity()
-                    }
-                }
-            }
+                },
+                openFoodDetailPage = { foodId ->
+                    val route = Screen.Main.FoodDetail.arguments(foodId)
+                    navController.navigate(route)
+                },
+                openSearchFoodPage = {
+                    navController.navigate(Screen.Main.SearchFood.route)
+                },
+                openUserProfilePage = {
+                    navController.navigate(Screen.Main.UserProfile.route)
+                },
+                openInfoPage = {
+                    Toast.makeText(context, "Info", Toast.LENGTH_SHORT).show()
+                },
+                onBackAlert = {
+                    Toast.makeText(context, "Tap again to exit the app", Toast.LENGTH_SHORT).show()
+                },
+                onBackPressed = {
+                    (context as? Activity)?.finishAffinity()
+                },
+            )
         }
         composable(Screen.Main.UserProfile.route) {
             val viewModel: UserProfileViewModel = getViewModel()

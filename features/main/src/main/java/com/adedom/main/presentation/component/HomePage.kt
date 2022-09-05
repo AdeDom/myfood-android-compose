@@ -39,6 +39,9 @@ fun HomePage(
     onMenuClick: () -> Unit,
     onLogoutClick: () -> Unit,
     dispatch: (HomeUiAction) -> Unit,
+    openFoodDetailPage: (Long) -> Unit,
+    openSearchFoodPage: () -> Unit,
+    openUserProfilePage: () -> Unit,
 ) {
     Box(
         modifier = modifier,
@@ -67,7 +70,7 @@ fun HomePage(
                                         .fillMaxSize()
                                         .clip(RoundedCornerShape(32.dp))
                                         .background(Color.LightGray)
-                                        .clickable { dispatch(HomeUiAction.NavSearchFood) }
+                                        .clickable(onClick = openSearchFoodPage),
                                 ) {
                                     Row(
                                         verticalAlignment = Alignment.CenterVertically,
@@ -94,9 +97,7 @@ fun HomePage(
                                                         height = 40.dp,
                                                     )
                                                     .clip(CircleShape)
-                                                    .clickable {
-                                                        dispatch(HomeUiAction.NavUserProfile)
-                                                    },
+                                                    .clickable(onClick = openUserProfilePage),
                                             )
                                         }
                                         Spacer(modifier = Modifier.width(8.dp))
@@ -178,7 +179,7 @@ fun HomePage(
                             items(state.foods) { food ->
                                 FoodBoxItem(
                                     food = food,
-                                    onFoodClick = { dispatch(HomeUiAction.NavFoodDetail(it)) },
+                                    onFoodClick = openFoodDetailPage,
                                 )
                             }
                         }
@@ -322,16 +323,6 @@ fun HomePagePreview() {
                             Toast.LENGTH_SHORT
                         ).show()
                     }
-                    is HomeUiAction.NavFoodDetail -> {
-                        Toast.makeText(
-                            context,
-                            "FoodClick ${action.foodId}",
-                            Toast.LENGTH_SHORT
-                        ).show()
-                    }
-                    HomeUiAction.NavSearchFood -> {
-                        Toast.makeText(context, "NavSearch", Toast.LENGTH_SHORT).show()
-                    }
                     HomeUiAction.ErrorDismiss -> {
                         Toast.makeText(context, "ErrorDismiss", Toast.LENGTH_SHORT).show()
                     }
@@ -342,11 +333,12 @@ fun HomePagePreview() {
                         Toast.makeText(context, "Refreshing", Toast.LENGTH_SHORT).show()
                     }
                     is HomeUiAction.Logout -> {}
-                    HomeUiAction.NavUserProfile -> {}
-                    HomeUiAction.NavInfo -> {}
                     HomeUiAction.NavLogout -> {}
                 }
-            }
+            },
+            openFoodDetailPage = {},
+            openSearchFoodPage = {},
+            openUserProfilePage = {},
         )
     }
 }
