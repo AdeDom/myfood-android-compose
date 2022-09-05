@@ -5,7 +5,7 @@ import com.adedom.ui_components.base.BaseMvi
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.consumeAsFlow
+import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
 
 object SplashScreenUiState
@@ -17,7 +17,7 @@ class SplashScreenViewModel(
 ) : BaseMvi<SplashScreenUiState, SplashScreenUiAction>(SplashScreenUiState) {
 
     private val _nav = Channel<Boolean>()
-    val nav: Flow<Boolean> = _nav.consumeAsFlow()
+    val nav: Flow<Boolean> = _nav.receiveAsFlow()
 
     init {
         launch {

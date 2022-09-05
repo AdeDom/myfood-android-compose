@@ -4,7 +4,6 @@ import com.adedom.ui_components.base.BaseMvi
 import com.adedom.welcome.domain.use_cases.WelcomeGuestRoleUseCase
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.consumeAsFlow
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
 
