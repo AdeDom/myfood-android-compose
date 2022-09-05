@@ -142,8 +142,8 @@ fun UserProfileContentPreview() {
                 ),
 //                error = BaseError(),
             ),
-            dispatch = { action ->
-                when (action) {
+            dispatch = { event ->
+                when (event) {
                     UserProfileUiEvent.DismissErrorDialog -> {
                         Toast.makeText(context, "DismissErrorDialog", Toast.LENGTH_SHORT).show()
                     }

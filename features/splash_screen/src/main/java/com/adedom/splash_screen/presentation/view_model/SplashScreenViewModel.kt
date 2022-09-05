@@ -27,5 +27,5 @@ class SplashScreenViewModel(
         }
     }
 
-    override fun dispatch(action: SplashScreenUiEvent) {}
+    override fun dispatch(event: SplashScreenUiEvent) {}
 }

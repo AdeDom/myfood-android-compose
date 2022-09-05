@@ -30,7 +30,7 @@ abstract class BaseViewModel<Event : Any, State : Any>(
         uiState = uiState.reducer()
     }
 
-    abstract fun dispatch(action: Event)
+    abstract fun dispatch(event: Event)
 
     override fun onCleared() {
         coroutineContext.cancel()

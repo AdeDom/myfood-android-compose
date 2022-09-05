@@ -100,8 +100,8 @@ fun ConnectivityContentAvailablePreview() {
             state = ConnectivityUiState(
                 status = Status.Available,
             ),
-            dispatch = { action ->
-                when (action) {
+            dispatch = { event ->
+                when (event) {
                     ConnectivityUiEvent.DismissRequest -> {
                         Toast.makeText(context, "onDismissRequest", Toast.LENGTH_SHORT).show()
                     }
@@ -120,8 +120,8 @@ fun ConnectivityContentUnavailablePreview() {
             state = ConnectivityUiState(
                 status = Status.Unavailable,
             ),
-            dispatch = { action ->
-                when (action) {
+            dispatch = { event ->
+                when (event) {
                     ConnectivityUiEvent.DismissRequest -> {
                         Toast.makeText(context, "onDismissRequest", Toast.LENGTH_SHORT).show()
                     }

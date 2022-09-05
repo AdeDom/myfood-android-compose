@@ -34,9 +34,9 @@ class ConnectivityViewModel(
             .launchIn(this)
     }
 
-    override fun dispatch(action: ConnectivityUiEvent) {
+    override fun dispatch(event: ConnectivityUiEvent) {
         launch {
-            when (action) {
+            when (event) {
                 ConnectivityUiEvent.DismissRequest -> {
                     setState { copy(status = Status.Unknown) }
                 }

@@ -24,9 +24,9 @@ class SearchFoodViewModel(
 
     private var searchJob: Job? = null
 
-    override fun dispatch(action: SearchFoodUiEvent) {
+    override fun dispatch(event: SearchFoodUiEvent) {
         launch {
-            when (action) {
+            when (event) {
                 SearchFoodUiEvent.Initial -> {
                     delay(200)
                     val foods = searchFoodUseCase("")
@@ -38,11 +38,11 @@ class SearchFoodViewModel(
                     }
                 }
                 is SearchFoodUiEvent.SetSearch -> {
-                    setState { copy(search = action.value) }
+                    setState { copy(search = event.value) }
                     searchJob?.cancel()
                     searchJob = launch {
                         delay(500)
-                        val foods = searchFoodUseCase(action.value)
+                        val foods = searchFoodUseCase(event.value)
                         setState { copy(searchList = foods) }
                     }
                 }

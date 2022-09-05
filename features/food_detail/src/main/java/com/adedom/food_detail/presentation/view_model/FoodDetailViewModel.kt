@@ -50,5 +50,5 @@ class FoodDetailViewModel(
         }
     }
 
-    override fun dispatch(action: FoodDetailUiEvent) {}
+    override fun dispatch(event: FoodDetailUiEvent) {}
 }

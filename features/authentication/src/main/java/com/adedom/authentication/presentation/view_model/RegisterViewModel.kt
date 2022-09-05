@@ -23,26 +23,26 @@ sealed interface RegisterUiEvent {
 
 class RegisterViewModel : BaseViewModel<RegisterUiEvent, RegisterUiState>(RegisterUiState()) {
 
-    override fun dispatch(action: RegisterUiEvent) {
+    override fun dispatch(event: RegisterUiEvent) {
         launch {
-            when (action) {
+            when (event) {
                 is RegisterUiEvent.SetName -> {
-                    setState { copy(name = action.value) }
+                    setState { copy(name = event.value) }
                 }
                 is RegisterUiEvent.SetEmail -> {
-                    setState { copy(email = action.value) }
+                    setState { copy(email = event.value) }
                 }
                 is RegisterUiEvent.SetMobileNo -> {
-                    setState { copy(mobileNo = action.value) }
+                    setState { copy(mobileNo = event.value) }
                 }
                 is RegisterUiEvent.SetAddress -> {
-                    setState { copy(address = action.value) }
+                    setState { copy(address = event.value) }
                 }
                 is RegisterUiEvent.SetPassword -> {
-                    setState { copy(password = action.value) }
+                    setState { copy(password = event.value) }
                 }
                 is RegisterUiEvent.SetConfirmPassword -> {
-                    setState { copy(confirmPassword = action.value) }
+                    setState { copy(confirmPassword = event.value) }
                 }
             }
         }

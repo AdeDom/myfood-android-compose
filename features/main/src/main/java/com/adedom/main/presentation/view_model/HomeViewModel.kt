@@ -117,16 +117,16 @@ class HomeViewModel(
         }
     }
 
-    override fun dispatch(action: HomeUiEvent) {
+    override fun dispatch(event: HomeUiEvent) {
         launch {
-            when (action) {
+            when (event) {
                 is HomeUiEvent.CategoryClick -> {
-                    val (categoryName, foods) = getFoodListByCategoryIdUseCase(action.categoryId)
+                    val (categoryName, foods) = getFoodListByCategoryIdUseCase(event.categoryId)
                     setState {
                         copy(
                             categoryName = categoryName,
                             foods = foods,
-                            categoryIdClick = action.categoryId,
+                            categoryIdClick = event.categoryId,
                         )
                     }
                 }
@@ -155,7 +155,7 @@ class HomeViewModel(
                     }
                 }
                 is HomeUiEvent.Logout -> {
-                    setState { copy(isLogoutDialog = action.isLogoutDialog) }
+                    setState { copy(isLogoutDialog = event.isLogoutDialog) }
                 }
             }
         }

@@ -37,15 +37,15 @@ class LoginViewModel(
     private val _nav = Channel<Unit>()
     val nav: Flow<Unit> = _nav.receiveAsFlow()
 
-    override fun dispatch(action: LoginUiEvent) {
+    override fun dispatch(event: LoginUiEvent) {
         launch {
-            when (action) {
+            when (event) {
                 is LoginUiEvent.SetEmail -> {
-                    val isValidateEmail = validateEmailUseCase(email = action.value)
+                    val isValidateEmail = validateEmailUseCase(email = event.value)
                     val isValidatePassword = validatePasswordUseCase(uiState.password)
                     setState {
                         copy(
-                            email = action.value,
+                            email = event.value,
                             isErrorEmail = !isValidateEmail,
                             isLogin = isValidateEmail && isValidatePassword,
                         )
@@ -53,10 +53,10 @@ class LoginViewModel(
                 }
                 is LoginUiEvent.SetPassword -> {
                     val isValidateEmail = validateEmailUseCase(uiState.email)
-                    val isValidatePassword = validatePasswordUseCase(action.value)
+                    val isValidatePassword = validatePasswordUseCase(event.value)
                     setState {
                         copy(
-                            password = action.value,
+                            password = event.value,
                             isErrorPassword = !isValidatePassword,
                             isLogin = isValidateEmail && isValidatePassword,
                         )

@@ -51,9 +51,9 @@ class UserProfileViewModel(
         }
     }
 
-    override fun dispatch(action: UserProfileUiEvent) {
+    override fun dispatch(event: UserProfileUiEvent) {
         launch {
-            when (action) {
+            when (event) {
                 UserProfileUiEvent.DismissErrorDialog -> {
                     setState { copy(error = null) }
                 }

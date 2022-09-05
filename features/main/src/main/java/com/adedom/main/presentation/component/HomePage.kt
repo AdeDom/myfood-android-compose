@@ -314,12 +314,12 @@ fun HomePagePreview() {
             ),
             onMenuClick = {},
             onLogoutClick = {},
-            dispatch = { action ->
-                when (action) {
+            dispatch = { event ->
+                when (event) {
                     is HomeUiEvent.CategoryClick -> {
                         Toast.makeText(
                             context,
-                            "CategoryClick ${action.categoryId}",
+                            "CategoryClick ${event.categoryId}",
                             Toast.LENGTH_SHORT
                         ).show()
                     }
