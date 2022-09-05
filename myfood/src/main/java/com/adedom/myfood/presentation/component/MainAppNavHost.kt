@@ -213,7 +213,7 @@ fun NavGraphBuilder.mainGraph(navController: NavController) {
             arguments = Screen.Main.FoodDetail.arguments,
         ) { backStackEntry ->
             val viewModel: FoodDetailViewModel = getViewModel()
-            val foodId = backStackEntry.arguments?.getInt("foodId")
+            val foodId = backStackEntry.arguments?.getInt(Screen.Main.FOOD_ID)
             FoodDetailScreen(
                 viewModel = viewModel,
                 foodId = foodId,
