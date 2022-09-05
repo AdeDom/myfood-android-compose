@@ -21,6 +21,8 @@ import com.adedom.welcome.presentation.view_model.WelcomeUiAction
 @Composable
 fun BottomSection(
     dispatch: (WelcomeUiAction) -> Unit,
+    openLoginPage: () -> Unit,
+    openRegisterPage: () -> Unit,
 ) {
     Column(
         verticalArrangement = Arrangement.Center,
@@ -30,13 +32,13 @@ fun BottomSection(
         AppButton(
             text = "Login",
             backgroundColor = Color(0xFFFFD700),
-            onClick = { dispatch(WelcomeUiAction.NavLogin) },
+            onClick = openLoginPage,
         )
         Spacer(modifier = Modifier.height(20.dp))
         AppButton(
             text = "Create an Account",
             backgroundColor = Color.White,
-            onClick = { dispatch(WelcomeUiAction.NavRegister) },
+            onClick = openRegisterPage,
         )
         Spacer(modifier = Modifier.height(20.dp))
         AppBottomText(
@@ -91,6 +93,8 @@ fun BottomSectionPreview() {
     MyFoodTheme {
         BottomSection(
             dispatch = {},
+            openLoginPage = {},
+            openRegisterPage = {},
         )
     }
 }

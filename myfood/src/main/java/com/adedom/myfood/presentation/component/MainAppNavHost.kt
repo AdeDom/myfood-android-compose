@@ -34,7 +34,6 @@ import com.adedom.user_profile.presentation.component.UserProfileScreen
 import com.adedom.user_profile.presentation.view_model.UserProfileUiEvent
 import com.adedom.user_profile.presentation.view_model.UserProfileViewModel
 import com.adedom.welcome.presentation.component.WelcomeScreen
-import com.adedom.welcome.presentation.view_model.WelcomeUiEvent
 import com.adedom.welcome.presentation.view_model.WelcomeViewModel
 import org.koin.androidx.compose.getViewModel
 
@@ -89,23 +88,22 @@ fun NavGraphBuilder.authGraph(navController: NavController) {
     ) {
         composable(Screen.Welcome.Init.route) {
             val viewModel: WelcomeViewModel = getViewModel()
-            WelcomeScreen(viewModel) { uiEvent ->
-                when (uiEvent) {
-                    WelcomeUiEvent.NavLogin -> {
-                        navController.navigate(Screen.Welcome.Login.route)
-                    }
-                    WelcomeUiEvent.NavRegister -> {
-                        navController.navigate(Screen.Welcome.Register.route)
-                    }
-                    is WelcomeUiEvent.NavSkip -> {
-                        navController.navigate(Screen.Main.route) {
-                            popUpTo(Screen.Welcome.route) {
-                                inclusive = true
-                            }
+            WelcomeScreen(
+                viewModel = viewModel,
+                openLoginPage = {
+                    navController.navigate(Screen.Welcome.Login.route)
+                },
+                openRegisterPage = {
+                    navController.navigate(Screen.Welcome.Register.route)
+                },
+                openMainPage = {
+                    navController.navigate(Screen.Main.route) {
+                        popUpTo(Screen.Welcome.route) {
+                            inclusive = true
                         }
                     }
-                }
-            }
+                },
+            )
         }
         composable(Screen.Welcome.Login.route) {
             val viewModel: LoginViewModel = getViewModel()
