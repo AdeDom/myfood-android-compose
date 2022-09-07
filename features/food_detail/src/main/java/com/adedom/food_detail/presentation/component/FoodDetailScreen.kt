@@ -52,107 +52,107 @@ fun FoodDetailContent(
     Box(
         modifier = Modifier.fillMaxSize(),
     ) {
-        if (state.isLoading) {
-            AppLoadingLottieAnimation()
-        }
-
-        if (state.error != null) {
-            AppErrorAlertDialog(
-                error = state.error,
-                onDismiss = onBackPressed,
-            )
-        }
-
-        state.foodDetail?.let { foodDetail ->
-            AppImageNetwork(
-                image = foodDetail.image,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(screenHeightDp / 2),
-            )
-            LazyColumn {
-                item {
-                    Spacer(
-                        modifier = Modifier.height((screenHeightDp / 2) - 128.dp),
-                    )
-                    Box {
-                        Column {
-                            Spacer(
-                                modifier = Modifier.height(64.dp),
-                            )
-                            Card(
-                                shape = RoundedCornerShape(
-                                    topStart = 64.dp,
-                                    topEnd = 64.dp,
-                                ),
-                                elevation = 16.dp,
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .height(screenHeightDp - 64.dp),
-                            ) {
-                                Column(
-                                    modifier = Modifier.padding(
-                                        start = 32.dp,
-                                        end = 32.dp,
-                                        top = 32.dp,
-                                    )
+        when (state) {
+            FoodDetailUiState.Loading -> {
+                AppLoadingLottieAnimation()
+            }
+            is FoodDetailUiState.Error -> {
+                AppErrorAlertDialog(
+                    error = state.error,
+                    onDismiss = onBackPressed,
+                )
+            }
+            is FoodDetailUiState.Success -> {
+                AppImageNetwork(
+                    image = state.data.image,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(screenHeightDp / 2),
+                )
+                LazyColumn {
+                    item {
+                        Spacer(
+                            modifier = Modifier.height((screenHeightDp / 2) - 128.dp),
+                        )
+                        Box {
+                            Column {
+                                Spacer(
+                                    modifier = Modifier.height(64.dp),
+                                )
+                                Card(
+                                    shape = RoundedCornerShape(
+                                        topStart = 64.dp,
+                                        topEnd = 64.dp,
+                                    ),
+                                    elevation = 16.dp,
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .height(screenHeightDp - 64.dp),
                                 ) {
-                                    Text(
-                                        text = foodDetail.foodName,
-                                        color = Color.Black,
-                                        fontSize = 24.sp,
-                                    )
-                                    Spacer(modifier = Modifier.height(8.dp))
-                                    Row(
-                                        verticalAlignment = Alignment.Bottom,
+                                    Column(
+                                        modifier = Modifier.padding(
+                                            start = 32.dp,
+                                            end = 32.dp,
+                                            top = 32.dp,
+                                        )
                                     ) {
-                                        AppIcon(
-                                            image = Icons.Default.Star,
-                                            color = Color(0xFFFFC107),
-                                            modifier = Modifier.size(18.dp),
-                                        )
-                                        Spacer(modifier = Modifier.width(4.dp))
                                         Text(
-                                            text = foodDetail.ratingScoreCount,
-                                            color = Color(0xFFFFC107),
-                                            fontSize = 14.sp,
+                                            text = state.data.foodName,
+                                            color = Color.Black,
+                                            fontSize = 24.sp,
                                         )
-                                        Box(modifier = Modifier.weight(1f))
+                                        Spacer(modifier = Modifier.height(8.dp))
+                                        Row(
+                                            verticalAlignment = Alignment.Bottom,
+                                        ) {
+                                            AppIcon(
+                                                image = Icons.Default.Star,
+                                                color = Color(0xFFFFC107),
+                                                modifier = Modifier.size(18.dp),
+                                            )
+                                            Spacer(modifier = Modifier.width(4.dp))
+                                            Text(
+                                                text = state.data.ratingScoreCount,
+                                                color = Color(0xFFFFC107),
+                                                fontSize = 14.sp,
+                                            )
+                                            Box(modifier = Modifier.weight(1f))
+                                            Text(
+                                                text = "${state.data.price}",
+                                                fontSize = 32.sp,
+                                                fontWeight = FontWeight.Bold,
+                                            )
+                                            Spacer(modifier = Modifier.width(8.dp))
+                                            Text(
+                                                text = "Bath",
+                                                fontSize = 32.sp,
+                                                fontWeight = FontWeight.Bold,
+                                            )
+                                        }
+                                        Spacer(modifier = Modifier.height(32.dp))
                                         Text(
-                                            text = "${foodDetail.price}",
-                                            fontSize = 32.sp,
+                                            text = "Description",
                                             fontWeight = FontWeight.Bold,
+                                            fontSize = 16.sp,
                                         )
-                                        Spacer(modifier = Modifier.width(8.dp))
+                                        Spacer(modifier = Modifier.height(8.dp))
                                         Text(
-                                            text = "Bath",
-                                            fontSize = 32.sp,
-                                            fontWeight = FontWeight.Bold,
+                                            text = state.data.description,
+                                            fontSize = 16.sp,
                                         )
                                     }
-                                    Spacer(modifier = Modifier.height(32.dp))
-                                    Text(
-                                        text = "Description",
-                                        fontWeight = FontWeight.Bold,
-                                        fontSize = 16.sp,
-                                    )
-                                    Spacer(modifier = Modifier.height(8.dp))
-                                    Text(
-                                        text = foodDetail.description,
-                                        fontSize = 16.sp,
-                                    )
                                 }
                             }
+                            AppImage(
+                                image = R.drawable.favorite_active,
+                                modifier = Modifier
+                                    .size(80.dp)
+                                    .offset(
+                                        x = screenWidthDp - 128.dp,
+                                        y = 16.dp,
+                                    ),
+                            )
                         }
-                        AppImage(
-                            image = R.drawable.favorite_active,
-                            modifier = Modifier
-                                .size(80.dp)
-                                .offset(
-                                    x = screenWidthDp - 128.dp,
-                                    y = 16.dp,
-                                ),
-                        )
                     }
                 }
             }
@@ -165,9 +165,10 @@ fun FoodDetailContent(
 fun FoodDetailContentPreview() {
     MyFoodTheme {
         FoodDetailContent(
-            state = FoodDetailUiState(
-//                isLoading = true,
-                foodDetail = FoodDetailModel(
+//            state = FoodDetailUiState.Loading,
+//            state = FoodDetailUiState.Error(BaseError()),
+            state = FoodDetailUiState.Success(
+                FoodDetailModel(
                     foodName = "foodName",
                     image = "",
                     price = 99.0,
