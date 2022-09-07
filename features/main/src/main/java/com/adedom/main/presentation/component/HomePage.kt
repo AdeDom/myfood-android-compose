@@ -43,168 +43,188 @@ fun HomePage(
     openSearchFoodPage: () -> Unit,
     openUserProfilePage: () -> Unit,
 ) {
+    when (state.dialog) {
+        HomeUiState.Dialog.Loading -> {
+            AppLoadingLottieAnimation()
+        }
+        is HomeUiState.Dialog.Error -> {
+            AppErrorAlertDialog(
+                error = state.dialog.error,
+                onDismiss = { dispatch(HomeUiEvent.ErrorDismiss) },
+            )
+        }
+        HomeUiState.Dialog.Logout -> {
+            AppInteractAlertDialog(
+                title = "Logout",
+                text = "Are you sure to logout the app?",
+                confirmButton = onLogoutClick,
+                dismissButton = { dispatch(HomeUiEvent.HideDialog) },
+                modifier = Modifier.wrapContentSize(),
+            )
+        }
+        null -> {
+            HomeContent(
+                modifier = modifier,
+                state = state,
+                onMenuClick = onMenuClick,
+                dispatch = dispatch,
+                openFoodDetailPage = openFoodDetailPage,
+                openSearchFoodPage = openSearchFoodPage,
+                openUserProfilePage = openUserProfilePage,
+            )
+        }
+    }
+}
+
+@Composable
+private fun HomeContent(
+    modifier: Modifier = Modifier,
+    state: HomeUiState,
+    onMenuClick: () -> Unit,
+    dispatch: (HomeUiEvent) -> Unit,
+    openFoodDetailPage: (Long) -> Unit,
+    openSearchFoodPage: () -> Unit,
+    openUserProfilePage: () -> Unit,
+) {
     Box(
         modifier = modifier,
     ) {
-        if (state.isLoading) {
-            AppLoadingLottieAnimation()
-        } else {
-            Column(
-                modifier = Modifier.fillMaxSize(),
+        Column(
+            modifier = Modifier.fillMaxSize(),
+        ) {
+            SwipeRefresh(
+                state = rememberSwipeRefreshState(state.isRefreshing),
+                onRefresh = { dispatch(HomeUiEvent.Refreshing) },
             ) {
-                SwipeRefresh(
-                    state = rememberSwipeRefreshState(state.isRefreshing),
-                    onRefresh = { dispatch(HomeUiEvent.Refreshing) },
-                ) {
-                    LazyColumn {
-                        item {
+                LazyColumn {
+                    item {
+                        Box(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .height(60.dp)
+                                .padding(4.dp),
+                        ) {
                             Box(
+                                contentAlignment = Alignment.Center,
                                 modifier = Modifier
-                                    .fillMaxWidth()
-                                    .height(60.dp)
-                                    .padding(4.dp),
+                                    .fillMaxSize()
+                                    .clip(RoundedCornerShape(32.dp))
+                                    .background(Color.LightGray)
+                                    .clickable(onClick = openSearchFoodPage),
                             ) {
-                                Box(
-                                    contentAlignment = Alignment.Center,
-                                    modifier = Modifier
-                                        .fillMaxSize()
-                                        .clip(RoundedCornerShape(32.dp))
-                                        .background(Color.LightGray)
-                                        .clickable(onClick = openSearchFoodPage),
+                                Row(
+                                    verticalAlignment = Alignment.CenterVertically,
                                 ) {
-                                    Row(
-                                        verticalAlignment = Alignment.CenterVertically,
-                                    ) {
-                                        Spacer(modifier = Modifier.width(8.dp))
-                                        IconButton(onClick = onMenuClick) {
-                                            Icon(
-                                                imageVector = Icons.Default.Menu,
-                                                contentDescription = null,
-                                            )
-                                        }
-                                        Spacer(modifier = Modifier.width(8.dp))
-                                        AppText(
-                                            text = "Search food",
-                                            color = Color.Gray,
-                                            modifier = Modifier.weight(1f),
+                                    Spacer(modifier = Modifier.width(8.dp))
+                                    IconButton(onClick = onMenuClick) {
+                                        Icon(
+                                            imageVector = Icons.Default.Menu,
+                                            contentDescription = null,
                                         )
-                                        state.imageProfile?.let {
-                                            AppImageNetwork(
-                                                image = state.imageProfile,
-                                                modifier = Modifier
-                                                    .size(
-                                                        width = 40.dp,
-                                                        height = 40.dp,
-                                                    )
-                                                    .clip(CircleShape)
-                                                    .clickable(onClick = openUserProfilePage),
-                                            )
-                                        }
-                                        Spacer(modifier = Modifier.width(8.dp))
                                     }
+                                    Spacer(modifier = Modifier.width(8.dp))
+                                    AppText(
+                                        text = "Search food",
+                                        color = Color.Gray,
+                                        modifier = Modifier.weight(1f),
+                                    )
+                                    state.imageProfile?.let {
+                                        AppImageNetwork(
+                                            image = state.imageProfile,
+                                            modifier = Modifier
+                                                .size(
+                                                    width = 40.dp,
+                                                    height = 40.dp,
+                                                )
+                                                .clip(CircleShape)
+                                                .clickable(onClick = openUserProfilePage),
+                                        )
+                                    }
+                                    Spacer(modifier = Modifier.width(8.dp))
                                 }
                             }
                         }
+                    }
 
-                        item {
-                            LazyRow {
-                                items(state.categories) { category ->
-                                    Box(
-                                        modifier = Modifier
-                                            .padding(4.dp)
-                                            .clickable {
-                                                dispatch(HomeUiEvent.CategoryClick(category.categoryId))
-                                            },
+                    item {
+                        LazyRow {
+                            items(state.categories) { category ->
+                                Box(
+                                    modifier = Modifier
+                                        .padding(4.dp)
+                                        .clickable {
+                                            dispatch(HomeUiEvent.CategoryClick(category.categoryId))
+                                        },
+                                ) {
+                                    Card(
+                                        shape = RoundedCornerShape(8.dp),
+                                        elevation = 8.dp,
                                     ) {
-                                        Card(
-                                            shape = RoundedCornerShape(8.dp),
-                                            elevation = 8.dp,
+                                        Column(
+                                            horizontalAlignment = Alignment.CenterHorizontally,
                                         ) {
-                                            Column(
-                                                horizontalAlignment = Alignment.CenterHorizontally,
-                                            ) {
-                                                AppImageNetwork(
-                                                    image = category.image,
-                                                    modifier = Modifier.size(
-                                                        width = 100.dp,
-                                                        height = 100.dp,
-                                                    ),
+                                            AppImageNetwork(
+                                                image = category.image,
+                                                modifier = Modifier.size(
+                                                    width = 100.dp,
+                                                    height = 100.dp,
+                                                ),
+                                            )
+                                            Spacer(modifier = Modifier.height(4.dp))
+                                            AppText(
+                                                text = category.categoryName,
+                                                fontWeight = FontWeight.Bold,
+                                            )
+                                            Spacer(modifier = Modifier.height(4.dp))
+                                            if (category.categoryId == state.categoryIdClick) {
+                                                Box(
+                                                    modifier = Modifier
+                                                        .size(
+                                                            width = 64.dp,
+                                                            height = 4.dp,
+                                                        )
+                                                        .clip(RoundedCornerShape(4.dp))
+                                                        .background(Color(0xFFFFD700)),
                                                 )
                                                 Spacer(modifier = Modifier.height(4.dp))
-                                                AppText(
-                                                    text = category.categoryName,
-                                                    fontWeight = FontWeight.Bold,
-                                                )
-                                                Spacer(modifier = Modifier.height(4.dp))
-                                                if (category.categoryId == state.categoryIdClick) {
-                                                    Box(
-                                                        modifier = Modifier
-                                                            .size(
-                                                                width = 64.dp,
-                                                                height = 4.dp,
-                                                            )
-                                                            .clip(RoundedCornerShape(4.dp))
-                                                            .background(Color(0xFFFFD700)),
-                                                    )
-                                                    Spacer(modifier = Modifier.height(4.dp))
-                                                } else {
-                                                    Spacer(modifier = Modifier.height(8.dp))
-                                                }
+                                            } else {
+                                                Spacer(modifier = Modifier.height(8.dp))
                                             }
                                         }
                                     }
                                 }
                             }
                         }
+                    }
 
-                        item {
-                            Row {
-                                Spacer(
-                                    modifier = Modifier.size(
-                                        width = 4.dp,
-                                        height = 4.dp,
-                                    )
-                                )
-                                AppTitleText(text = state.categoryName)
-                            }
+                    item {
+                        Row {
+                            Spacer(
+                                modifier = Modifier.size(
+                                    width = 4.dp,
+                                    height = 4.dp,
+                                ),
+                            )
+                            AppTitleText(text = state.categoryName)
                         }
+                    }
 
-                        if (state.foods.isEmpty()) {
-                            item {
-                                AppEmptyData(
-                                    modifier = Modifier.fillMaxWidth(),
-                                )
-                            }
-                        } else {
-                            items(state.foods) { food ->
-                                FoodBoxItem(
-                                    food = food,
-                                    onFoodClick = openFoodDetailPage,
-                                )
-                            }
+                    if (state.foods.isEmpty()) {
+                        item {
+                            AppEmptyData(
+                                modifier = Modifier.fillMaxWidth(),
+                            )
+                        }
+                    } else {
+                        items(state.foods) { food ->
+                            FoodBoxItem(
+                                food = food,
+                                onFoodClick = openFoodDetailPage,
+                            )
                         }
                     }
                 }
             }
-        }
-
-        when (state.dialog) {
-            is HomeUiState.Dialog.Error -> {
-                AppErrorAlertDialog(
-                    error = state.dialog.error,
-                    onDismiss = { dispatch(HomeUiEvent.ErrorDismiss) },
-                )
-            }
-            HomeUiState.Dialog.Logout -> {
-                AppInteractAlertDialog(
-                    title = "Logout",
-                    text = "Are you sure to logout the app?",
-                    confirmButton = onLogoutClick,
-                    dismissButton = { dispatch(HomeUiEvent.HideDialog) },
-                    modifier = Modifier.wrapContentSize(),
-                )
-            }
-            null -> {}
         }
     }
 }
@@ -216,7 +236,6 @@ fun HomePagePreview() {
     MyFoodTheme {
         HomePage(
             state = HomeUiState(
-//                isLoading = true,
                 categories = listOf(
                     CategoryModel(
                         categoryId = 1,

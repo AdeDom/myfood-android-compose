@@ -15,7 +15,6 @@ import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
 
 data class HomeUiState(
-    val isLoading: Boolean = false,
     val isRefreshing: Boolean = false,
     val imageProfile: String? = null,
     val categories: List<CategoryModel> = emptyList(),
@@ -26,6 +25,7 @@ data class HomeUiState(
     val dialog: Dialog? = null,
 ) {
     sealed interface Dialog {
+        object Loading : Dialog
         data class Error(val error: BaseError) : Dialog
         object Logout : Dialog
     }
@@ -70,19 +70,18 @@ class HomeViewModel(
                     imageProfile = getImageProfileUseCase(),
                 )
             }
-            callHomeContent(isLoading = true)
+            callHomeContent(dialog = HomeUiState.Dialog.Loading)
         }
     }
 
     private suspend fun callHomeContent(
-        isLoading: Boolean = false,
+        dialog: HomeUiState.Dialog? = null,
         isRefreshing: Boolean = false,
     ) {
         setState {
             copy(
-                isLoading = isLoading,
+                dialog = dialog,
                 isRefreshing = isRefreshing,
-                dialog = null,
             )
         }
 
@@ -94,7 +93,7 @@ class HomeViewModel(
                 )
                 setState {
                     copy(
-                        isLoading = false,
+                        dialog = null,
                         isRefreshing = false,
                         categories = resource.data,
                         categoryName = categoryName,
@@ -106,7 +105,6 @@ class HomeViewModel(
             is Resource.Error -> {
                 setState {
                     copy(
-                        isLoading = false,
                         isRefreshing = false,
                         dialog = HomeUiState.Dialog.Error(resource.error),
                     )
@@ -140,7 +138,7 @@ class HomeViewModel(
                     _channel.send(HomeChannel.Logout)
                 }
                 HomeUiEvent.ErrorDismiss -> {
-                    callHomeContent(isLoading = true)
+                    callHomeContent(dialog = HomeUiState.Dialog.Loading)
                 }
                 HomeUiEvent.Refreshing -> {
                     callHomeContent(isRefreshing = true)
