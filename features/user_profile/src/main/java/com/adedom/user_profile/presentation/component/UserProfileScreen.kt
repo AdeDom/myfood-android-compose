@@ -109,18 +109,21 @@ fun UserProfileContent(
             modifier = Modifier.align(Alignment.BottomCenter),
         )
 
-        state.error?.let {
-            AppErrorAlertDialog(
-                error = state.error,
-                onDismiss = { dispatch(UserProfileUiEvent.DismissErrorDialog) },
-            )
-        }
-
-        state.refreshTokenExpired?.let { error ->
-            AppErrorAlertDialog(
-                error = error,
-                onDismiss = refreshTokenExpired,
-            )
+        when (state.dialog) {
+            is UserProfileUiState.Dialog.Error -> {
+                AppErrorAlertDialog(
+                    error = state.dialog.error,
+                    onDismiss = { dispatch(UserProfileUiEvent.DismissErrorDialog) },
+                )
+            }
+            is UserProfileUiState.Dialog.RefreshTokenExpired -> {
+                AppErrorAlertDialog(
+                    title = "Token expired!!!",
+                    error = state.dialog.error,
+                    onDismiss = refreshTokenExpired,
+                )
+            }
+            null -> {}
         }
     }
 }
@@ -140,7 +143,8 @@ fun UserProfileContentPreview() {
                     address = "address",
                     mobileNo = "mobileNo",
                 ),
-//                error = BaseError(),
+//                dialog = UserProfileUiState.Dialog.Error(BaseError()),
+//                dialog = UserProfileUiState.Dialog.RefreshTokenExpired(BaseError()),
             ),
             dispatch = { event ->
                 when (event) {

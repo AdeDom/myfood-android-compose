@@ -10,9 +10,18 @@ import kotlinx.coroutines.launch
 
 data class UserProfileUiState(
     val userProfile: UserProfileModel? = null,
-    val error: BaseError? = null,
-    val refreshTokenExpired: BaseError? = null,
-)
+    val dialog: Dialog? = null,
+) {
+    sealed interface Dialog {
+        data class Error(
+            val error: BaseError,
+        ) : Dialog
+
+        data class RefreshTokenExpired(
+            val error: BaseError,
+        ) : Dialog
+    }
+}
 
 sealed interface UserProfileUiEvent {
     object DismissErrorDialog : UserProfileUiEvent
@@ -42,10 +51,14 @@ class UserProfileViewModel(
             when (resource) {
                 is Resource2.Success -> {}
                 is Resource2.Error -> {
-                    setState { copy(error = resource.error) }
+                    setState {
+                        copy(dialog = UserProfileUiState.Dialog.Error(resource.error))
+                    }
                 }
                 is Resource2.RefreshTokenExpired -> {
-                    setState { copy(refreshTokenExpired = resource.error) }
+                    setState {
+                        copy(dialog = UserProfileUiState.Dialog.RefreshTokenExpired(resource.error))
+                    }
                 }
             }
         }
@@ -55,7 +68,7 @@ class UserProfileViewModel(
         launch {
             when (event) {
                 UserProfileUiEvent.DismissErrorDialog -> {
-                    setState { copy(error = null) }
+                    setState { copy(dialog = null) }
                 }
             }
         }
