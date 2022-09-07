@@ -15,11 +15,15 @@ data class LoginUiState(
     val isErrorEmail: Boolean = false,
     val isErrorPassword: Boolean = false,
     val isLogin: Boolean = false,
-    val isLoading: Boolean = false,
-    val error: BaseError? = null,
     val email: String = "",
     val password: String = "",
-)
+    val dialog: Dialog? = null,
+) {
+    sealed interface Dialog {
+        object Loading : Dialog
+        data class Error(val error: BaseError) : Dialog
+    }
+}
 
 sealed interface LoginUiEvent {
     data class SetEmail(val value: String) : LoginUiEvent
@@ -65,9 +69,8 @@ class LoginViewModel(
                 LoginUiEvent.Submit -> {
                     setState {
                         copy(
-                            isLoading = true,
                             isLogin = false,
-                            error = null,
+                            dialog = LoginUiState.Dialog.Loading,
                         )
                     }
 
@@ -81,16 +84,15 @@ class LoginViewModel(
                         is Resource.Error -> {
                             setState {
                                 copy(
-                                    error = resource.error,
-                                    isLoading = false,
                                     isLogin = true,
+                                    dialog = LoginUiState.Dialog.Error(resource.error),
                                 )
                             }
                         }
                     }
                 }
                 LoginUiEvent.HideErrorDialog -> {
-                    setState { copy(error = null) }
+                    setState { copy(dialog = null) }
                 }
             }
         }

@@ -15,17 +15,21 @@ import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
 
 data class HomeUiState(
-    val isLoading: Boolean = false,
     val isRefreshing: Boolean = false,
-    val error: BaseError? = null,
     val imageProfile: String? = null,
     val categories: List<CategoryModel> = emptyList(),
     val categoryName: String = "",
     val foods: List<FoodModel> = emptyList(),
     val categoryIdClick: Long? = null,
     val isExitAuth: Boolean = false,
-    val isLogoutDialog: Boolean = false,
-)
+    val dialog: Dialog? = null,
+) {
+    sealed interface Dialog {
+        object Loading : Dialog
+        data class Error(val error: BaseError) : Dialog
+        object Logout : Dialog
+    }
+}
 
 sealed interface HomeUiEvent {
     data class CategoryClick(val categoryId: Long) : HomeUiEvent
@@ -33,7 +37,8 @@ sealed interface HomeUiEvent {
     object ErrorDismiss : HomeUiEvent
     object Refreshing : HomeUiEvent
     object BackHandler : HomeUiEvent
-    data class Logout(val isLogoutDialog: Boolean) : HomeUiEvent
+    object Logout : HomeUiEvent
+    object HideDialog : HomeUiEvent
 }
 
 sealed interface HomeChannel {
@@ -65,19 +70,18 @@ class HomeViewModel(
                     imageProfile = getImageProfileUseCase(),
                 )
             }
-            callHomeContent(isLoading = true)
+            callHomeContent(dialog = HomeUiState.Dialog.Loading)
         }
     }
 
     private suspend fun callHomeContent(
-        isLoading: Boolean = false,
+        dialog: HomeUiState.Dialog? = null,
         isRefreshing: Boolean = false,
     ) {
         setState {
             copy(
-                isLoading = isLoading,
+                dialog = dialog,
                 isRefreshing = isRefreshing,
-                error = null,
             )
         }
 
@@ -89,7 +93,7 @@ class HomeViewModel(
                 )
                 setState {
                     copy(
-                        isLoading = false,
+                        dialog = null,
                         isRefreshing = false,
                         categories = resource.data,
                         categoryName = categoryName,
@@ -101,9 +105,8 @@ class HomeViewModel(
             is Resource.Error -> {
                 setState {
                     copy(
-                        isLoading = false,
                         isRefreshing = false,
-                        error = resource.error,
+                        dialog = HomeUiState.Dialog.Error(resource.error),
                     )
                 }
             }
@@ -135,7 +138,7 @@ class HomeViewModel(
                     _channel.send(HomeChannel.Logout)
                 }
                 HomeUiEvent.ErrorDismiss -> {
-                    callHomeContent(isLoading = true)
+                    callHomeContent(dialog = HomeUiState.Dialog.Loading)
                 }
                 HomeUiEvent.Refreshing -> {
                     callHomeContent(isRefreshing = true)
@@ -154,8 +157,11 @@ class HomeViewModel(
                         isBackPressed = false
                     }
                 }
-                is HomeUiEvent.Logout -> {
-                    setState { copy(isLogoutDialog = event.isLogoutDialog) }
+                HomeUiEvent.Logout -> {
+                    setState { copy(dialog = HomeUiState.Dialog.Logout) }
+                }
+                HomeUiEvent.HideDialog -> {
+                    setState { copy(dialog = null) }
                 }
             }
         }

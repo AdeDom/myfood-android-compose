@@ -111,7 +111,7 @@ fun MainContent(
                     DrawableItemMenu(
                         text = "Logout",
                         icon = { AppIcon(image = R.drawable.ic_logout_gray) },
-                        onClick = { dispatch(HomeUiEvent.Logout(true)) },
+                        onClick = { dispatch(HomeUiEvent.Logout) },
                     )
                 } else {
                     DrawableItemMenu(

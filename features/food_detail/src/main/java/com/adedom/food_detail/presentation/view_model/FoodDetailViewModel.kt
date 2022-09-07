@@ -7,44 +7,27 @@ import com.adedom.myfood.data.models.base.BaseError
 import com.adedom.ui_components.base.BaseViewModel
 import kotlinx.coroutines.launch
 
-data class FoodDetailUiState(
-    val isLoading: Boolean = false,
-    val foodDetail: FoodDetailModel? = null,
-    val error: BaseError? = null,
-)
+sealed interface FoodDetailUiState {
+    object Loading : FoodDetailUiState
+    data class Error(val error: BaseError) : FoodDetailUiState
+    data class Success(val data: FoodDetailModel) : FoodDetailUiState
+}
 
 sealed interface FoodDetailUiEvent
 
 class FoodDetailViewModel(
     private val getFoodDetailUseCase: GetFoodDetailUseCase,
-) : BaseViewModel<FoodDetailUiEvent, FoodDetailUiState>(FoodDetailUiState()) {
+) : BaseViewModel<FoodDetailUiEvent, FoodDetailUiState>(FoodDetailUiState.Loading) {
 
     fun callFoodDetail(foodId: Int?) {
         launch {
-            setState {
-                copy(
-                    isLoading = true,
-                    error = null,
-                )
-            }
-
             val resource = getFoodDetailUseCase(foodId)
             when (resource) {
                 is Resource.Success -> {
-                    setState {
-                        copy(
-                            isLoading = false,
-                            foodDetail = resource.data,
-                        )
-                    }
+                    setState { FoodDetailUiState.Success(resource.data) }
                 }
                 is Resource.Error -> {
-                    setState {
-                        copy(
-                            isLoading = false,
-                            error = resource.error,
-                        )
-                    }
+                    setState { FoodDetailUiState.Error(resource.error) }
                 }
             }
         }

@@ -28,8 +28,9 @@ fun AppLoadingAlertDialog() {
 
 @Composable
 fun AppErrorAlertDialog(
-    error: BaseError,
     modifier: Modifier = Modifier,
+    title: String = "Error!!!",
+    error: BaseError,
     onDismiss: () -> Unit,
 ) {
     AlertDialog(
@@ -40,7 +41,7 @@ fun AppErrorAlertDialog(
                 modifier = Modifier.fillMaxSize(),
             ) {
                 Column {
-                    AppTitleText(text = "Error!!!")
+                    AppTitleText(text = title)
                     AppText(text = error.message ?: "Unknown error")
                 }
                 AppText(
