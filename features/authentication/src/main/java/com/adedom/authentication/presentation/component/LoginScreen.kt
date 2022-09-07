@@ -43,17 +43,6 @@ fun LoginContent(
     Box(
         modifier = Modifier.fillMaxSize(),
     ) {
-        if (state.isLoading) {
-            AppLoadingAlertDialog()
-        }
-
-        state.error?.let { error ->
-            AppErrorAlertDialog(
-                error = error,
-                onDismiss = { dispatch(LoginUiEvent.HideErrorDialog) },
-            )
-        }
-
         Column(
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally,
@@ -112,6 +101,19 @@ fun LoginContent(
                 .align(Alignment.BottomCenter)
                 .padding(bottom = 16.dp),
         )
+
+        when (state.dialog) {
+            LoginUiState.Dialog.Loading -> {
+                AppLoadingAlertDialog()
+            }
+            is LoginUiState.Dialog.Error -> {
+                AppErrorAlertDialog(
+                    error = state.dialog.error,
+                    onDismiss = { dispatch(LoginUiEvent.HideErrorDialog) },
+                )
+            }
+            null -> {}
+        }
     }
 }
 
@@ -120,7 +122,8 @@ fun LoginContent(
 fun LoginContentPreview() {
     LoginContent(
         state = LoginUiState(
-//            isLoading = true,
+//            dialog = LoginUiState.Dialog.Loading,
+//            dialog = LoginUiState.Dialog.Error(BaseError()),
         ),
         dispatch = {},
         openRegisterPage = {},

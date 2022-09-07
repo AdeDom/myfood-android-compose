@@ -5,6 +5,7 @@ import com.adedom.authentication.domain.use_cases.LoginUseCase
 import com.adedom.authentication.domain.use_cases.ValidateEmailUseCase
 import com.adedom.authentication.domain.use_cases.ValidatePasswordUseCase
 import com.adedom.authentication.presentation.view_model.LoginUiEvent
+import com.adedom.authentication.presentation.view_model.LoginUiState
 import com.adedom.authentication.presentation.view_model.LoginViewModel
 import com.adedom.authentication.utils.MainCoroutineRule
 import com.adedom.core.utils.Resource
@@ -43,6 +44,17 @@ class LoginViewModelTest {
             validatePasswordUseCase,
             loginUseCase,
         )
+    }
+
+    @Test
+    fun `verify login ui initial state`() {
+        val state = viewModel.uiState
+        assertThat(state.isErrorEmail).isFalse()
+        assertThat(state.isErrorPassword).isFalse()
+        assertThat(state.isLogin).isFalse()
+        assertThat(state.email).isEmpty()
+        assertThat(state.password).isEmpty()
+        assertThat(state.dialog).isNull()
     }
 
     @Test
@@ -114,8 +126,7 @@ class LoginViewModelTest {
         viewModel.dispatch(LoginUiEvent.Submit)
 
         val state = viewModel.uiState
-        assertThat(state.error).isEqualTo(baseError)
-        assertThat(state.isLoading).isFalse()
+        assertThat(state.dialog).isEqualTo(LoginUiState.Dialog.Error(baseError))
         assertThat(state.isLogin).isTrue()
         coVerify { loginUseCase(any(), any()) }
     }
@@ -141,6 +152,6 @@ class LoginViewModelTest {
         viewModel.dispatch(LoginUiEvent.HideErrorDialog)
 
         val result = viewModel.uiState
-        assertThat(result.error).isNull()
+        assertThat(result.dialog).isNull()
     }
 }
