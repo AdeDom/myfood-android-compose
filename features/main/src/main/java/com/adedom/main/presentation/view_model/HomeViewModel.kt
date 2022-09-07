@@ -37,7 +37,8 @@ sealed interface HomeUiEvent {
     object ErrorDismiss : HomeUiEvent
     object Refreshing : HomeUiEvent
     object BackHandler : HomeUiEvent
-    data class Logout(val isLogoutDialog: Boolean) : HomeUiEvent
+    object Logout : HomeUiEvent
+    object HideDialog : HomeUiEvent
 }
 
 sealed interface HomeChannel {
@@ -158,8 +159,11 @@ class HomeViewModel(
                         isBackPressed = false
                     }
                 }
-                is HomeUiEvent.Logout -> {
+                HomeUiEvent.Logout -> {
                     setState { copy(dialog = HomeUiState.Dialog.Logout) }
+                }
+                HomeUiEvent.HideDialog -> {
+                    setState { copy(dialog = null) }
                 }
             }
         }

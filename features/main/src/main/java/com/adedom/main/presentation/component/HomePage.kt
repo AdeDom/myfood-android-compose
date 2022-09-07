@@ -200,7 +200,7 @@ fun HomePage(
                     title = "Logout",
                     text = "Are you sure to logout the app?",
                     confirmButton = onLogoutClick,
-                    dismissButton = { dispatch(HomeUiEvent.Logout(false)) },
+                    dismissButton = { dispatch(HomeUiEvent.HideDialog) },
                     modifier = Modifier.wrapContentSize(),
                 )
             }
@@ -338,6 +338,7 @@ fun HomePagePreview() {
                     }
                     is HomeUiEvent.Logout -> {}
                     HomeUiEvent.NavLogout -> {}
+                    HomeUiEvent.HideDialog -> {}
                 }
             },
             openFoodDetailPage = {},
