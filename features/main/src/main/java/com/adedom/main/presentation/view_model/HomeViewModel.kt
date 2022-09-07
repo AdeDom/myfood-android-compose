@@ -17,15 +17,19 @@ import kotlinx.coroutines.launch
 data class HomeUiState(
     val isLoading: Boolean = false,
     val isRefreshing: Boolean = false,
-    val error: BaseError? = null,
     val imageProfile: String? = null,
     val categories: List<CategoryModel> = emptyList(),
     val categoryName: String = "",
     val foods: List<FoodModel> = emptyList(),
     val categoryIdClick: Long? = null,
     val isExitAuth: Boolean = false,
-    val isLogoutDialog: Boolean = false,
-)
+    val dialog: Dialog? = null,
+) {
+    sealed interface Dialog {
+        data class Error(val error: BaseError) : Dialog
+        object Logout : Dialog
+    }
+}
 
 sealed interface HomeUiEvent {
     data class CategoryClick(val categoryId: Long) : HomeUiEvent
@@ -77,7 +81,7 @@ class HomeViewModel(
             copy(
                 isLoading = isLoading,
                 isRefreshing = isRefreshing,
-                error = null,
+                dialog = null,
             )
         }
 
@@ -103,7 +107,7 @@ class HomeViewModel(
                     copy(
                         isLoading = false,
                         isRefreshing = false,
-                        error = resource.error,
+                        dialog = HomeUiState.Dialog.Error(resource.error),
                     )
                 }
             }
@@ -155,7 +159,7 @@ class HomeViewModel(
                     }
                 }
                 is HomeUiEvent.Logout -> {
-                    setState { copy(isLogoutDialog = event.isLogoutDialog) }
+                    setState { copy(dialog = HomeUiState.Dialog.Logout) }
                 }
             }
         }

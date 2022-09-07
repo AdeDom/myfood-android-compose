@@ -13,13 +13,8 @@ data class UserProfileUiState(
     val dialog: Dialog? = null,
 ) {
     sealed interface Dialog {
-        data class Error(
-            val error: BaseError,
-        ) : Dialog
-
-        data class RefreshTokenExpired(
-            val error: BaseError,
-        ) : Dialog
+        data class Error(val error: BaseError) : Dialog
+        data class RefreshTokenExpired(val error: BaseError) : Dialog
     }
 }
 

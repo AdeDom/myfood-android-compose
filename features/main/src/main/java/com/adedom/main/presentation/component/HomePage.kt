@@ -188,21 +188,23 @@ fun HomePage(
             }
         }
 
-        if (state.isLogoutDialog) {
-            AppInteractAlertDialog(
-                title = "Logout",
-                text = "Are you sure to logout the app?",
-                confirmButton = onLogoutClick,
-                dismissButton = { dispatch(HomeUiEvent.Logout(false)) },
-                modifier = Modifier.wrapContentSize(),
-            )
-        }
-
-        if (state.error != null) {
-            AppErrorAlertDialog(
-                error = state.error,
-                onDismiss = { dispatch(HomeUiEvent.ErrorDismiss) },
-            )
+        when (state.dialog) {
+            is HomeUiState.Dialog.Error -> {
+                AppErrorAlertDialog(
+                    error = state.dialog.error,
+                    onDismiss = { dispatch(HomeUiEvent.ErrorDismiss) },
+                )
+            }
+            HomeUiState.Dialog.Logout -> {
+                AppInteractAlertDialog(
+                    title = "Logout",
+                    text = "Are you sure to logout the app?",
+                    confirmButton = onLogoutClick,
+                    dismissButton = { dispatch(HomeUiEvent.Logout(false)) },
+                    modifier = Modifier.wrapContentSize(),
+                )
+            }
+            null -> {}
         }
     }
 }
@@ -311,6 +313,8 @@ fun HomePagePreview() {
                 ),
                 categoryIdClick = 2,
                 imageProfile = "",
+//                dialog = HomeUiState.Dialog.Error(BaseError()),
+//                dialog = HomeUiState.Dialog.Logout,
             ),
             onMenuClick = {},
             onLogoutClick = {},
