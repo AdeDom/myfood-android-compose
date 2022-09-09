@@ -1,4 +1,4 @@
-package com.adedom.core.utils
+package com.adedom.core.data
 
 import com.adedom.myfood.data.models.base.BaseError
 

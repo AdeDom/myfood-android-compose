@@ -1,6 +1,6 @@
 package com.adedom.user_profile.presentation.view_model
 
-import com.adedom.core.utils.Resource2
+import com.adedom.core.data.Resource2
 import com.adedom.myfood.data.models.base.BaseError
 import com.adedom.ui_components.base.BaseViewModel
 import com.adedom.user_profile.domain.models.UserProfileModel

@@ -8,7 +8,7 @@ import com.adedom.authentication.presentation.view_model.LoginUiEvent
 import com.adedom.authentication.presentation.view_model.LoginUiState
 import com.adedom.authentication.presentation.view_model.LoginViewModel
 import com.adedom.authentication.utils.MainCoroutineRule
-import com.adedom.core.utils.Resource
+import com.adedom.core.data.Resource
 import com.adedom.myfood.data.models.base.BaseError
 import com.google.common.truth.Truth.assertThat
 import io.mockk.coEvery

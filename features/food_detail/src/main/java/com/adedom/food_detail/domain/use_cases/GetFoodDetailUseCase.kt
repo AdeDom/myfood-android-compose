@@ -1,8 +1,8 @@
 package com.adedom.food_detail.domain.use_cases
 
+import com.adedom.core.data.Resource
 import com.adedom.core.data.models.error.AppErrorCode
 import com.adedom.core.utils.ApiServiceException
-import com.adedom.core.utils.Resource
 import com.adedom.food_detail.domain.models.FoodDetailModel
 import com.adedom.food_detail.domain.repositories.FoodDetailRepository
 import com.adedom.myfood.data.models.base.BaseError

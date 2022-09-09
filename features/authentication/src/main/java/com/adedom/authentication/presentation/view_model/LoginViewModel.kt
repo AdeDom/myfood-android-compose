@@ -3,7 +3,7 @@ package com.adedom.authentication.presentation.view_model
 import com.adedom.authentication.domain.use_cases.LoginUseCase
 import com.adedom.authentication.domain.use_cases.ValidateEmailUseCase
 import com.adedom.authentication.domain.use_cases.ValidatePasswordUseCase
-import com.adedom.core.utils.Resource
+import com.adedom.core.data.Resource
 import com.adedom.myfood.data.models.base.BaseError
 import com.adedom.ui_components.base.BaseViewModel
 import kotlinx.coroutines.channels.Channel
