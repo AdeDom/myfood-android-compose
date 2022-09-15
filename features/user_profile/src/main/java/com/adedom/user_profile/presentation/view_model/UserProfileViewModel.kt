@@ -1,11 +1,13 @@
 package com.adedom.user_profile.presentation.view_model
 
-import com.adedom.core.utils.Resource2
+import com.adedom.core.data.Resource2
 import com.adedom.myfood.data.models.base.BaseError
 import com.adedom.ui_components.base.BaseViewModel
 import com.adedom.user_profile.domain.models.UserProfileModel
 import com.adedom.user_profile.domain.use_cases.FetchUserProfileUseCase
 import com.adedom.user_profile.domain.use_cases.GetUserProfileUseCase
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 
 data class UserProfileUiState(
@@ -33,11 +35,11 @@ class UserProfileViewModel(
     }
 
     private fun initUserProfile() {
-        launch {
-            getUserProfileUseCase().collect { userProfile ->
+        getUserProfileUseCase()
+            .onEach { userProfile ->
                 setState { copy(userProfile = userProfile) }
             }
-        }
+            .launchIn(this)
     }
 
     private fun callUserProfile() {

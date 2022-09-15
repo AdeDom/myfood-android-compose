@@ -1,7 +1,7 @@
 package com.adedom.main.presentation.view_model
 
+import com.adedom.core.data.Resource
 import com.adedom.core.domain.models.FoodModel
-import com.adedom.core.utils.Resource
 import com.adedom.main.domain.models.CategoryModel
 import com.adedom.main.domain.use_cases.*
 import com.adedom.myfood.data.models.base.BaseError

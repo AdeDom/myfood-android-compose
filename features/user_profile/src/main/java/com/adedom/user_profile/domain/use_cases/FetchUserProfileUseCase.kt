@@ -1,8 +1,8 @@
 package com.adedom.user_profile.domain.use_cases
 
+import com.adedom.core.data.Resource2
 import com.adedom.core.utils.ApiServiceException
 import com.adedom.core.utils.RefreshTokenExpiredException
-import com.adedom.core.utils.Resource2
 import com.adedom.myfood.data.models.response.UserProfileResponse
 import com.adedom.profile.repositories.UserProfileRepository
 import myfood.database.UserProfileEntity
