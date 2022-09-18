@@ -1,4 +1,4 @@
-package com.adedom.authentication.data.providers.remote.auth
+package com.adedom.profile.providers.remote
 
 import com.adedom.core.data.providers.data_store.AppDataStore
 import com.adedom.core.data.providers.data_store.FakeAppDataStore
@@ -6,8 +6,7 @@ import com.adedom.core.data.providers.remote.AppHttpClientEngine
 import com.adedom.core.data.providers.remote.DataProviderRemote
 import com.adedom.core.utils.ApiServiceException
 import com.adedom.myfood.data.models.base.BaseResponse
-import com.adedom.myfood.data.models.request.LoginRequest
-import com.adedom.myfood.data.models.response.TokenResponse
+import com.adedom.myfood.data.models.response.UserProfileResponse
 import com.google.common.truth.Truth.assertThat
 import io.ktor.client.engine.*
 import io.ktor.client.engine.mock.*
@@ -19,7 +18,7 @@ import kotlinx.serialization.json.Json
 import org.junit.Before
 import org.junit.Test
 
-class AuthRemoteDataSourceImplTest {
+class ProfileRemoteDataSourceImplTest {
 
     private lateinit var appDataStore: AppDataStore
 
@@ -29,18 +28,21 @@ class AuthRemoteDataSourceImplTest {
     }
 
     @Test
-    fun `call login should correct return success`() = runTest {
-        val loginRequest = LoginRequest(
-            email = "email",
-            password = "password",
-        )
+    fun `call user profile return success`() = runTest {
         val jsonString = """
             {
                 "version": "1.0",
                 "status": "success",
                 "result": {
-                    "accessToken": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJhdWQiOiJteS1mb29kIiwidXNlcl9pZCI6IjdlNmU0ZGI2YTA5YzQzZDFhMWUzZWQ4MTU2NzUwZTg4IiwiaXNzIjoiaHR0cHM6Ly9naXRodWIuY29tL0FkZURvbSIsImV4cCI6MTY1OTkwOTIxN30.lNsomHLL1q2wrkVxt2jjrVRpX2vWHU0u966-nMo7aHpp_V5Ym1b05Wz0ffqo18orts667LqA3PCef15IFxIbtQ",
-                    "refreshToken": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJhdWQiOiJteS1mb29kIiwidXNlcl9pZCI6IjdlNmU0ZGI2YTA5YzQzZDFhMWUzZWQ4MTU2NzUwZTg4IiwiaXNzIjoiaHR0cHM6Ly9naXRodWIuY29tL0FkZURvbSIsImV4cCI6MTY2MDQyNzYxN30.tME-OIro476Byg-FZGHDYl2iImVlkSIXOul-PfclMhRDA1WPSRT8PQ4DHrQWfDHpxk-pvuywVT3eO6sahdbVPw"
+                    "userId": "7e6e4db6a09c43d1a1e3ed8156750e88",
+                    "email": "dom6",
+                    "name": "Change profile",
+                    "mobileNo": "1234567890",
+                    "address": "Phayao",
+                    "image": "https://picsum.photos/300/300",
+                    "status": "active",
+                    "created": "26/3/2022 18:23",
+                    "updated": "10/5/2022 19:5"
                 }
             }
         """.trimIndent()
@@ -57,26 +59,22 @@ class AuthRemoteDataSourceImplTest {
             }
         }
         val dataProviderRemote = DataProviderRemote(appHttpClientEngine, appDataStore)
-        val dataSource = AuthRemoteDataSourceImpl(dataProviderRemote)
+        val dataSource = ProfileRemoteDataSourceImpl(dataProviderRemote, appDataStore)
 
-        val result = dataSource.callLogin(loginRequest)
+        val result = dataSource.callUserProfile()
 
-        val response = Json.decodeFromString<BaseResponse<TokenResponse>>(jsonString)
+        val response = Json.decodeFromString<BaseResponse<UserProfileResponse>>(jsonString)
         assertThat(result).isEqualTo(response)
     }
 
     @Test(expected = ApiServiceException::class)
-    fun `call login should incorrect return error`() = runTest {
-        val loginRequest = LoginRequest(
-            email = "email",
-            password = "password",
-        )
+    fun `call user profile return error`() = runTest {
         val jsonString = """
             {
                 "version": "1.0",
-                "status": "error",
+                "status": "success",
                 "error": {
-                    "message": "Email or password incorrect."
+                    "message": "User profile is error"
                 }
             }
         """.trimIndent()
@@ -93,8 +91,8 @@ class AuthRemoteDataSourceImplTest {
             }
         }
         val dataProviderRemote = DataProviderRemote(appHttpClientEngine, appDataStore)
-        val dataSource = AuthRemoteDataSourceImpl(dataProviderRemote)
+        val dataSource = ProfileRemoteDataSourceImpl(dataProviderRemote, appDataStore)
 
-        dataSource.callLogin(loginRequest)
+        dataSource.callUserProfile()
     }
 }

@@ -2,10 +2,13 @@ package com.adedom.core.utils
 
 import com.adedom.myfood.data.models.base.BaseError
 import kotlinx.serialization.decodeFromString
+import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 import java.io.IOException
 
-class ApiServiceException(baseError: BaseError?) : IOException(baseError?.toMessage()) {
+class ApiServiceException(
+    baseError: BaseError?
+) : IOException(Json.encodeToString(baseError)) {
 
     fun toBaseError(): BaseError {
         return message?.let { msg ->
@@ -14,7 +17,9 @@ class ApiServiceException(baseError: BaseError?) : IOException(baseError?.toMess
     }
 }
 
-class RefreshTokenExpiredException(baseError: BaseError?) : IOException(baseError?.toMessage()) {
+class RefreshTokenExpiredException(
+    baseError: BaseError?
+) : IOException(Json.encodeToString(baseError)) {
 
     fun toBaseError(): BaseError {
         return message?.let { msg ->

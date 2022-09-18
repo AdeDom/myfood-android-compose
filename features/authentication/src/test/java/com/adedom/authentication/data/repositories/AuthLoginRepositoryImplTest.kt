@@ -1,11 +1,13 @@
 package com.adedom.authentication.data.repositories
 
-import com.adedom.authentication.data.providers.data_store.FakeAppDataStore
 import com.adedom.authentication.data.providers.remote.auth.AuthRemoteDataSource
 import com.adedom.authentication.domain.repositories.AuthLoginRepository
+import com.adedom.core.data.Resource
 import com.adedom.core.data.providers.data_store.AppDataStore
+import com.adedom.core.data.providers.data_store.FakeAppDataStore
 import com.adedom.core.utils.ApiServiceException
 import com.adedom.core.utils.AuthRole
+import com.adedom.myfood.data.models.base.BaseError
 import com.adedom.myfood.data.models.base.BaseResponse
 import com.adedom.myfood.data.models.request.LoginRequest
 import com.adedom.myfood.data.models.response.TokenResponse
@@ -55,11 +57,12 @@ class AuthLoginRepositoryImplTest {
 
         val result = repository.callLogin(loginRequest)
 
-        assertThat(result).isEqualTo(response.result)
+        val resourceSuccess = Resource.Success(response.result ?: TokenResponse("", ""))
+        assertThat(result).isEqualTo(resourceSuccess)
         coVerify { authRemoteDataSource.callLogin(any()) }
     }
 
-    @Test(expected = ApiServiceException::class)
+    @Test
     fun `call login incorrect should be error`() = runTest {
         val loginRequest = LoginRequest(
             email = "email",
@@ -78,7 +81,11 @@ class AuthLoginRepositoryImplTest {
         val exception = ApiServiceException(response.error)
         coEvery { authRemoteDataSource.callLogin(any()) } throws exception
 
-        repository.callLogin(loginRequest)
+        val result = repository.callLogin(loginRequest)
+
+        val resourceError = Resource.Error(response.error ?: BaseError())
+        assertThat(result).isEqualTo(resourceError)
+        coVerify { authRemoteDataSource.callLogin(any()) }
     }
 
     @Test

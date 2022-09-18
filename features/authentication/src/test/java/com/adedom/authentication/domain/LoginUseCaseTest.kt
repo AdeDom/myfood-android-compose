@@ -1,20 +1,19 @@
 package com.adedom.authentication.domain
 
-import com.adedom.authentication.data.providers.data_store.FakeAppDataStore
-import com.adedom.authentication.data.providers.local.FakeUserProfileLocalDataSource
 import com.adedom.authentication.data.providers.remote.auth.AuthRemoteDataSource
 import com.adedom.authentication.data.repositories.AuthLoginRepositoryImpl
 import com.adedom.authentication.domain.repositories.AuthLoginRepository
 import com.adedom.authentication.domain.use_cases.LoginUseCase
 import com.adedom.core.data.Resource
-import com.adedom.core.data.models.error.AppErrorCode
 import com.adedom.core.data.providers.data_store.AppDataStore
+import com.adedom.core.data.providers.data_store.FakeAppDataStore
 import com.adedom.core.utils.ApiServiceException
 import com.adedom.core.utils.AuthRole
 import com.adedom.myfood.data.models.base.BaseError
 import com.adedom.myfood.data.models.base.BaseResponse
 import com.adedom.myfood.data.models.response.TokenResponse
 import com.adedom.myfood.data.models.response.UserProfileResponse
+import com.adedom.profile.providers.local.FakeUserProfileLocalDataSource
 import com.adedom.profile.providers.local.UserProfileLocalDataSource
 import com.adedom.profile.providers.remote.ProfileRemoteDataSource
 import com.adedom.profile.repositories.UserProfileRepository
@@ -73,26 +72,7 @@ class LoginUseCaseTest {
         assertThat(authLoginRepository.getAuthRole()).isEqualTo(AuthRole.Unknown)
         assertThat(userProfileLocalDataSource.getUserProfile()).isNull()
         coVerify { authRemoteDataSource.callLogin(any()) }
-    }
-
-    @Test
-    fun `call login correct but token is null should be error`() = runTest {
-        val email = "email"
-        val password = "password"
-        val tokenResponse = BaseResponse<TokenResponse>()
-        coEvery { authRemoteDataSource.callLogin(any()) } returns tokenResponse
-
-        val result = useCase(email, password)
-
-        val code = AppErrorCode.TokenIsNull.code
-        val tokenError = BaseError(code = code)
-        val tokenResourceError = Resource.Error(tokenError)
-        assertThat(result).isEqualTo(tokenResourceError)
-        assertThat(appDataStore.getAccessToken()).isNull()
-        assertThat(appDataStore.getRefreshToken()).isNull()
-        assertThat(authLoginRepository.getAuthRole()).isEqualTo(AuthRole.Unknown)
-        assertThat(userProfileLocalDataSource.getUserProfile()).isNull()
-        coVerify { authRemoteDataSource.callLogin(any()) }
+        coVerify(exactly = 0) { profileRemoteDataSource.callUserProfile() }
     }
 
     @Test
@@ -127,8 +107,9 @@ class LoginUseCaseTest {
         val password = "password"
         val accessToken = "accessToken"
         val refreshToken = "refreshToken"
+        val tokenResult = TokenResponse(accessToken, refreshToken)
         val tokenResponse = BaseResponse(
-            result = TokenResponse(accessToken, refreshToken),
+            result = tokenResult,
         )
         val userProfileResponse = BaseResponse(
             result = UserProfileResponse(
@@ -148,7 +129,7 @@ class LoginUseCaseTest {
 
         val result = useCase(email, password)
 
-        val useCaseResourceSuccess = Resource.Success(Unit)
+        val useCaseResourceSuccess = Resource.Success(tokenResult)
         assertThat(result).isEqualTo(useCaseResourceSuccess)
         assertThat(appDataStore.getAccessToken()).isEqualTo(accessToken)
         assertThat(appDataStore.getRefreshToken()).isEqualTo(refreshToken)

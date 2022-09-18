@@ -23,11 +23,11 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.adedom.core.domain.models.FoodModel
 import com.adedom.main.domain.models.CategoryModel
 import com.adedom.main.presentation.view_model.HomeUiEvent
 import com.adedom.main.presentation.view_model.HomeUiState
 import com.adedom.ui_components.components.*
+import com.adedom.ui_components.domain.models.FoodModel
 import com.adedom.ui_components.theme.MyFoodTheme
 import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState

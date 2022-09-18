@@ -1,8 +1,8 @@
 package com.adedom.search_food.presentation.view_model
 
-import com.adedom.core.domain.models.FoodModel
 import com.adedom.search_food.domain.use_cases.SearchFoodUseCase
 import com.adedom.ui_components.base.BaseViewModel
+import com.adedom.ui_components.domain.models.FoodModel
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
