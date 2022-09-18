@@ -1,7 +1,7 @@
 package com.adedom.search_food.domain.use_cases
 
-import com.adedom.core.domain.models.FoodModel
 import com.adedom.search_food.domain.repositories.SearchFoodRepository
+import com.adedom.ui_components.domain.models.FoodModel
 
 class SearchFoodUseCase(
     private val searchFoodRepository: SearchFoodRepository,

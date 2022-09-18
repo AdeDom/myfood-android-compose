@@ -12,7 +12,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.adedom.core.domain.models.FoodModel
+import com.adedom.ui_components.domain.models.FoodModel
 
 @Composable
 fun FoodBoxItem(

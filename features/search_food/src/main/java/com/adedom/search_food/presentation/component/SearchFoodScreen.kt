@@ -17,7 +17,6 @@ import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.platform.LocalTextInputService
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.adedom.core.domain.models.FoodModel
 import com.adedom.search_food.presentation.view_model.SearchFoodUiEvent
 import com.adedom.search_food.presentation.view_model.SearchFoodUiState
 import com.adedom.search_food.presentation.view_model.SearchFoodViewModel
@@ -25,6 +24,7 @@ import com.adedom.ui_components.components.AppEmptyData
 import com.adedom.ui_components.components.AppIcon
 import com.adedom.ui_components.components.AppTextField
 import com.adedom.ui_components.components.FoodBoxItem
+import com.adedom.ui_components.domain.models.FoodModel
 import com.adedom.ui_components.theme.MyFoodTheme
 
 @Composable
