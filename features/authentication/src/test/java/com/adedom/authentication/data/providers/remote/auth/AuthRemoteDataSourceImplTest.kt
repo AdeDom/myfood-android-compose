@@ -1,8 +1,8 @@
 package com.adedom.authentication.data.providers.remote.auth
 
-import com.adedom.authentication.data.providers.data_store.FakeAppDataStore
 import com.adedom.authentication.data.providers.remote.HttpClientEngineMock
 import com.adedom.core.data.providers.data_store.AppDataStore
+import com.adedom.core.data.providers.data_store.FakeAppDataStore
 import com.adedom.core.data.providers.remote.DataProviderRemote
 import com.adedom.core.utils.ApiServiceException
 import com.adedom.myfood.data.models.base.BaseResponse

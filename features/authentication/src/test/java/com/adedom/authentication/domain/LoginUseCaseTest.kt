@@ -1,19 +1,19 @@
 package com.adedom.authentication.domain
 
-import com.adedom.authentication.data.providers.data_store.FakeAppDataStore
-import com.adedom.authentication.data.providers.local.FakeUserProfileLocalDataSource
 import com.adedom.authentication.data.providers.remote.auth.AuthRemoteDataSource
 import com.adedom.authentication.data.repositories.AuthLoginRepositoryImpl
 import com.adedom.authentication.domain.repositories.AuthLoginRepository
 import com.adedom.authentication.domain.use_cases.LoginUseCase
 import com.adedom.core.data.Resource
 import com.adedom.core.data.providers.data_store.AppDataStore
+import com.adedom.core.data.providers.data_store.FakeAppDataStore
 import com.adedom.core.utils.ApiServiceException
 import com.adedom.core.utils.AuthRole
 import com.adedom.myfood.data.models.base.BaseError
 import com.adedom.myfood.data.models.base.BaseResponse
 import com.adedom.myfood.data.models.response.TokenResponse
 import com.adedom.myfood.data.models.response.UserProfileResponse
+import com.adedom.profile.providers.local.FakeUserProfileLocalDataSource
 import com.adedom.profile.providers.local.UserProfileLocalDataSource
 import com.adedom.profile.providers.remote.ProfileRemoteDataSource
 import com.adedom.profile.repositories.UserProfileRepository

@@ -1,10 +1,10 @@
 package com.adedom.authentication.data.repositories
 
-import com.adedom.authentication.data.providers.data_store.FakeAppDataStore
 import com.adedom.authentication.data.providers.remote.auth.AuthRemoteDataSource
 import com.adedom.authentication.domain.repositories.AuthLoginRepository
 import com.adedom.core.data.Resource
 import com.adedom.core.data.providers.data_store.AppDataStore
+import com.adedom.core.data.providers.data_store.FakeAppDataStore
 import com.adedom.core.utils.ApiServiceException
 import com.adedom.core.utils.AuthRole
 import com.adedom.myfood.data.models.base.BaseError
