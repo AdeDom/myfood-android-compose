@@ -1,7 +1,10 @@
 package com.adedom.main.data.repositories
 
+import com.adedom.core.data.Resource
 import com.adedom.core.data.providers.data_store.AppDataStore
+import com.adedom.core.utils.ApiServiceException
 import com.adedom.core.utils.AuthRole
+import com.adedom.core.utils.RefreshTokenExpiredException
 import com.adedom.main.data.providers.remote.auth.AuthRemoteDataSource
 import com.adedom.main.domain.repositories.AuthLogoutRepository
 import kotlinx.coroutines.CoroutineDispatcher
@@ -14,10 +17,18 @@ class AuthLogoutRepositoryImpl(
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO,
 ) : AuthLogoutRepository {
 
-    override suspend fun callLogout(): String? {
+    override suspend fun callLogout(): Resource<Unit> {
         return withContext(ioDispatcher) {
-            val logoutResponse = authRemoteDataSource.callLogout()
-            logoutResponse.result
+            try {
+                authRemoteDataSource.callLogout()
+                Resource.Success(Unit)
+            } catch (exception: ApiServiceException) {
+                val baseError = exception.toBaseError()
+                Resource.Error(baseError)
+            } catch (exception: RefreshTokenExpiredException) {
+                val baseError = exception.toBaseError()
+                Resource.Error(baseError)
+            }
         }
     }
 

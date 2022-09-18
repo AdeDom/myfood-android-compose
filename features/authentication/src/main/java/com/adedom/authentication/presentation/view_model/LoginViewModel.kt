@@ -79,7 +79,7 @@ class LoginViewModel(
                     val resource = loginUseCase(email, password)
                     when (resource) {
                         is Resource.Success -> {
-                            _nav.send(resource.data)
+                            _nav.send(Unit)
                         }
                         is Resource.Error -> {
                             setState {

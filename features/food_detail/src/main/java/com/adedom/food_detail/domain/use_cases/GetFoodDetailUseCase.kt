@@ -2,7 +2,6 @@ package com.adedom.food_detail.domain.use_cases
 
 import com.adedom.core.data.Resource
 import com.adedom.core.data.models.error.AppErrorCode
-import com.adedom.core.utils.ApiServiceException
 import com.adedom.food_detail.domain.models.FoodDetailModel
 import com.adedom.food_detail.domain.repositories.FoodDetailRepository
 import com.adedom.myfood.data.models.base.BaseError
@@ -13,17 +12,17 @@ class GetFoodDetailUseCase(
 ) {
 
     suspend operator fun invoke(foodId: Int?): Resource<FoodDetailModel> {
-        return try {
-            if (foodId != null) {
-                val foodDetailResponse = foodDetailRepository.callFoodDetail(foodId)
-                val foodModel = mapFoodDetailResponseToFoodDetailModel(foodDetailResponse)
+        return if (foodId != null) {
+            val foodDetailResult = foodDetailRepository.callFoodDetail(foodId)
+            if (foodDetailResult is Resource.Success) {
+                val foodModel = mapFoodDetailResponseToFoodDetailModel(foodDetailResult.data)
                 Resource.Success(foodModel)
             } else {
-                val error = BaseError(code = AppErrorCode.FoodIdIsNull.code)
-                Resource.Error(error)
+                val baseError = BaseError(code = AppErrorCode.DataIsNull.code)
+                Resource.Error(baseError)
             }
-        } catch (exception: ApiServiceException) {
-            val error = exception.toBaseError()
+        } else {
+            val error = BaseError(code = AppErrorCode.FoodIdIsNull.code)
             Resource.Error(error)
         }
     }

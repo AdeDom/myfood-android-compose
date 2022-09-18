@@ -1,7 +1,6 @@
 package com.adedom.main.domain.use_cases
 
 import com.adedom.core.data.Resource
-import com.adedom.core.utils.ApiServiceException
 import com.adedom.main.domain.repositories.AuthLogoutRepository
 import com.adedom.profile.repositories.UserProfileRepository
 
@@ -11,14 +10,8 @@ class LogoutUseCase(
 ) {
 
     suspend operator fun invoke(): Resource<Unit> {
-        return try {
-            authLogoutRepository.setUnAuthRole()
-            userProfileRepository.deleteUserProfile()
-            authLogoutRepository.callLogout()
-            return Resource.Success(Unit)
-        } catch (exception: ApiServiceException) {
-            val baseError = exception.toBaseError()
-            Resource.Error(baseError)
-        }
+        authLogoutRepository.setUnAuthRole()
+        userProfileRepository.deleteUserProfile()
+        return authLogoutRepository.callLogout()
     }
 }
