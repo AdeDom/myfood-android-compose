@@ -7,4 +7,5 @@ sealed class AppErrorCode(val code: String) {
     object PasswordLessThanFour : AppErrorCode("APP-004")
     object TokenIsNull : AppErrorCode("APP-005")
     object FoodIdIsNull : AppErrorCode("APP-006")
+    object DataIsNull : AppErrorCode("APP-999")
 }

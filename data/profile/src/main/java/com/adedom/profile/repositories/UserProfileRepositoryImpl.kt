@@ -1,5 +1,10 @@
 package com.adedom.profile.repositories
 
+import com.adedom.core.data.Resource2
+import com.adedom.core.data.models.error.AppErrorCode
+import com.adedom.core.utils.ApiServiceException
+import com.adedom.core.utils.RefreshTokenExpiredException
+import com.adedom.myfood.data.models.base.BaseError
 import com.adedom.myfood.data.models.response.UserProfileResponse
 import com.adedom.profile.providers.local.UserProfileLocalDataSource
 import com.adedom.profile.providers.remote.ProfileRemoteDataSource
@@ -15,10 +20,24 @@ class UserProfileRepositoryImpl(
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO,
 ) : UserProfileRepository {
 
-    override suspend fun callUserProfile(): UserProfileResponse? {
+    override suspend fun callUserProfile(): Resource2<UserProfileResponse> {
         return withContext(ioDispatcher) {
-            val userProfileResponse = profileRemoteDataSource.callUserProfile()
-            userProfileResponse.result
+            try {
+                val userProfileResponse = profileRemoteDataSource.callUserProfile()
+                val result = userProfileResponse.result
+                if (result != null) {
+                    Resource2.Success(result)
+                } else {
+                    val baseError = BaseError(code = AppErrorCode.DataIsNull.code)
+                    Resource2.Error(baseError)
+                }
+            } catch (exception: ApiServiceException) {
+                val baseError = exception.toBaseError()
+                Resource2.Error(baseError)
+            } catch (exception: RefreshTokenExpiredException) {
+                val baseError = exception.toBaseError()
+                Resource2.RefreshTokenExpired(baseError)
+            }
         }
     }
 

@@ -1,8 +1,6 @@
 package com.adedom.user_profile.domain.use_cases
 
 import com.adedom.core.data.Resource2
-import com.adedom.core.utils.ApiServiceException
-import com.adedom.core.utils.RefreshTokenExpiredException
 import com.adedom.myfood.data.models.response.UserProfileResponse
 import com.adedom.profile.repositories.UserProfileRepository
 import myfood.database.UserProfileEntity
@@ -11,19 +9,15 @@ class FetchUserProfileUseCase(
     private val userProfileRepository: UserProfileRepository,
 ) {
 
-    suspend operator fun invoke(): Resource2<Unit> {
-        return try {
-            val userProfile = userProfileRepository.callUserProfile()
-            val userProfileEntity = mapUserProfileToUserProfileEntity(userProfile)
+    suspend operator fun invoke(): Resource2<UserProfileResponse> {
+        val userProfileResult = userProfileRepository.callUserProfile()
+        return if (userProfileResult is Resource2.Success) {
+            val userProfileEntity = mapUserProfileToUserProfileEntity(userProfileResult.data)
             userProfileRepository.deleteUserProfile()
             userProfileRepository.saveUserProfile(userProfileEntity)
-            Resource2.Success(Unit)
-        } catch (exception: ApiServiceException) {
-            val baseError = exception.toBaseError()
-            Resource2.Error(baseError)
-        } catch (exception: RefreshTokenExpiredException) {
-            val baseError = exception.toBaseError()
-            Resource2.RefreshTokenExpired(baseError)
+            userProfileResult
+        } else {
+            userProfileResult
         }
     }
 

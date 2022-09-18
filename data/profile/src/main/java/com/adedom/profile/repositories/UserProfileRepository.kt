@@ -1,12 +1,13 @@
 package com.adedom.profile.repositories
 
+import com.adedom.core.data.Resource2
 import com.adedom.myfood.data.models.response.UserProfileResponse
 import kotlinx.coroutines.flow.Flow
 import myfood.database.UserProfileEntity
 
 interface UserProfileRepository {
 
-    suspend fun callUserProfile(): UserProfileResponse?
+    suspend fun callUserProfile(): Resource2<UserProfileResponse>
 
     fun getUserProfileFlow(): Flow<UserProfileEntity?>
 
