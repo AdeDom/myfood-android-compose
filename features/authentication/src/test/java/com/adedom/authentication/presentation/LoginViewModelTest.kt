@@ -10,6 +10,7 @@ import com.adedom.authentication.presentation.view_model.LoginViewModel
 import com.adedom.authentication.utils.MainCoroutineRule
 import com.adedom.core.data.Resource
 import com.adedom.myfood.data.models.base.BaseError
+import com.adedom.myfood.data.models.response.TokenResponse
 import com.google.common.truth.Truth.assertThat
 import io.mockk.coEvery
 import io.mockk.coVerify
@@ -135,7 +136,10 @@ class LoginViewModelTest {
     fun `call service login correct should be return success`() = runTest {
         val email = "dom6"
         val password = "1234"
-        val resourceError = Resource.Success(Unit)
+        val accessToken = "accessToken"
+        val refreshToken = "refreshToken"
+        val tokenResponse = TokenResponse(accessToken, refreshToken)
+        val resourceError = Resource.Success(tokenResponse)
         coEvery { loginUseCase(any(), any()) } returns resourceError
 
         viewModel.dispatch(LoginUiEvent.SetEmail(email))
