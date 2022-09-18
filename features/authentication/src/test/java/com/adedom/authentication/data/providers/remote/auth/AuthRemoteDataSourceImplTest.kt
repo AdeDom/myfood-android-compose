@@ -1,14 +1,15 @@
 package com.adedom.authentication.data.providers.remote.auth
 
-import com.adedom.authentication.data.providers.remote.HttpClientEngineMock
 import com.adedom.core.data.providers.data_store.AppDataStore
 import com.adedom.core.data.providers.data_store.FakeAppDataStore
+import com.adedom.core.data.providers.remote.AppHttpClientEngine
 import com.adedom.core.data.providers.remote.DataProviderRemote
 import com.adedom.core.utils.ApiServiceException
 import com.adedom.myfood.data.models.base.BaseResponse
 import com.adedom.myfood.data.models.request.LoginRequest
 import com.adedom.myfood.data.models.response.TokenResponse
 import com.google.common.truth.Truth.assertThat
+import io.ktor.client.engine.*
 import io.ktor.client.engine.mock.*
 import io.ktor.http.*
 import io.ktor.utils.io.*
@@ -43,15 +44,17 @@ class AuthRemoteDataSourceImplTest {
                 }
             }
         """.trimIndent()
-        val appHttpClientEngine = HttpClientEngineMock {
-            respond(
-                content = ByteReadChannel(jsonString),
-                status = HttpStatusCode.OK,
-                headers = headersOf(
-                    HttpHeaders.ContentType,
-                    ContentType.Application.Json.toString(),
+        val appHttpClientEngine = object : AppHttpClientEngine {
+            override val engine: HttpClientEngine = MockEngine {
+                respond(
+                    content = ByteReadChannel(jsonString),
+                    status = HttpStatusCode.OK,
+                    headers = headersOf(
+                        HttpHeaders.ContentType,
+                        ContentType.Application.Json.toString(),
+                    )
                 )
-            )
+            }
         }
         val dataProviderRemote = DataProviderRemote(appHttpClientEngine, appDataStore)
         val dataSource = AuthRemoteDataSourceImpl(dataProviderRemote)
@@ -77,15 +80,17 @@ class AuthRemoteDataSourceImplTest {
                 }
             }
         """.trimIndent()
-        val appHttpClientEngine = HttpClientEngineMock {
-            respond(
-                content = ByteReadChannel(jsonString),
-                status = HttpStatusCode.BadRequest,
-                headers = headersOf(
-                    HttpHeaders.ContentType,
-                    ContentType.Application.Json.toString(),
+        val appHttpClientEngine = object : AppHttpClientEngine {
+            override val engine: HttpClientEngine = MockEngine {
+                respond(
+                    content = ByteReadChannel(jsonString),
+                    status = HttpStatusCode.BadRequest,
+                    headers = headersOf(
+                        HttpHeaders.ContentType,
+                        ContentType.Application.Json.toString(),
+                    )
                 )
-            )
+            }
         }
         val dataProviderRemote = DataProviderRemote(appHttpClientEngine, appDataStore)
         val dataSource = AuthRemoteDataSourceImpl(dataProviderRemote)
