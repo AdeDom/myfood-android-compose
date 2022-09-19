@@ -19,3 +19,4 @@ local.properties
 .idea/vcs.xml
 .idea/deploymentTargetDropDown.xml
 .idea/inspectionProfiles/Project_Default.xml
+.idea/androidTestResultsUserPreferences.xml
