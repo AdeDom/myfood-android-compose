@@ -3,6 +3,7 @@ package com.adedom.splash_screen.presentation.component
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithContentDescription
+import androidx.compose.ui.test.onNodeWithTag
 import com.adedom.ui_components.theme.MyFoodTheme
 import org.junit.Rule
 import org.junit.Test
@@ -23,9 +24,8 @@ class SplashScreenTest {
         composeTestRule
             .onNodeWithContentDescription("Background splash screen")
             .assertIsDisplayed()
-
         composeTestRule
-            .onNodeWithContentDescription("Logo app")
+            .onNodeWithTag("Logo app")
             .assertIsDisplayed()
     }
 }

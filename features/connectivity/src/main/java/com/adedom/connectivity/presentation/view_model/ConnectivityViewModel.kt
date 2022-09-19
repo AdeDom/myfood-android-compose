@@ -28,7 +28,7 @@ class ConnectivityViewModel(
             }
             .filter { it == Status.Available }
             .onEach {
-                delay(3000)
+                delay(3_000)
                 dispatch(ConnectivityUiEvent.DismissRequest)
             }
             .launchIn(this)
