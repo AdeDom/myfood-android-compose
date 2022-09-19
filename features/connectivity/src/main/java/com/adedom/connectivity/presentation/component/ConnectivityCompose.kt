@@ -10,6 +10,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Popup
@@ -62,7 +63,8 @@ private fun OnlineNetworkPopup(
             contentAlignment = Alignment.Center,
             modifier = Modifier
                 .fillMaxWidth()
-                .background(Color.Green),
+                .background(Color.Green)
+                .testTag("Background network popup"),
         ) {
             Text(
                 text = "Online",
@@ -80,7 +82,8 @@ private fun OfflineNetworkPopup() {
             contentAlignment = Alignment.Center,
             modifier = Modifier
                 .fillMaxWidth()
-                .background(Color.Red),
+                .background(Color.Red)
+                .testTag("Background network popup"),
         ) {
             Text(
                 text = "Offline",
