@@ -6,6 +6,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
@@ -41,20 +42,37 @@ fun LoginContent(
     openRegisterPage: () -> Unit,
 ) {
     Box(
-        modifier = Modifier.fillMaxSize(),
+        modifier = Modifier
+            .fillMaxSize()
+            .testTag("Box root"),
     ) {
         Column(
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally,
-            modifier = Modifier.fillMaxWidth(),
+            modifier = Modifier
+                .fillMaxWidth()
+                .testTag("Column form"),
         ) {
             AppTitleText(
                 text = "Login",
-                modifier = Modifier.padding(top = 64.dp),
+                modifier = Modifier
+                    .padding(top = 64.dp)
+                    .testTag("Login title text"),
             )
-            Spacer(modifier = Modifier.height(20.dp))
-            AppSubTitleText("Add your details to login")
-            Spacer(modifier = Modifier.height(20.dp))
+            Spacer(
+                modifier = Modifier
+                    .height(20.dp)
+                    .testTag("Space column1"),
+            )
+            AppSubTitleText(
+                "Add your details to login",
+                modifier = Modifier.testTag("Add your details to login text"),
+            )
+            Spacer(
+                modifier = Modifier
+                    .height(20.dp)
+                    .testTag("Space column2"),
+            )
             AppTextField(
                 value = state.email,
                 onValueChange = { dispatch(LoginUiEvent.SetEmail(it)) },
@@ -62,10 +80,7 @@ fun LoginContent(
                 error = if (state.isErrorEmail) "Email is incorrect" else null,
                 keyboardType = KeyboardType.Email,
                 imeAction = ImeAction.Next,
-                modifier = Modifier.size(
-                    width = 300.dp,
-                    height = 60.dp,
-                )
+                modifier = Modifier.testTag("Text field email"),
             )
             AppTextField(
                 value = state.password,
@@ -74,10 +89,7 @@ fun LoginContent(
                 error = if (state.isErrorPassword) "Password is incorrect" else null,
                 keyboardType = KeyboardType.Password,
                 imeAction = ImeAction.Done,
-                modifier = Modifier.size(
-                    width = 300.dp,
-                    height = 60.dp,
-                )
+                modifier = Modifier.testTag("Text field password"),
             )
             AppButton(
                 text = "Login",
@@ -85,11 +97,17 @@ fun LoginContent(
                 borderColor = if (state.isLogin) Color(0xFFFFD700) else Color.Gray,
                 enabled = state.isLogin,
                 onClick = { dispatch(LoginUiEvent.Submit) },
+                modifier = Modifier.testTag("Login button"),
             )
-            Spacer(modifier = Modifier.height(20.dp))
+            Spacer(
+                modifier = Modifier
+                    .height(20.dp)
+                    .testTag("Space column3"),
+            )
             AppText(
                 text = "Forget your password?",
                 color = Color.Gray,
+                modifier = Modifier.testTag("Forget your password text"),
             )
         }
 
@@ -99,17 +117,19 @@ fun LoginContent(
             onClick = openRegisterPage,
             modifier = Modifier
                 .align(Alignment.BottomCenter)
-                .padding(bottom = 16.dp),
+                .padding(bottom = 16.dp)
+                .testTag("Don't have an account text"),
         )
 
         when (state.dialog) {
             LoginUiState.Dialog.Loading -> {
-                AppLoadingAlertDialog()
+                AppLoadingAlertDialog(modifier = Modifier.testTag("Loading dialog"))
             }
             is LoginUiState.Dialog.Error -> {
                 AppErrorAlertDialog(
                     error = state.dialog.error,
                     onDismiss = { dispatch(LoginUiEvent.HideErrorDialog) },
+                    modifier = Modifier.testTag("Error dialog"),
                 )
             }
             null -> {}

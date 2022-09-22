@@ -41,7 +41,9 @@ fun AppTextField(
         VisualTransformation.None
     }
 
-    Column {
+    Column(
+        modifier = modifier,
+    ) {
         TextField(
             value = value,
             onValueChange = onValueChange,
@@ -68,7 +70,10 @@ fun AppTextField(
                 unfocusedIndicatorColor = Color.Transparent,
             ),
             shape = RoundedCornerShape(32.dp),
-            modifier = modifier,
+            modifier = Modifier.size(
+                width = 300.dp,
+                height = 60.dp,
+            ),
         )
         if (error.isNullOrBlank()) {
             Spacer(modifier = Modifier.height(20.dp))
