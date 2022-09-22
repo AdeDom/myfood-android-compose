@@ -9,6 +9,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -28,26 +29,43 @@ fun BottomSection(
     Column(
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally,
-        modifier = modifier.fillMaxSize(),
+        modifier = modifier
+            .fillMaxSize()
+            .testTag("Welcome bottom section root column"),
     ) {
         AppButton(
             text = "Login",
             backgroundColor = Color(0xFFFFD700),
             onClick = openLoginPage,
+            modifier = Modifier.testTag("Login button"),
         )
-        Spacer(modifier = Modifier.height(20.dp))
+        Spacer(
+            modifier = Modifier
+                .height(20.dp)
+                .testTag("Space column1"),
+        )
         AppButton(
             text = "Create an Account",
             backgroundColor = Color.White,
             onClick = openRegisterPage,
+            modifier = Modifier.testTag("Create an account button"),
         )
-        Spacer(modifier = Modifier.height(20.dp))
+        Spacer(
+            modifier = Modifier
+                .height(20.dp)
+                .testTag("Space column2"),
+        )
         AppBottomText(
             firstText = "Don\'t want login?",
             secondText = "Skip",
             onClick = { dispatch(WelcomeUiEvent.NavSkip) },
+            modifier = Modifier.testTag("Don't want login? skip test"),
         )
-        Spacer(modifier = Modifier.height(20.dp))
+        Spacer(
+            modifier = Modifier
+                .height(20.dp)
+                .testTag("Space column3"),
+        )
         Row(
             modifier = Modifier
                 .width(80.dp)
@@ -58,7 +76,8 @@ fun BottomSection(
                         color = Color(0xFFFFD700),
                     ),
                     shape = RoundedCornerShape(32.dp),
-                ),
+                )
+                .testTag("Row change language"),
         ) {
             Box(
                 contentAlignment = Alignment.Center,
@@ -68,21 +87,27 @@ fun BottomSection(
                     .background(
                         color = Color(0xFFFFD700),
                         shape = RoundedCornerShape(32.dp),
-                    ),
+                    )
+                    .testTag("Box change language"),
             ) {
                 AppText(
                     text = "TH",
                     fontWeight = FontWeight.Bold,
                     color = Color.White,
+                    modifier = Modifier.testTag("Text th"),
                 )
             }
             Box(
                 contentAlignment = Alignment.Center,
                 modifier = Modifier
                     .width(40.dp)
-                    .height(32.dp),
+                    .height(32.dp)
+                    .testTag("Box en"),
             ) {
-                AppText(text = "EN")
+                AppText(
+                    text = "EN",
+                    modifier = Modifier.testTag("Text en"),
+                )
             }
         }
     }
