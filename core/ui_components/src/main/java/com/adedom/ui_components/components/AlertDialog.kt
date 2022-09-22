@@ -14,7 +14,9 @@ import com.adedom.myfood.data.models.base.BaseError
 import com.adedom.ui_components.theme.MyFoodTheme
 
 @Composable
-fun AppLoadingAlertDialog() {
+fun AppLoadingAlertDialog(
+    modifier: Modifier = Modifier,
+) {
     AlertDialog(
         onDismissRequest = {},
         confirmButton = {},
@@ -22,7 +24,7 @@ fun AppLoadingAlertDialog() {
         text = {
             AppLoadingLottieAnimation()
         },
-        modifier = Modifier.fillMaxSize(),
+        modifier = modifier.fillMaxSize(),
     )
 }
 
