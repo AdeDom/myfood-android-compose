@@ -1,9 +1,7 @@
 package com.adedom.authentication.presentation.component
 
-import androidx.compose.ui.test.assertIsDisplayed
-import androidx.compose.ui.test.isDialog
+import androidx.compose.ui.test.*
 import androidx.compose.ui.test.junit4.createComposeRule
-import androidx.compose.ui.test.onNodeWithTag
 import com.adedom.authentication.presentation.view_model.LoginUiState
 import com.adedom.myfood.data.models.base.BaseError
 import com.adedom.ui_components.theme.MyFoodTheme
@@ -34,7 +32,7 @@ class LoginScreenTest {
         composeTestRule.onNodeWithTag("Add your details to login text").assertIsDisplayed()
         composeTestRule.onNodeWithTag("Space column2").assertExists()
         composeTestRule.onNodeWithTag("Text field email").assertIsDisplayed()
-        composeTestRule.onNodeWithTag("Text file password").assertIsDisplayed()
+        composeTestRule.onNodeWithTag("Text field password").assertIsDisplayed()
         composeTestRule.onNodeWithTag("Login button").assertIsDisplayed()
         composeTestRule.onNodeWithTag("Space column3").assertExists()
         composeTestRule.onNodeWithTag("Forget your password text").assertIsDisplayed()
@@ -63,7 +61,7 @@ class LoginScreenTest {
         composeTestRule.onNodeWithTag("Add your details to login text").assertIsDisplayed()
         composeTestRule.onNodeWithTag("Space column2").assertExists()
         composeTestRule.onNodeWithTag("Text field email").assertIsDisplayed()
-        composeTestRule.onNodeWithTag("Text file password").assertIsDisplayed()
+        composeTestRule.onNodeWithTag("Text field password").assertIsDisplayed()
         composeTestRule.onNodeWithTag("Login button").assertIsDisplayed()
         composeTestRule.onNodeWithTag("Space column3").assertExists()
         composeTestRule.onNodeWithTag("Forget your password text").assertIsDisplayed()
@@ -92,7 +90,7 @@ class LoginScreenTest {
         composeTestRule.onNodeWithTag("Add your details to login text").assertIsDisplayed()
         composeTestRule.onNodeWithTag("Space column2").assertExists()
         composeTestRule.onNodeWithTag("Text field email").assertIsDisplayed()
-        composeTestRule.onNodeWithTag("Text file password").assertIsDisplayed()
+        composeTestRule.onNodeWithTag("Text field password").assertIsDisplayed()
         composeTestRule.onNodeWithTag("Login button").assertIsDisplayed()
         composeTestRule.onNodeWithTag("Space column3").assertExists()
         composeTestRule.onNodeWithTag("Forget your password text").assertIsDisplayed()
@@ -121,7 +119,7 @@ class LoginScreenTest {
         composeTestRule.onNodeWithTag("Add your details to login text").assertIsDisplayed()
         composeTestRule.onNodeWithTag("Space column2").assertExists()
         composeTestRule.onNodeWithTag("Text field email").assertIsDisplayed()
-        composeTestRule.onNodeWithTag("Text file password").assertIsDisplayed()
+        composeTestRule.onNodeWithTag("Text field password").assertIsDisplayed()
         composeTestRule.onNodeWithTag("Login button").assertIsDisplayed()
         composeTestRule.onNodeWithTag("Space column3").assertExists()
         composeTestRule.onNodeWithTag("Forget your password text").assertIsDisplayed()
@@ -133,10 +131,11 @@ class LoginScreenTest {
 
     @Test
     fun loginScreen_email() {
+        val email = "email@gmail.com"
         composeTestRule.setContent {
             MyFoodTheme {
                 LoginContent(
-                    state = LoginUiState(email = "email"),
+                    state = LoginUiState(email = email),
                     dispatch = {},
                     openRegisterPage = {},
                 )
@@ -149,8 +148,10 @@ class LoginScreenTest {
         composeTestRule.onNodeWithTag("Space column1").assertExists()
         composeTestRule.onNodeWithTag("Add your details to login text").assertIsDisplayed()
         composeTestRule.onNodeWithTag("Space column2").assertExists()
-        composeTestRule.onNodeWithTag("Text field email").assertIsDisplayed()
-        composeTestRule.onNodeWithTag("Text file password").assertIsDisplayed()
+        composeTestRule.onNodeWithTag("Text field email")
+            .assertIsDisplayed()
+            .assert(hasAnyChild(hasText(email)))
+        composeTestRule.onNodeWithTag("Text field password").assertIsDisplayed()
         composeTestRule.onNodeWithTag("Login button").assertIsDisplayed()
         composeTestRule.onNodeWithTag("Space column3").assertExists()
         composeTestRule.onNodeWithTag("Forget your password text").assertIsDisplayed()
@@ -162,10 +163,11 @@ class LoginScreenTest {
 
     @Test
     fun loginScreen_password() {
+        val password = "password1234"
         composeTestRule.setContent {
             MyFoodTheme {
                 LoginContent(
-                    state = LoginUiState(password = "password"),
+                    state = LoginUiState(password = password),
                     dispatch = {},
                     openRegisterPage = {},
                 )
@@ -179,7 +181,7 @@ class LoginScreenTest {
         composeTestRule.onNodeWithTag("Add your details to login text").assertIsDisplayed()
         composeTestRule.onNodeWithTag("Space column2").assertExists()
         composeTestRule.onNodeWithTag("Text field email").assertIsDisplayed()
-        composeTestRule.onNodeWithTag("Text file password").assertIsDisplayed()
+        composeTestRule.onNodeWithTag("Text field password").assertIsDisplayed()
         composeTestRule.onNodeWithTag("Login button").assertIsDisplayed()
         composeTestRule.onNodeWithTag("Space column3").assertExists()
         composeTestRule.onNodeWithTag("Forget your password text").assertIsDisplayed()
@@ -208,7 +210,7 @@ class LoginScreenTest {
         composeTestRule.onNodeWithTag("Add your details to login text").assertIsDisplayed()
         composeTestRule.onNodeWithTag("Space column2").assertExists()
         composeTestRule.onNodeWithTag("Text field email").assertIsDisplayed()
-        composeTestRule.onNodeWithTag("Text file password").assertIsDisplayed()
+        composeTestRule.onNodeWithTag("Text field password").assertIsDisplayed()
         composeTestRule.onNodeWithTag("Login button").assertIsDisplayed()
         composeTestRule.onNodeWithTag("Space column3").assertExists()
         composeTestRule.onNodeWithTag("Forget your password text").assertIsDisplayed()
@@ -237,7 +239,7 @@ class LoginScreenTest {
         composeTestRule.onNodeWithTag("Add your details to login text").assertIsDisplayed()
         composeTestRule.onNodeWithTag("Space column2").assertExists()
         composeTestRule.onNodeWithTag("Text field email").assertIsDisplayed()
-        composeTestRule.onNodeWithTag("Text file password").assertIsDisplayed()
+        composeTestRule.onNodeWithTag("Text field password").assertIsDisplayed()
         composeTestRule.onNodeWithTag("Login button").assertIsDisplayed()
         composeTestRule.onNodeWithTag("Space column3").assertExists()
         composeTestRule.onNodeWithTag("Forget your password text").assertIsDisplayed()

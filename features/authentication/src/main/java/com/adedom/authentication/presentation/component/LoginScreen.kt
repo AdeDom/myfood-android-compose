@@ -80,12 +80,7 @@ fun LoginContent(
                 error = if (state.isErrorEmail) "Email is incorrect" else null,
                 keyboardType = KeyboardType.Email,
                 imeAction = ImeAction.Next,
-                modifier = Modifier
-                    .size(
-                        width = 300.dp,
-                        height = 60.dp,
-                    )
-                    .testTag("Text field email"),
+                modifier = Modifier.testTag("Text field email"),
             )
             AppTextField(
                 value = state.password,
@@ -94,12 +89,7 @@ fun LoginContent(
                 error = if (state.isErrorPassword) "Password is incorrect" else null,
                 keyboardType = KeyboardType.Password,
                 imeAction = ImeAction.Done,
-                modifier = Modifier
-                    .size(
-                        width = 300.dp,
-                        height = 60.dp,
-                    )
-                    .testTag("Text file password"),
+                modifier = Modifier.testTag("Text field password"),
             )
             AppButton(
                 text = "Login",
