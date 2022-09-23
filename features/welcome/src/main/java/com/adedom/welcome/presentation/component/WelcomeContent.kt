@@ -19,9 +19,7 @@ fun WelcomeContent(
     openRegisterPage: () -> Unit,
 ) {
     Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .testTag("Welcome column root"),
+        modifier = Modifier.fillMaxSize(),
     ) {
         TopSection(modifier = Modifier.testTag("Welcome top section"))
         Spacer(

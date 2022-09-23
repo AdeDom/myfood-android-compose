@@ -29,15 +29,12 @@ fun BottomSection(
     Column(
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally,
-        modifier = modifier
-            .fillMaxSize()
-            .testTag("Welcome bottom section root column"),
+        modifier = modifier.fillMaxSize(),
     ) {
         AppButton(
             text = "Login",
             backgroundColor = Color(0xFFFFD700),
             onClick = openLoginPage,
-            modifier = Modifier.testTag("Login button"),
         )
         Spacer(
             modifier = Modifier
@@ -48,7 +45,6 @@ fun BottomSection(
             text = "Create an Account",
             backgroundColor = Color.White,
             onClick = openRegisterPage,
-            modifier = Modifier.testTag("Create an account button"),
         )
         Spacer(
             modifier = Modifier
@@ -59,7 +55,6 @@ fun BottomSection(
             firstText = "Don\'t want login?",
             secondText = "Skip",
             onClick = { dispatch(WelcomeUiEvent.NavSkip) },
-            modifier = Modifier.testTag("Don't want login? skip test"),
         )
         Spacer(
             modifier = Modifier
@@ -77,7 +72,7 @@ fun BottomSection(
                     ),
                     shape = RoundedCornerShape(32.dp),
                 )
-                .testTag("Row change language"),
+                .testTag("Border change language"),
         ) {
             Box(
                 contentAlignment = Alignment.Center,
@@ -88,26 +83,22 @@ fun BottomSection(
                         color = Color(0xFFFFD700),
                         shape = RoundedCornerShape(32.dp),
                     )
-                    .testTag("Box change language"),
+                    .testTag("Background change language th"),
             ) {
                 AppText(
                     text = "TH",
                     fontWeight = FontWeight.Bold,
                     color = Color.White,
-                    modifier = Modifier.testTag("Text th"),
                 )
             }
             Box(
                 contentAlignment = Alignment.Center,
-                modifier = Modifier
-                    .width(40.dp)
-                    .height(32.dp)
-                    .testTag("Box en"),
+                modifier = Modifier.size(
+                    width = 40.dp,
+                    height = 32.dp,
+                ),
             ) {
-                AppText(
-                    text = "EN",
-                    modifier = Modifier.testTag("Text en"),
-                )
+                AppText(text = "EN")
             }
         }
     }

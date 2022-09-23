@@ -21,7 +21,6 @@ class WelcomeTopSectionTest {
             }
         }
 
-        composeTestRule.onNodeWithTag("Card welcome top").assertIsDisplayed()
         composeTestRule.onNodeWithContentDescription("Background logo app").assertIsDisplayed()
         composeTestRule.onNodeWithTag("Logo app").assertIsDisplayed()
     }

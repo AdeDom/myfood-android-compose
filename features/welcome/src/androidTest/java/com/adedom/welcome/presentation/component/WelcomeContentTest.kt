@@ -24,7 +24,6 @@ class WelcomeContentTest {
             }
         }
 
-        composeTestRule.onNodeWithTag("Welcome column root").assertIsDisplayed()
         composeTestRule.onNodeWithTag("Welcome top section").assertIsDisplayed()
         composeTestRule.onNodeWithTag("Space welcome center").assertExists()
         composeTestRule.onNodeWithTag("Welcome bottom section").assertIsDisplayed()
