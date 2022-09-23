@@ -26,12 +26,9 @@ class LoginScreenTest {
         }
 
         composeTestRule.onAllNodesWithText("Login").assertAll(hasText("Login"))
-        composeTestRule.onNodeWithTag("Space column1").assertExists()
         composeTestRule.onNodeWithText("Add your details to login").assertIsDisplayed()
-        composeTestRule.onNodeWithTag("Space column2").assertExists()
         composeTestRule.onNodeWithText("Your Email").assertIsDisplayed()
         composeTestRule.onNodeWithText("Password").assertIsDisplayed()
-        composeTestRule.onNodeWithTag("Space column3").assertExists()
         composeTestRule.onNodeWithText("Forget your password?").assertIsDisplayed()
         composeTestRule.onNodeWithText("Don\'t have an Account?").assertIsDisplayed()
         composeTestRule.onNodeWithText("Sign Up").assertIsDisplayed()
@@ -53,13 +50,10 @@ class LoginScreenTest {
         }
 
         composeTestRule.onAllNodesWithText("Login").assertAll(hasText("Login"))
-        composeTestRule.onNodeWithTag("Space column1").assertExists()
         composeTestRule.onNodeWithText("Add your details to login").assertIsDisplayed()
-        composeTestRule.onNodeWithTag("Space column2").assertExists()
         composeTestRule.onNodeWithText("Your Email").assertIsDisplayed()
         composeTestRule.onNodeWithText("Email is incorrect").assertIsDisplayed()
         composeTestRule.onNodeWithText("Password").assertIsDisplayed()
-        composeTestRule.onNodeWithTag("Space column3").assertExists()
         composeTestRule.onNodeWithText("Forget your password?").assertIsDisplayed()
         composeTestRule.onNodeWithText("Don\'t have an Account?").assertIsDisplayed()
         composeTestRule.onNodeWithText("Sign Up").assertIsDisplayed()
@@ -81,13 +75,10 @@ class LoginScreenTest {
         }
 
         composeTestRule.onAllNodesWithText("Login").assertAll(hasText("Login"))
-        composeTestRule.onNodeWithTag("Space column1").assertExists()
         composeTestRule.onNodeWithText("Add your details to login").assertIsDisplayed()
-        composeTestRule.onNodeWithTag("Space column2").assertExists()
         composeTestRule.onNodeWithText("Your Email").assertIsDisplayed()
         composeTestRule.onNodeWithText("Password").assertIsDisplayed()
         composeTestRule.onNodeWithText("Password is incorrect").assertIsDisplayed()
-        composeTestRule.onNodeWithTag("Space column3").assertExists()
         composeTestRule.onNodeWithText("Forget your password?").assertIsDisplayed()
         composeTestRule.onNodeWithText("Don\'t have an Account?").assertIsDisplayed()
         composeTestRule.onNodeWithText("Sign Up").assertIsDisplayed()
@@ -109,12 +100,9 @@ class LoginScreenTest {
         }
 
         composeTestRule.onAllNodesWithText("Login").assertAll(hasText("Login"))
-        composeTestRule.onNodeWithTag("Space column1").assertExists()
         composeTestRule.onNodeWithText("Add your details to login").assertIsDisplayed()
-        composeTestRule.onNodeWithTag("Space column2").assertExists()
         composeTestRule.onNodeWithText("Your Email").assertIsDisplayed()
         composeTestRule.onNodeWithText("Password").assertIsDisplayed()
-        composeTestRule.onNodeWithTag("Space column3").assertExists()
         composeTestRule.onNodeWithText("Forget your password?").assertIsDisplayed()
         composeTestRule.onNodeWithText("Don\'t have an Account?").assertIsDisplayed()
         composeTestRule.onNodeWithText("Sign Up").assertIsDisplayed()
@@ -137,13 +125,10 @@ class LoginScreenTest {
         }
 
         composeTestRule.onAllNodesWithText("Login").assertAll(hasText("Login"))
-        composeTestRule.onNodeWithTag("Space column1").assertExists()
         composeTestRule.onNodeWithText("Add your details to login").assertIsDisplayed()
-        composeTestRule.onNodeWithTag("Space column2").assertExists()
         composeTestRule.onNodeWithText("Your Email").assertIsDisplayed()
         composeTestRule.onNodeWithText(email).assertIsDisplayed()
         composeTestRule.onNodeWithText("Password").assertIsDisplayed()
-        composeTestRule.onNodeWithTag("Space column3").assertExists()
         composeTestRule.onNodeWithText("Forget your password?").assertIsDisplayed()
         composeTestRule.onNodeWithText("Don\'t have an Account?").assertIsDisplayed()
         composeTestRule.onNodeWithText("Sign Up").assertIsDisplayed()
@@ -166,13 +151,10 @@ class LoginScreenTest {
         }
 
         composeTestRule.onAllNodesWithText("Login").assertAll(hasText("Login"))
-        composeTestRule.onNodeWithTag("Space column1").assertExists()
         composeTestRule.onNodeWithText("Add your details to login").assertIsDisplayed()
-        composeTestRule.onNodeWithTag("Space column2").assertExists()
         composeTestRule.onNodeWithText("Your Email").assertIsDisplayed()
         composeTestRule.onNodeWithText("Password").assertIsDisplayed()
         composeTestRule.onNodeWithText(password).assertDoesNotExist()
-        composeTestRule.onNodeWithTag("Space column3").assertExists()
         composeTestRule.onNodeWithText("Forget your password?").assertIsDisplayed()
         composeTestRule.onNodeWithText("Don\'t have an Account?").assertIsDisplayed()
         composeTestRule.onNodeWithText("Sign Up").assertIsDisplayed()
@@ -194,12 +176,9 @@ class LoginScreenTest {
         }
 
         composeTestRule.onAllNodesWithText("Login").assertAll(hasText("Login"))
-        composeTestRule.onNodeWithTag("Space column1").assertExists()
         composeTestRule.onNodeWithText("Add your details to login").assertIsDisplayed()
-        composeTestRule.onNodeWithTag("Space column2").assertExists()
         composeTestRule.onNodeWithText("Your Email").assertIsDisplayed()
         composeTestRule.onNodeWithText("Password").assertIsDisplayed()
-        composeTestRule.onNodeWithTag("Space column3").assertExists()
         composeTestRule.onNodeWithText("Forget your password?").assertIsDisplayed()
         composeTestRule.onNodeWithText("Don\'t have an Account?").assertIsDisplayed()
         composeTestRule.onNodeWithText("Sign Up").assertIsDisplayed()
@@ -221,12 +200,9 @@ class LoginScreenTest {
         }
 
         composeTestRule.onAllNodesWithText("Login").assertAll(hasText("Login"))
-        composeTestRule.onNodeWithTag("Space column1").assertExists()
         composeTestRule.onNodeWithText("Add your details to login").assertIsDisplayed()
-        composeTestRule.onNodeWithTag("Space column2").assertExists()
         composeTestRule.onNodeWithText("Your Email").assertIsDisplayed()
         composeTestRule.onNodeWithText("Password").assertIsDisplayed()
-        composeTestRule.onNodeWithTag("Space column3").assertExists()
         composeTestRule.onNodeWithText("Forget your password?").assertIsDisplayed()
         composeTestRule.onNodeWithText("Don\'t have an Account?").assertIsDisplayed()
         composeTestRule.onNodeWithText("Sign Up").assertIsDisplayed()

@@ -26,12 +26,9 @@ class WelcomeBottomSectionTest {
         }
 
         composeTestRule.onNodeWithText("Login").assertIsDisplayed()
-        composeTestRule.onNodeWithTag("Space column1").assertExists()
         composeTestRule.onNodeWithText("Create an Account").assertIsDisplayed()
-        composeTestRule.onNodeWithTag("Space column2").assertExists()
         composeTestRule.onNodeWithText("Don't want login?").assertIsDisplayed()
         composeTestRule.onNodeWithText("Skip").assertIsDisplayed()
-        composeTestRule.onNodeWithTag("Space column3").assertExists()
         composeTestRule.onNodeWithTag("Border change language").assertIsDisplayed()
         composeTestRule.onNodeWithTag("Background change language th").assertIsDisplayed()
         composeTestRule.onNodeWithText("TH").assertIsDisplayed()

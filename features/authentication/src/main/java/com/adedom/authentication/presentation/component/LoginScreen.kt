@@ -53,17 +53,9 @@ fun LoginContent(
                 text = "Login",
                 modifier = Modifier.padding(top = 64.dp),
             )
-            Spacer(
-                modifier = Modifier
-                    .height(20.dp)
-                    .testTag("Space column1"),
-            )
+            Spacer(modifier = Modifier.height(20.dp))
             AppSubTitleText("Add your details to login")
-            Spacer(
-                modifier = Modifier
-                    .height(20.dp)
-                    .testTag("Space column2"),
-            )
+            Spacer(modifier = Modifier.height(20.dp))
             AppTextField(
                 value = state.email,
                 onValueChange = { dispatch(LoginUiEvent.SetEmail(it)) },
@@ -87,11 +79,7 @@ fun LoginContent(
                 enabled = state.isLogin,
                 onClick = { dispatch(LoginUiEvent.Submit) },
             )
-            Spacer(
-                modifier = Modifier
-                    .height(20.dp)
-                    .testTag("Space column3"),
-            )
+            Spacer(modifier = Modifier.height(20.dp))
             AppText(
                 text = "Forget your password?",
                 color = Color.Gray,

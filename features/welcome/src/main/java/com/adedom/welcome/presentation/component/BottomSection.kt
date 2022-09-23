@@ -36,31 +36,19 @@ fun BottomSection(
             backgroundColor = Color(0xFFFFD700),
             onClick = openLoginPage,
         )
-        Spacer(
-            modifier = Modifier
-                .height(20.dp)
-                .testTag("Space column1"),
-        )
+        Spacer(modifier = Modifier.height(20.dp))
         AppButton(
             text = "Create an Account",
             backgroundColor = Color.White,
             onClick = openRegisterPage,
         )
-        Spacer(
-            modifier = Modifier
-                .height(20.dp)
-                .testTag("Space column2"),
-        )
+        Spacer(modifier = Modifier.height(20.dp))
         AppBottomText(
             firstText = "Don\'t want login?",
             secondText = "Skip",
             onClick = { dispatch(WelcomeUiEvent.NavSkip) },
         )
-        Spacer(
-            modifier = Modifier
-                .height(20.dp)
-                .testTag("Space column3"),
-        )
+        Spacer(modifier = Modifier.height(20.dp))
         Row(
             modifier = Modifier
                 .width(80.dp)
