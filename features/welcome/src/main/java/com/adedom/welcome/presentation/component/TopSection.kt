@@ -33,8 +33,7 @@ fun TopSection(
         ),
         modifier = modifier
             .fillMaxWidth()
-            .height((screenHeight / 2) - 64.dp)
-            .testTag("Card welcome top"),
+            .height((screenHeight / 2) - 64.dp),
     ) {
         Image(
             painter = painterResource(id = R.drawable.orange_top_shape),

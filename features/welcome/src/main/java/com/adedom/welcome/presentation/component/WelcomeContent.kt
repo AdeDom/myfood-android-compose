@@ -19,16 +19,10 @@ fun WelcomeContent(
     openRegisterPage: () -> Unit,
 ) {
     Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .testTag("Welcome column root"),
+        modifier = Modifier.fillMaxSize(),
     ) {
         TopSection(modifier = Modifier.testTag("Welcome top section"))
-        Spacer(
-            modifier = Modifier
-                .height(64.dp)
-                .testTag("Space welcome center"),
-        )
+        Spacer(modifier = Modifier.height(64.dp))
         BottomSection(
             dispatch = dispatch,
             openLoginPage = openLoginPage,
