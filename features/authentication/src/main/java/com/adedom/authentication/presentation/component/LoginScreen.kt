@@ -42,32 +42,23 @@ fun LoginContent(
     openRegisterPage: () -> Unit,
 ) {
     Box(
-        modifier = Modifier
-            .fillMaxSize()
-            .testTag("Box root"),
+        modifier = Modifier.fillMaxSize(),
     ) {
         Column(
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally,
-            modifier = Modifier
-                .fillMaxWidth()
-                .testTag("Column form"),
+            modifier = Modifier.fillMaxWidth(),
         ) {
             AppTitleText(
                 text = "Login",
-                modifier = Modifier
-                    .padding(top = 64.dp)
-                    .testTag("Login title text"),
+                modifier = Modifier.padding(top = 64.dp),
             )
             Spacer(
                 modifier = Modifier
                     .height(20.dp)
                     .testTag("Space column1"),
             )
-            AppSubTitleText(
-                "Add your details to login",
-                modifier = Modifier.testTag("Add your details to login text"),
-            )
+            AppSubTitleText("Add your details to login")
             Spacer(
                 modifier = Modifier
                     .height(20.dp)
@@ -97,7 +88,6 @@ fun LoginContent(
                 borderColor = if (state.isLogin) Color(0xFFFFD700) else Color.Gray,
                 enabled = state.isLogin,
                 onClick = { dispatch(LoginUiEvent.Submit) },
-                modifier = Modifier.testTag("Login button"),
             )
             Spacer(
                 modifier = Modifier
@@ -107,7 +97,6 @@ fun LoginContent(
             AppText(
                 text = "Forget your password?",
                 color = Color.Gray,
-                modifier = Modifier.testTag("Forget your password text"),
             )
         }
 
@@ -117,8 +106,7 @@ fun LoginContent(
             onClick = openRegisterPage,
             modifier = Modifier
                 .align(Alignment.BottomCenter)
-                .padding(bottom = 16.dp)
-                .testTag("Don't have an account text"),
+                .padding(bottom = 16.dp),
         )
 
         when (state.dialog) {
