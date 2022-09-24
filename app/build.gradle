@@ -54,7 +54,7 @@ android {
         compose true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion compose_version
+        kotlinCompilerExtensionVersion compose_compiler_version
     }
     packagingOptions {
         resources {
@@ -63,11 +63,12 @@ android {
             excludes += 'META-INF/INDEX.LIST'
         }
     }
+    namespace 'com.adedom.myfood'
 }
 
 dependencies {
 
     implementation "androidx.core:core-ktx:$core_ktx_version"
     implementation project(path: ':myfood')
-    implementation 'androidx.activity:activity-compose:1.5.1'
+    implementation "androidx.activity:activity-compose:$activity_compose_version"
 }
