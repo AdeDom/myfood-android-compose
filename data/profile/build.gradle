@@ -45,11 +45,6 @@ android {
     kotlinOptions {
         jvmTarget = '1.8'
     }
-    packagingOptions {
-        resources {
-            excludes += ['META-INF/io.netty.versions.properties', 'META-INF/INDEX.LIST']
-        }
-    }
     namespace 'com.adedom.profile'
 }
 
