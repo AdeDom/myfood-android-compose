@@ -53,9 +53,11 @@ android {
         kotlinCompilerExtensionVersion compose_compiler_version
     }
     packagingOptions {
-        exclude 'META-INF/io.netty.versions.properties'
-        exclude 'META-INF/INDEX.LIST'
+        resources {
+            excludes += ['META-INF/io.netty.versions.properties', 'META-INF/INDEX.LIST']
+        }
     }
+    namespace 'com.adedom.main'
 }
 
 dependencies {
