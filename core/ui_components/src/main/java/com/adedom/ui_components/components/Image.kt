@@ -13,11 +13,12 @@ import com.adedom.ui_components.R
 fun AppImage(
     modifier: Modifier = Modifier,
     @DrawableRes image: Int,
+    contentDescription: String? = null,
     contentScale: ContentScale = ContentScale.Crop,
 ) {
     Image(
         painter = painterResource(id = image),
-        contentDescription = null,
+        contentDescription = contentDescription,
         contentScale = contentScale,
         modifier = modifier,
     )
@@ -27,18 +28,21 @@ fun AppImage(
 fun AppImageNetwork(
     modifier: Modifier = Modifier,
     image: String,
+    contentDescription: String? = null,
     contentScale: ContentScale = ContentScale.Crop,
 ) {
     if (image.isNotEmpty()) {
         AsyncImage(
             model = image,
-            contentDescription = null,
+            contentDescription = contentDescription,
             contentScale = contentScale,
+            placeholder = painterResource(id = R.drawable.logo_black),
             modifier = modifier,
         )
     } else {
         AppImage(
             image = R.drawable.logo_black,
+            contentDescription = contentDescription,
             contentScale = contentScale,
             modifier = modifier,
         )
