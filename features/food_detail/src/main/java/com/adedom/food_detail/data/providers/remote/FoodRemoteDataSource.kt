@@ -1,7 +1,7 @@
 package com.adedom.food_detail.data.providers.remote
 
-import com.adedom.myfood.data.models.base.BaseResponse
-import com.adedom.myfood.data.models.response.FoodDetailResponse
+import com.myfood.server.data.models.base.BaseResponse
+import com.myfood.server.data.models.response.FoodDetailResponse
 
 interface FoodRemoteDataSource {
 

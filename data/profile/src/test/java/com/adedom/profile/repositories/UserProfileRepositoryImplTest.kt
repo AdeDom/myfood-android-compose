@@ -2,13 +2,13 @@ package com.adedom.profile.repositories
 
 import com.adedom.core.data.Resource2
 import com.adedom.core.utils.ApiServiceException
-import com.adedom.myfood.data.models.base.BaseError
-import com.adedom.myfood.data.models.base.BaseResponse
-import com.adedom.myfood.data.models.response.UserProfileResponse
 import com.adedom.profile.providers.local.FakeUserProfileLocalDataSource
 import com.adedom.profile.providers.local.UserProfileLocalDataSource
 import com.adedom.profile.providers.remote.ProfileRemoteDataSource
 import com.google.common.truth.Truth.assertThat
+import com.myfood.server.data.models.base.BaseError
+import com.myfood.server.data.models.base.BaseResponse
+import com.myfood.server.data.models.response.UserProfileResponse
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.mockk

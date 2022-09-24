@@ -85,7 +85,7 @@ dependencies {
     implementation "io.ktor:ktor-serialization-kotlinx-json:$ktor_version"
     implementation "io.ktor:ktor-client-auth:$ktor_version"
 
-    implementation "com.github.AdeDom:myfood-server:$myfood_version"
+    implementation "com.github.AdeDom:myfood-ktor-server:$myfood_version"
 
     debugImplementation "androidx.compose.ui:ui-tooling:$compose_version"
     debugImplementation "androidx.compose.ui:ui-test-manifest:$compose_version"

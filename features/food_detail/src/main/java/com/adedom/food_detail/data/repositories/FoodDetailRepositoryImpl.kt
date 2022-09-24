@@ -5,8 +5,8 @@ import com.adedom.core.data.models.error.AppErrorCode
 import com.adedom.core.utils.ApiServiceException
 import com.adedom.food_detail.data.providers.remote.FoodRemoteDataSource
 import com.adedom.food_detail.domain.repositories.FoodDetailRepository
-import com.adedom.myfood.data.models.base.BaseError
-import com.adedom.myfood.data.models.response.FoodDetailResponse
+import com.myfood.server.data.models.base.BaseError
+import com.myfood.server.data.models.response.FoodDetailResponse
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext

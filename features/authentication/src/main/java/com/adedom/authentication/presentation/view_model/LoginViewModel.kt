@@ -1,11 +1,11 @@
 package com.adedom.authentication.presentation.view_model
 
 import com.adedom.authentication.domain.use_cases.LoginUseCase
-import com.adedom.authentication.domain.use_cases.ValidateEmailUseCase
-import com.adedom.authentication.domain.use_cases.ValidatePasswordUseCase
 import com.adedom.core.data.Resource
-import com.adedom.myfood.data.models.base.BaseError
 import com.adedom.ui_components.base.BaseViewModel
+import com.myfood.server.data.models.base.BaseError
+import com.myfood.server.usecase.validate.ValidateEmailUseCase
+import com.myfood.server.usecase.validate.ValidatePasswordUseCase
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.receiveAsFlow

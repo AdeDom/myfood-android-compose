@@ -2,16 +2,16 @@ package com.adedom.authentication.presentation
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.adedom.authentication.domain.use_cases.LoginUseCase
-import com.adedom.authentication.domain.use_cases.ValidateEmailUseCase
-import com.adedom.authentication.domain.use_cases.ValidatePasswordUseCase
 import com.adedom.authentication.presentation.view_model.LoginUiEvent
 import com.adedom.authentication.presentation.view_model.LoginUiState
 import com.adedom.authentication.presentation.view_model.LoginViewModel
 import com.adedom.authentication.utils.MainCoroutineRule
 import com.adedom.core.data.Resource
-import com.adedom.myfood.data.models.base.BaseError
-import com.adedom.myfood.data.models.response.TokenResponse
 import com.google.common.truth.Truth.assertThat
+import com.myfood.server.data.models.base.BaseError
+import com.myfood.server.data.models.response.TokenResponse
+import com.myfood.server.usecase.validate.ValidateEmailUseCase
+import com.myfood.server.usecase.validate.ValidatePasswordUseCase
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.mockk

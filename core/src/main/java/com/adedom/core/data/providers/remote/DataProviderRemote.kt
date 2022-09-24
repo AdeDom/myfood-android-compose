@@ -5,11 +5,11 @@ import com.adedom.core.data.providers.data_store.AppDataStore
 import com.adedom.core.utils.ApiServiceException
 import com.adedom.core.utils.AuthRole
 import com.adedom.core.utils.RefreshTokenExpiredException
-import com.adedom.myfood.data.models.base.BaseError
-import com.adedom.myfood.data.models.base.BaseResponse
-import com.adedom.myfood.data.models.base.ErrorResponse
-import com.adedom.myfood.data.models.request.TokenRequest
-import com.adedom.myfood.data.models.response.TokenResponse
+import com.myfood.server.data.models.base.BaseError
+import com.myfood.server.data.models.base.BaseResponse
+import com.myfood.server.data.models.base.ErrorResponse
+import com.myfood.server.data.models.request.TokenRequest
+import com.myfood.server.data.models.response.TokenResponse
 import io.ktor.client.*
 import io.ktor.client.call.*
 import io.ktor.client.plugins.*

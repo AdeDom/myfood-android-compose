@@ -7,11 +7,11 @@ import com.adedom.core.data.providers.data_store.AppDataStore
 import com.adedom.core.data.providers.data_store.FakeAppDataStore
 import com.adedom.core.utils.ApiServiceException
 import com.adedom.core.utils.AuthRole
-import com.adedom.myfood.data.models.base.BaseError
-import com.adedom.myfood.data.models.base.BaseResponse
-import com.adedom.myfood.data.models.request.LoginRequest
-import com.adedom.myfood.data.models.response.TokenResponse
 import com.google.common.truth.Truth.assertThat
+import com.myfood.server.data.models.base.BaseError
+import com.myfood.server.data.models.base.BaseResponse
+import com.myfood.server.data.models.request.LoginRequest
+import com.myfood.server.data.models.response.TokenResponse
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.mockk

@@ -4,10 +4,10 @@ import com.adedom.core.data.Resource2
 import com.adedom.core.data.models.error.AppErrorCode
 import com.adedom.core.utils.ApiServiceException
 import com.adedom.core.utils.RefreshTokenExpiredException
-import com.adedom.myfood.data.models.base.BaseError
-import com.adedom.myfood.data.models.response.UserProfileResponse
 import com.adedom.profile.providers.local.UserProfileLocalDataSource
 import com.adedom.profile.providers.remote.ProfileRemoteDataSource
+import com.myfood.server.data.models.base.BaseError
+import com.myfood.server.data.models.response.UserProfileResponse
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow

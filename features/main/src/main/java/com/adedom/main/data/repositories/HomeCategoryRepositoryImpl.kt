@@ -3,7 +3,7 @@ package com.adedom.main.data.repositories
 import com.adedom.main.data.providers.local.category.CategoryLocalDataSource
 import com.adedom.main.data.providers.remote.category.CategoryRemoteDataSource
 import com.adedom.main.domain.repositories.HomeCategoryRepository
-import com.adedom.myfood.data.models.response.CategoryResponse
+import com.myfood.server.data.models.response.CategoryResponse
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow

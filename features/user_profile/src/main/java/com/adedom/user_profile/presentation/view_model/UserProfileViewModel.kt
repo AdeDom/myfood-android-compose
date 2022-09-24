@@ -1,11 +1,11 @@
 package com.adedom.user_profile.presentation.view_model
 
 import com.adedom.core.data.Resource2
-import com.adedom.myfood.data.models.base.BaseError
 import com.adedom.ui_components.base.BaseViewModel
 import com.adedom.user_profile.domain.models.UserProfileModel
 import com.adedom.user_profile.domain.use_cases.FetchUserProfileUseCase
 import com.adedom.user_profile.domain.use_cases.GetUserProfileUseCase
+import com.myfood.server.data.models.base.BaseError
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch

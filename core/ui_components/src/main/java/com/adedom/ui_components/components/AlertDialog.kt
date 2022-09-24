@@ -10,8 +10,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.adedom.myfood.data.models.base.BaseError
 import com.adedom.ui_components.theme.MyFoodTheme
+import com.myfood.server.data.models.base.BaseError
 
 @Composable
 fun AppLoadingAlertDialog(

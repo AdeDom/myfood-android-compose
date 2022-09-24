@@ -3,8 +3,8 @@ package com.adedom.food_detail.presentation.view_model
 import com.adedom.core.data.Resource
 import com.adedom.food_detail.domain.models.FoodDetailModel
 import com.adedom.food_detail.domain.use_cases.GetFoodDetailUseCase
-import com.adedom.myfood.data.models.base.BaseError
 import com.adedom.ui_components.base.BaseViewModel
+import com.myfood.server.data.models.base.BaseError
 import kotlinx.coroutines.launch
 
 sealed interface FoodDetailUiState {

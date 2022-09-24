@@ -1,6 +1,6 @@
 package com.adedom.core.data.providers.remote
 
-import com.adedom.myfood.data.models.base.BaseError
+import com.myfood.server.data.models.base.BaseError
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json

@@ -4,8 +4,8 @@ import com.adedom.core.data.Resource
 import com.adedom.core.data.models.error.AppErrorCode
 import com.adedom.food_detail.domain.models.FoodDetailModel
 import com.adedom.food_detail.domain.repositories.FoodDetailRepository
-import com.adedom.myfood.data.models.base.BaseError
-import com.adedom.myfood.data.models.response.FoodDetailResponse
+import com.myfood.server.data.models.base.BaseError
+import com.myfood.server.data.models.response.FoodDetailResponse
 
 class GetFoodDetailUseCase(
     private val foodDetailRepository: FoodDetailRepository,

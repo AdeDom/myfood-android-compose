@@ -4,7 +4,7 @@ import com.adedom.core.data.Resource
 import com.adedom.main.domain.models.CategoryModel
 import com.adedom.main.domain.repositories.HomeCategoryRepository
 import com.adedom.main.domain.repositories.HomeFoodRepository
-import com.adedom.myfood.data.models.response.CategoryResponse
+import com.myfood.server.data.models.response.CategoryResponse
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.coroutineScope

@@ -7,9 +7,9 @@ import com.adedom.core.data.models.error.AppErrorCode
 import com.adedom.core.data.providers.data_store.AppDataStore
 import com.adedom.core.utils.ApiServiceException
 import com.adedom.core.utils.AuthRole
-import com.adedom.myfood.data.models.base.BaseError
-import com.adedom.myfood.data.models.request.LoginRequest
-import com.adedom.myfood.data.models.response.TokenResponse
+import com.myfood.server.data.models.base.BaseError
+import com.myfood.server.data.models.request.LoginRequest
+import com.myfood.server.data.models.response.TokenResponse
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext

@@ -1,8 +1,8 @@
 package com.adedom.authentication.data.providers.remote.auth
 
-import com.adedom.myfood.data.models.base.BaseResponse
-import com.adedom.myfood.data.models.request.LoginRequest
-import com.adedom.myfood.data.models.response.TokenResponse
+import com.myfood.server.data.models.base.BaseResponse
+import com.myfood.server.data.models.request.LoginRequest
+import com.myfood.server.data.models.response.TokenResponse
 
 interface AuthRemoteDataSource {
 

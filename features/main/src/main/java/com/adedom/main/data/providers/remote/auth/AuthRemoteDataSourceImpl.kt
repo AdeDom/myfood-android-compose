@@ -3,7 +3,7 @@ package com.adedom.main.data.providers.remote.auth
 import com.adedom.core.data.providers.data_store.AppDataStore
 import com.adedom.core.data.providers.remote.DataProviderRemote
 import com.adedom.main.BuildConfig
-import com.adedom.myfood.data.models.base.BaseResponse
+import com.myfood.server.data.models.base.BaseResponse
 import io.ktor.client.call.*
 import io.ktor.client.request.*
 import io.ktor.http.*

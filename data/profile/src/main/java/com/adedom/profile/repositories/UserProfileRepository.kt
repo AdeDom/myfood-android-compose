@@ -1,7 +1,7 @@
 package com.adedom.profile.repositories
 
 import com.adedom.core.data.Resource2
-import com.adedom.myfood.data.models.response.UserProfileResponse
+import com.myfood.server.data.models.response.UserProfileResponse
 import kotlinx.coroutines.flow.Flow
 import myfood.database.UserProfileEntity
 

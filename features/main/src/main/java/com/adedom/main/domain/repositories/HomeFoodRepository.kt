@@ -1,6 +1,6 @@
 package com.adedom.main.domain.repositories
 
-import com.adedom.myfood.data.models.response.FoodDetailResponse
+import com.myfood.server.data.models.response.FoodDetailResponse
 import kotlinx.coroutines.flow.Flow
 import myfood.database.FoodEntity
 

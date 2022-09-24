@@ -3,8 +3,8 @@ package com.adedom.authentication.presentation.component
 import androidx.compose.ui.test.*
 import androidx.compose.ui.test.junit4.createComposeRule
 import com.adedom.authentication.presentation.view_model.LoginUiState
-import com.adedom.myfood.data.models.base.BaseError
 import com.adedom.ui_components.theme.MyFoodTheme
+import com.myfood.server.data.models.base.BaseError
 import org.junit.Rule
 import org.junit.Test
 

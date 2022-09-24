@@ -3,9 +3,9 @@ package com.adedom.main.presentation.view_model
 import com.adedom.core.data.Resource
 import com.adedom.main.domain.models.CategoryModel
 import com.adedom.main.domain.use_cases.*
-import com.adedom.myfood.data.models.base.BaseError
 import com.adedom.ui_components.base.BaseViewModel
 import com.adedom.ui_components.domain.models.FoodModel
+import com.myfood.server.data.models.base.BaseError
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.channels.Channel

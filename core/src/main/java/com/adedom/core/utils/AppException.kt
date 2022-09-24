@@ -1,6 +1,6 @@
 package com.adedom.core.utils
 
-import com.adedom.myfood.data.models.base.BaseError
+import com.myfood.server.data.models.base.BaseError
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json

@@ -2,9 +2,9 @@ package com.adedom.authentication.data.providers.remote.auth
 
 import com.adedom.authentication.BuildConfig
 import com.adedom.core.data.providers.remote.DataProviderRemote
-import com.adedom.myfood.data.models.base.BaseResponse
-import com.adedom.myfood.data.models.request.LoginRequest
-import com.adedom.myfood.data.models.response.TokenResponse
+import com.myfood.server.data.models.base.BaseResponse
+import com.myfood.server.data.models.request.LoginRequest
+import com.myfood.server.data.models.response.TokenResponse
 import io.ktor.client.call.*
 import io.ktor.client.request.*
 import io.ktor.http.*

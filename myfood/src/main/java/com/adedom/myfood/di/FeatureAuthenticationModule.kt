@@ -5,10 +5,10 @@ import com.adedom.authentication.data.providers.remote.auth.AuthRemoteDataSource
 import com.adedom.authentication.data.repositories.AuthLoginRepositoryImpl
 import com.adedom.authentication.domain.repositories.AuthLoginRepository
 import com.adedom.authentication.domain.use_cases.LoginUseCase
-import com.adedom.authentication.domain.use_cases.ValidateEmailUseCase
-import com.adedom.authentication.domain.use_cases.ValidatePasswordUseCase
 import com.adedom.authentication.presentation.view_model.LoginViewModel
 import com.adedom.authentication.presentation.view_model.RegisterViewModel
+import com.myfood.server.usecase.validate.ValidateEmailUseCase
+import com.myfood.server.usecase.validate.ValidatePasswordUseCase
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
