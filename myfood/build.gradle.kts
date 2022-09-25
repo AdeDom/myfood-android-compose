@@ -1,3 +1,4 @@
+import com.adedom.buildsrc.Dependencies
 import com.adedom.buildsrc.Versions
 
 plugins {
@@ -66,31 +67,31 @@ android {
 
 dependencies {
 
-    implementation("androidx.core:core-ktx:${Versions.coreKtxVersion}")
-    implementation(project(":core"))
-    implementation(project(":core:ui_components"))
-    implementation(project(":features:splash_screen"))
-    implementation(project(":features:welcome"))
-    implementation(project(":features:main"))
-    implementation(project(":features:authentication"))
-    implementation(project(":features:connectivity"))
-    implementation(project(":features:food_detail"))
-    implementation(project(":features:search_food"))
-    implementation(project(":features:user_profile"))
-    implementation(project(":data:profile"))
+    implementation(Dependencies.AndroidXCore.coreKtx)
+    implementation(project(Dependencies.Project.core))
+    implementation(project(Dependencies.Project.coreUiComponents))
+    implementation(project(Dependencies.Project.featuresSplashScreen))
+    implementation(project(Dependencies.Project.featuresWelcome))
+    implementation(project(Dependencies.Project.featuresMain))
+    implementation(project(Dependencies.Project.featuresAuthentication))
+    implementation(project(Dependencies.Project.featuresConnectivity))
+    implementation(project(Dependencies.Project.featuresFoodDetail))
+    implementation(project(Dependencies.Project.featuresSearchFood))
+    implementation(project(Dependencies.Project.featuresUserProfile))
+    implementation(project(Dependencies.Project.dataProfile))
 
-    implementation("io.insert-koin:koin-core:${Versions.koinVersion}")
-    implementation("io.insert-koin:koin-android:${Versions.koinVersion}")
-    implementation("io.insert-koin:koin-androidx-compose:${Versions.koinVersion}")
+    implementation(Dependencies.Koin.koinCore)
+    implementation(Dependencies.Koin.koinAndroid)
+    implementation(Dependencies.Koin.koinAndroidxCompose)
 
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:${Versions.coroutineVersion}")
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:${Versions.coroutineVersion}")
+    implementation(Dependencies.KotlinX.coroutinesCore)
+    implementation(Dependencies.KotlinX.coroutinesAndroid)
 
-    implementation("androidx.datastore:datastore-preferences:${Versions.datastorePreferencesVersion}")
+    implementation(Dependencies.AndroidXDataStore.datastorePreferences)
 
-    implementation("com.squareup.sqldelight:android-driver:${Versions.sqlDelightVersion}")
+    implementation(Dependencies.SquareUp.sqlDelightAndroidDriver)
 
-    implementation("androidx.navigation:navigation-compose:${Versions.navigationComposeVersion}")
+    implementation(Dependencies.AndroidXNavigation.navigationCompose)
 
-    implementation("com.github.AdeDom:myfood-ktor-server:${Versions.myFoodVersion}")
+    implementation(Dependencies.AdeDom.myFoodKtorServer)
 }

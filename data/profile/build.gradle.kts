@@ -1,3 +1,4 @@
+import com.adedom.buildsrc.Dependencies
 import com.adedom.buildsrc.Versions
 
 plugins {
@@ -55,26 +56,26 @@ android {
 
 dependencies {
 
-    implementation("androidx.core:core-ktx:${Versions.coreKtxVersion}")
-    implementation(project(":core"))
+    implementation(Dependencies.AndroidXCore.coreKtx)
+    implementation(project(Dependencies.Project.core))
 
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:${Versions.coroutineVersion}")
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:${Versions.coroutineVersion}")
+    implementation(Dependencies.KotlinX.coroutinesCore)
+    implementation(Dependencies.KotlinX.coroutinesAndroid)
 
-    implementation("io.ktor:ktor-client-core:${Versions.ktorVersion}")
-    implementation("io.ktor:ktor-client-cio:${Versions.ktorVersion}")
-    implementation("io.ktor:ktor-client-logging:${Versions.ktorVersion}")
-    implementation("io.ktor:ktor-client-content-negotiation:${Versions.ktorVersion}")
-    implementation("io.ktor:ktor-serialization-kotlinx-json:${Versions.ktorVersion}")
-    implementation("io.ktor:ktor-client-auth:${Versions.ktorVersion}")
+    implementation(Dependencies.Ktor.clientCore)
+    implementation(Dependencies.Ktor.clientCio)
+    implementation(Dependencies.Ktor.clientLogging)
+    implementation(Dependencies.Ktor.clientContentNegotiation)
+    implementation(Dependencies.Ktor.serializationKotlinxJson)
+    implementation(Dependencies.Ktor.clientAuth)
 
-    implementation("com.squareup.sqldelight:coroutines-extensions:${Versions.sqlDelightVersion}")
+    implementation(Dependencies.SquareUp.sqlDelightCoroutinesExt)
 
-    implementation("com.github.AdeDom:myfood-ktor-server:${Versions.myFoodVersion}")
+    implementation(Dependencies.AdeDom.myFoodKtorServer)
 
-    testImplementation("junit:junit:${Versions.junitVersion}")
-    testImplementation("com.google.truth:truth:${Versions.truthVersion}")
-    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:${Versions.coroutineVersion}")
-    testImplementation("io.ktor:ktor-client-mock:${Versions.ktorVersion}")
-    testImplementation("io.mockk:mockk:${Versions.mockkVersion}")
+    testImplementation(Dependencies.Junit.testJunit)
+    testImplementation(Dependencies.Truth.testTruth)
+    testImplementation(Dependencies.KotlinX.testCoroutinesTest)
+    testImplementation(Dependencies.Ktor.testClientMock)
+    testImplementation(Dependencies.Mockk.testMockk)
 }

@@ -1,3 +1,4 @@
+import com.adedom.buildsrc.Dependencies
 import com.adedom.buildsrc.Versions
 
 plugins {
@@ -62,22 +63,22 @@ android {
 
 dependencies {
 
-    implementation("androidx.core:core-ktx:${Versions.coreKtxVersion}")
-    implementation("androidx.activity:activity-compose:${Versions.activityComposeVersion}")
-    implementation("androidx.compose.material:material:${Versions.composeVersion}")
-    implementation("androidx.compose.ui:ui:${Versions.composeVersion}")
-    implementation("androidx.compose.ui:ui-tooling-preview:${Versions.composeVersion}")
-    implementation(project(":core"))
-    implementation(project(":core:ui_components"))
-    implementation(project(":data:profile"))
+    implementation(Dependencies.AndroidXCore.coreKtx)
+    implementation(Dependencies.AndroidXActivity.activityCompose)
+    implementation(Dependencies.AndroidXCompose.material)
+    implementation(Dependencies.AndroidXCompose.ui)
+    implementation(Dependencies.AndroidXCompose.uiToolingPreview)
+    implementation(project(Dependencies.Project.core))
+    implementation(project(Dependencies.Project.coreUiComponents))
+    implementation(project(Dependencies.Project.dataProfile))
 
-    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:${Versions.lifecycleVersion}")
-    implementation("androidx.lifecycle:lifecycle-viewmodel-compose:${Versions.lifecycleVersion}")
-    implementation("androidx.lifecycle:lifecycle-livedata-ktx:${Versions.lifecycleVersion}")
-    implementation("androidx.lifecycle:lifecycle-runtime-ktx:${Versions.lifecycleVersion}")
+    implementation(Dependencies.Lifecycle.viewModelKtx)
+    implementation(Dependencies.Lifecycle.viewModelCompose)
+    implementation(Dependencies.Lifecycle.livedataKtx)
+    implementation(Dependencies.Lifecycle.runtimeKtx)
 
-    implementation("com.github.AdeDom:myfood-ktor-server:${Versions.myFoodVersion}")
+    implementation(Dependencies.AdeDom.myFoodKtorServer)
 
-    debugImplementation("androidx.compose.ui:ui-tooling:${Versions.composeVersion}")
-    debugImplementation("androidx.compose.ui:ui-test-manifest:${Versions.composeVersion}")
+    debugImplementation(Dependencies.AndroidXCompose.debugUiTooling)
+    debugImplementation(Dependencies.AndroidXCompose.debugUiTestManifest)
 }

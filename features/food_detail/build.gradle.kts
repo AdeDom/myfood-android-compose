@@ -1,3 +1,4 @@
+import com.adedom.buildsrc.Dependencies
 import com.adedom.buildsrc.Versions
 
 plugins {
@@ -62,31 +63,31 @@ android {
 
 dependencies {
 
-    implementation("androidx.core:core-ktx:${Versions.coreKtxVersion}")
-    implementation("androidx.activity:activity-compose:${Versions.activityComposeVersion}")
-    implementation("androidx.compose.material:material:${Versions.composeVersion}")
-    implementation("androidx.compose.ui:ui:${Versions.composeVersion}")
-    implementation("androidx.compose.ui:ui-tooling-preview:${Versions.composeVersion}")
-    implementation(project(":core"))
-    implementation(project(":core:ui_components"))
+    implementation(Dependencies.AndroidXCore.coreKtx)
+    implementation(Dependencies.AndroidXActivity.activityCompose)
+    implementation(Dependencies.AndroidXCompose.material)
+    implementation(Dependencies.AndroidXCompose.ui)
+    implementation(Dependencies.AndroidXCompose.uiToolingPreview)
+    implementation(project(Dependencies.Project.core))
+    implementation(project(Dependencies.Project.coreUiComponents))
 
-    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:${Versions.lifecycleVersion}")
-    implementation("androidx.lifecycle:lifecycle-viewmodel-compose:${Versions.lifecycleVersion}")
-    implementation("androidx.lifecycle:lifecycle-livedata-ktx:${Versions.lifecycleVersion}")
-    implementation("androidx.lifecycle:lifecycle-runtime-ktx:${Versions.lifecycleVersion}")
+    implementation(Dependencies.Lifecycle.viewModelKtx)
+    implementation(Dependencies.Lifecycle.viewModelCompose)
+    implementation(Dependencies.Lifecycle.livedataKtx)
+    implementation(Dependencies.Lifecycle.runtimeKtx)
 
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:${Versions.coroutineVersion}")
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:${Versions.coroutineVersion}")
+    implementation(Dependencies.KotlinX.coroutinesCore)
+    implementation(Dependencies.KotlinX.coroutinesAndroid)
 
-    implementation("io.ktor:ktor-client-core:${Versions.ktorVersion}")
-    implementation("io.ktor:ktor-client-cio:${Versions.ktorVersion}")
-    implementation("io.ktor:ktor-client-logging:${Versions.ktorVersion}")
-    implementation("io.ktor:ktor-client-content-negotiation:${Versions.ktorVersion}")
-    implementation("io.ktor:ktor-serialization-kotlinx-json:${Versions.ktorVersion}")
-    implementation("io.ktor:ktor-client-auth:${Versions.ktorVersion}")
+    implementation(Dependencies.Ktor.clientCore)
+    implementation(Dependencies.Ktor.clientCio)
+    implementation(Dependencies.Ktor.clientLogging)
+    implementation(Dependencies.Ktor.clientContentNegotiation)
+    implementation(Dependencies.Ktor.serializationKotlinxJson)
+    implementation(Dependencies.Ktor.clientAuth)
 
-    implementation("com.github.AdeDom:myfood-ktor-server:${Versions.myFoodVersion}")
+    implementation(Dependencies.AdeDom.myFoodKtorServer)
 
-    debugImplementation("androidx.compose.ui:ui-tooling:${Versions.composeVersion}")
-    debugImplementation("androidx.compose.ui:ui-test-manifest:${Versions.composeVersion}")
+    debugImplementation(Dependencies.AndroidXCompose.debugUiTooling)
+    debugImplementation(Dependencies.AndroidXCompose.debugUiTestManifest)
 }

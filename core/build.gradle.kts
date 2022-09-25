@@ -1,3 +1,4 @@
+import com.adedom.buildsrc.Dependencies
 import com.adedom.buildsrc.Versions
 
 plugins {
@@ -65,18 +66,18 @@ android {
 
 dependencies {
 
-    implementation("androidx.core:core-ktx:${Versions.coreKtxVersion}")
-    implementation("androidx.activity:activity-compose:${Versions.activityComposeVersion}")
-    implementation("com.google.android.material:material:${Versions.materialVersion}")
+    implementation(Dependencies.AndroidXCore.coreKtx)
+    implementation(Dependencies.AndroidXActivity.activityCompose)
+    implementation(Dependencies.AndroidGoogle.material)
 
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:${Versions.coroutineVersion}")
+    implementation(Dependencies.KotlinX.coroutinesCore)
 
-    implementation("io.ktor:ktor-client-core:${Versions.ktorVersion}")
-    implementation("io.ktor:ktor-client-cio:${Versions.ktorVersion}")
-    implementation("io.ktor:ktor-client-logging:${Versions.ktorVersion}")
-    implementation("io.ktor:ktor-client-content-negotiation:${Versions.ktorVersion}")
-    implementation("io.ktor:ktor-serialization-kotlinx-json:${Versions.ktorVersion}")
-    implementation("io.ktor:ktor-client-auth:${Versions.ktorVersion}")
+    implementation(Dependencies.Ktor.clientCore)
+    implementation(Dependencies.Ktor.clientCio)
+    implementation(Dependencies.Ktor.clientLogging)
+    implementation(Dependencies.Ktor.clientContentNegotiation)
+    implementation(Dependencies.Ktor.serializationKotlinxJson)
+    implementation(Dependencies.Ktor.clientAuth)
 
-    implementation("com.github.AdeDom:myfood-ktor-server:${Versions.myFoodVersion}")
+    implementation(Dependencies.AdeDom.myFoodKtorServer)
 }

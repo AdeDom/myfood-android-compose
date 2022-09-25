@@ -1,3 +1,4 @@
+import com.adedom.buildsrc.Dependencies
 import com.adedom.buildsrc.Versions
 
 plugins {
@@ -73,7 +74,7 @@ android {
 
 dependencies {
 
-    implementation("androidx.core:core-ktx:${Versions.coreKtxVersion}")
-    implementation(project(":myfood"))
-    implementation("androidx.activity:activity-compose:${Versions.activityComposeVersion}")
+    implementation(Dependencies.AndroidXCore.coreKtx)
+    implementation(project(Dependencies.Project.myFood))
+    implementation(Dependencies.AndroidXActivity.activityCompose)
 }
