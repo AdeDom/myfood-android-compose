@@ -74,7 +74,7 @@ android {
 
 dependencies {
 
-    implementation(Dependencies.AndroidXCore.coreKtx)
     implementation(project(Dependencies.Project.myFood))
+    implementation(Dependencies.AndroidXCore.coreKtx)
     implementation(Dependencies.AndroidXActivity.activityCompose)
 }

@@ -56,8 +56,9 @@ android {
 
 dependencies {
 
-    implementation(Dependencies.AndroidXCore.coreKtx)
     implementation(project(Dependencies.Project.core))
+
+    implementation(Dependencies.AndroidXCore.coreKtx)
 
     implementation(Dependencies.KotlinX.coroutinesCore)
     implementation(Dependencies.KotlinX.coroutinesAndroid)

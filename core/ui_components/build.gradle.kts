@@ -63,12 +63,13 @@ android {
 
 dependencies {
 
+    implementation(project(Dependencies.Project.core))
+
     implementation(Dependencies.AndroidXCore.coreKtx)
     implementation(Dependencies.AndroidXActivity.activityCompose)
     implementation(Dependencies.AndroidXCompose.material)
     implementation(Dependencies.AndroidXCompose.ui)
     implementation(Dependencies.AndroidXCompose.uiToolingPreview)
-    implementation(project(Dependencies.Project.core))
 
     implementation(Dependencies.Lifecycle.viewModelKtx)
     implementation(Dependencies.Lifecycle.viewModelCompose)

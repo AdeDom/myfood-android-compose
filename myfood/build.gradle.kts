@@ -67,7 +67,6 @@ android {
 
 dependencies {
 
-    implementation(Dependencies.AndroidXCore.coreKtx)
     implementation(project(Dependencies.Project.core))
     implementation(project(Dependencies.Project.coreUiComponents))
     implementation(project(Dependencies.Project.featuresSplashScreen))
@@ -79,6 +78,8 @@ dependencies {
     implementation(project(Dependencies.Project.featuresSearchFood))
     implementation(project(Dependencies.Project.featuresUserProfile))
     implementation(project(Dependencies.Project.dataProfile))
+
+    implementation(Dependencies.AndroidXCore.coreKtx)
 
     implementation(Dependencies.Koin.koinCore)
     implementation(Dependencies.Koin.koinAndroid)
