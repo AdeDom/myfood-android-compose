@@ -62,6 +62,8 @@ android {
         resources {
             excludes += "META-INF/io.netty.versions.properties"
             excludes += "META-INF/INDEX.LIST"
+            excludes += "META-INF/LICENSE.md"
+            excludes += "META-INF/LICENSE-notice.md"
         }
     }
     namespace = "com.adedom.authentication"
@@ -106,6 +108,7 @@ dependencies {
     testImplementation(Dependencies.AndroidXArch.testCoreTesting)
 
     androidTestImplementation(Dependencies.AndroidXCompose.androidTestUiTestJunit4)
+    androidTestImplementation(Dependencies.Mockk.androidTestMockk)
 
     debugImplementation(Dependencies.AndroidXCompose.debugUiTooling)
     debugImplementation(Dependencies.AndroidXCompose.debugUiTestManifest)

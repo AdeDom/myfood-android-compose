@@ -2,9 +2,17 @@ package com.adedom.authentication.presentation.component
 
 import androidx.compose.ui.test.*
 import androidx.compose.ui.test.junit4.createComposeRule
-import com.adedom.authentication.presentation.view_model.LoginUiState
+import androidx.compose.ui.text.input.ImeAction
+import com.adedom.authentication.domain.use_cases.LoginUseCase
+import com.adedom.authentication.presentation.view_model.LoginViewModel
+import com.adedom.core.data.Resource
 import com.adedom.ui_components.theme.MyFoodTheme
 import com.myfood.server.data.models.base.BaseError
+import com.myfood.server.usecase.validate.ValidateEmailUseCase
+import com.myfood.server.usecase.validate.ValidatePasswordUseCase
+import io.mockk.coEvery
+import io.mockk.mockk
+import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 
@@ -13,201 +21,128 @@ class LoginScreenTest {
     @get:Rule
     val composeTestRule = createComposeRule()
 
-    @Test
-    fun loginScreen_initialState() {
+    private lateinit var validateEmailUseCase: ValidateEmailUseCase
+    private lateinit var validatePasswordUseCase: ValidatePasswordUseCase
+    private val loginUseCase: LoginUseCase = mockk()
+    lateinit var viewModel: LoginViewModel
+
+    @Before
+    fun setUp() {
+        validateEmailUseCase = ValidateEmailUseCase()
+        validatePasswordUseCase = ValidatePasswordUseCase()
+        viewModel = LoginViewModel(
+            validateEmailUseCase,
+            validatePasswordUseCase,
+            loginUseCase,
+        )
+
         composeTestRule.setContent {
             MyFoodTheme {
-                LoginContent(
-                    state = LoginUiState(),
-                    dispatch = {},
+                LoginScreen(
+                    viewModel = viewModel,
                     openRegisterPage = {},
+                    openMainPage = {},
                 )
             }
         }
-
-        composeTestRule.onAllNodesWithText("Login").assertAll(hasText("Login"))
-        composeTestRule.onNodeWithText("Add your details to login").assertIsDisplayed()
-        composeTestRule.onNodeWithText("Your Email").assertIsDisplayed()
-        composeTestRule.onNodeWithText("Password").assertIsDisplayed()
-        composeTestRule.onNodeWithText("Forget your password?").assertIsDisplayed()
-        composeTestRule.onNodeWithText("Don\'t have an Account?").assertIsDisplayed()
-        composeTestRule.onNodeWithText("Sign Up").assertIsDisplayed()
-        composeTestRule.onNodeWithTag("Loading dialog").assertDoesNotExist()
-        composeTestRule.onNodeWithTag("Error dialog").assertDoesNotExist()
-        composeTestRule.onNode(isDialog()).assertDoesNotExist()
     }
 
     @Test
-    fun loginScreen_isErrorEmail() {
-        composeTestRule.setContent {
-            MyFoodTheme {
-                LoginContent(
-                    state = LoginUiState(isErrorEmail = true),
-                    dispatch = {},
-                    openRegisterPage = {},
-                )
-            }
-        }
+    fun textFieldEmail_incorrect_returnErrorEmail() {
+        val email = "dom"
+        composeTestRule.onNodeWithText("Your Email").assertIsDisplayed()
+        composeTestRule.onNodeWithText("Email is incorrect").assertDoesNotExist()
 
-        composeTestRule.onAllNodesWithText("Login").assertAll(hasText("Login"))
-        composeTestRule.onNodeWithText("Add your details to login").assertIsDisplayed()
+        composeTestRule.onNodeWithText("Your Email").performTextInput(email)
+
+        composeTestRule.onNodeWithText(email).assertIsDisplayed()
         composeTestRule.onNodeWithText("Your Email").assertIsDisplayed()
         composeTestRule.onNodeWithText("Email is incorrect").assertIsDisplayed()
-        composeTestRule.onNodeWithText("Password").assertIsDisplayed()
-        composeTestRule.onNodeWithText("Forget your password?").assertIsDisplayed()
-        composeTestRule.onNodeWithText("Don\'t have an Account?").assertIsDisplayed()
-        composeTestRule.onNodeWithText("Sign Up").assertIsDisplayed()
-        composeTestRule.onNodeWithTag("Loading dialog").assertDoesNotExist()
-        composeTestRule.onNodeWithTag("Error dialog").assertDoesNotExist()
-        composeTestRule.onNode(isDialog()).assertDoesNotExist()
+        composeTestRule.onAllNodesWithText("Login")[1].assertIsNotEnabled()
+        composeTestRule.onNodeWithText("Your Email").assert(hasImeAction(ImeAction.Next))
     }
 
     @Test
-    fun loginScreen_isErrorPassword() {
-        composeTestRule.setContent {
-            MyFoodTheme {
-                LoginContent(
-                    state = LoginUiState(isErrorPassword = true),
-                    dispatch = {},
-                    openRegisterPage = {},
-                )
-            }
-        }
-
-        composeTestRule.onAllNodesWithText("Login").assertAll(hasText("Login"))
-        composeTestRule.onNodeWithText("Add your details to login").assertIsDisplayed()
+    fun textFieldEmail_correct_returnEmail() {
+        val email = "dom6"
         composeTestRule.onNodeWithText("Your Email").assertIsDisplayed()
+        composeTestRule.onNodeWithText("Email is incorrect").assertDoesNotExist()
+
+        composeTestRule.onNodeWithText("Your Email").performTextInput(email)
+
+        composeTestRule.onNodeWithText(email).assertIsDisplayed()
+        composeTestRule.onNodeWithText("Your Email").assertIsDisplayed()
+        composeTestRule.onNodeWithText("Email is incorrect").assertDoesNotExist()
+        composeTestRule.onAllNodesWithText("Login")[1].assertIsNotEnabled()
+        composeTestRule.onNodeWithText("Your Email").assert(hasImeAction(ImeAction.Next))
+    }
+
+    @Test
+    fun textFieldPassword_incorrect_returnErrorPassword() {
+        val password = "dom"
+        composeTestRule.onNodeWithText("Password").assertIsDisplayed()
+        composeTestRule.onNodeWithText("Password is incorrect").assertDoesNotExist()
+
+        composeTestRule.onNodeWithText("Password").performTextInput(password)
+
+        composeTestRule.onNodeWithText(password).assertDoesNotExist()
         composeTestRule.onNodeWithText("Password").assertIsDisplayed()
         composeTestRule.onNodeWithText("Password is incorrect").assertIsDisplayed()
-        composeTestRule.onNodeWithText("Forget your password?").assertIsDisplayed()
-        composeTestRule.onNodeWithText("Don\'t have an Account?").assertIsDisplayed()
-        composeTestRule.onNodeWithText("Sign Up").assertIsDisplayed()
-        composeTestRule.onNodeWithTag("Loading dialog").assertDoesNotExist()
-        composeTestRule.onNodeWithTag("Error dialog").assertDoesNotExist()
-        composeTestRule.onNode(isDialog()).assertDoesNotExist()
+        composeTestRule.onAllNodesWithText("Login")[1].assertIsNotEnabled()
+        composeTestRule.onNodeWithText("Password").assert(hasImeAction(ImeAction.Done))
     }
 
     @Test
-    fun loginScreen_isLogin() {
-        composeTestRule.setContent {
-            MyFoodTheme {
-                LoginContent(
-                    state = LoginUiState(isLogin = true),
-                    dispatch = {},
-                    openRegisterPage = {},
-                )
-            }
-        }
-
-        composeTestRule.onAllNodesWithText("Login").assertAll(hasText("Login"))
-        composeTestRule.onNodeWithText("Add your details to login").assertIsDisplayed()
-        composeTestRule.onNodeWithText("Your Email").assertIsDisplayed()
+    fun textFieldPassword_correct_returnPassword() {
+        val password = "dom6"
         composeTestRule.onNodeWithText("Password").assertIsDisplayed()
-        composeTestRule.onNodeWithText("Forget your password?").assertIsDisplayed()
-        composeTestRule.onNodeWithText("Don\'t have an Account?").assertIsDisplayed()
-        composeTestRule.onNodeWithText("Sign Up").assertIsDisplayed()
-        composeTestRule.onNodeWithTag("Loading dialog").assertDoesNotExist()
-        composeTestRule.onNodeWithTag("Error dialog").assertDoesNotExist()
-        composeTestRule.onNode(isDialog()).assertDoesNotExist()
-    }
+        composeTestRule.onNodeWithText("Password is incorrect").assertDoesNotExist()
 
-    @Test
-    fun loginScreen_email() {
-        val email = "email@gmail.com"
-        composeTestRule.setContent {
-            MyFoodTheme {
-                LoginContent(
-                    state = LoginUiState(email = email),
-                    dispatch = {},
-                    openRegisterPage = {},
-                )
-            }
-        }
+        composeTestRule.onNodeWithText("Password").performTextInput(password)
 
-        composeTestRule.onAllNodesWithText("Login").assertAll(hasText("Login"))
-        composeTestRule.onNodeWithText("Add your details to login").assertIsDisplayed()
-        composeTestRule.onNodeWithText("Your Email").assertIsDisplayed()
-        composeTestRule.onNodeWithText(email).assertIsDisplayed()
-        composeTestRule.onNodeWithText("Password").assertIsDisplayed()
-        composeTestRule.onNodeWithText("Forget your password?").assertIsDisplayed()
-        composeTestRule.onNodeWithText("Don\'t have an Account?").assertIsDisplayed()
-        composeTestRule.onNodeWithText("Sign Up").assertIsDisplayed()
-        composeTestRule.onNodeWithTag("Loading dialog").assertDoesNotExist()
-        composeTestRule.onNodeWithTag("Error dialog").assertDoesNotExist()
-        composeTestRule.onNode(isDialog()).assertDoesNotExist()
-    }
-
-    @Test
-    fun loginScreen_password() {
-        val password = "password1234"
-        composeTestRule.setContent {
-            MyFoodTheme {
-                LoginContent(
-                    state = LoginUiState(password = password),
-                    dispatch = {},
-                    openRegisterPage = {},
-                )
-            }
-        }
-
-        composeTestRule.onAllNodesWithText("Login").assertAll(hasText("Login"))
-        composeTestRule.onNodeWithText("Add your details to login").assertIsDisplayed()
-        composeTestRule.onNodeWithText("Your Email").assertIsDisplayed()
-        composeTestRule.onNodeWithText("Password").assertIsDisplayed()
         composeTestRule.onNodeWithText(password).assertDoesNotExist()
-        composeTestRule.onNodeWithText("Forget your password?").assertIsDisplayed()
-        composeTestRule.onNodeWithText("Don\'t have an Account?").assertIsDisplayed()
-        composeTestRule.onNodeWithText("Sign Up").assertIsDisplayed()
-        composeTestRule.onNodeWithTag("Loading dialog").assertDoesNotExist()
-        composeTestRule.onNodeWithTag("Error dialog").assertDoesNotExist()
+        composeTestRule.onNodeWithText("Password").assertIsDisplayed()
+        composeTestRule.onNodeWithText("Password is incorrect").assertDoesNotExist()
+        composeTestRule.onAllNodesWithText("Login")[1].assertIsNotEnabled()
+        composeTestRule.onNodeWithText("Password").assert(hasImeAction(ImeAction.Done))
+    }
+
+    @Test
+    fun loginSubmit_incorrect_returnError() {
+        val email = "email@gmail.com"
+        val password = "password1234"
+        val resourceError = Resource.Error(BaseError())
+        coEvery { loginUseCase(any(), any()) } returns resourceError
         composeTestRule.onNode(isDialog()).assertDoesNotExist()
-    }
-
-    @Test
-    fun loginScreen_loadingDialog() {
-        composeTestRule.setContent {
-            MyFoodTheme {
-                LoginContent(
-                    state = LoginUiState(dialog = LoginUiState.Dialog.Loading),
-                    dispatch = {},
-                    openRegisterPage = {},
-                )
-            }
-        }
-
-        composeTestRule.onAllNodesWithText("Login").assertAll(hasText("Login"))
-        composeTestRule.onNodeWithText("Add your details to login").assertIsDisplayed()
-        composeTestRule.onNodeWithText("Your Email").assertIsDisplayed()
-        composeTestRule.onNodeWithText("Password").assertIsDisplayed()
-        composeTestRule.onNodeWithText("Forget your password?").assertIsDisplayed()
-        composeTestRule.onNodeWithText("Don\'t have an Account?").assertIsDisplayed()
-        composeTestRule.onNodeWithText("Sign Up").assertIsDisplayed()
-        composeTestRule.onNodeWithTag("Loading dialog").assertExists()
         composeTestRule.onNodeWithTag("Error dialog").assertDoesNotExist()
+        composeTestRule.onAllNodesWithText("Login")[1].assertIsNotEnabled()
+
+        composeTestRule.onNodeWithText("Your Email").performTextInput(email)
+        composeTestRule.onNodeWithText("Password").performTextInput(password)
+        composeTestRule.onAllNodesWithText("Login")[1].performClick()
+
         composeTestRule.onNode(isDialog()).assertExists()
+        composeTestRule.onNodeWithTag("Error dialog").assertExists()
+        composeTestRule.onNodeWithText(email).assertIsDisplayed()
+        composeTestRule.onNodeWithText(password).assertDoesNotExist()
+        composeTestRule.onAllNodesWithText("Login")[1].assertIsEnabled()
     }
 
     @Test
-    fun loginScreen_errorDialog() {
-        composeTestRule.setContent {
-            MyFoodTheme {
-                LoginContent(
-                    state = LoginUiState(dialog = LoginUiState.Dialog.Error(BaseError())),
-                    dispatch = {},
-                    openRegisterPage = {},
-                )
-            }
-        }
-
-        composeTestRule.onAllNodesWithText("Login").assertAll(hasText("Login"))
-        composeTestRule.onNodeWithText("Add your details to login").assertIsDisplayed()
-        composeTestRule.onNodeWithText("Your Email").assertIsDisplayed()
-        composeTestRule.onNodeWithText("Password").assertIsDisplayed()
-        composeTestRule.onNodeWithText("Forget your password?").assertIsDisplayed()
-        composeTestRule.onNodeWithText("Don\'t have an Account?").assertIsDisplayed()
-        composeTestRule.onNodeWithText("Sign Up").assertIsDisplayed()
-        composeTestRule.onNodeWithTag("Loading dialog").assertDoesNotExist()
-        composeTestRule.onNodeWithTag("Error dialog").assertExists()
+    fun loginError_onClick_returnHideDialog() {
+        val email = "email@gmail.com"
+        val password = "password1234"
+        val resourceError = Resource.Error(BaseError())
+        coEvery { loginUseCase(any(), any()) } returns resourceError
+        composeTestRule.onNodeWithText("Your Email").performTextInput(email)
+        composeTestRule.onNodeWithText("Password").performTextInput(password)
+        composeTestRule.onAllNodesWithText("Login")[1].performClick()
         composeTestRule.onNode(isDialog()).assertExists()
+        composeTestRule.onNodeWithTag("Error dialog").assertExists()
+
+        composeTestRule.onNodeWithText("OK").performClick()
+
+        composeTestRule.onNode(isDialog()).assertDoesNotExist()
+        composeTestRule.onNodeWithTag("Error dialog").assertDoesNotExist()
     }
 }
