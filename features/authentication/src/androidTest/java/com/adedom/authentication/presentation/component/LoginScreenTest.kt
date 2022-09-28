@@ -11,6 +11,7 @@ import com.myfood.server.data.models.base.BaseError
 import com.myfood.server.usecase.validate.ValidateEmailUseCase
 import com.myfood.server.usecase.validate.ValidatePasswordUseCase
 import io.mockk.coEvery
+import io.mockk.coVerify
 import io.mockk.mockk
 import org.junit.Before
 import org.junit.Rule
@@ -188,6 +189,7 @@ class LoginScreenTest {
         composeTestRule.onNodeWithTag("Loading dialog").assertDoesNotExist()
         composeTestRule.onNodeWithTag("Error dialog").assertExists()
         composeTestRule.onNode(isDialog()).assertExists()
+        coVerify { loginUseCase(any(), any()) }
     }
 
     @Test
@@ -234,5 +236,6 @@ class LoginScreenTest {
         composeTestRule.onNodeWithTag("Loading dialog").assertDoesNotExist()
         composeTestRule.onNodeWithTag("Error dialog").assertDoesNotExist()
         composeTestRule.onNode(isDialog()).assertDoesNotExist()
+        coVerify { loginUseCase(any(), any()) }
     }
 }
