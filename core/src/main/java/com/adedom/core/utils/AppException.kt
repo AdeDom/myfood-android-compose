@@ -27,3 +27,7 @@ class RefreshTokenExpiredException(
         } ?: BaseError(message = message)
     }
 }
+
+fun Throwable.toBaseError(): BaseError {
+    return BaseError(message = message)
+}

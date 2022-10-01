@@ -27,7 +27,7 @@ class ConnectivityComposeTest {
         }
 
         composeTestRule.onNode(isPopup()).assertIsDisplayed()
-        composeTestRule.onNodeWithTag("Background network popup").assertIsDisplayed()
+        composeTestRule.onNodeWithContentDescription("Background network popup").assertIsDisplayed()
         composeTestRule.onNodeWithText("Online").assertIsDisplayed()
     }
 
@@ -45,7 +45,7 @@ class ConnectivityComposeTest {
         }
 
         composeTestRule.onNode(isPopup()).assertIsDisplayed()
-        composeTestRule.onNodeWithTag("Background network popup").assertIsDisplayed()
+        composeTestRule.onNodeWithContentDescription("Background network popup").assertIsDisplayed()
         composeTestRule.onNodeWithText("Offline").assertIsDisplayed()
     }
 
@@ -63,7 +63,7 @@ class ConnectivityComposeTest {
         }
 
         composeTestRule.onNode(isPopup()).assertIsDisplayed()
-        composeTestRule.onNodeWithTag("Background network popup").assertIsDisplayed()
+        composeTestRule.onNodeWithContentDescription("Background network popup").assertIsDisplayed()
         composeTestRule.onNodeWithText("Offline").assertIsDisplayed()
     }
 
@@ -81,7 +81,7 @@ class ConnectivityComposeTest {
         }
 
         composeTestRule.onNode(isPopup()).assertIsDisplayed()
-        composeTestRule.onNodeWithTag("Background network popup").assertIsDisplayed()
+        composeTestRule.onNodeWithContentDescription("Background network popup").assertIsDisplayed()
         composeTestRule.onNodeWithText("Offline").assertIsDisplayed()
     }
 

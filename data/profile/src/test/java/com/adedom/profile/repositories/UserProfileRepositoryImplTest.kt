@@ -1,18 +1,19 @@
 package com.adedom.profile.repositories
 
-import com.adedom.core.data.Resource2
 import com.adedom.core.utils.ApiServiceException
 import com.adedom.profile.providers.local.FakeUserProfileLocalDataSource
 import com.adedom.profile.providers.local.UserProfileLocalDataSource
 import com.adedom.profile.providers.remote.ProfileRemoteDataSource
 import com.google.common.truth.Truth.assertThat
-import com.myfood.server.data.models.base.BaseError
 import com.myfood.server.data.models.base.BaseResponse
+import com.myfood.server.data.models.response.TokenResponse
 import com.myfood.server.data.models.response.UserProfileResponse
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.mockk
 import kotlinx.coroutines.test.runTest
+import kotlinx.serialization.decodeFromString
+import kotlinx.serialization.json.Json
 import myfood.database.UserProfileEntity
 import org.junit.Before
 import org.junit.Test
@@ -50,21 +51,28 @@ class UserProfileRepositoryImplTest {
 
         val result = repository.callUserProfile()
 
-        val resourceSuccess = Resource2.Success(userProfileResponse)
-        assertThat(result).isEqualTo(resourceSuccess)
+        assertThat(result).isEqualTo(userProfileResponse)
         coVerify { profileRemoteDataSource.callUserProfile() }
     }
 
-    @Test
+    @Test(expected = ApiServiceException::class)
     fun `call user profile return error`() = runTest {
-        val baseError = BaseError(message = "User profile is error.")
-        val exception = ApiServiceException(baseError)
+        val jsonString = """
+            {
+                "version": "1.0",
+                "status": "error",
+                "error": {
+                    "message": "User profile error."
+                }
+            }
+        """.trimIndent()
+        val response = Json.decodeFromString<BaseResponse<TokenResponse>>(jsonString)
+        val exception = ApiServiceException(response.error)
         coEvery { profileRemoteDataSource.callUserProfile() } throws exception
 
         val result = repository.callUserProfile()
 
-        val resourceError = Resource2.Error(baseError)
-        assertThat(result).isEqualTo(resourceError)
+        assertThat(result).isEqualTo(response.error)
         coVerify { profileRemoteDataSource.callUserProfile() }
     }
 

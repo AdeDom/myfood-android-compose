@@ -104,7 +104,7 @@ fun UserProfileContent(
 
         AppButton(
             text = "Back",
-            backgroundColor = Color(0xFFFFD700),
+            color = Color(0xFFFFD700),
             onClick = onBackPressed,
             modifier = Modifier.align(Alignment.BottomCenter),
         )

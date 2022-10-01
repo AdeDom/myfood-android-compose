@@ -8,6 +8,7 @@ plugins {
 }
 
 android {
+    namespace = "com.adedom.authentication"
     compileSdk = Versions.targetAndCompileVersion
 
     defaultConfig {
@@ -19,7 +20,7 @@ android {
     }
 
     buildTypes {
-        getByName("release") {
+        release {
             isMinifyEnabled = false
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
@@ -66,14 +67,13 @@ android {
             excludes += "META-INF/LICENSE-notice.md"
         }
     }
-    namespace = "com.adedom.authentication"
 }
 
 dependencies {
 
     implementation(project(Dependencies.Project.core))
     implementation(project(Dependencies.Project.coreUiComponents))
-    implementation(project(Dependencies.Project.dataProfile))
+    implementation(project(Dependencies.Project.domainUserProfile))
 
     implementation(Dependencies.AndroidXCore.coreKtx)
     implementation(Dependencies.AndroidXActivity.activityCompose)

@@ -8,6 +8,7 @@ plugins {
 }
 
 android {
+    namespace = "com.adedom.user_profile"
     compileSdk = Versions.targetAndCompileVersion
 
     defaultConfig {
@@ -19,7 +20,7 @@ android {
     }
 
     buildTypes {
-        getByName("release") {
+        release {
             isMinifyEnabled = false
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
@@ -58,14 +59,13 @@ android {
     composeOptions {
         kotlinCompilerExtensionVersion = Versions.composeCompilerVersion
     }
-    namespace = "com.adedom.user_profile"
 }
 
 dependencies {
 
     implementation(project(Dependencies.Project.core))
     implementation(project(Dependencies.Project.coreUiComponents))
-    implementation(project(Dependencies.Project.dataProfile))
+    implementation(project(Dependencies.Project.domainUserProfile))
 
     implementation(Dependencies.AndroidXCore.coreKtx)
     implementation(Dependencies.AndroidXActivity.activityCompose)

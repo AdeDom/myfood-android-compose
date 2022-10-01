@@ -8,6 +8,7 @@ plugins {
 }
 
 android {
+    namespace = "com.adedom.ui_components"
     compileSdk = Versions.targetAndCompileVersion
 
     defaultConfig {
@@ -19,7 +20,7 @@ android {
     }
 
     buildTypes {
-        getByName("release") {
+        release {
             isMinifyEnabled = false
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
@@ -58,7 +59,6 @@ android {
     composeOptions {
         kotlinCompilerExtensionVersion = Versions.composeCompilerVersion
     }
-    namespace = "com.adedom.ui_components"
 }
 
 dependencies {

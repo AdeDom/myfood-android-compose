@@ -6,7 +6,8 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.adedom.ui_components.theme.MyFoodTheme
@@ -21,13 +22,13 @@ fun WelcomeContent(
     Column(
         modifier = Modifier.fillMaxSize(),
     ) {
-        TopSection(modifier = Modifier.testTag("Welcome top section"))
+        TopSection(modifier = Modifier.semantics { contentDescription = "Welcome top section" })
         Spacer(modifier = Modifier.height(64.dp))
         BottomSection(
             dispatch = dispatch,
             openLoginPage = openLoginPage,
             openRegisterPage = openRegisterPage,
-            modifier = Modifier.testTag("Welcome bottom section"),
+            modifier = Modifier.semantics { contentDescription = "Welcome bottom section" },
         )
     }
 }

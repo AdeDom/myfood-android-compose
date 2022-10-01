@@ -88,7 +88,7 @@ fun RegisterContent(
             )
             AppButton(
                 text = "Sign Up",
-                backgroundColor = Color(0xFFFFD700),
+                color = Color(0xFFFFD700),
                 borderColor = Color(0xFFFFD700),
                 onClick = openMainPage,
             )

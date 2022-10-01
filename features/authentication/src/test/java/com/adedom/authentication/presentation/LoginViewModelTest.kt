@@ -6,10 +6,9 @@ import com.adedom.authentication.presentation.view_model.LoginUiEvent
 import com.adedom.authentication.presentation.view_model.LoginUiState
 import com.adedom.authentication.presentation.view_model.LoginViewModel
 import com.adedom.authentication.utils.MainCoroutineRule
-import com.adedom.core.data.Resource
+import com.adedom.core.utils.ApiServiceException
 import com.google.common.truth.Truth.assertThat
 import com.myfood.server.data.models.base.BaseError
-import com.myfood.server.data.models.response.TokenResponse
 import com.myfood.server.usecase.validate.ValidateEmailUseCase
 import com.myfood.server.usecase.validate.ValidatePasswordUseCase
 import io.mockk.coEvery
@@ -119,8 +118,8 @@ class LoginViewModelTest {
         val email = "dom6"
         val password = "1234"
         val baseError = BaseError(message = "Email or password is incorrect")
-        val resourceError = Resource.Error(baseError)
-        coEvery { loginUseCase(any(), any()) } returns resourceError
+        val exception = ApiServiceException(baseError)
+        coEvery { loginUseCase(any(), any()) } throws exception
 
         viewModel.dispatch(LoginUiEvent.SetEmail(email))
         viewModel.dispatch(LoginUiEvent.SetPassword(password))
@@ -133,14 +132,29 @@ class LoginViewModelTest {
     }
 
     @Test
+    fun `call service login correct token is null should be return error`() = runTest {
+        val email = "dom6"
+        val password = "1234"
+        val messageError = "Token is null"
+        val exception = Throwable(messageError)
+        coEvery { loginUseCase(any(), any()) } throws exception
+
+        viewModel.dispatch(LoginUiEvent.SetEmail(email))
+        viewModel.dispatch(LoginUiEvent.SetPassword(password))
+        viewModel.dispatch(LoginUiEvent.Submit)
+
+        val state = viewModel.uiState
+        val baseError = BaseError(message = messageError)
+        assertThat(state.dialog).isEqualTo(LoginUiState.Dialog.Error(baseError))
+        assertThat(state.isLogin).isTrue()
+        coVerify { loginUseCase(any(), any()) }
+    }
+
+    @Test
     fun `call service login correct should be return success`() = runTest {
         val email = "dom6"
         val password = "1234"
-        val accessToken = "accessToken"
-        val refreshToken = "refreshToken"
-        val tokenResponse = TokenResponse(accessToken, refreshToken)
-        val resourceError = Resource.Success(tokenResponse)
-        coEvery { loginUseCase(any(), any()) } returns resourceError
+        coEvery { loginUseCase(any(), any()) } returns Unit
 
         viewModel.dispatch(LoginUiEvent.SetEmail(email))
         viewModel.dispatch(LoginUiEvent.SetPassword(password))

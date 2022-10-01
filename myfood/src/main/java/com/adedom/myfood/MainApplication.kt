@@ -14,17 +14,18 @@ class MainApplication : Application() {
             androidLogger()
             androidContext(this@MainApplication)
             modules(
-                appModule,
                 coreModule,
-                featureSplashScreenModule,
-                featureWelcomeModule,
+                dataProfileModule,
+                domainUserProfileModule,
                 featureAuthenticationModule,
-                featureMainModule,
                 featureConnectivityModule,
                 featureFoodDetailModule,
+                featureMainModule,
                 featureSearchFoodModule,
+                featureSplashScreenModule,
                 featureUserProfileModule,
-                dataProfileModule,
+                featureWelcomeModule,
+                myFoodModule,
             )
         }
     }
