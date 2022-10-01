@@ -10,6 +10,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.scale
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
@@ -56,6 +57,7 @@ fun SplashScreenContent() {
     Image(
         painter = painterResource(id = R.drawable.bg),
         contentDescription = "Background splash screen",
+        contentScale = ContentScale.Crop,
         modifier = Modifier.fillMaxSize(),
     )
 
