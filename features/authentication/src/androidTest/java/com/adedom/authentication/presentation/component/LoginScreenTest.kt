@@ -5,7 +5,7 @@ import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.text.input.ImeAction
 import com.adedom.authentication.domain.use_cases.LoginUseCase
 import com.adedom.authentication.presentation.view_model.LoginViewModel
-import com.adedom.core.data.Resource
+import com.adedom.core.utils.ApiServiceException
 import com.adedom.ui_components.theme.MyFoodTheme
 import com.myfood.server.data.models.base.BaseError
 import com.myfood.server.usecase.validate.ValidateEmailUseCase
@@ -163,11 +163,44 @@ class LoginScreenTest {
     }
 
     @Test
+    fun loginSubmit_correct_returnLastState() {
+        val email = "email@gmail.com"
+        val password = "password1234"
+        val messageError = "Email or password incorrect."
+        coEvery { loginUseCase(any(), any()) } returns Unit
+
+        composeTestRule.onNodeWithText("Your Email").performTextInput(email)
+        composeTestRule.onNodeWithText("Password").performTextInput(password)
+        composeTestRule.onAllNodesWithText("Login")[1].performClick()
+
+        composeTestRule.onAllNodesWithText("Login")[0].assertIsDisplayed()
+        composeTestRule.onNodeWithText("Add your details to login").assertIsDisplayed()
+        composeTestRule.onNodeWithText(email).assertIsDisplayed()
+        composeTestRule.onNodeWithText("Your Email").assertIsDisplayed()
+        composeTestRule.onNodeWithText("Email is incorrect").assertDoesNotExist()
+        composeTestRule.onNodeWithText(password).assertDoesNotExist()
+        composeTestRule.onNodeWithText("Password").assertIsDisplayed()
+        composeTestRule.onNodeWithText("Password is incorrect").assertDoesNotExist()
+        composeTestRule.onAllNodesWithText("Login")[1].assertIsDisplayed()
+        composeTestRule.onAllNodesWithText("Login")[1].assertIsNotEnabled()
+        composeTestRule.onNodeWithText("Forget your password?").assertIsDisplayed()
+        composeTestRule.onNodeWithText("Don\'t have an Account?").assertIsDisplayed()
+        composeTestRule.onNodeWithText("Sign Up").assertIsDisplayed()
+        composeTestRule.onNodeWithTag("Loading dialog").assertExists()
+        composeTestRule.onNodeWithTag("Error dialog").assertDoesNotExist()
+        composeTestRule.onNodeWithText(messageError).assertDoesNotExist()
+        composeTestRule.onNode(isDialog()).assertExists()
+        coVerify { loginUseCase(any(), any()) }
+    }
+
+    @Test
     fun loginSubmit_incorrect_returnError() {
         val email = "email@gmail.com"
         val password = "password1234"
-        val resourceError = Resource.Error(BaseError())
-        coEvery { loginUseCase(any(), any()) } returns resourceError
+        val messageError = "Email or password incorrect."
+        val baseError = BaseError(message = messageError)
+        val exception = ApiServiceException(baseError)
+        coEvery { loginUseCase(any(), any()) } throws exception
 
         composeTestRule.onNodeWithText("Your Email").performTextInput(email)
         composeTestRule.onNodeWithText("Password").performTextInput(password)
@@ -188,6 +221,39 @@ class LoginScreenTest {
         composeTestRule.onNodeWithText("Sign Up").assertIsDisplayed()
         composeTestRule.onNodeWithTag("Loading dialog").assertDoesNotExist()
         composeTestRule.onNodeWithTag("Error dialog").assertExists()
+        composeTestRule.onNodeWithText(messageError).assertIsDisplayed()
+        composeTestRule.onNode(isDialog()).assertExists()
+        coVerify { loginUseCase(any(), any()) }
+    }
+
+    @Test
+    fun loginSubmit_correctTokenIsNull_returnError() {
+        val email = "email@gmail.com"
+        val password = "password1234"
+        val messageError = "Email or password incorrect."
+        val exception = Throwable(messageError)
+        coEvery { loginUseCase(any(), any()) } throws exception
+
+        composeTestRule.onNodeWithText("Your Email").performTextInput(email)
+        composeTestRule.onNodeWithText("Password").performTextInput(password)
+        composeTestRule.onAllNodesWithText("Login")[1].performClick()
+
+        composeTestRule.onAllNodesWithText("Login")[0].assertIsDisplayed()
+        composeTestRule.onNodeWithText("Add your details to login").assertIsDisplayed()
+        composeTestRule.onNodeWithText(email).assertIsDisplayed()
+        composeTestRule.onNodeWithText("Your Email").assertIsDisplayed()
+        composeTestRule.onNodeWithText("Email is incorrect").assertDoesNotExist()
+        composeTestRule.onNodeWithText(password).assertDoesNotExist()
+        composeTestRule.onNodeWithText("Password").assertIsDisplayed()
+        composeTestRule.onNodeWithText("Password is incorrect").assertDoesNotExist()
+        composeTestRule.onAllNodesWithText("Login")[1].assertIsDisplayed()
+        composeTestRule.onAllNodesWithText("Login")[1].assertIsEnabled()
+        composeTestRule.onNodeWithText("Forget your password?").assertIsDisplayed()
+        composeTestRule.onNodeWithText("Don\'t have an Account?").assertIsDisplayed()
+        composeTestRule.onNodeWithText("Sign Up").assertIsDisplayed()
+        composeTestRule.onNodeWithTag("Loading dialog").assertDoesNotExist()
+        composeTestRule.onNodeWithTag("Error dialog").assertExists()
+        composeTestRule.onNodeWithText(messageError).assertIsDisplayed()
         composeTestRule.onNode(isDialog()).assertExists()
         coVerify { loginUseCase(any(), any()) }
     }
@@ -196,8 +262,10 @@ class LoginScreenTest {
     fun loginError_onClick_returnHideDialog() {
         val email = "email@gmail.com"
         val password = "password1234"
-        val resourceError = Resource.Error(BaseError())
-        coEvery { loginUseCase(any(), any()) } returns resourceError
+        val messageError = "Email or password incorrect."
+        val baseError = BaseError(message = messageError)
+        val exception = ApiServiceException(baseError)
+        coEvery { loginUseCase(any(), any()) } throws exception
         composeTestRule.onNodeWithText("Your Email").performTextInput(email)
         composeTestRule.onNodeWithText("Password").performTextInput(password)
         composeTestRule.onAllNodesWithText("Login")[1].performClick()
@@ -216,6 +284,7 @@ class LoginScreenTest {
         composeTestRule.onNodeWithText("Sign Up").assertIsDisplayed()
         composeTestRule.onNodeWithTag("Loading dialog").assertDoesNotExist()
         composeTestRule.onNodeWithTag("Error dialog").assertExists()
+        composeTestRule.onNodeWithText(messageError).assertIsDisplayed()
         composeTestRule.onNode(isDialog()).assertExists()
 
         composeTestRule.onNodeWithText("OK").performClick()
@@ -235,6 +304,7 @@ class LoginScreenTest {
         composeTestRule.onNodeWithText("Sign Up").assertIsDisplayed()
         composeTestRule.onNodeWithTag("Loading dialog").assertDoesNotExist()
         composeTestRule.onNodeWithTag("Error dialog").assertDoesNotExist()
+        composeTestRule.onNodeWithText(messageError).assertDoesNotExist()
         composeTestRule.onNode(isDialog()).assertDoesNotExist()
         coVerify { loginUseCase(any(), any()) }
     }

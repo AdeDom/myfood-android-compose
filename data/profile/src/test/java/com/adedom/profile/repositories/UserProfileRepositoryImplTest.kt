@@ -1,6 +1,5 @@
 package com.adedom.profile.repositories
 
-import com.adedom.core.data.Resource2
 import com.adedom.core.utils.ApiServiceException
 import com.adedom.profile.providers.local.FakeUserProfileLocalDataSource
 import com.adedom.profile.providers.local.UserProfileLocalDataSource
@@ -50,21 +49,18 @@ class UserProfileRepositoryImplTest {
 
         val result = repository.callUserProfile()
 
-        val resourceSuccess = Resource2.Success(userProfileResponse)
-        assertThat(result).isEqualTo(resourceSuccess)
+        assertThat(result).isEqualTo(userProfileResponse)
         coVerify { profileRemoteDataSource.callUserProfile() }
     }
 
-    @Test
+    @Test(expected = ApiServiceException::class)
     fun `call user profile return error`() = runTest {
         val baseError = BaseError(message = "User profile is error.")
         val exception = ApiServiceException(baseError)
         coEvery { profileRemoteDataSource.callUserProfile() } throws exception
 
-        val result = repository.callUserProfile()
+        repository.callUserProfile()
 
-        val resourceError = Resource2.Error(baseError)
-        assertThat(result).isEqualTo(resourceError)
         coVerify { profileRemoteDataSource.callUserProfile() }
     }
 

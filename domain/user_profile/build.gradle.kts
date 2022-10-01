@@ -64,4 +64,9 @@ dependencies {
     implementation(Dependencies.KotlinX.coroutinesCore)
 
     implementation(Dependencies.AdeDom.myFoodKtorServer)
+
+    testImplementation(Dependencies.Junit.testJunit)
+    testImplementation(Dependencies.Truth.testTruth)
+    testImplementation(Dependencies.KotlinX.testCoroutinesTest)
+    testImplementation(Dependencies.Mockk.testMockk)
 }
