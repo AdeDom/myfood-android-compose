@@ -8,7 +8,7 @@ import com.adedom.myfood.data.providers.data_store.AppDataStoreImpl
 import com.adedom.myfood.data.providers.database.MyFoodDatabaseDriverFactory
 import org.koin.dsl.module
 
-val appModule = module {
+val myFoodModule = module {
 
     single {
         PreferenceDataStoreFactory.create {

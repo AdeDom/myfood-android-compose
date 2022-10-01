@@ -69,15 +69,16 @@ dependencies {
 
     implementation(project(Dependencies.Project.core))
     implementation(project(Dependencies.Project.coreUiComponents))
-    implementation(project(Dependencies.Project.featuresSplashScreen))
-    implementation(project(Dependencies.Project.featuresWelcome))
-    implementation(project(Dependencies.Project.featuresMain))
+    implementation(project(Dependencies.Project.dataProfile))
+    implementation(project(Dependencies.Project.domainUserProfile))
     implementation(project(Dependencies.Project.featuresAuthentication))
     implementation(project(Dependencies.Project.featuresConnectivity))
     implementation(project(Dependencies.Project.featuresFoodDetail))
+    implementation(project(Dependencies.Project.featuresMain))
     implementation(project(Dependencies.Project.featuresSearchFood))
+    implementation(project(Dependencies.Project.featuresSplashScreen))
     implementation(project(Dependencies.Project.featuresUserProfile))
-    implementation(project(Dependencies.Project.dataProfile))
+    implementation(project(Dependencies.Project.featuresWelcome))
 
     implementation(Dependencies.AndroidXCore.coreKtx)
 

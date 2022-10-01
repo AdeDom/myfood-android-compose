@@ -7,7 +7,7 @@ plugins {
 }
 
 android {
-    namespace = "com.adedom.user_profile"
+    namespace = "com.adedom.domain.user_profile"
     compileSdk = Versions.targetAndCompileVersion
 
     defaultConfig {
@@ -57,6 +57,11 @@ android {
 dependencies {
 
     implementation(project(Dependencies.Project.core))
+    implementation(project(Dependencies.Project.dataProfile))
 
     implementation(Dependencies.AndroidXCore.coreKtx)
+
+    implementation(Dependencies.KotlinX.coroutinesCore)
+
+    implementation(Dependencies.AdeDom.myFoodKtorServer)
 }

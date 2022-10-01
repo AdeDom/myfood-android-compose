@@ -7,7 +7,7 @@ plugins {
 }
 
 android {
-    namespace = "com.adedom.profile"
+    namespace = "com.adedom.data.profile"
     compileSdk = Versions.targetAndCompileVersion
 
     defaultConfig {
