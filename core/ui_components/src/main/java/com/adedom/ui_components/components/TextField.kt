@@ -1,6 +1,10 @@
 package com.adedom.ui_components.components
 
-import androidx.compose.foundation.layout.*
+import androidx.compose.animation.*
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
@@ -75,18 +79,20 @@ fun AppTextField(
                 height = 60.dp,
             ),
         )
-        if (error.isNullOrBlank()) {
-            Spacer(modifier = Modifier.height(20.dp))
-        } else {
-            Box(
-                contentAlignment = Alignment.CenterEnd,
-                modifier = Modifier.size(
-                    width = 300.dp,
-                    height = 20.dp,
-                ),
+        Box(
+            contentAlignment = Alignment.CenterEnd,
+            modifier = Modifier.size(
+                width = 300.dp,
+                height = 20.dp,
+            ),
+        ) {
+            this@Column.AnimatedVisibility(
+                visible = !error.isNullOrBlank(),
+                enter = fadeIn() + slideInVertically(),
+                exit = fadeOut() + slideOutVertically(),
             ) {
                 AppText(
-                    text = error,
+                    text = error.orEmpty(),
                     color = Color.Red,
                     fontSize = 14.sp,
                     modifier = Modifier.padding(end = 32.dp),

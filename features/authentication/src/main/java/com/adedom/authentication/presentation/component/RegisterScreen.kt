@@ -89,7 +89,7 @@ fun RegisterContent(
             AppButton(
                 text = "Sign Up",
                 color = Color(0xFFFFD700),
-                borderColor = Color(0xFFFFD700),
+                border = Color(0xFFFFD700),
                 onClick = openMainPage,
             )
             Spacer(modifier = Modifier.height(20.dp))

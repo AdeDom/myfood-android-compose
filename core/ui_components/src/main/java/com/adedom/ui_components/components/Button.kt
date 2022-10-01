@@ -25,7 +25,7 @@ fun AppButton(
     modifier: Modifier = Modifier,
     text: String,
     color: Color,
-    borderColor: Color = Color(0xFFFFD700),
+    border: Color = Color(0xFFFFD700),
     enabled: Boolean = true,
     onClick: () -> Unit,
 ) {
@@ -35,7 +35,7 @@ fun AppButton(
         Surface(
             shape = RoundedCornerShape(32.dp),
             color = color,
-            border = BorderStroke(1.dp, borderColor),
+            border = BorderStroke(1.dp, border),
             elevation = 2.dp,
             modifier = Modifier
                 .width(300.dp)
