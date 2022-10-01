@@ -34,13 +34,13 @@ fun BottomSection(
     ) {
         AppButton(
             text = "Login",
-            backgroundColor = Color(0xFFFFD700),
+            color = Color(0xFFFFD700),
             onClick = openLoginPage,
         )
         Spacer(modifier = Modifier.height(20.dp))
         AppButton(
             text = "Create an Account",
-            backgroundColor = Color.White,
+            color = Color.White,
             onClick = openRegisterPage,
         )
         Spacer(modifier = Modifier.height(20.dp))

@@ -75,7 +75,7 @@ fun LoginContent(
             )
             AppButton(
                 text = "Login",
-                backgroundColor = if (state.isLogin) Color(0xFFFFD700) else Color.Gray,
+                color = if (state.isLogin) Color(0xFFFFD700) else Color.Gray,
                 borderColor = if (state.isLogin) Color(0xFFFFD700) else Color.Gray,
                 enabled = state.isLogin,
                 onClick = { dispatch(LoginUiEvent.Submit) },

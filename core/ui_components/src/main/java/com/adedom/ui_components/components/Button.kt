@@ -8,7 +8,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Card
+import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -24,7 +24,7 @@ import com.adedom.ui_components.theme.MyFoodTheme
 fun AppButton(
     modifier: Modifier = Modifier,
     text: String,
-    backgroundColor: Color,
+    color: Color,
     borderColor: Color = Color(0xFFFFD700),
     enabled: Boolean = true,
     onClick: () -> Unit,
@@ -32,9 +32,9 @@ fun AppButton(
     Box(
         modifier = modifier
     ) {
-        Card(
+        Surface(
             shape = RoundedCornerShape(32.dp),
-            backgroundColor = backgroundColor,
+            color = color,
             border = BorderStroke(1.dp, borderColor),
             elevation = 2.dp,
             modifier = Modifier
@@ -66,7 +66,7 @@ fun ButtonPreview() {
         val context = LocalContext.current
         AppButton(
             text = "Hello",
-            backgroundColor = Color.White,
+            color = Color.White,
         ) {
             Toast.makeText(context, "Button", Toast.LENGTH_SHORT).show()
         }
