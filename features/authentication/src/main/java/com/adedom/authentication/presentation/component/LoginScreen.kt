@@ -6,7 +6,8 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
@@ -97,13 +98,17 @@ fun LoginContent(
 
         when (state.dialog) {
             LoginUiState.Dialog.Loading -> {
-                AppLoadingAlertDialog(modifier = Modifier.testTag("Loading dialog"))
+                AppLoadingAlertDialog(
+                    modifier = Modifier.semantics {
+                        contentDescription = "Loading dialog"
+                    },
+                )
             }
             is LoginUiState.Dialog.Error -> {
                 AppErrorAlertDialog(
                     error = state.dialog.error,
                     onDismiss = { dispatch(LoginUiEvent.HideErrorDialog) },
-                    modifier = Modifier.testTag("Error dialog"),
+                    modifier = Modifier.semantics { contentDescription = "Error dialog" },
                 )
             }
             null -> {}

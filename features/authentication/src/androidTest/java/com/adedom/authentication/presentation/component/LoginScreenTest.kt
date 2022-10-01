@@ -61,8 +61,8 @@ class LoginScreenTest {
         composeTestRule.onNodeWithText("Forget your password?").assertIsDisplayed()
         composeTestRule.onNodeWithText("Don\'t have an Account?").assertIsDisplayed()
         composeTestRule.onNodeWithText("Sign Up").assertIsDisplayed()
-        composeTestRule.onNodeWithTag("Loading dialog").assertDoesNotExist()
-        composeTestRule.onNodeWithTag("Error dialog").assertDoesNotExist()
+        composeTestRule.onNodeWithContentDescription("Loading dialog").assertDoesNotExist()
+        composeTestRule.onNodeWithContentDescription("Error dialog").assertDoesNotExist()
         composeTestRule.onNode(isDialog()).assertDoesNotExist()
     }
 
@@ -85,8 +85,8 @@ class LoginScreenTest {
         composeTestRule.onNodeWithText("Forget your password?").assertIsDisplayed()
         composeTestRule.onNodeWithText("Don\'t have an Account?").assertIsDisplayed()
         composeTestRule.onNodeWithText("Sign Up").assertIsDisplayed()
-        composeTestRule.onNodeWithTag("Loading dialog").assertDoesNotExist()
-        composeTestRule.onNodeWithTag("Error dialog").assertDoesNotExist()
+        composeTestRule.onNodeWithContentDescription("Loading dialog").assertDoesNotExist()
+        composeTestRule.onNodeWithContentDescription("Error dialog").assertDoesNotExist()
         composeTestRule.onNode(isDialog()).assertDoesNotExist()
     }
 
@@ -109,8 +109,8 @@ class LoginScreenTest {
         composeTestRule.onNodeWithText("Forget your password?").assertIsDisplayed()
         composeTestRule.onNodeWithText("Don\'t have an Account?").assertIsDisplayed()
         composeTestRule.onNodeWithText("Sign Up").assertIsDisplayed()
-        composeTestRule.onNodeWithTag("Loading dialog").assertDoesNotExist()
-        composeTestRule.onNodeWithTag("Error dialog").assertDoesNotExist()
+        composeTestRule.onNodeWithContentDescription("Loading dialog").assertDoesNotExist()
+        composeTestRule.onNodeWithContentDescription("Error dialog").assertDoesNotExist()
         composeTestRule.onNode(isDialog()).assertDoesNotExist()
     }
 
@@ -133,8 +133,8 @@ class LoginScreenTest {
         composeTestRule.onNodeWithText("Forget your password?").assertIsDisplayed()
         composeTestRule.onNodeWithText("Don\'t have an Account?").assertIsDisplayed()
         composeTestRule.onNodeWithText("Sign Up").assertIsDisplayed()
-        composeTestRule.onNodeWithTag("Loading dialog").assertDoesNotExist()
-        composeTestRule.onNodeWithTag("Error dialog").assertDoesNotExist()
+        composeTestRule.onNodeWithContentDescription("Loading dialog").assertDoesNotExist()
+        composeTestRule.onNodeWithContentDescription("Error dialog").assertDoesNotExist()
         composeTestRule.onNode(isDialog()).assertDoesNotExist()
     }
 
@@ -157,8 +157,8 @@ class LoginScreenTest {
         composeTestRule.onNodeWithText("Forget your password?").assertIsDisplayed()
         composeTestRule.onNodeWithText("Don\'t have an Account?").assertIsDisplayed()
         composeTestRule.onNodeWithText("Sign Up").assertIsDisplayed()
-        composeTestRule.onNodeWithTag("Loading dialog").assertDoesNotExist()
-        composeTestRule.onNodeWithTag("Error dialog").assertDoesNotExist()
+        composeTestRule.onNodeWithContentDescription("Loading dialog").assertDoesNotExist()
+        composeTestRule.onNodeWithContentDescription("Error dialog").assertDoesNotExist()
         composeTestRule.onNode(isDialog()).assertDoesNotExist()
     }
 
@@ -186,8 +186,8 @@ class LoginScreenTest {
         composeTestRule.onNodeWithText("Forget your password?").assertIsDisplayed()
         composeTestRule.onNodeWithText("Don\'t have an Account?").assertIsDisplayed()
         composeTestRule.onNodeWithText("Sign Up").assertIsDisplayed()
-        composeTestRule.onNodeWithTag("Loading dialog").assertExists()
-        composeTestRule.onNodeWithTag("Error dialog").assertDoesNotExist()
+        composeTestRule.onNodeWithContentDescription("Loading dialog").assertExists()
+        composeTestRule.onNodeWithContentDescription("Error dialog").assertDoesNotExist()
         composeTestRule.onNodeWithText(messageError).assertDoesNotExist()
         composeTestRule.onNode(isDialog()).assertExists()
         coVerify { loginUseCase(any(), any()) }
@@ -219,8 +219,8 @@ class LoginScreenTest {
         composeTestRule.onNodeWithText("Forget your password?").assertIsDisplayed()
         composeTestRule.onNodeWithText("Don\'t have an Account?").assertIsDisplayed()
         composeTestRule.onNodeWithText("Sign Up").assertIsDisplayed()
-        composeTestRule.onNodeWithTag("Loading dialog").assertDoesNotExist()
-        composeTestRule.onNodeWithTag("Error dialog").assertExists()
+        composeTestRule.onNodeWithContentDescription("Loading dialog").assertDoesNotExist()
+        composeTestRule.onNodeWithContentDescription("Error dialog").assertExists()
         composeTestRule.onNodeWithText(messageError).assertIsDisplayed()
         composeTestRule.onNode(isDialog()).assertExists()
         coVerify { loginUseCase(any(), any()) }
@@ -251,8 +251,8 @@ class LoginScreenTest {
         composeTestRule.onNodeWithText("Forget your password?").assertIsDisplayed()
         composeTestRule.onNodeWithText("Don\'t have an Account?").assertIsDisplayed()
         composeTestRule.onNodeWithText("Sign Up").assertIsDisplayed()
-        composeTestRule.onNodeWithTag("Loading dialog").assertDoesNotExist()
-        composeTestRule.onNodeWithTag("Error dialog").assertExists()
+        composeTestRule.onNodeWithContentDescription("Loading dialog").assertDoesNotExist()
+        composeTestRule.onNodeWithContentDescription("Error dialog").assertExists()
         composeTestRule.onNodeWithText(messageError).assertIsDisplayed()
         composeTestRule.onNode(isDialog()).assertExists()
         coVerify { loginUseCase(any(), any()) }
@@ -282,8 +282,8 @@ class LoginScreenTest {
         composeTestRule.onNodeWithText("Forget your password?").assertIsDisplayed()
         composeTestRule.onNodeWithText("Don\'t have an Account?").assertIsDisplayed()
         composeTestRule.onNodeWithText("Sign Up").assertIsDisplayed()
-        composeTestRule.onNodeWithTag("Loading dialog").assertDoesNotExist()
-        composeTestRule.onNodeWithTag("Error dialog").assertExists()
+        composeTestRule.onNodeWithContentDescription("Loading dialog").assertDoesNotExist()
+        composeTestRule.onNodeWithContentDescription("Error dialog").assertExists()
         composeTestRule.onNodeWithText(messageError).assertIsDisplayed()
         composeTestRule.onNode(isDialog()).assertExists()
 
@@ -302,8 +302,8 @@ class LoginScreenTest {
         composeTestRule.onNodeWithText("Forget your password?").assertIsDisplayed()
         composeTestRule.onNodeWithText("Don\'t have an Account?").assertIsDisplayed()
         composeTestRule.onNodeWithText("Sign Up").assertIsDisplayed()
-        composeTestRule.onNodeWithTag("Loading dialog").assertDoesNotExist()
-        composeTestRule.onNodeWithTag("Error dialog").assertDoesNotExist()
+        composeTestRule.onNodeWithContentDescription("Loading dialog").assertDoesNotExist()
+        composeTestRule.onNodeWithContentDescription("Error dialog").assertDoesNotExist()
         composeTestRule.onNodeWithText(messageError).assertDoesNotExist()
         composeTestRule.onNode(isDialog()).assertDoesNotExist()
         coVerify { loginUseCase(any(), any()) }

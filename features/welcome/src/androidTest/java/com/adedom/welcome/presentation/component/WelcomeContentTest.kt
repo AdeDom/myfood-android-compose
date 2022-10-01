@@ -2,7 +2,7 @@ package com.adedom.welcome.presentation.component
 
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.junit4.createComposeRule
-import androidx.compose.ui.test.onNodeWithTag
+import androidx.compose.ui.test.onNodeWithContentDescription
 import com.adedom.ui_components.theme.MyFoodTheme
 import org.junit.Rule
 import org.junit.Test
@@ -24,7 +24,7 @@ class WelcomeContentTest {
             }
         }
 
-        composeTestRule.onNodeWithTag("Welcome top section").assertIsDisplayed()
-        composeTestRule.onNodeWithTag("Welcome bottom section").assertIsDisplayed()
+        composeTestRule.onNodeWithContentDescription("Welcome top section").assertIsDisplayed()
+        composeTestRule.onNodeWithContentDescription("Welcome bottom section").assertIsDisplayed()
     }
 }
