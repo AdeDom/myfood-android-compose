@@ -1,3 +1,6 @@
+import com.adedom.buildsrc.Dependencies
+import com.adedom.buildsrc.Versions
+
 plugins {
     id("com.android.library")
     id("org.jetbrains.kotlin.android")
@@ -5,11 +8,11 @@ plugins {
 
 android {
     namespace = "com.adedom.user_profile"
-    compileSdk = 32
+    compileSdk = Versions.targetAndCompileVersion
 
     defaultConfig {
-        minSdk = 24
-        targetSdk = 32
+        minSdk = Versions.minSdkVersion
+        targetSdk = Versions.targetAndCompileVersion
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
@@ -24,6 +27,24 @@ android {
             )
         }
     }
+
+    flavorDimensions += "appType"
+    productFlavors {
+        create("develop") {
+            dimension = "appType"
+            buildConfigField("Boolean", "IS_DEVELOP_MODE", "true")
+            buildConfigField("String", "BASE_URL", "\"https://myfood-server.herokuapp.com/\"")
+            buildConfigField("String", "HOST", "\"myfood-server.herokuapp.com\"")
+        }
+
+        create("production") {
+            dimension = "appType"
+            buildConfigField("Boolean", "IS_DEVELOP_MODE", "false")
+            buildConfigField("String", "BASE_URL", "\"https://myfood-server.herokuapp.com/\"")
+            buildConfigField("String", "HOST", "\"myfood-server.herokuapp.com\"")
+        }
+    }
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
@@ -35,10 +56,7 @@ android {
 
 dependencies {
 
-    implementation("androidx.core:core-ktx:1.7.0")
-    implementation("androidx.appcompat:appcompat:1.5.1")
-    implementation("com.google.android.material:material:1.6.1")
-    testImplementation("junit:junit:4.13.2")
-    androidTestImplementation("androidx.test.ext:junit:1.1.3")
-    androidTestImplementation("androidx.test.espresso:espresso-core:3.4.0")
+    implementation(project(Dependencies.Project.core))
+
+    implementation(Dependencies.AndroidXCore.coreKtx)
 }

@@ -8,6 +8,7 @@ plugins {
 }
 
 android {
+    namespace = "com.adedom.authentication"
     compileSdk = Versions.targetAndCompileVersion
 
     defaultConfig {
@@ -19,7 +20,7 @@ android {
     }
 
     buildTypes {
-        getByName("release") {
+        release {
             isMinifyEnabled = false
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
@@ -66,7 +67,6 @@ android {
             excludes += "META-INF/LICENSE-notice.md"
         }
     }
-    namespace = "com.adedom.authentication"
 }
 
 dependencies {

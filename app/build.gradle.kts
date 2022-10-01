@@ -7,6 +7,7 @@ plugins {
 }
 
 android {
+    namespace = "com.adedom.myfood"
     compileSdk = Versions.targetAndCompileVersion
 
     defaultConfig {
@@ -23,7 +24,7 @@ android {
     }
 
     buildTypes {
-        getByName("release") {
+        release {
             isMinifyEnabled = false
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
@@ -69,7 +70,6 @@ android {
             excludes += "META-INF/INDEX.LIST"
         }
     }
-    namespace = "com.adedom.myfood"
 }
 
 dependencies {

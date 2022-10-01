@@ -17,6 +17,7 @@ sqldelight {
 }
 
 android {
+    namespace = "com.adedom.core"
     compileSdk = Versions.targetAndCompileVersion
 
     defaultConfig {
@@ -28,7 +29,7 @@ android {
     }
 
     buildTypes {
-        getByName("release") {
+        release {
             isMinifyEnabled = false
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
@@ -61,7 +62,6 @@ android {
     kotlinOptions {
         jvmTarget = "1.8"
     }
-    namespace = "com.adedom.core"
 }
 
 dependencies {
