@@ -1,6 +1,7 @@
 package com.adedom.food_detail.presentation.view_model
 
-import com.adedom.core.data.Resource
+import com.adedom.core.utils.ApiServiceException
+import com.adedom.core.utils.toBaseError
 import com.adedom.food_detail.domain.models.FoodDetailModel
 import com.adedom.food_detail.domain.use_cases.GetFoodDetailUseCase
 import com.adedom.ui_components.base.BaseViewModel
@@ -21,14 +22,13 @@ class FoodDetailViewModel(
 
     fun callFoodDetail(foodId: Int?) {
         launch {
-            val resource = getFoodDetailUseCase(foodId)
-            when (resource) {
-                is Resource.Success -> {
-                    setState { FoodDetailUiState.Success(resource.data) }
-                }
-                is Resource.Error -> {
-                    setState { FoodDetailUiState.Error(resource.error) }
-                }
+            try {
+                val foodDetailModel = getFoodDetailUseCase(foodId)
+                setState { FoodDetailUiState.Success(foodDetailModel) }
+            } catch (exception: ApiServiceException) {
+                setState { FoodDetailUiState.Error(exception.toBaseError()) }
+            } catch (exception: Throwable) {
+                setState { FoodDetailUiState.Error(exception.toBaseError()) }
             }
         }
     }

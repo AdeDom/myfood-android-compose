@@ -1,6 +1,7 @@
 package com.adedom.user_profile.presentation.view_model
 
-import com.adedom.core.data.Resource2
+import com.adedom.core.utils.ApiServiceException
+import com.adedom.core.utils.RefreshTokenExpiredException
 import com.adedom.ui_components.base.BaseViewModel
 import com.adedom.user_profile.domain.models.UserProfileModel
 import com.adedom.user_profile.domain.use_cases.FetchUserProfileUseCase
@@ -44,18 +45,23 @@ class UserProfileViewModel(
 
     private fun callUserProfile() {
         launch {
-            val resource = fetchUserProfileUseCase()
-            when (resource) {
-                is Resource2.Success -> {}
-                is Resource2.Error -> {
-                    setState {
-                        copy(dialog = UserProfileUiState.Dialog.Error(resource.error))
-                    }
+            try {
+                fetchUserProfileUseCase()
+            } catch (exception: ApiServiceException) {
+                setState {
+                    copy(
+                        dialog = UserProfileUiState.Dialog.Error(
+                            exception.toBaseError(),
+                        ),
+                    )
                 }
-                is Resource2.RefreshTokenExpired -> {
-                    setState {
-                        copy(dialog = UserProfileUiState.Dialog.RefreshTokenExpired(resource.error))
-                    }
+            } catch (exception: RefreshTokenExpiredException) {
+                setState {
+                    copy(
+                        dialog = UserProfileUiState.Dialog.RefreshTokenExpired(
+                            exception.toBaseError(),
+                        ),
+                    )
                 }
             }
         }

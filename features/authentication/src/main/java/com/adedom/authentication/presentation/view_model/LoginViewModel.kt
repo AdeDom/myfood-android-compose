@@ -1,7 +1,8 @@
 package com.adedom.authentication.presentation.view_model
 
 import com.adedom.authentication.domain.use_cases.LoginUseCase
-import com.adedom.core.data.Resource
+import com.adedom.core.utils.ApiServiceException
+import com.adedom.core.utils.toBaseError
 import com.adedom.ui_components.base.BaseViewModel
 import com.myfood.server.data.models.base.BaseError
 import com.myfood.server.usecase.validate.ValidateEmailUseCase
@@ -74,20 +75,22 @@ class LoginViewModel(
                         )
                     }
 
-                    val email = uiState.email
-                    val password = uiState.password
-                    val resource = loginUseCase(email, password)
-                    when (resource) {
-                        is Resource.Success -> {
-                            _nav.send(Unit)
+                    try {
+                        loginUseCase(uiState.email, uiState.password)
+                        _nav.send(Unit)
+                    } catch (exception: ApiServiceException) {
+                        setState {
+                            copy(
+                                isLogin = true,
+                                dialog = LoginUiState.Dialog.Error(exception.toBaseError()),
+                            )
                         }
-                        is Resource.Error -> {
-                            setState {
-                                copy(
-                                    isLogin = true,
-                                    dialog = LoginUiState.Dialog.Error(resource.error),
-                                )
-                            }
+                    } catch (exception: Throwable) {
+                        setState {
+                            copy(
+                                isLogin = true,
+                                dialog = LoginUiState.Dialog.Error(exception.toBaseError()),
+                            )
                         }
                     }
                 }

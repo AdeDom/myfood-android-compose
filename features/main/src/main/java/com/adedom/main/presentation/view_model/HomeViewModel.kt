@@ -1,6 +1,7 @@
 package com.adedom.main.presentation.view_model
 
-import com.adedom.core.data.Resource
+import com.adedom.core.utils.ApiServiceException
+import com.adedom.core.utils.RefreshTokenExpiredException
 import com.adedom.main.domain.models.CategoryModel
 import com.adedom.main.domain.use_cases.*
 import com.adedom.ui_components.base.BaseViewModel
@@ -85,38 +86,41 @@ class HomeViewModel(
             )
         }
 
-        val resource = homeContentUseCase()
-        when (resource) {
-            is Resource.Success -> {
-                val (categoryName, foods) = getFoodListByCategoryIdUseCase(
-                    categoryId = uiState.categoryIdClick ?: CATEGORY_RECOMMEND,
+        try {
+            val categories = homeContentUseCase()
+            val (categoryName, foods) = getFoodListByCategoryIdUseCase(
+                categoryId = uiState.categoryIdClick ?: CATEGORY_RECOMMEND,
+            )
+            setState {
+                copy(
+                    dialog = null,
+                    isRefreshing = false,
+                    categories = categories,
+                    categoryName = categoryName,
+                    foods = foods,
+                    categoryIdClick = uiState.categoryIdClick ?: CATEGORY_RECOMMEND,
                 )
-                setState {
-                    copy(
-                        dialog = null,
-                        isRefreshing = false,
-                        categories = resource.data,
-                        categoryName = categoryName,
-                        foods = foods,
-                        categoryIdClick = uiState.categoryIdClick ?: CATEGORY_RECOMMEND,
-                    )
-                }
             }
-            is Resource.Error -> {
-                setState {
-                    copy(
-                        isRefreshing = false,
-                        dialog = HomeUiState.Dialog.Error(resource.error),
-                    )
-                }
+        } catch (exception: ApiServiceException) {
+            setState {
+                copy(
+                    isRefreshing = false,
+                    dialog = HomeUiState.Dialog.Error(exception.toBaseError()),
+                )
             }
         }
     }
 
     fun onLogoutEvent() {
         GlobalScope.launch {
-            _channel.send(HomeChannel.Logout)
-            logoutUseCase()
+            try {
+                _channel.send(HomeChannel.Logout)
+                logoutUseCase()
+            } catch (exception: ApiServiceException) {
+                exception.printStackTrace()
+            } catch (exception: RefreshTokenExpiredException) {
+                exception.printStackTrace()
+            }
         }
     }
 

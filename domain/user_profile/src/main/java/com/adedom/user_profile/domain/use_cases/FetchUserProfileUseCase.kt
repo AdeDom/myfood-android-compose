@@ -1,6 +1,5 @@
 package com.adedom.user_profile.domain.use_cases
 
-import com.adedom.core.data.Resource2
 import com.adedom.profile.repositories.UserProfileRepository
 import com.myfood.server.data.models.response.UserProfileResponse
 import myfood.database.UserProfileEntity
@@ -9,16 +8,11 @@ class FetchUserProfileUseCase(
     private val userProfileRepository: UserProfileRepository,
 ) {
 
-    suspend operator fun invoke(): Resource2<UserProfileResponse> {
-        val userProfileResult = userProfileRepository.callUserProfile()
-        return if (userProfileResult is Resource2.Success) {
-            val userProfileEntity = mapUserProfileToUserProfileEntity(userProfileResult.data)
-            userProfileRepository.deleteUserProfile()
-            userProfileRepository.saveUserProfile(userProfileEntity)
-            userProfileResult
-        } else {
-            userProfileResult
-        }
+    suspend operator fun invoke() {
+        val userProfileResponse = userProfileRepository.callUserProfile()
+        val userProfileEntity = mapUserProfileToUserProfileEntity(userProfileResponse)
+        userProfileRepository.deleteUserProfile()
+        userProfileRepository.saveUserProfile(userProfileEntity)
     }
 
     private fun mapUserProfileToUserProfileEntity(userProfile: UserProfileResponse?): UserProfileEntity {

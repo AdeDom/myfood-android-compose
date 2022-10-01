@@ -1,6 +1,5 @@
 package com.adedom.main.domain.use_cases
 
-import com.adedom.core.data.Resource
 import com.adedom.main.domain.models.CategoryModel
 import com.adedom.main.domain.repositories.HomeCategoryRepository
 import com.adedom.main.domain.repositories.HomeFoodRepository
@@ -16,7 +15,7 @@ class HomeContentUseCase(
     private val homeFoodRepository: HomeFoodRepository,
 ) {
 
-    suspend operator fun invoke(): Resource<List<CategoryModel>> {
+    suspend operator fun invoke(): List<CategoryModel> {
         return coroutineScope {
             // category
             val categories = homeCategoryRepository.callCategoryAll()
@@ -63,8 +62,7 @@ class HomeContentUseCase(
             homeFoodRepository.deleteFoodAll()
             homeFoodRepository.saveFoodAll(foodEntity)
 
-            val categoriesModel = categories.map { mapCategoryToCategoryModel(it) }
-            Resource.Success(categoriesModel)
+            categories.map { mapCategoryToCategoryModel(it) }
         }
     }
 

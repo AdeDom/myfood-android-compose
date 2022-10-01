@@ -1,30 +1,18 @@
 package com.adedom.food_detail.domain.use_cases
 
-import com.adedom.core.data.Resource
-import com.adedom.core.data.models.error.AppErrorCode
 import com.adedom.food_detail.domain.models.FoodDetailModel
 import com.adedom.food_detail.domain.repositories.FoodDetailRepository
-import com.myfood.server.data.models.base.BaseError
 import com.myfood.server.data.models.response.FoodDetailResponse
 
 class GetFoodDetailUseCase(
     private val foodDetailRepository: FoodDetailRepository,
 ) {
 
-    suspend operator fun invoke(foodId: Int?): Resource<FoodDetailModel> {
-        return if (foodId != null) {
-            val foodDetailResult = foodDetailRepository.callFoodDetail(foodId)
-            if (foodDetailResult is Resource.Success) {
-                val foodModel = mapFoodDetailResponseToFoodDetailModel(foodDetailResult.data)
-                Resource.Success(foodModel)
-            } else {
-                val baseError = BaseError(code = AppErrorCode.DataIsNull.code)
-                Resource.Error(baseError)
-            }
-        } else {
-            val error = BaseError(code = AppErrorCode.FoodIdIsNull.code)
-            Resource.Error(error)
-        }
+    suspend operator fun invoke(foodId: Int?): FoodDetailModel {
+        val foodDetailResponse = foodDetailRepository.callFoodDetail(
+            foodId ?: throw Throwable("Food id is null"),
+        )
+        return mapFoodDetailResponseToFoodDetailModel(foodDetailResponse)
     }
 
     private fun mapFoodDetailResponseToFoodDetailModel(food: FoodDetailResponse?): FoodDetailModel {
