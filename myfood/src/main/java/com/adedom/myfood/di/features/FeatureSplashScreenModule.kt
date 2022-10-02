@@ -1,4 +1,4 @@
-package com.adedom.myfood.di
+package com.adedom.myfood.di.features
 
 import com.adedom.splash_screen.data.repositories.SplashScreenRepositoryImpl
 import com.adedom.splash_screen.domain.repositories.SplashScreenRepository

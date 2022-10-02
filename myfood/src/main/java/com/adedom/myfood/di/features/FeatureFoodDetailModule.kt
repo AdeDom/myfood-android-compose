@@ -1,4 +1,4 @@
-package com.adedom.myfood.di
+package com.adedom.myfood.di.features
 
 import com.adedom.food_detail.data.providers.remote.FoodRemoteDataSource
 import com.adedom.food_detail.data.providers.remote.FoodRemoteDataSourceImpl
@@ -20,5 +20,5 @@ val featureFoodDetailModule = module {
     factory { GetFoodDetailUseCase(get()) }
 
     // view model
-    viewModel { FoodDetailViewModel(get()) }
+    viewModel { FoodDetailViewModel(get(), get()) }
 }

@@ -2,10 +2,14 @@ package com.adedom.food_detail.presentation.view_model
 
 import com.adedom.core.utils.ApiServiceException
 import com.adedom.core.utils.toBaseError
+import com.adedom.domain.use_cases.GetWebSocketMessageUseCase
 import com.adedom.food_detail.domain.models.FoodDetailModel
 import com.adedom.food_detail.domain.use_cases.GetFoodDetailUseCase
 import com.adedom.ui_components.base.BaseViewModel
 import com.myfood.server.data.models.base.BaseError
+import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
 
 sealed interface FoodDetailUiState {
@@ -14,11 +18,17 @@ sealed interface FoodDetailUiState {
     data class Success(val data: FoodDetailModel) : FoodDetailUiState
 }
 
-sealed interface FoodDetailUiEvent
+sealed interface FoodDetailUiEvent {
+    object Favorite : FoodDetailUiEvent
+}
 
 class FoodDetailViewModel(
     private val getFoodDetailUseCase: GetFoodDetailUseCase,
+    private val getWebSocketMessageUseCase: GetWebSocketMessageUseCase,
 ) : BaseViewModel<FoodDetailUiEvent, FoodDetailUiState>(FoodDetailUiState.Loading) {
+
+    private val _message = Channel<String>()
+    val message: Flow<String> = _message.receiveAsFlow()
 
     fun callFoodDetail(foodId: Int?) {
         launch {
@@ -33,5 +43,13 @@ class FoodDetailViewModel(
         }
     }
 
-    override fun dispatch(event: FoodDetailUiEvent) {}
+    override fun dispatch(event: FoodDetailUiEvent) {
+        when (event) {
+            FoodDetailUiEvent.Favorite -> {
+                launch {
+                    _message.send(getWebSocketMessageUseCase())
+                }
+            }
+        }
+    }
 }

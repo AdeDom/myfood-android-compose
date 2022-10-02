@@ -1,4 +1,4 @@
-package com.adedom.myfood.di
+package com.adedom.myfood.di.domain
 
 import com.adedom.user_profile.domain.use_cases.FetchUserProfileUseCase
 import com.adedom.user_profile.domain.use_cases.GetUserProfileUseCase

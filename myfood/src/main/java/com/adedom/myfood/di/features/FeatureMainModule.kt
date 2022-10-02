@@ -1,4 +1,4 @@
-package com.adedom.myfood.di
+package com.adedom.myfood.di.features
 
 import com.adedom.main.data.providers.local.category.CategoryLocalDataSource
 import com.adedom.main.data.providers.local.category.CategoryLocalDataSourceImpl

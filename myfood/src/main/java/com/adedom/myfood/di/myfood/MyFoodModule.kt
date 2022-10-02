@@ -1,4 +1,4 @@
-package com.adedom.myfood.di
+package com.adedom.myfood.di.myfood
 
 import android.content.Context
 import androidx.datastore.preferences.core.PreferenceDataStoreFactory

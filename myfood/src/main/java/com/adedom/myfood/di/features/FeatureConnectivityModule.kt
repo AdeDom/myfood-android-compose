@@ -1,4 +1,4 @@
-package com.adedom.myfood.di
+package com.adedom.myfood.di.features
 
 import com.adedom.connectivity.data.providers.connectivity.ConnectivityObserver
 import com.adedom.connectivity.data.providers.connectivity.NetworkConnectivityObserver

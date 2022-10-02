@@ -1,7 +1,10 @@
 package com.adedom.food_detail.presentation.component
 
+import android.widget.Toast
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
 import androidx.compose.material.Text
@@ -11,14 +14,17 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.adedom.food_detail.R
 import com.adedom.food_detail.domain.models.FoodDetailModel
+import com.adedom.food_detail.presentation.view_model.FoodDetailUiEvent
 import com.adedom.food_detail.presentation.view_model.FoodDetailUiState
 import com.adedom.food_detail.presentation.view_model.FoodDetailViewModel
 import com.adedom.ui_components.components.*
@@ -30,12 +36,21 @@ fun FoodDetailScreen(
     foodId: Int?,
     onBackPressed: () -> Unit,
 ) {
+    val context = LocalContext.current
+
     LaunchedEffect(key1 = Unit) {
         viewModel.callFoodDetail(foodId)
     }
 
+    LaunchedEffect(key1 = Unit) {
+        viewModel.message.collect { message ->
+            Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
+        }
+    }
+
     FoodDetailContent(
         state = viewModel.uiState,
+        viewModel::dispatch,
         onBackPressed,
     )
 }
@@ -43,6 +58,7 @@ fun FoodDetailScreen(
 @Composable
 fun FoodDetailContent(
     state: FoodDetailUiState,
+    dispatch: (FoodDetailUiEvent) -> Unit,
     onBackPressed: () -> Unit,
 ) {
     val configuration = LocalConfiguration.current
@@ -150,7 +166,9 @@ fun FoodDetailContent(
                                     .offset(
                                         x = screenWidthDp - 128.dp,
                                         y = 16.dp,
-                                    ),
+                                    )
+                                    .clip(CircleShape)
+                                    .clickable { dispatch(FoodDetailUiEvent.Favorite) },
                             )
                         }
                     }
@@ -176,6 +194,7 @@ fun FoodDetailContentPreview() {
                     ratingScoreCount = "4.9",
                 ),
             ),
+            dispatch = {},
             onBackPressed = {},
         )
     }

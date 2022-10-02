@@ -90,6 +90,7 @@ dependencies {
 
     implementation(project(Dependencies.Project.core))
     implementation(project(Dependencies.Project.coreUiComponents))
+    implementation(project(Dependencies.Project.domainWebsockets))
 
     implementation(Dependencies.AndroidXCore.coreKtx)
     implementation(Dependencies.AndroidXActivity.activityCompose)

@@ -1,4 +1,4 @@
-package com.adedom.myfood.di
+package com.adedom.myfood.di.features
 
 import com.adedom.search_food.data.providers.local.food.FoodLocalDataSource
 import com.adedom.search_food.data.providers.local.food.FoodLocalDataSourceImpl

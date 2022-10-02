@@ -1,4 +1,4 @@
-package com.adedom.myfood.di
+package com.adedom.myfood.di.features
 
 import com.adedom.authentication.data.providers.remote.auth.AuthRemoteDataSource
 import com.adedom.authentication.data.providers.remote.auth.AuthRemoteDataSourceImpl

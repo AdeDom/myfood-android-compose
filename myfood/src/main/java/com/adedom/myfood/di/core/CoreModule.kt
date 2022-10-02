@@ -1,4 +1,4 @@
-package com.adedom.myfood.di
+package com.adedom.myfood.di.core
 
 import com.adedom.core.data.providers.remote.AppHttpClientEngine
 import com.adedom.core.data.providers.remote.DataProviderRemote
