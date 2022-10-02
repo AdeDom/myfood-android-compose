@@ -6,6 +6,29 @@ object Versions {
     const val composeCompilerVersion = "1.3.0"
 }
 
+object Flavors {
+    const val flavorDimensions = "appType"
+    const val developDimension = "develop"
+    const val productionDimension = "production"
+    const val booleanTypeField = "boolean"
+    const val stringTypeField = "String"
+    const val isDevelopModeNameField = "IS_DEVELOP_MODE"
+    const val baseUrlNameField = "BASE_URL"
+    const val hostNameField = "HOST"
+
+    object DevelopValueField {
+        const val isDevelopMode = "true"
+        const val baseUrl = "\"https://myfood-server.herokuapp.com/\""
+        const val host = "\"myfood-server.herokuapp.com\""
+    }
+
+    object ProductionValueField {
+        const val isDevelopMode = "false"
+        const val baseUrl = "\"https://myfood-server.herokuapp.com/\""
+        const val host = "\"myfood-server.herokuapp.com\""
+    }
+}
+
 object Dependencies {
 
     object Project {

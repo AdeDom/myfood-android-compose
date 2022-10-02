@@ -1,4 +1,5 @@
 import com.adedom.buildsrc.Dependencies
+import com.adedom.buildsrc.Flavors
 import com.adedom.buildsrc.Versions
 
 plugins {
@@ -28,20 +29,44 @@ android {
         }
     }
 
-    flavorDimensions += "appType"
+    flavorDimensions += Flavors.flavorDimensions
     productFlavors {
-        create("develop") {
-            dimension = "appType"
-            buildConfigField("Boolean", "IS_DEVELOP_MODE", "true")
-            buildConfigField("String", "BASE_URL", "\"https://myfood-server.herokuapp.com/\"")
-            buildConfigField("String", "HOST", "\"myfood-server.herokuapp.com\"")
+        create(Flavors.developDimension) {
+            dimension = Flavors.flavorDimensions
+            buildConfigField(
+                Flavors.booleanTypeField,
+                Flavors.isDevelopModeNameField,
+                Flavors.DevelopValueField.isDevelopMode,
+            )
+            buildConfigField(
+                Flavors.stringTypeField,
+                Flavors.baseUrlNameField,
+                Flavors.DevelopValueField.baseUrl,
+            )
+            buildConfigField(
+                Flavors.stringTypeField,
+                Flavors.hostNameField,
+                Flavors.DevelopValueField.host,
+            )
         }
 
-        create("production") {
-            dimension = "appType"
-            buildConfigField("Boolean", "IS_DEVELOP_MODE", "false")
-            buildConfigField("String", "BASE_URL", "\"https://myfood-server.herokuapp.com/\"")
-            buildConfigField("String", "HOST", "\"myfood-server.herokuapp.com\"")
+        create(Flavors.productionDimension) {
+            dimension = Flavors.flavorDimensions
+            buildConfigField(
+                Flavors.booleanTypeField,
+                Flavors.isDevelopModeNameField,
+                Flavors.ProductionValueField.isDevelopMode,
+            )
+            buildConfigField(
+                Flavors.stringTypeField,
+                Flavors.baseUrlNameField,
+                Flavors.ProductionValueField.baseUrl,
+            )
+            buildConfigField(
+                Flavors.stringTypeField,
+                Flavors.hostNameField,
+                Flavors.ProductionValueField.host,
+            )
         }
     }
 
