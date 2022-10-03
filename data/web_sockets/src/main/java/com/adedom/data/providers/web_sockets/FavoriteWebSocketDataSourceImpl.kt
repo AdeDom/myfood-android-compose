@@ -59,7 +59,7 @@ class FavoriteWebSocketDataSourceImpl(
         }
     }
 
-    override suspend fun send(foodId: Int?): Unit? {
+    override suspend fun send(foodId: Int): Unit? {
         return try {
             val request = MyFavoriteRequest(foodId)
             val json = Json.encodeToString(request)

@@ -2,7 +2,10 @@ package com.adedom.food_detail.presentation.view_model
 
 import com.adedom.core.utils.ApiServiceException
 import com.adedom.core.utils.toBaseError
-import com.adedom.data.providers.web_sockets.FavoriteWebSocketDataSource
+import com.adedom.domain.use_cases.GetIsActiveFavoriteWebSocketUseCase
+import com.adedom.domain.use_cases.GetMyFavoriteWebSocketFlowUseCase
+import com.adedom.domain.use_cases.InitFavoriteWebSocketUseCase
+import com.adedom.domain.use_cases.SendMyFavoriteWebSocketUseCase
 import com.adedom.food_detail.domain.models.FoodDetailModel
 import com.adedom.food_detail.domain.use_cases.GetFoodDetailUseCase
 import com.adedom.ui_components.base.BaseViewModel
@@ -24,7 +27,10 @@ sealed interface FoodDetailUiEvent {
 
 class FoodDetailViewModel(
     private val getFoodDetailUseCase: GetFoodDetailUseCase,
-    private val favoriteWebSocketDataSource: FavoriteWebSocketDataSource,
+    private val initFavoriteWebSocketUseCase: InitFavoriteWebSocketUseCase,
+    private val getIsActiveFavoriteWebSocketUseCase: GetIsActiveFavoriteWebSocketUseCase,
+    private val getMyFavoriteWebSocketFlowUseCase: GetMyFavoriteWebSocketFlowUseCase,
+    private val sendMyFavoriteWebSocketUseCase: SendMyFavoriteWebSocketUseCase,
 ) : BaseViewModel<FoodDetailUiEvent, FoodDetailUiState>(FoodDetailUiState.Loading) {
 
     private val _message = Channel<String>()
@@ -36,11 +42,11 @@ class FoodDetailViewModel(
 
     private fun setupMyFavorite() {
         launch {
-            favoriteWebSocketDataSource.init()
-            val isActive = favoriteWebSocketDataSource.isActive()
+            initFavoriteWebSocketUseCase()
+            val isActive = getIsActiveFavoriteWebSocketUseCase()
             if (isActive) {
-                favoriteWebSocketDataSource.observe().collect {
-                    _message.send(it.result?.favorite.toString())
+                getMyFavoriteWebSocketFlowUseCase().collect {
+                    _message.send(it?.favorite.toString())
                 }
                 setupMyFavorite()
             } else {
@@ -66,7 +72,7 @@ class FoodDetailViewModel(
         when (event) {
             is FoodDetailUiEvent.MyFavorite -> {
                 launch {
-                    favoriteWebSocketDataSource.send(event.foodId)
+                    sendMyFavoriteWebSocketUseCase(event.foodId)
                 }
             }
         }

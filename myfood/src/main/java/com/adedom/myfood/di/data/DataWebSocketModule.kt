@@ -2,8 +2,8 @@ package com.adedom.myfood.di.data
 
 import com.adedom.data.providers.web_sockets.FavoriteWebSocketDataSource
 import com.adedom.data.providers.web_sockets.FavoriteWebSocketDataSourceImpl
-import com.adedom.data.repositories.WebSocketRepository
-import com.adedom.data.repositories.WebSocketRepositoryImpl
+import com.adedom.data.repositories.FavoriteWebSocketRepository
+import com.adedom.data.repositories.FavoriteWebSocketRepositoryImpl
 import org.koin.dsl.module
 
 val dataWebSocketModule = module {
@@ -12,5 +12,5 @@ val dataWebSocketModule = module {
     single<FavoriteWebSocketDataSource> { FavoriteWebSocketDataSourceImpl(get(), get()) }
 
     // repository
-    single<WebSocketRepository> { WebSocketRepositoryImpl() }
+    single<FavoriteWebSocketRepository> { FavoriteWebSocketRepositoryImpl(get()) }
 }

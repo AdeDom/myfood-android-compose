@@ -1,9 +1,9 @@
-package com.adedom.data.providers.web_sockets
+package com.adedom.data.repositories
 
 import com.adedom.data.models.MyFavoriteResponse
 import kotlinx.coroutines.flow.Flow
 
-interface FavoriteWebSocketDataSource {
+interface FavoriteWebSocketRepository {
 
     suspend fun init(): Unit?
 

@@ -83,4 +83,8 @@ dependencies {
 
     implementation(project(Dependencies.Project.core))
     implementation(project(Dependencies.Project.dataWebsockets))
+
+    implementation(Dependencies.KotlinX.coroutinesCore)
+
+    implementation(Dependencies.AdeDom.myFoodKtorServer)
 }

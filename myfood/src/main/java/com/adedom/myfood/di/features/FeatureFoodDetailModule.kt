@@ -20,5 +20,5 @@ val featureFoodDetailModule = module {
     factory { GetFoodDetailUseCase(get()) }
 
     // view model
-    viewModel { FoodDetailViewModel(get(), get()) }
+    viewModel { FoodDetailViewModel(get(), get(), get(), get(), get()) }
 }
