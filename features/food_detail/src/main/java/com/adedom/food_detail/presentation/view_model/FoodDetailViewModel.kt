@@ -2,7 +2,7 @@ package com.adedom.food_detail.presentation.view_model
 
 import com.adedom.core.utils.ApiServiceException
 import com.adedom.core.utils.toBaseError
-import com.adedom.domain.use_cases.GetWebSocketMessageUseCase
+import com.adedom.data.providers.web_sockets.FavoriteWebSocketDataSource
 import com.adedom.food_detail.domain.models.FoodDetailModel
 import com.adedom.food_detail.domain.use_cases.GetFoodDetailUseCase
 import com.adedom.ui_components.base.BaseViewModel
@@ -19,16 +19,35 @@ sealed interface FoodDetailUiState {
 }
 
 sealed interface FoodDetailUiEvent {
-    object Favorite : FoodDetailUiEvent
+    data class MyFavorite(val foodId: Int?) : FoodDetailUiEvent
 }
 
 class FoodDetailViewModel(
     private val getFoodDetailUseCase: GetFoodDetailUseCase,
-    private val getWebSocketMessageUseCase: GetWebSocketMessageUseCase,
+    private val favoriteWebSocketDataSource: FavoriteWebSocketDataSource,
 ) : BaseViewModel<FoodDetailUiEvent, FoodDetailUiState>(FoodDetailUiState.Loading) {
 
     private val _message = Channel<String>()
     val message: Flow<String> = _message.receiveAsFlow()
+
+    init {
+        setupMyFavorite()
+    }
+
+    private fun setupMyFavorite() {
+        launch {
+            favoriteWebSocketDataSource.init()
+            val isActive = favoriteWebSocketDataSource.isActive()
+            if (isActive) {
+                favoriteWebSocketDataSource.observe().collect {
+                    _message.send(it.result?.favorite.toString())
+                }
+                setupMyFavorite()
+            } else {
+                setupMyFavorite()
+            }
+        }
+    }
 
     fun callFoodDetail(foodId: Int?) {
         launch {
@@ -45,9 +64,9 @@ class FoodDetailViewModel(
 
     override fun dispatch(event: FoodDetailUiEvent) {
         when (event) {
-            FoodDetailUiEvent.Favorite -> {
+            is FoodDetailUiEvent.MyFavorite -> {
                 launch {
-                    _message.send(getWebSocketMessageUseCase())
+                    favoriteWebSocketDataSource.send(event.foodId)
                 }
             }
         }

@@ -5,6 +5,7 @@ import com.adedom.buildsrc.Versions
 plugins {
     id("com.android.library")
     id("org.jetbrains.kotlin.android")
+    id("kotlinx-serialization")
 }
 
 android {
@@ -82,4 +83,16 @@ android {
 dependencies {
 
     implementation(project(Dependencies.Project.core))
+
+    implementation(Dependencies.KotlinX.coroutinesCore)
+
+    implementation(Dependencies.Ktor.clientCore)
+    implementation(Dependencies.Ktor.clientCio)
+    implementation(Dependencies.Ktor.clientWebSockets)
+    implementation(Dependencies.Ktor.clientLogging)
+    implementation(Dependencies.Ktor.clientContentNegotiation)
+    implementation(Dependencies.Ktor.serializationKotlinxJson)
+    implementation(Dependencies.Ktor.clientAuth)
+
+    implementation(Dependencies.AdeDom.myFoodKtorServer)
 }

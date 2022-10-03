@@ -114,6 +114,7 @@ object Dependencies {
         private const val version = "2.1.1"
         const val clientCore = "io.ktor:ktor-client-core:$version"
         const val clientCio = "io.ktor:ktor-client-cio:$version"
+        const val clientWebSockets = "io.ktor:ktor-client-websockets:$version"
         const val clientLogging = "io.ktor:ktor-client-logging:$version"
         const val clientContentNegotiation = "io.ktor:ktor-client-content-negotiation:$version"
         const val serializationKotlinxJson = "io.ktor:ktor-serialization-kotlinx-json:$version"

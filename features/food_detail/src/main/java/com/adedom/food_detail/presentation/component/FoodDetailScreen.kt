@@ -52,6 +52,7 @@ fun FoodDetailScreen(
         state = viewModel.uiState,
         viewModel::dispatch,
         onBackPressed,
+        foodId,
     )
 }
 
@@ -60,6 +61,7 @@ fun FoodDetailContent(
     state: FoodDetailUiState,
     dispatch: (FoodDetailUiEvent) -> Unit,
     onBackPressed: () -> Unit,
+    foodId: Int?,
 ) {
     val configuration = LocalConfiguration.current
     val screenWidthDp = configuration.screenWidthDp.dp
@@ -168,7 +170,7 @@ fun FoodDetailContent(
                                         y = 16.dp,
                                     )
                                     .clip(CircleShape)
-                                    .clickable { dispatch(FoodDetailUiEvent.Favorite) },
+                                    .clickable { dispatch(FoodDetailUiEvent.MyFavorite(foodId)) },
                             )
                         }
                     }
@@ -196,6 +198,7 @@ fun FoodDetailContentPreview() {
             ),
             dispatch = {},
             onBackPressed = {},
+            foodId = 0,
         )
     }
 }
