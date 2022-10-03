@@ -87,12 +87,7 @@ dependencies {
     implementation(Dependencies.KotlinX.coroutinesCore)
 
     implementation(Dependencies.Ktor.clientCore)
-    implementation(Dependencies.Ktor.clientCio)
-    implementation(Dependencies.Ktor.clientWebSockets)
-    implementation(Dependencies.Ktor.clientLogging)
-    implementation(Dependencies.Ktor.clientContentNegotiation)
     implementation(Dependencies.Ktor.serializationKotlinxJson)
-    implementation(Dependencies.Ktor.clientAuth)
 
     implementation(Dependencies.AdeDom.myFoodKtorServer)
 }
