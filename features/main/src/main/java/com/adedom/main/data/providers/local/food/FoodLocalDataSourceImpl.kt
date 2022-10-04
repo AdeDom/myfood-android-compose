@@ -1,6 +1,7 @@
 package com.adedom.main.data.providers.local.food
 
 import com.adedom.myfood.MyFoodDatabase
+import com.myfood.server.data.models.web_sockets.FavoriteWebSocketsResponse
 import com.squareup.sqldelight.runtime.coroutines.asFlow
 import com.squareup.sqldelight.runtime.coroutines.mapToList
 import kotlinx.coroutines.flow.Flow
@@ -45,6 +46,10 @@ class FoodLocalDataSourceImpl(
                 updated = food.updated,
             )
         }
+    }
+
+    override suspend fun updateFavoriteByFoodId(favorite: FavoriteWebSocketsResponse) {
+        return queries.updateFavoriteByFoodId(favorite.favorite, favorite.foodId.toLong())
     }
 
     override suspend fun deleteFoodAll() {

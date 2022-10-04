@@ -35,5 +35,10 @@ INSERT OR REPLACE
 INTO FoodEntity
 VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
 
+updateFavoriteByFoodId:
+UPDATE FoodEntity
+SET favorite = ?
+WHERE foodId = ?;
+
 deleteFoodAll:
 DELETE FROM FoodEntity;

@@ -1,6 +1,7 @@
 package com.adedom.main.domain.repositories
 
 import com.myfood.server.data.models.response.FoodDetailResponse
+import com.myfood.server.data.models.web_sockets.FavoriteWebSocketsResponse
 import kotlinx.coroutines.flow.Flow
 import myfood.database.FoodEntity
 
@@ -15,6 +16,8 @@ interface HomeFoodRepository {
     suspend fun getFoodListByCategoryId(categoryId: Long): List<FoodEntity>
 
     suspend fun saveFoodAll(foodList: List<FoodEntity>)
+
+    suspend fun updateFavoriteByFoodId(favorite: FavoriteWebSocketsResponse)
 
     suspend fun deleteFoodAll()
 }
