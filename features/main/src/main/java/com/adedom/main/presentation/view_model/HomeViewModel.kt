@@ -86,7 +86,6 @@ class HomeViewModel(
 
     private fun setupMyFavorite() {
         launch {
-            initFavoriteWebSocketUseCase()
             while (true) {
                 if (!getIsActiveFavoriteWebSocketUseCase()) {
                     initFavoriteWebSocketUseCase()

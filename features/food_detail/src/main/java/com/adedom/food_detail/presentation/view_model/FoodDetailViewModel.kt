@@ -64,7 +64,10 @@ class FoodDetailViewModel(
         when (event) {
             is FoodDetailUiEvent.MyFavorite -> {
                 launch {
-                    sendMyFavoriteWebSocketUseCase(event.foodId)
+                    val result = sendMyFavoriteWebSocketUseCase(event.foodId)
+                    if (!result) {
+                        dispatch(FoodDetailUiEvent.MyFavorite(event.foodId))
+                    }
                 }
             }
         }
