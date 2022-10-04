@@ -3,8 +3,6 @@ package com.adedom.main.data.providers.local.food
 import com.adedom.myfood.MyFoodDatabase
 import com.squareup.sqldelight.runtime.coroutines.asFlow
 import com.squareup.sqldelight.runtime.coroutines.mapToList
-import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import myfood.database.FoodEntity
 import myfood.database.FoodQueries
@@ -12,13 +10,12 @@ import java.util.*
 
 class FoodLocalDataSourceImpl(
     db: MyFoodDatabase,
-    private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO,
 ) : FoodLocalDataSource {
 
     private val queries: FoodQueries = db.foodQueries
 
     override fun getFoodListFlow(): Flow<List<FoodEntity>> {
-        return queries.getFoodList().asFlow().mapToList(ioDispatcher)
+        return queries.getFoodList().asFlow().mapToList()
     }
 
     override suspend fun getFoodList(): List<FoodEntity> {

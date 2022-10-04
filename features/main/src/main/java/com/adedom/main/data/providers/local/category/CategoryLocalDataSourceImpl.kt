@@ -3,21 +3,18 @@ package com.adedom.main.data.providers.local.category
 import com.adedom.myfood.MyFoodDatabase
 import com.squareup.sqldelight.runtime.coroutines.asFlow
 import com.squareup.sqldelight.runtime.coroutines.mapToList
-import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import myfood.database.CategoryEntity
 import myfood.database.CategoryQueries
 
 class CategoryLocalDataSourceImpl(
     db: MyFoodDatabase,
-    private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO,
 ) : CategoryLocalDataSource {
 
     private val queries: CategoryQueries = db.categoryQueries
 
     override fun getCategoryListFlow(): Flow<List<CategoryEntity>> {
-        return queries.getCategoryList().asFlow().mapToList(ioDispatcher)
+        return queries.getCategoryList().asFlow().mapToList()
     }
 
     override suspend fun getCategoryList(): List<CategoryEntity> {

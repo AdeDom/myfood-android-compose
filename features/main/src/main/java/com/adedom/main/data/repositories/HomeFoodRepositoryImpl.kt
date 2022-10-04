@@ -7,6 +7,7 @@ import com.myfood.server.data.models.response.FoodDetailResponse
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.withContext
 import myfood.database.FoodEntity
 
@@ -24,7 +25,7 @@ class HomeFoodRepositoryImpl(
     }
 
     override fun getFoodListFlow(): Flow<List<FoodEntity>> {
-        return foodLocalDataSource.getFoodListFlow()
+        return foodLocalDataSource.getFoodListFlow().flowOn(ioDispatcher)
     }
 
     override suspend fun getFoodList(): List<FoodEntity> {
