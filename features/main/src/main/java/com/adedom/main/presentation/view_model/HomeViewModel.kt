@@ -2,6 +2,8 @@ package com.adedom.main.presentation.view_model
 
 import com.adedom.core.utils.ApiServiceException
 import com.adedom.core.utils.RefreshTokenExpiredException
+import com.adedom.domain.use_cases.GetIsActiveFavoriteWebSocketUseCase
+import com.adedom.domain.use_cases.InitFavoriteWebSocketUseCase
 import com.adedom.main.domain.models.CategoryModel
 import com.adedom.main.domain.use_cases.*
 import com.adedom.ui_components.base.BaseViewModel
@@ -55,6 +57,8 @@ class HomeViewModel(
     private val logoutUseCase: LogoutUseCase,
     private val getIsAuthRoleUseCase: GetIsAuthRoleUseCase,
     private val saveUnAuthRoleUseCase: SaveUnAuthRoleUseCase,
+    private val initFavoriteWebSocketUseCase: InitFavoriteWebSocketUseCase,
+    private val getIsActiveFavoriteWebSocketUseCase: GetIsActiveFavoriteWebSocketUseCase,
 ) : BaseViewModel<HomeUiEvent, HomeUiState>(HomeUiState()) {
 
     private var isBackPressed = false
@@ -64,6 +68,11 @@ class HomeViewModel(
     val channel: Flow<HomeChannel> = _channel.receiveAsFlow()
 
     init {
+        setupHome()
+        setupMyFavorite()
+    }
+
+    private fun setupHome() {
         launch {
             coState {
                 copy(
@@ -72,6 +81,18 @@ class HomeViewModel(
                 )
             }
             callHomeContent(dialog = HomeUiState.Dialog.Loading)
+        }
+    }
+
+    private fun setupMyFavorite() {
+        launch {
+            initFavoriteWebSocketUseCase()
+            while (true) {
+                if (!getIsActiveFavoriteWebSocketUseCase()) {
+                    initFavoriteWebSocketUseCase()
+                }
+                delay(2_000)
+            }
         }
     }
 

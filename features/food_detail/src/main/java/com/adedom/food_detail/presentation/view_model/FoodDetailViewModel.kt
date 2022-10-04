@@ -2,9 +2,8 @@ package com.adedom.food_detail.presentation.view_model
 
 import com.adedom.core.utils.ApiServiceException
 import com.adedom.core.utils.toBaseError
-import com.adedom.domain.use_cases.GetIsActiveFavoriteWebSocketUseCase
+import com.adedom.domain.use_cases.CloseFavoriteWebSocketUseCase
 import com.adedom.domain.use_cases.GetMyFavoriteWebSocketFlowUseCase
-import com.adedom.domain.use_cases.InitFavoriteWebSocketUseCase
 import com.adedom.domain.use_cases.SendMyFavoriteWebSocketUseCase
 import com.adedom.food_detail.domain.models.FoodDetailModel
 import com.adedom.food_detail.domain.use_cases.GetFoodDetailUseCase
@@ -27,31 +26,24 @@ sealed interface FoodDetailUiEvent {
 
 class FoodDetailViewModel(
     private val getFoodDetailUseCase: GetFoodDetailUseCase,
-    private val initFavoriteWebSocketUseCase: InitFavoriteWebSocketUseCase,
-    private val getIsActiveFavoriteWebSocketUseCase: GetIsActiveFavoriteWebSocketUseCase,
     private val getMyFavoriteWebSocketFlowUseCase: GetMyFavoriteWebSocketFlowUseCase,
     private val sendMyFavoriteWebSocketUseCase: SendMyFavoriteWebSocketUseCase,
+    private val closeFavoriteWebSocketUseCase: CloseFavoriteWebSocketUseCase,
 ) : BaseViewModel<FoodDetailUiEvent, FoodDetailUiState>(FoodDetailUiState.Loading) {
 
     private val _message = Channel<String>()
     val message: Flow<String> = _message.receiveAsFlow()
 
     init {
-        setupMyFavorite()
+        observeMyFavorite()
     }
 
-    private fun setupMyFavorite() {
+    private fun observeMyFavorite() {
         launch {
-            initFavoriteWebSocketUseCase()
-            val isActive = getIsActiveFavoriteWebSocketUseCase()
-            if (isActive) {
-                getMyFavoriteWebSocketFlowUseCase().collect {
-                    _message.send(it?.favorite.toString())
-                }
-                setupMyFavorite()
-            } else {
-                setupMyFavorite()
+            getMyFavoriteWebSocketFlowUseCase().collect {
+                _message.send(it?.favorite.toString())
             }
+            observeMyFavorite()
         }
     }
 
@@ -75,6 +67,13 @@ class FoodDetailViewModel(
                     sendMyFavoriteWebSocketUseCase(event.foodId)
                 }
             }
+        }
+    }
+
+    override fun onCleared() {
+        launch {
+            closeFavoriteWebSocketUseCase()
+            super.onCleared()
         }
     }
 }
