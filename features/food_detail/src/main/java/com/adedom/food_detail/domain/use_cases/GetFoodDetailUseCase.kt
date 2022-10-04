@@ -1,15 +1,15 @@
 package com.adedom.food_detail.domain.use_cases
 
+import com.adedom.data.repositories.FoodRepository
 import com.adedom.food_detail.domain.models.FoodDetailModel
-import com.adedom.food_detail.domain.repositories.FoodDetailRepository
 import com.myfood.server.data.models.response.FoodDetailResponse
 
 class GetFoodDetailUseCase(
-    private val foodDetailRepository: FoodDetailRepository,
+    private val foodRepository: FoodRepository,
 ) {
 
     suspend operator fun invoke(foodId: Int?): FoodDetailModel {
-        val foodDetailResponse = foodDetailRepository.callFoodDetail(
+        val foodDetailResponse = foodRepository.callFoodDetail(
             foodId ?: throw Throwable("Food id is null"),
         )
         return mapFoodDetailResponseToFoodDetailModel(foodDetailResponse)

@@ -1,8 +1,8 @@
 package com.adedom.main.domain.use_cases
 
+import com.adedom.data.repositories.FoodRepository
 import com.adedom.main.domain.models.CategoryModel
 import com.adedom.main.domain.repositories.HomeCategoryRepository
-import com.adedom.main.domain.repositories.HomeFoodRepository
 import com.myfood.server.data.models.response.CategoryResponse
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
@@ -12,7 +12,7 @@ import myfood.database.FoodEntity
 
 class HomeContentUseCase(
     private val homeCategoryRepository: HomeCategoryRepository,
-    private val homeFoodRepository: HomeFoodRepository,
+    private val foodRepository: FoodRepository,
 ) {
 
     suspend operator fun invoke(): List<CategoryModel> {
@@ -36,7 +36,7 @@ class HomeContentUseCase(
             val foods = categories
                 .map { category ->
                     async {
-                        homeFoodRepository.callFoodListByCategoryId(category.categoryId)
+                        foodRepository.callFoodListByCategoryId(category.categoryId)
                     }
                 }
                 .awaitAll()
@@ -59,8 +59,8 @@ class HomeContentUseCase(
                     updated = food.updated,
                 )
             }
-            homeFoodRepository.deleteFoodAll()
-            homeFoodRepository.saveFoodAll(foodEntity)
+            foodRepository.deleteFoodAll()
+            foodRepository.saveFoodAll(foodEntity)
 
             categories.map { mapCategoryToCategoryModel(it) }
         }

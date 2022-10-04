@@ -1,14 +1,14 @@
 package com.adedom.main.domain.use_cases
 
+import com.adedom.data.repositories.FoodRepository
 import com.adedom.main.domain.repositories.HomeCategoryRepository
-import com.adedom.main.domain.repositories.HomeFoodRepository
 import com.adedom.ui_components.domain.models.FoodModel
 import kotlinx.coroutines.async
 import kotlinx.coroutines.coroutineScope
 
 class GetFoodListByCategoryIdUseCase(
     private val homeCategoryRepository: HomeCategoryRepository,
-    private val homeFoodRepository: HomeFoodRepository,
+    private val foodRepository: FoodRepository,
 ) {
 
     suspend operator fun invoke(categoryId: Long): Pair<String, List<FoodModel>> {
@@ -18,7 +18,7 @@ class GetFoodListByCategoryIdUseCase(
             }
 
             val foodListAsync = async {
-                homeFoodRepository.getFoodListByCategoryId(categoryId).map { food ->
+                foodRepository.getFoodListByCategoryId(categoryId).map { food ->
                     FoodModel(
                         foodId = food.foodId,
                         foodName = food.foodName,

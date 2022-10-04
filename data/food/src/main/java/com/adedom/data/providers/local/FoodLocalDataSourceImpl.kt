@@ -1,4 +1,4 @@
-package com.adedom.main.data.providers.local.food
+package com.adedom.data.providers.local
 
 import com.adedom.myfood.MyFoodDatabase
 import com.myfood.server.data.models.web_sockets.FavoriteWebSocketsResponse
@@ -25,6 +25,10 @@ class FoodLocalDataSourceImpl(
 
     override suspend fun getFoodListByCategoryId(categoryId: Long): List<FoodEntity> {
         return queries.getFoodListByCategoryId(categoryId).executeAsList()
+    }
+
+    override suspend fun getFoodListBySearch(search: String): List<FoodEntity> {
+        return queries.getFoodListBySearch(search).executeAsList()
     }
 
     override suspend fun saveFoodAll(foodList: List<FoodEntity>) {

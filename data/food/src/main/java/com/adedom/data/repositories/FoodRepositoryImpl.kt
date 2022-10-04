@@ -1,8 +1,7 @@
-package com.adedom.main.data.repositories
+package com.adedom.data.repositories
 
-import com.adedom.main.data.providers.local.food.FoodLocalDataSource
-import com.adedom.main.data.providers.remote.food.FoodRemoteDataSource
-import com.adedom.main.domain.repositories.HomeFoodRepository
+import com.adedom.data.providers.local.FoodLocalDataSource
+import com.adedom.data.providers.remote.FoodRemoteDataSource
 import com.myfood.server.data.models.response.FoodDetailResponse
 import com.myfood.server.data.models.web_sockets.FavoriteWebSocketsResponse
 import kotlinx.coroutines.CoroutineDispatcher
@@ -12,11 +11,11 @@ import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.withContext
 import myfood.database.FoodEntity
 
-class HomeFoodRepositoryImpl(
+class FoodRepositoryImpl(
     private val foodLocalDataSource: FoodLocalDataSource,
     private val foodRemoteDataSource: FoodRemoteDataSource,
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO,
-) : HomeFoodRepository {
+) : FoodRepository {
 
     override suspend fun callFoodListByCategoryId(categoryId: Int): List<FoodDetailResponse> {
         return withContext(ioDispatcher) {
@@ -41,6 +40,12 @@ class HomeFoodRepositoryImpl(
         }
     }
 
+    override suspend fun getFoodListBySearch(search: String): List<FoodEntity> {
+        return withContext(ioDispatcher) {
+            foodLocalDataSource.getFoodListBySearch(search)
+        }
+    }
+
     override suspend fun saveFoodAll(foodList: List<FoodEntity>) {
         return withContext(ioDispatcher) {
             foodLocalDataSource.saveFoodAll(foodList)
@@ -56,6 +61,13 @@ class HomeFoodRepositoryImpl(
     override suspend fun deleteFoodAll() {
         return withContext(ioDispatcher) {
             foodLocalDataSource.deleteFoodAll()
+        }
+    }
+
+    override suspend fun callFoodDetail(foodId: Int): FoodDetailResponse? {
+        return withContext(ioDispatcher) {
+            val foodDetailResponse = foodRemoteDataSource.callFoodDetail(foodId)
+            foodDetailResponse.result
         }
     }
 }
