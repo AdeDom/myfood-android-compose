@@ -24,8 +24,8 @@ class FoodRepositoryImpl(
         }
     }
 
-    override fun getFoodListFlow(): Flow<List<FoodEntity>> {
-        return foodLocalDataSource.getFoodListFlow().flowOn(ioDispatcher)
+    override fun getFoodListByCategoryIdFlow(categoryId: Long): Flow<List<FoodEntity>> {
+        return foodLocalDataSource.getFoodListByCategoryIdFlow(categoryId).flowOn(ioDispatcher)
     }
 
     override suspend fun getFoodList(): List<FoodEntity> {

@@ -44,5 +44,19 @@ val featureMainModule = module {
     factory { GetFoodListByCategoryIdUseCase(get(), get()) }
 
     //presentation
-    viewModel { HomeViewModel(get(), get(), get(), get(), get(), get(), get(), get()) }
+    viewModel {
+        HomeViewModel(
+            homeContentUseCase = get(),
+            getImageProfileUseCase = get(),
+            getFoodListByCategoryIdUseCase = get(),
+            logoutUseCase = get(),
+            getIsAuthRoleUseCase = get(),
+            saveUnAuthRoleUseCase = get(),
+            initFavoriteWebSocketUseCase = get(),
+            getIsActiveFavoriteWebSocketUseCase = get(),
+            getMyFavoriteWebSocketFlowUseCase = get(),
+            updateFavoriteUseCase = get(),
+            getFoodListFlowUseCase = get(),
+        )
+    }
 }

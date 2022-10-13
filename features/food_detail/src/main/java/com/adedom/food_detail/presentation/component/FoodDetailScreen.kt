@@ -1,6 +1,5 @@
 package com.adedom.food_detail.presentation.component
 
-import android.widget.Toast
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -17,7 +16,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalConfiguration
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -36,16 +34,8 @@ fun FoodDetailScreen(
     foodId: Int?,
     onBackPressed: () -> Unit,
 ) {
-    val context = LocalContext.current
-
     LaunchedEffect(key1 = Unit) {
         viewModel.callFoodDetail(foodId)
-    }
-
-    LaunchedEffect(key1 = Unit) {
-        viewModel.message.collect { message ->
-            Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
-        }
     }
 
     FoodDetailContent(

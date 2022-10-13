@@ -9,7 +9,7 @@ interface FoodRepository {
 
     suspend fun callFoodListByCategoryId(categoryId: Int): List<FoodDetailResponse>
 
-    fun getFoodListFlow(): Flow<List<FoodEntity>>
+    fun getFoodListByCategoryIdFlow(categoryId: Long): Flow<List<FoodEntity>>
 
     suspend fun getFoodList(): List<FoodEntity>
 

@@ -4,15 +4,12 @@ import com.adedom.core.data.providers.data_store.AppDataStore
 import com.adedom.core.utils.ApiServiceException
 import com.adedom.core.utils.AuthRole
 import com.adedom.core.utils.toBaseError
-import com.adedom.domain.use_cases.*
+import com.adedom.domain.use_cases.CloseFavoriteWebSocketUseCase
+import com.adedom.domain.use_cases.SendMyFavoriteWebSocketUseCase
 import com.adedom.food_detail.domain.models.FoodDetailModel
 import com.adedom.food_detail.domain.use_cases.GetFoodDetailUseCase
 import com.adedom.ui_components.base.BaseViewModel
 import com.myfood.server.data.models.base.BaseError
-import kotlinx.coroutines.channels.Channel
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
 
 sealed interface FoodDetailUiState {
@@ -31,33 +28,9 @@ sealed interface FoodDetailUiEvent {
 class FoodDetailViewModel(
     private val appDataStore: AppDataStore,
     private val getFoodDetailUseCase: GetFoodDetailUseCase,
-    private val getMyFavoriteWebSocketFlowUseCase: GetMyFavoriteWebSocketFlowUseCase,
-    private val updateFavoriteUseCase: UpdateFavoriteUseCase,
     private val sendMyFavoriteWebSocketUseCase: SendMyFavoriteWebSocketUseCase,
     private val closeFavoriteWebSocketUseCase: CloseFavoriteWebSocketUseCase,
-    private val getIsActiveFavoriteWebSocketUseCase: GetIsActiveFavoriteWebSocketUseCase,
 ) : BaseViewModel<FoodDetailUiEvent, FoodDetailUiState>(FoodDetailUiState.Loading) {
-
-    private val _message = Channel<String>()
-    val message: Flow<String> = _message.receiveAsFlow()
-
-    init {
-        observeMyFavorite()
-    }
-
-    private fun observeMyFavorite() {
-        launch {
-            while (true) {
-                if (getIsActiveFavoriteWebSocketUseCase()) {
-                    getMyFavoriteWebSocketFlowUseCase().collect {
-                        updateFavoriteUseCase(it)
-                        _message.send(it?.favorite.toString())
-                    }
-                }
-                delay(200)
-            }
-        }
-    }
 
     fun callFoodDetail(foodId: Int?) {
         launch {

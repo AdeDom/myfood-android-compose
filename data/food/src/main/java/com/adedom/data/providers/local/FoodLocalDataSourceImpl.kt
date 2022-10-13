@@ -15,8 +15,8 @@ class FoodLocalDataSourceImpl(
 
     private val queries: FoodQueries = db.foodQueries
 
-    override fun getFoodListFlow(): Flow<List<FoodEntity>> {
-        return queries.getFoodList().asFlow().mapToList()
+    override fun getFoodListByCategoryIdFlow(categoryId: Long): Flow<List<FoodEntity>> {
+        return queries.getFoodListByCategoryId(categoryId).asFlow().mapToList()
     }
 
     override suspend fun getFoodList(): List<FoodEntity> {

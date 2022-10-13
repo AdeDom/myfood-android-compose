@@ -2,8 +2,7 @@ package com.adedom.main.presentation.view_model
 
 import com.adedom.core.utils.ApiServiceException
 import com.adedom.core.utils.RefreshTokenExpiredException
-import com.adedom.domain.use_cases.GetIsActiveFavoriteWebSocketUseCase
-import com.adedom.domain.use_cases.InitFavoriteWebSocketUseCase
+import com.adedom.domain.use_cases.*
 import com.adedom.main.domain.models.CategoryModel
 import com.adedom.main.domain.use_cases.*
 import com.adedom.ui_components.base.BaseViewModel
@@ -14,6 +13,8 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
 
@@ -21,9 +22,9 @@ data class HomeUiState(
     val isRefreshing: Boolean = false,
     val imageProfile: String? = null,
     val categories: List<CategoryModel> = emptyList(),
+    val categoryId: Long? = null,
     val categoryName: String = "",
     val foods: List<FoodModel> = emptyList(),
-    val categoryIdClick: Long? = null,
     val isExitAuth: Boolean = false,
     val dialog: Dialog? = null,
 ) {
@@ -59,6 +60,9 @@ class HomeViewModel(
     private val saveUnAuthRoleUseCase: SaveUnAuthRoleUseCase,
     private val initFavoriteWebSocketUseCase: InitFavoriteWebSocketUseCase,
     private val getIsActiveFavoriteWebSocketUseCase: GetIsActiveFavoriteWebSocketUseCase,
+    private val getMyFavoriteWebSocketFlowUseCase: GetMyFavoriteWebSocketFlowUseCase,
+    private val updateFavoriteUseCase: UpdateFavoriteUseCase,
+    private val getFoodListFlowUseCase: GetFoodListFlowUseCase,
 ) : BaseViewModel<HomeUiEvent, HomeUiState>(HomeUiState()) {
 
     private var isBackPressed = false
@@ -70,6 +74,8 @@ class HomeViewModel(
     init {
         setupHome()
         setupMyFavorite()
+        observeMyFavorite()
+        observeFoodList()
     }
 
     private fun setupHome() {
@@ -95,6 +101,27 @@ class HomeViewModel(
         }
     }
 
+    private fun observeMyFavorite() {
+        launch {
+            while (true) {
+                if (getIsActiveFavoriteWebSocketUseCase()) {
+                    getMyFavoriteWebSocketFlowUseCase().collect {
+                        updateFavoriteUseCase(it)
+                    }
+                }
+                delay(200)
+            }
+        }
+    }
+
+    private fun observeFoodList() {
+        getFoodListFlowUseCase(uiState.categoryId ?: CATEGORY_RECOMMEND)
+            .onEach { foods ->
+                setState { copy(foods = foods) }
+            }
+            .launchIn(this)
+    }
+
     private suspend fun callHomeContent(
         dialog: HomeUiState.Dialog? = null,
         isRefreshing: Boolean = false,
@@ -109,16 +136,16 @@ class HomeViewModel(
         try {
             val categories = homeContentUseCase()
             val (categoryName, foods) = getFoodListByCategoryIdUseCase(
-                categoryId = uiState.categoryIdClick ?: CATEGORY_RECOMMEND,
+                categoryId = uiState.categoryId ?: CATEGORY_RECOMMEND,
             )
             setState {
                 copy(
                     dialog = null,
                     isRefreshing = false,
                     categories = categories,
+                    categoryId = uiState.categoryId ?: CATEGORY_RECOMMEND,
                     categoryName = categoryName,
                     foods = foods,
-                    categoryIdClick = uiState.categoryIdClick ?: CATEGORY_RECOMMEND,
                 )
             }
         } catch (exception: ApiServiceException) {
@@ -151,9 +178,9 @@ class HomeViewModel(
                     val (categoryName, foods) = getFoodListByCategoryIdUseCase(event.categoryId)
                     setState {
                         copy(
+                            categoryId = event.categoryId,
                             categoryName = categoryName,
                             foods = foods,
-                            categoryIdClick = event.categoryId,
                         )
                     }
                 }

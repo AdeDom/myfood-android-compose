@@ -6,7 +6,7 @@ import myfood.database.FoodEntity
 
 interface FoodLocalDataSource {
 
-    fun getFoodListFlow(): Flow<List<FoodEntity>>
+    fun getFoodListByCategoryIdFlow(categoryId: Long): Flow<List<FoodEntity>>
 
     suspend fun getFoodList(): List<FoodEntity>
 
