@@ -20,7 +20,7 @@ class GetFoodListByCategoryIdUseCase(
             val foodListAsync = async {
                 foodRepository.getFoodListByCategoryId(categoryId).map { food ->
                     FoodModel(
-                        foodId = food.foodId,
+                        foodId = food.foodIdRef ?: 0L,
                         foodName = food.foodName,
                         alias = food.alias,
                         image = food.image,

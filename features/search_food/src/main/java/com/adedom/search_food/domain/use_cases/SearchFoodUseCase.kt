@@ -10,7 +10,7 @@ class SearchFoodUseCase(
     suspend operator fun invoke(search: String): List<FoodModel> {
         return foodRepository.getFoodListBySearch(search).map { food ->
             FoodModel(
-                foodId = food.foodId,
+                foodId = food.foodIdRef ?: 0L,
                 foodName = food.foodName,
                 alias = food.alias,
                 image = food.image,

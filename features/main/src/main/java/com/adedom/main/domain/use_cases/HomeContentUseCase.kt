@@ -33,32 +33,37 @@ class HomeContentUseCase(
             homeCategoryRepository.saveCategoryAll(categoryEntity)
 
             // food
-            val foods = categories
+            val foodEntity = categories
                 .map { category ->
                     async {
-                        foodRepository.callFoodListByCategoryId(category.categoryId)
+                        Pair(
+                            category.categoryId,
+                            foodRepository.callFoodListByCategoryId(category.categoryId),
+                        )
                     }
                 }
                 .awaitAll()
-                .flatten()
-            val foodEntity = foods.map { food ->
-                FoodEntity(
-                    alias = food.alias,
-                    categoryId = food.categoryId.toLong(),
-                    created = food.created,
-                    description = food.description,
-                    favorite = food.favorite,
-                    foodId = food.foodId.toLong(),
-                    foodName = food.foodName,
-                    search = food.foodName,
-                    image = food.image,
-                    price = food.price,
-                    ratingScore = food.ratingScore?.toDouble(),
-                    ratingScoreCount = food.ratingScoreCount,
-                    status = food.status,
-                    updated = food.updated,
-                )
-            }
+                .flatMap { (categoryId, foods) ->
+                    foods.map { food ->
+                        FoodEntity(
+                            alias = food.alias,
+                            categoryId = categoryId.toLong(),
+                            created = food.created,
+                            description = food.description,
+                            favorite = food.favorite,
+                            foodIdKey = "${categoryId}_${food.foodId}",
+                            foodIdRef = food.foodId.toLong(),
+                            foodName = food.foodName,
+                            search = food.foodName,
+                            image = food.image,
+                            price = food.price,
+                            ratingScore = food.ratingScore?.toDouble(),
+                            ratingScoreCount = food.ratingScoreCount,
+                            status = food.status,
+                            updated = food.updated,
+                        )
+                    }
+                }
             foodRepository.deleteFoodAll()
             foodRepository.saveFoodAll(foodEntity)
 
