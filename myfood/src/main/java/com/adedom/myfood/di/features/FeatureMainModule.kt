@@ -41,14 +41,14 @@ val featureMainModule = module {
     factory { LogoutUseCase(get(), get()) }
     factory { GetIsAuthRoleUseCase(get()) }
     factory { SaveUnAuthRoleUseCase(get()) }
-    factory { GetFoodListByCategoryIdUseCase(get(), get()) }
+    factory { GetFoodListByCategoryIdPairUseCase(get(), get()) }
 
     //presentation
     viewModel {
         HomeViewModel(
             homeContentUseCase = get(),
             getImageProfileUseCase = get(),
-            getFoodListByCategoryIdUseCase = get(),
+            getFoodListByCategoryIdPairUseCase = get(),
             logoutUseCase = get(),
             getIsAuthRoleUseCase = get(),
             saveUnAuthRoleUseCase = get(),
@@ -56,7 +56,7 @@ val featureMainModule = module {
             getIsActiveFavoriteWebSocketUseCase = get(),
             getMyFavoriteWebSocketFlowUseCase = get(),
             updateFavoriteUseCase = get(),
-            getFoodListByCategoryIdFlowUseCase = get(),
+            getFoodListByCategoryIdUseCase = get(),
         )
     }
 }

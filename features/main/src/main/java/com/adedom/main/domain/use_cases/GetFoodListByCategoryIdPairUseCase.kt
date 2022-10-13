@@ -6,7 +6,7 @@ import com.adedom.ui_components.domain.models.FoodModel
 import kotlinx.coroutines.async
 import kotlinx.coroutines.coroutineScope
 
-class GetFoodListByCategoryIdUseCase(
+class GetFoodListByCategoryIdPairUseCase(
     private val homeCategoryRepository: HomeCategoryRepository,
     private val foodRepository: FoodRepository,
 ) {

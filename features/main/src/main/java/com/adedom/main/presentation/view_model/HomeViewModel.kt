@@ -8,6 +8,7 @@ import com.adedom.main.domain.use_cases.*
 import com.adedom.ui_components.base.BaseViewModel
 import com.adedom.ui_components.domain.models.FoodModel
 import com.myfood.server.data.models.base.BaseError
+import com.myfood.server.data.models.web_sockets.FavoriteWebSocketsResponse
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.channels.Channel
@@ -52,7 +53,7 @@ sealed interface HomeChannel {
 class HomeViewModel(
     private val homeContentUseCase: HomeContentUseCase,
     private val getImageProfileUseCase: GetImageProfileUseCase,
-    private val getFoodListByCategoryIdUseCase: GetFoodListByCategoryIdUseCase,
+    private val getFoodListByCategoryIdPairUseCase: GetFoodListByCategoryIdPairUseCase,
     private val logoutUseCase: LogoutUseCase,
     private val getIsAuthRoleUseCase: GetIsAuthRoleUseCase,
     private val saveUnAuthRoleUseCase: SaveUnAuthRoleUseCase,
@@ -60,7 +61,7 @@ class HomeViewModel(
     private val getIsActiveFavoriteWebSocketUseCase: GetIsActiveFavoriteWebSocketUseCase,
     private val getMyFavoriteWebSocketFlowUseCase: GetMyFavoriteWebSocketFlowUseCase,
     private val updateFavoriteUseCase: UpdateFavoriteUseCase,
-    private val getFoodListByCategoryIdFlowUseCase: GetFoodListByCategoryIdFlowUseCase,
+    private val getFoodListByCategoryIdUseCase: GetFoodListByCategoryIdUseCase,
 ) : BaseViewModel<HomeUiEvent, HomeUiState>(HomeUiState()) {
 
     private var isBackPressed = false
@@ -102,22 +103,27 @@ class HomeViewModel(
         launch {
             while (true) {
                 if (getIsActiveFavoriteWebSocketUseCase()) {
-                    getMyFavoriteWebSocketFlowUseCase().collect { socket ->
-                        val foodIdList = uiState.foods.map { it.foodId.toInt() }
-                        val isFoodIdUpdate = socket?.foodId in foodIdList
-                        if (isFoodIdUpdate) {
-                            coState {
-                                copy(
-                                    foods = getFoodListByCategoryIdFlowUseCase(
-                                        uiState.categoryId ?: CATEGORY_RECOMMEND,
-                                    )
-                                )
-                            }
-                        }
-                        updateFavoriteUseCase(socket)
-                    }
+                    getMyFavoriteWebSocketFlowUseCase().collect(::updateFoodSocket)
                 }
                 delay(200)
+            }
+        }
+    }
+
+    private fun updateFoodSocket(socket: FavoriteWebSocketsResponse?) {
+        launch {
+            updateFavoriteUseCase(socket)
+
+            val foodIdList = uiState.foods.map { it.foodId.toInt() }
+            val isFoodIdUpdate = socket?.foodId in foodIdList
+            if (isFoodIdUpdate) {
+                coState {
+                    copy(
+                        foods = getFoodListByCategoryIdUseCase(
+                            uiState.categoryId ?: CATEGORY_RECOMMEND,
+                        )
+                    )
+                }
             }
         }
     }
@@ -135,7 +141,7 @@ class HomeViewModel(
 
         try {
             val categories = homeContentUseCase()
-            val (categoryName, foods) = getFoodListByCategoryIdUseCase(
+            val (categoryName, foods) = getFoodListByCategoryIdPairUseCase(
                 categoryId = uiState.categoryId ?: CATEGORY_RECOMMEND,
             )
             setState {
@@ -175,7 +181,7 @@ class HomeViewModel(
         launch {
             when (event) {
                 is HomeUiEvent.CategoryClick -> {
-                    val (categoryName, foods) = getFoodListByCategoryIdUseCase(event.categoryId)
+                    val (categoryName, foods) = getFoodListByCategoryIdPairUseCase(event.categoryId)
                     setState {
                         copy(
                             categoryId = event.categoryId,
