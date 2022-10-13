@@ -14,6 +14,7 @@ class SearchFoodUseCase(
                 foodName = food.foodName,
                 alias = food.alias,
                 image = food.image,
+                favorite = food.favorite,
                 ratingScoreCount = food.ratingScoreCount,
                 categoryId = food.categoryId,
             )
