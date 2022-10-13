@@ -6,8 +6,6 @@ import com.myfood.server.data.models.response.FoodDetailResponse
 import com.myfood.server.data.models.web_sockets.FavoriteWebSocketsResponse
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.withContext
 import myfood.database.FoodEntity
 
@@ -22,10 +20,6 @@ class FoodRepositoryImpl(
             val foodListResponse = foodRemoteDataSource.callFoodListByCategoryId(categoryId)
             foodListResponse.result ?: emptyList()
         }
-    }
-
-    override fun getFoodListByCategoryIdFlow(categoryId: Long): Flow<List<FoodEntity>> {
-        return foodLocalDataSource.getFoodListByCategoryIdFlow(categoryId).flowOn(ioDispatcher)
     }
 
     override suspend fun getFoodList(): List<FoodEntity> {

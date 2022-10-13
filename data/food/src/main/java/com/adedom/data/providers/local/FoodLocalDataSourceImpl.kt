@@ -2,9 +2,6 @@ package com.adedom.data.providers.local
 
 import com.adedom.myfood.MyFoodDatabase
 import com.myfood.server.data.models.web_sockets.FavoriteWebSocketsResponse
-import com.squareup.sqldelight.runtime.coroutines.asFlow
-import com.squareup.sqldelight.runtime.coroutines.mapToList
-import kotlinx.coroutines.flow.Flow
 import myfood.database.FoodEntity
 import myfood.database.FoodQueries
 import java.util.*
@@ -14,10 +11,6 @@ class FoodLocalDataSourceImpl(
 ) : FoodLocalDataSource {
 
     private val queries: FoodQueries = db.foodQueries
-
-    override fun getFoodListByCategoryIdFlow(categoryId: Long): Flow<List<FoodEntity>> {
-        return queries.getFoodListByCategoryId(categoryId).asFlow().mapToList()
-    }
 
     override suspend fun getFoodList(): List<FoodEntity> {
         return queries.getFoodList().executeAsList()

@@ -11,5 +11,5 @@ val domainWebSocketModule = module {
     factory { UpdateFavoriteUseCase(get()) }
     factory { SendMyFavoriteWebSocketUseCase(get(), get()) }
     factory { CloseFavoriteWebSocketUseCase(get()) }
-    factory { GetFoodListFlowUseCase(get()) }
+    factory { GetFoodListByCategoryIdFlowUseCase(get()) }
 }

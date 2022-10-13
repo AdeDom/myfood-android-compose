@@ -13,8 +13,6 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
 
@@ -62,7 +60,7 @@ class HomeViewModel(
     private val getIsActiveFavoriteWebSocketUseCase: GetIsActiveFavoriteWebSocketUseCase,
     private val getMyFavoriteWebSocketFlowUseCase: GetMyFavoriteWebSocketFlowUseCase,
     private val updateFavoriteUseCase: UpdateFavoriteUseCase,
-    private val getFoodListFlowUseCase: GetFoodListFlowUseCase,
+    private val getFoodListByCategoryIdFlowUseCase: GetFoodListByCategoryIdFlowUseCase,
 ) : BaseViewModel<HomeUiEvent, HomeUiState>(HomeUiState()) {
 
     private var isBackPressed = false
@@ -75,7 +73,6 @@ class HomeViewModel(
         setupHome()
         setupMyFavorite()
         observeMyFavorite()
-        observeFoodList()
     }
 
     private fun setupHome() {
@@ -105,21 +102,24 @@ class HomeViewModel(
         launch {
             while (true) {
                 if (getIsActiveFavoriteWebSocketUseCase()) {
-                    getMyFavoriteWebSocketFlowUseCase().collect {
-                        updateFavoriteUseCase(it)
+                    getMyFavoriteWebSocketFlowUseCase().collect { socket ->
+                        val foodIdList = uiState.foods.map { it.foodId.toInt() }
+                        val isFoodIdUpdate = socket?.foodId in foodIdList
+                        if (isFoodIdUpdate) {
+                            coState {
+                                copy(
+                                    foods = getFoodListByCategoryIdFlowUseCase(
+                                        uiState.categoryId ?: CATEGORY_RECOMMEND,
+                                    )
+                                )
+                            }
+                        }
+                        updateFavoriteUseCase(socket)
                     }
                 }
                 delay(200)
             }
         }
-    }
-
-    private fun observeFoodList() {
-        getFoodListFlowUseCase(uiState.categoryId ?: CATEGORY_RECOMMEND)
-            .onEach { foods ->
-                setState { copy(foods = foods) }
-            }
-            .launchIn(this)
     }
 
     private suspend fun callHomeContent(

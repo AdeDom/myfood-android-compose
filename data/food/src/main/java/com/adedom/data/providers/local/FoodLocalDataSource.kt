@@ -1,12 +1,9 @@
 package com.adedom.data.providers.local
 
 import com.myfood.server.data.models.web_sockets.FavoriteWebSocketsResponse
-import kotlinx.coroutines.flow.Flow
 import myfood.database.FoodEntity
 
 interface FoodLocalDataSource {
-
-    fun getFoodListByCategoryIdFlow(categoryId: Long): Flow<List<FoodEntity>>
 
     suspend fun getFoodList(): List<FoodEntity>
 

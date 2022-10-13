@@ -2,14 +2,11 @@ package com.adedom.data.repositories
 
 import com.myfood.server.data.models.response.FoodDetailResponse
 import com.myfood.server.data.models.web_sockets.FavoriteWebSocketsResponse
-import kotlinx.coroutines.flow.Flow
 import myfood.database.FoodEntity
 
 interface FoodRepository {
 
     suspend fun callFoodListByCategoryId(categoryId: Int): List<FoodDetailResponse>
-
-    fun getFoodListByCategoryIdFlow(categoryId: Long): Flow<List<FoodEntity>>
 
     suspend fun getFoodList(): List<FoodEntity>
 

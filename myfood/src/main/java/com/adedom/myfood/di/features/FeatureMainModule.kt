@@ -56,7 +56,7 @@ val featureMainModule = module {
             getIsActiveFavoriteWebSocketUseCase = get(),
             getMyFavoriteWebSocketFlowUseCase = get(),
             updateFavoriteUseCase = get(),
-            getFoodListFlowUseCase = get(),
+            getFoodListByCategoryIdFlowUseCase = get(),
         )
     }
 }
