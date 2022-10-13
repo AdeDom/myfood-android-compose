@@ -56,6 +56,8 @@ class FavoriteWebSocketDataSourceImpl(
         } catch (e: Throwable) {
             e.printStackTrace()
             flow { }
+        } finally {
+            webSocketSession = null
         }
     }
 

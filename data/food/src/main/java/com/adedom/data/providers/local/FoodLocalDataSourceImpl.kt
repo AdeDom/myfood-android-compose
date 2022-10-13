@@ -52,8 +52,8 @@ class FoodLocalDataSourceImpl(
         }
     }
 
-    override suspend fun updateFavoriteByFoodId(favorite: FavoriteWebSocketsResponse) {
-        return queries.updateFavoriteByFoodId(favorite.favorite, favorite.foodId.toLong())
+    override suspend fun updateFavoriteByFoodId(favorite: FavoriteWebSocketsResponse?) {
+        return queries.updateFavoriteByFoodId(favorite?.favorite, favorite?.foodId?.toLong() ?: 0L)
     }
 
     override suspend fun deleteFoodAll() {

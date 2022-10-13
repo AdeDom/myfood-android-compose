@@ -90,7 +90,7 @@ class HomeViewModel(
                 if (!getIsActiveFavoriteWebSocketUseCase()) {
                     initFavoriteWebSocketUseCase()
                 }
-                delay(2_000)
+                delay(200)
             }
         }
     }

@@ -161,17 +161,19 @@ fun FoodDetailContent(
                                     }
                                 }
                             }
-                            AppImage(
-                                image = R.drawable.favorite_active,
-                                modifier = Modifier
-                                    .size(80.dp)
-                                    .offset(
-                                        x = screenWidthDp - 128.dp,
-                                        y = 16.dp,
-                                    )
-                                    .clip(CircleShape)
-                                    .clickable { dispatch(FoodDetailUiEvent.MyFavorite(foodId)) },
-                            )
+                            if (state.isFavorite) {
+                                AppImage(
+                                    image = R.drawable.favorite_active,
+                                    modifier = Modifier
+                                        .size(80.dp)
+                                        .offset(
+                                            x = screenWidthDp - 128.dp,
+                                            y = 16.dp,
+                                        )
+                                        .clip(CircleShape)
+                                        .clickable { dispatch(FoodDetailUiEvent.MyFavorite(foodId)) },
+                                )
+                            }
                         }
                     }
                 }
@@ -195,6 +197,7 @@ fun FoodDetailContentPreview() {
                     description = "description",
                     ratingScoreCount = "4.9",
                 ),
+                true,
             ),
             dispatch = {},
             onBackPressed = {},

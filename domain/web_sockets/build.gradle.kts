@@ -83,6 +83,7 @@ dependencies {
 
     implementation(project(Dependencies.Project.core))
     implementation(project(Dependencies.Project.dataWebsockets))
+    implementation(project(Dependencies.Project.dataFood))
 
     implementation(Dependencies.KotlinX.coroutinesCore)
 

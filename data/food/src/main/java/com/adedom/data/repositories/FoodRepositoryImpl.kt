@@ -52,7 +52,7 @@ class FoodRepositoryImpl(
         }
     }
 
-    override suspend fun updateFavoriteByFoodId(favorite: FavoriteWebSocketsResponse) {
+    override suspend fun updateFavoriteByFoodId(favorite: FavoriteWebSocketsResponse?) {
         return withContext(ioDispatcher) {
             foodLocalDataSource.updateFavoriteByFoodId(favorite)
         }

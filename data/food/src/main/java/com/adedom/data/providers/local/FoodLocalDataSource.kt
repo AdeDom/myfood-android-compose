@@ -16,7 +16,7 @@ interface FoodLocalDataSource {
 
     suspend fun saveFoodAll(foodList: List<FoodEntity>)
 
-    suspend fun updateFavoriteByFoodId(favorite: FavoriteWebSocketsResponse)
+    suspend fun updateFavoriteByFoodId(favorite: FavoriteWebSocketsResponse?)
 
     suspend fun deleteFoodAll()
 }
