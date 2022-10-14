@@ -24,7 +24,7 @@ val featureAuthenticationModule = module {
     factory { ValidateEmailUseCase() }
     factory { ValidatePasswordUseCase() }
     factory { LoginUseCase(get(), get(), get()) }
-    factory { FavoriteUseCase(get()) }
+    factory { FavoriteUseCase(get(), get()) }
 
     // presentation
     viewModel { LoginViewModel(get(), get(), get()) }

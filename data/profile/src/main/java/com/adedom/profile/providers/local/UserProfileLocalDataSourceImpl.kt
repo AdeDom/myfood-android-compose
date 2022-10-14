@@ -25,6 +25,10 @@ class UserProfileLocalDataSourceImpl(
         return queries.getImageProfile().executeAsOneOrNull()?.image
     }
 
+    override suspend fun getMyUserId(): String? {
+        return queries.getUserId().executeAsOneOrNull()
+    }
+
     override suspend fun saveUserProfile(userProfile: UserProfileEntity) {
         return queries.saveUserProfile(
             userId = userProfile.userId,

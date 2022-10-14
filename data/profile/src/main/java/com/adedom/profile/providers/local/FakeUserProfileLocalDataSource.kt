@@ -22,6 +22,10 @@ class FakeUserProfileLocalDataSource : UserProfileLocalDataSource {
         return userProfileEntity?.image
     }
 
+    override suspend fun getMyUserId(): String? {
+        return userProfileEntity?.userId
+    }
+
     override suspend fun saveUserProfile(userProfile: UserProfileEntity) {
         userProfileEntity = userProfile
     }

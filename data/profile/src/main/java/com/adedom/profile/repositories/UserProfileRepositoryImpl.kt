@@ -39,6 +39,12 @@ class UserProfileRepositoryImpl(
         }
     }
 
+    override suspend fun getMyUserId(): String? {
+        return withContext(ioDispatcher) {
+            userProfileLocalDataSource.getMyUserId()
+        }
+    }
+
     override suspend fun saveUserProfile(userProfile: UserProfileEntity) {
         return withContext(ioDispatcher) {
             userProfileLocalDataSource.saveUserProfile(userProfile)
