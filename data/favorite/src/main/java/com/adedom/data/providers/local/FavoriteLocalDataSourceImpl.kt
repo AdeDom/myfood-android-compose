@@ -14,6 +14,10 @@ class FavoriteLocalDataSourceImpl(
         return queries.getFavoriteList().executeAsList()
     }
 
+    override suspend fun getFavoriteCountByFoodId(foodId: Long): Long? {
+        return queries.getFavoriteCountByFoodId(foodId).executeAsOneOrNull()
+    }
+
     override suspend fun saveFavoriteAll(favoriteList: List<FavoriteEntity>) {
         return favoriteList.forEach { favorite ->
             queries.saveFavoriteAll(

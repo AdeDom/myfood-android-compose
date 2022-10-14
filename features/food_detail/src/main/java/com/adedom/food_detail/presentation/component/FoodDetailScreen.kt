@@ -171,7 +171,7 @@ fun FoodDetailContent(
                             }
                             if (state.foodDetail?.isFavorite == true) {
                                 AppImage(
-                                    image = R.drawable.favorite_active,
+                                    image = if (state.foodDetail.isFavoriteState) R.drawable.favorite_active else R.drawable.favorite_inactive,
                                     modifier = Modifier
                                         .size(80.dp)
                                         .offset(
@@ -204,6 +204,7 @@ fun FoodDetailContentPreview() {
                     favorite = 5,
                     ratingScoreCount = "4.9",
                     isFavorite = true,
+                    isFavoriteState = true,
                 ),
             ),
             dispatch = {},

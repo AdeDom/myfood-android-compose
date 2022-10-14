@@ -27,6 +27,12 @@ class FavoriteRepositoryImpl(
         }
     }
 
+    override suspend fun getFavoriteCountByFoodId(foodId: Long): Long? {
+        return withContext(ioDispatcher) {
+            favoriteLocalDataSource.getFavoriteCountByFoodId(foodId)
+        }
+    }
+
     override suspend fun saveFavoriteAll(favoriteList: List<FavoriteEntity>) {
         return withContext(ioDispatcher) {
             favoriteLocalDataSource.saveFavoriteAll(favoriteList)

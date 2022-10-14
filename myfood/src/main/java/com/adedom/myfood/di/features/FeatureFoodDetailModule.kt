@@ -8,7 +8,7 @@ import org.koin.dsl.module
 val featureFoodDetailModule = module {
 
     // domain
-    factory { GetFoodDetailUseCase(get(), get()) }
+    factory { GetFoodDetailUseCase(get(), get(), get()) }
 
     // view model
     viewModel { FoodDetailViewModel(get(), get(), get(), get()) }

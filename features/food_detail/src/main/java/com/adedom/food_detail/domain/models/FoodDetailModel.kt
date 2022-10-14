@@ -8,4 +8,5 @@ data class FoodDetailModel(
     val favorite: Long,
     val ratingScoreCount: String,
     val isFavorite: Boolean,
+    val isFavoriteState: Boolean,
 )

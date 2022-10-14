@@ -9,6 +9,8 @@ interface FavoriteRepository {
 
     suspend fun getFavoriteList(): List<FavoriteEntity>
 
+    suspend fun getFavoriteCountByFoodId(foodId: Long): Long?
+
     suspend fun saveFavoriteAll(favoriteList: List<FavoriteEntity>)
 
     suspend fun deleteFavoriteAll()

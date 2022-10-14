@@ -12,6 +12,11 @@ getFavoriteList:
 SELECT *
 FROM FavoriteEntity;
 
+getFavoriteCountByFoodId:
+SELECT COUNT(*)
+FROM FavoriteEntity
+WHERE foodId = ?;
+
 saveFavoriteAll:
 INSERT OR REPLACE
 INTO FavoriteEntity
