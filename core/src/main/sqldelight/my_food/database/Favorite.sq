@@ -12,7 +12,7 @@ getFavoriteList:
 SELECT *
 FROM FavoriteEntity;
 
-saveFavorite:
+saveFavoriteAll:
 INSERT OR REPLACE
 INTO FavoriteEntity
 VALUES (?, ?, ?, ?, ?, ?, ?);

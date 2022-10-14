@@ -98,6 +98,7 @@ dependencies {
 
     implementation(project(Dependencies.Project.core))
     implementation(project(Dependencies.Project.coreUiComponents))
+    implementation(project(Dependencies.Project.dataFavorite))
     implementation(project(Dependencies.Project.domainUserProfile))
 
     implementation(Dependencies.AndroidXCore.coreKtx)
