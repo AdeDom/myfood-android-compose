@@ -4,6 +4,7 @@ import com.adedom.authentication.data.providers.remote.auth.AuthRemoteDataSource
 import com.adedom.authentication.data.providers.remote.auth.AuthRemoteDataSourceImpl
 import com.adedom.authentication.data.repositories.AuthLoginRepositoryImpl
 import com.adedom.authentication.domain.repositories.AuthLoginRepository
+import com.adedom.authentication.domain.use_cases.FavoriteUseCase
 import com.adedom.authentication.domain.use_cases.LoginUseCase
 import com.adedom.authentication.presentation.view_model.LoginViewModel
 import com.adedom.authentication.presentation.view_model.RegisterViewModel
@@ -23,6 +24,7 @@ val featureAuthenticationModule = module {
     factory { ValidateEmailUseCase() }
     factory { ValidatePasswordUseCase() }
     factory { LoginUseCase(get(), get(), get()) }
+    factory { FavoriteUseCase(get()) }
 
     // presentation
     viewModel { LoginViewModel(get(), get(), get()) }
