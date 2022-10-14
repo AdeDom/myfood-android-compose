@@ -52,7 +52,7 @@ class FoodDetailViewModel(
                 launch {
                     val result = sendMyFavoriteWebSocketUseCase(event.foodId)
                     if (!result) {
-                        dispatch(FoodDetailUiEvent.MyFavorite(event.foodId))
+                        setState { FoodDetailUiState.Error(BaseError()) }
                     }
                 }
             }

@@ -1,15 +1,19 @@
+import com.adedom.buildsrc.Dependencies
+import com.adedom.buildsrc.Flavors
+import com.adedom.buildsrc.Versions
+
 plugins {
     id("com.android.library")
     id("org.jetbrains.kotlin.android")
 }
 
 android {
-    namespace = "com.adedom.favorite"
-    compileSdk = 32
+    namespace = "com.adedom.data.favorite"
+    compileSdk = Versions.targetAndCompileVersion
 
     defaultConfig {
-        minSdk = 24
-        targetSdk = 32
+        minSdk = Versions.minSdkVersion
+        targetSdk = Versions.targetAndCompileVersion
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
@@ -24,6 +28,48 @@ android {
             )
         }
     }
+
+    flavorDimensions += Flavors.flavorDimensions
+    productFlavors {
+        create(Flavors.developDimension) {
+            dimension = Flavors.flavorDimensions
+            buildConfigField(
+                Flavors.booleanTypeField,
+                Flavors.isDevelopModeNameField,
+                Flavors.DevelopValueField.isDevelopMode,
+            )
+            buildConfigField(
+                Flavors.stringTypeField,
+                Flavors.baseUrlNameField,
+                Flavors.DevelopValueField.baseUrl,
+            )
+            buildConfigField(
+                Flavors.stringTypeField,
+                Flavors.hostNameField,
+                Flavors.DevelopValueField.host,
+            )
+        }
+
+        create(Flavors.productionDimension) {
+            dimension = Flavors.flavorDimensions
+            buildConfigField(
+                Flavors.booleanTypeField,
+                Flavors.isDevelopModeNameField,
+                Flavors.ProductionValueField.isDevelopMode,
+            )
+            buildConfigField(
+                Flavors.stringTypeField,
+                Flavors.baseUrlNameField,
+                Flavors.ProductionValueField.baseUrl,
+            )
+            buildConfigField(
+                Flavors.stringTypeField,
+                Flavors.hostNameField,
+                Flavors.ProductionValueField.host,
+            )
+        }
+    }
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
@@ -35,10 +81,13 @@ android {
 
 dependencies {
 
-    implementation("androidx.core:core-ktx:1.7.0")
-    implementation("androidx.appcompat:appcompat:1.5.1")
-    implementation("com.google.android.material:material:1.6.1")
-    testImplementation("junit:junit:4.13.2")
-    androidTestImplementation("androidx.test.ext:junit:1.1.3")
-    androidTestImplementation("androidx.test.espresso:espresso-core:3.4.0")
+    implementation(project(Dependencies.Project.core))
+
+    implementation(Dependencies.KotlinX.coroutinesCore)
+
+    implementation(Dependencies.Ktor.clientCore)
+
+    implementation(Dependencies.SquareUp.sqlDelightCoroutinesExt)
+
+    implementation(Dependencies.AdeDom.myFoodKtorServer)
 }

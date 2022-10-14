@@ -38,6 +38,7 @@ object Dependencies {
         const val dataProfile = ":data:profile"
         const val dataWebsockets = ":data:web_sockets"
         const val dataFood = ":data:food"
+        const val dataFavorite = ":data:favorite"
         const val domainUserProfile = ":domain:user_profile"
         const val domainWebsockets = ":domain:web_sockets"
         const val featuresAuthentication = ":features:authentication"

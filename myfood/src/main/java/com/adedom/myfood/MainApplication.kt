@@ -2,6 +2,7 @@ package com.adedom.myfood
 
 import android.app.Application
 import com.adedom.myfood.di.core.coreModule
+import com.adedom.myfood.di.data.dataFavoriteModule
 import com.adedom.myfood.di.data.dataFoodModule
 import com.adedom.myfood.di.data.dataProfileModule
 import com.adedom.myfood.di.data.dataWebSocketModule
@@ -25,6 +26,7 @@ class MainApplication : Application() {
                 dataProfileModule,
                 dataWebSocketModule,
                 dataFoodModule,
+                dataFavoriteModule,
                 domainUserProfileModule,
                 domainWebSocketModule,
                 featureAuthenticationModule,
