@@ -8,6 +8,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.Star
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -60,19 +61,19 @@ fun FoodDetailContent(
     Box(
         modifier = Modifier.fillMaxSize(),
     ) {
-        when (state) {
-            FoodDetailUiState.Loading -> {
+        when (state.dialog) {
+            FoodDetailUiState.Dialog.Loading -> {
                 AppLoadingLottieAnimation()
             }
-            is FoodDetailUiState.Error -> {
+            is FoodDetailUiState.Dialog.Error -> {
                 AppErrorAlertDialog(
-                    error = state.error,
+                    error = state.dialog.error,
                     onDismiss = onBackPressed,
                 )
             }
-            is FoodDetailUiState.Success -> {
+            null -> {
                 AppImageNetwork(
-                    image = state.data.image,
+                    image = state.foodDetail?.image,
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(screenHeightDp / 2),
@@ -105,7 +106,7 @@ fun FoodDetailContent(
                                         )
                                     ) {
                                         Text(
-                                            text = state.data.foodName,
+                                            text = state.foodDetail?.foodName.toString(),
                                             color = Color.Black,
                                             fontSize = 24.sp,
                                         )
@@ -113,20 +114,37 @@ fun FoodDetailContent(
                                         Row(
                                             verticalAlignment = Alignment.Bottom,
                                         ) {
-                                            AppIcon(
-                                                image = Icons.Default.Star,
-                                                color = Color(0xFFFFC107),
-                                                modifier = Modifier.size(18.dp),
-                                            )
-                                            Spacer(modifier = Modifier.width(4.dp))
-                                            Text(
-                                                text = state.data.ratingScoreCount,
-                                                color = Color(0xFFFFC107),
-                                                fontSize = 14.sp,
-                                            )
+                                            Column {
+                                                Row {
+                                                    AppIcon(
+                                                        image = Icons.Default.Favorite,
+                                                        color = Color(0xFFFFC107),
+                                                        modifier = Modifier.size(18.dp),
+                                                    )
+                                                    Spacer(modifier = Modifier.width(4.dp))
+                                                    Text(
+                                                        text = state.foodDetail?.favorite.toString(),
+                                                        color = Color(0xFFFFC107),
+                                                        fontSize = 14.sp,
+                                                    )
+                                                }
+                                                Row {
+                                                    AppIcon(
+                                                        image = Icons.Default.Star,
+                                                        color = Color(0xFFFFC107),
+                                                        modifier = Modifier.size(18.dp),
+                                                    )
+                                                    Spacer(modifier = Modifier.width(4.dp))
+                                                    Text(
+                                                        text = state.foodDetail?.ratingScoreCount.toString(),
+                                                        color = Color(0xFFFFC107),
+                                                        fontSize = 14.sp,
+                                                    )
+                                                }
+                                            }
                                             Box(modifier = Modifier.weight(1f))
                                             Text(
-                                                text = "${state.data.price}",
+                                                text = "${state.foodDetail?.price}",
                                                 fontSize = 32.sp,
                                                 fontWeight = FontWeight.Bold,
                                             )
@@ -145,13 +163,13 @@ fun FoodDetailContent(
                                         )
                                         Spacer(modifier = Modifier.height(8.dp))
                                         Text(
-                                            text = state.data.description,
+                                            text = state.foodDetail?.description.toString(),
                                             fontSize = 16.sp,
                                         )
                                     }
                                 }
                             }
-                            if (state.isFavorite) {
+                            if (state.foodDetail?.isFavorite == true) {
                                 AppImage(
                                     image = R.drawable.favorite_active,
                                     modifier = Modifier
@@ -177,17 +195,16 @@ fun FoodDetailContent(
 fun FoodDetailContentPreview() {
     MyFoodTheme {
         FoodDetailContent(
-//            state = FoodDetailUiState.Loading,
-//            state = FoodDetailUiState.Error(BaseError()),
-            state = FoodDetailUiState.Success(
-                FoodDetailModel(
+            state = FoodDetailUiState(
+                foodDetail = FoodDetailModel(
                     foodName = "foodName",
                     image = "",
                     price = 99.0,
                     description = "description",
+                    favorite = 5,
                     ratingScoreCount = "4.9",
+                    isFavorite = true,
                 ),
-                true,
             ),
             dispatch = {},
             onBackPressed = {},
