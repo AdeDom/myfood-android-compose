@@ -4,6 +4,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.Star
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -50,6 +51,22 @@ fun FoodBoxItem(
                         color = Color.Gray,
                         fontSize = 14.sp,
                     )
+                }
+                food.favorite?.let { favorite ->
+                    Spacer(modifier = Modifier.height(4.dp))
+                    Row {
+                        AppIcon(
+                            image = Icons.Default.Favorite,
+                            color = Color(0xFFFFC107),
+                            modifier = Modifier.size(18.dp),
+                        )
+                        Spacer(modifier = Modifier.width(4.dp))
+                        AppText(
+                            text = favorite.toString(),
+                            color = Color(0xFFFFC107),
+                            fontSize = 14.sp,
+                        )
+                    }
                 }
                 food.ratingScoreCount?.let { ratingScoreCount ->
                     Spacer(modifier = Modifier.height(4.dp))

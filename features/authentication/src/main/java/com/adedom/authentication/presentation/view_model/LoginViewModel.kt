@@ -1,9 +1,11 @@
 package com.adedom.authentication.presentation.view_model
 
+import com.adedom.authentication.domain.use_cases.FavoriteUseCase
 import com.adedom.authentication.domain.use_cases.LoginUseCase
 import com.adedom.core.utils.ApiServiceException
 import com.adedom.core.utils.toBaseError
 import com.adedom.ui_components.base.BaseViewModel
+import com.adedom.user_profile.domain.use_cases.FetchUserProfileUseCase
 import com.myfood.server.data.models.base.BaseError
 import com.myfood.server.usecase.validate.ValidateEmailUseCase
 import com.myfood.server.usecase.validate.ValidatePasswordUseCase
@@ -37,6 +39,8 @@ class LoginViewModel(
     private val validateEmailUseCase: ValidateEmailUseCase,
     private val validatePasswordUseCase: ValidatePasswordUseCase,
     private val loginUseCase: LoginUseCase,
+    private val fetchUserProfileUseCase: FetchUserProfileUseCase,
+    private val favoriteUseCase: FavoriteUseCase,
 ) : BaseViewModel<LoginUiEvent, LoginUiState>(LoginUiState()) {
 
     private val _nav = Channel<Unit>()
@@ -77,6 +81,8 @@ class LoginViewModel(
 
                     try {
                         loginUseCase(uiState.email, uiState.password)
+                        fetchUserProfileUseCase()
+                        favoriteUseCase()
                         _nav.send(Unit)
                     } catch (exception: ApiServiceException) {
                         setState {

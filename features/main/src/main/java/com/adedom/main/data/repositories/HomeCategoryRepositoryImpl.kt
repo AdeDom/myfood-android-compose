@@ -7,6 +7,7 @@ import com.myfood.server.data.models.response.CategoryResponse
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.withContext
 import myfood.database.CategoryEntity
 
@@ -24,7 +25,7 @@ class HomeCategoryRepositoryImpl(
     }
 
     override fun getCategoryListFlow(): Flow<List<CategoryEntity>> {
-        return categoryLocalDataSource.getCategoryListFlow()
+        return categoryLocalDataSource.getCategoryListFlow().flowOn(ioDispatcher)
     }
 
     override suspend fun getCategoryList(): List<CategoryEntity> {

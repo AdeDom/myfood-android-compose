@@ -1,8 +1,8 @@
 package com.adedom.profile.providers.remote
 
-import com.adedom.core.BuildConfig
 import com.adedom.core.data.providers.data_store.AppDataStore
 import com.adedom.core.data.providers.remote.DataProviderRemote
+import com.adedom.data.profile.BuildConfig
 import com.myfood.server.data.models.base.BaseResponse
 import com.myfood.server.data.models.response.UserProfileResponse
 import io.ktor.client.call.*

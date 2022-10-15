@@ -1,0 +1,36 @@
+CREATE TABLE FavoriteEntity(
+    favoriteId TEXT NOT NULL PRIMARY KEY,
+    userId TEXT NOT NULL,
+    foodId INTEGER NOT NULL,
+    isFavorite INTEGER NOT NULL,
+    isBackup INTEGER NOT NULL,
+    created TEXT NOT NULL,
+    updated TEXT
+);
+
+getFavoriteList:
+SELECT *
+FROM FavoriteEntity;
+
+getFavoriteByFoodId:
+SELECT *
+FROM FavoriteEntity
+WHERE foodId = ?;
+
+getIsFavoriteByFoodId:
+SELECT isFavorite
+FROM FavoriteEntity
+WHERE foodId = ?;
+
+insertOrReplaceFavorite:
+INSERT OR REPLACE
+INTO FavoriteEntity
+VALUES (?, ?, ?, ?, ?, ?, ?);
+
+updateBackupFavorite:
+UPDATE FavoriteEntity
+SET isBackup = 1, updated = ?
+WHERE favoriteId = ?;
+
+deleteFavoriteAll:
+DELETE FROM FavoriteEntity;

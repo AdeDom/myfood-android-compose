@@ -98,6 +98,7 @@ dependencies {
 
     implementation(project(Dependencies.Project.core))
     implementation(project(Dependencies.Project.coreUiComponents))
+    implementation(project(Dependencies.Project.dataFavorite))
     implementation(project(Dependencies.Project.domainUserProfile))
 
     implementation(Dependencies.AndroidXCore.coreKtx)
@@ -115,13 +116,6 @@ dependencies {
     implementation(Dependencies.KotlinX.coroutinesAndroid)
 
     implementation(Dependencies.Ktor.clientCore)
-    implementation(Dependencies.Ktor.clientCio)
-    implementation(Dependencies.Ktor.clientLogging)
-    implementation(Dependencies.Ktor.clientContentNegotiation)
-    implementation(Dependencies.Ktor.serializationKotlinxJson)
-    implementation(Dependencies.Ktor.clientAuth)
-
-    implementation(Dependencies.SquareUp.sqlDelightCoroutinesExt)
 
     implementation(Dependencies.AdeDom.myFoodKtorServer)
 

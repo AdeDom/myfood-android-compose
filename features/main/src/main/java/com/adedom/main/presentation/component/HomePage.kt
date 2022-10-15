@@ -176,7 +176,7 @@ private fun HomeContent(
                                                 fontWeight = FontWeight.Bold,
                                             )
                                             Spacer(modifier = Modifier.height(4.dp))
-                                            if (category.categoryId == state.categoryIdClick) {
+                                            if (category.categoryId == state.categoryId) {
                                                 Box(
                                                     modifier = Modifier
                                                         .size(
@@ -270,6 +270,7 @@ fun HomePagePreview() {
                         foodName = "foodName",
                         alias = "alias",
                         image = "",
+                        favorite = 5,
                         ratingScoreCount = "ratingScoreCount",
                         categoryId = 2,
                     ),
@@ -278,6 +279,7 @@ fun HomePagePreview() {
                         foodName = "foodName",
                         alias = "alias",
                         image = "",
+                        favorite = 5,
                         ratingScoreCount = "ratingScoreCount",
                         categoryId = 2,
                     ),
@@ -286,6 +288,7 @@ fun HomePagePreview() {
                         foodName = "foodName",
                         alias = "alias",
                         image = "",
+                        favorite = 5,
                         ratingScoreCount = "ratingScoreCount",
                         categoryId = 2,
                     ),
@@ -294,6 +297,7 @@ fun HomePagePreview() {
                         foodName = "foodName",
                         alias = "alias",
                         image = "",
+                        favorite = 5,
                         ratingScoreCount = "ratingScoreCount",
                         categoryId = 2,
                     ),
@@ -302,6 +306,7 @@ fun HomePagePreview() {
                         foodName = "foodName",
                         alias = "alias",
                         image = "",
+                        favorite = 5,
                         ratingScoreCount = "ratingScoreCount",
                         categoryId = 2,
                     ),
@@ -310,6 +315,7 @@ fun HomePagePreview() {
                         foodName = "foodName",
                         alias = "alias",
                         image = "",
+                        favorite = 5,
                         ratingScoreCount = "ratingScoreCount",
                         categoryId = 2,
                     ),
@@ -318,6 +324,7 @@ fun HomePagePreview() {
                         foodName = "foodName",
                         alias = "alias",
                         image = "",
+                        favorite = 5,
                         ratingScoreCount = "ratingScoreCount",
                         categoryId = 2,
                     ),
@@ -326,11 +333,12 @@ fun HomePagePreview() {
                         foodName = "foodName",
                         alias = "alias",
                         image = "",
+                        favorite = 5,
                         ratingScoreCount = "ratingScoreCount",
                         categoryId = 2,
                     ),
                 ),
-                categoryIdClick = 2,
+                categoryId = 2,
                 imageProfile = "",
 //                dialog = HomeUiState.Dialog.Error(BaseError()),
 //                dialog = HomeUiState.Dialog.Logout,

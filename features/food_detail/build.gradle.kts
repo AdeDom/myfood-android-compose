@@ -84,12 +84,22 @@ android {
     composeOptions {
         kotlinCompilerExtensionVersion = Versions.composeCompilerVersion
     }
+    packagingOptions {
+        resources {
+            excludes += "META-INF/io.netty.versions.properties"
+            excludes += "META-INF/INDEX.LIST"
+        }
+    }
 }
 
 dependencies {
 
     implementation(project(Dependencies.Project.core))
     implementation(project(Dependencies.Project.coreUiComponents))
+    implementation(project(Dependencies.Project.domainWebsockets))
+    implementation(project(Dependencies.Project.domainUserProfile))
+    implementation(project(Dependencies.Project.dataFood))
+    implementation(project(Dependencies.Project.dataFavorite))
 
     implementation(Dependencies.AndroidXCore.coreKtx)
     implementation(Dependencies.AndroidXActivity.activityCompose)
@@ -101,16 +111,6 @@ dependencies {
     implementation(Dependencies.Lifecycle.viewModelCompose)
     implementation(Dependencies.Lifecycle.livedataKtx)
     implementation(Dependencies.Lifecycle.runtimeKtx)
-
-    implementation(Dependencies.KotlinX.coroutinesCore)
-    implementation(Dependencies.KotlinX.coroutinesAndroid)
-
-    implementation(Dependencies.Ktor.clientCore)
-    implementation(Dependencies.Ktor.clientCio)
-    implementation(Dependencies.Ktor.clientLogging)
-    implementation(Dependencies.Ktor.clientContentNegotiation)
-    implementation(Dependencies.Ktor.serializationKotlinxJson)
-    implementation(Dependencies.Ktor.clientAuth)
 
     implementation(Dependencies.AdeDom.myFoodKtorServer)
 

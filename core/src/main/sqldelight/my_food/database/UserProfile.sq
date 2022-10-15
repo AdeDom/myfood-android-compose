@@ -20,6 +20,11 @@ SELECT image
 FROM UserProfileEntity
 LIMIT 1;
 
+getUserId:
+SELECT userId
+FROM UserProfileEntity
+LIMIT 1;
+
 saveUserProfile:
 INSERT OR REPLACE
 INTO UserProfileEntity

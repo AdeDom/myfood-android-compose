@@ -5,6 +5,7 @@ data class FoodModel(
     val foodName: String,
     val alias: String?,
     val image: String,
+    val favorite: Long?,
     val ratingScoreCount: String?,
     val categoryId: Long?,
 )

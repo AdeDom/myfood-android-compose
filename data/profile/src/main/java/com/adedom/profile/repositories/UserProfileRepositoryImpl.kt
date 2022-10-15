@@ -6,6 +6,7 @@ import com.myfood.server.data.models.response.UserProfileResponse
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.withContext
 import myfood.database.UserProfileEntity
 
@@ -23,7 +24,7 @@ class UserProfileRepositoryImpl(
     }
 
     override fun getUserProfileFlow(): Flow<UserProfileEntity?> {
-        return userProfileLocalDataSource.getUserProfileFlow()
+        return userProfileLocalDataSource.getUserProfileFlow().flowOn(ioDispatcher)
     }
 
     override suspend fun getUserProfile(): UserProfileEntity? {
@@ -35,6 +36,12 @@ class UserProfileRepositoryImpl(
     override suspend fun getImageProfile(): String? {
         return withContext(ioDispatcher) {
             userProfileLocalDataSource.getImageProfile()
+        }
+    }
+
+    override suspend fun getMyUserId(): String? {
+        return withContext(ioDispatcher) {
+            userProfileLocalDataSource.getMyUserId()
         }
     }
 

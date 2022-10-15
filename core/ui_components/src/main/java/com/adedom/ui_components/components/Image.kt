@@ -27,23 +27,23 @@ fun AppImage(
 @Composable
 fun AppImageNetwork(
     modifier: Modifier = Modifier,
-    image: String,
+    image: String?,
     contentDescription: String? = null,
     contentScale: ContentScale = ContentScale.Crop,
 ) {
-    if (image.isNotEmpty()) {
+    if (image.isNullOrEmpty()) {
+        AppImage(
+            image = R.drawable.logo_black,
+            contentDescription = contentDescription,
+            contentScale = contentScale,
+            modifier = modifier,
+        )
+    } else {
         AsyncImage(
             model = image,
             contentDescription = contentDescription,
             contentScale = contentScale,
             placeholder = painterResource(id = R.drawable.logo_black),
-            modifier = modifier,
-        )
-    } else {
-        AppImage(
-            image = R.drawable.logo_black,
-            contentDescription = contentDescription,
-            contentScale = contentScale,
             modifier = modifier,
         )
     }

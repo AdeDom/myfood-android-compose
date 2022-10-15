@@ -91,7 +91,6 @@ android {
 
 dependencies {
 
-    implementation(Dependencies.AndroidXCore.coreKtx)
     implementation(Dependencies.AndroidXActivity.activityCompose)
     implementation(Dependencies.AndroidGoogle.material)
 
@@ -99,6 +98,7 @@ dependencies {
 
     implementation(Dependencies.Ktor.clientCore)
     implementation(Dependencies.Ktor.clientCio)
+    implementation(Dependencies.Ktor.clientWebSockets)
     implementation(Dependencies.Ktor.clientLogging)
     implementation(Dependencies.Ktor.clientContentNegotiation)
     implementation(Dependencies.Ktor.serializationKotlinxJson)

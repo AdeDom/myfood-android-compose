@@ -14,6 +14,8 @@ interface UserProfileRepository {
 
     suspend fun getImageProfile(): String?
 
+    suspend fun getMyUserId(): String?
+
     suspend fun saveUserProfile(userProfile: UserProfileEntity)
 
     suspend fun deleteUserProfile()

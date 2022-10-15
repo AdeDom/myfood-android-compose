@@ -2,11 +2,13 @@ package com.adedom.main.presentation.view_model
 
 import com.adedom.core.utils.ApiServiceException
 import com.adedom.core.utils.RefreshTokenExpiredException
+import com.adedom.domain.use_cases.*
 import com.adedom.main.domain.models.CategoryModel
 import com.adedom.main.domain.use_cases.*
 import com.adedom.ui_components.base.BaseViewModel
 import com.adedom.ui_components.domain.models.FoodModel
 import com.myfood.server.data.models.base.BaseError
+import com.myfood.server.data.models.web_sockets.FavoriteWebSocketsResponse
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.channels.Channel
@@ -19,9 +21,9 @@ data class HomeUiState(
     val isRefreshing: Boolean = false,
     val imageProfile: String? = null,
     val categories: List<CategoryModel> = emptyList(),
+    val categoryId: Long? = null,
     val categoryName: String = "",
     val foods: List<FoodModel> = emptyList(),
-    val categoryIdClick: Long? = null,
     val isExitAuth: Boolean = false,
     val dialog: Dialog? = null,
 ) {
@@ -51,10 +53,15 @@ sealed interface HomeChannel {
 class HomeViewModel(
     private val homeContentUseCase: HomeContentUseCase,
     private val getImageProfileUseCase: GetImageProfileUseCase,
-    private val getFoodListByCategoryIdUseCase: GetFoodListByCategoryIdUseCase,
+    private val getFoodListByCategoryIdPairUseCase: GetFoodListByCategoryIdPairUseCase,
     private val logoutUseCase: LogoutUseCase,
     private val getIsAuthRoleUseCase: GetIsAuthRoleUseCase,
     private val saveUnAuthRoleUseCase: SaveUnAuthRoleUseCase,
+    private val initFavoriteWebSocketUseCase: InitFavoriteWebSocketUseCase,
+    private val getIsActiveFavoriteWebSocketUseCase: GetIsActiveFavoriteWebSocketUseCase,
+    private val getMyFavoriteWebSocketFlowUseCase: GetMyFavoriteWebSocketFlowUseCase,
+    private val updateFavoriteUseCase: UpdateFavoriteUseCase,
+    private val getFoodListByCategoryIdUseCase: GetFoodListByCategoryIdUseCase,
 ) : BaseViewModel<HomeUiEvent, HomeUiState>(HomeUiState()) {
 
     private var isBackPressed = false
@@ -64,6 +71,12 @@ class HomeViewModel(
     val channel: Flow<HomeChannel> = _channel.receiveAsFlow()
 
     init {
+        setupHome()
+        setupMyFavorite()
+        observeMyFavorite()
+    }
+
+    private fun setupHome() {
         launch {
             coState {
                 copy(
@@ -72,6 +85,46 @@ class HomeViewModel(
                 )
             }
             callHomeContent(dialog = HomeUiState.Dialog.Loading)
+        }
+    }
+
+    private fun setupMyFavorite() {
+        launch {
+            while (true) {
+                if (!getIsActiveFavoriteWebSocketUseCase()) {
+                    initFavoriteWebSocketUseCase()
+                }
+                delay(200)
+            }
+        }
+    }
+
+    private fun observeMyFavorite() {
+        launch {
+            while (true) {
+                if (getIsActiveFavoriteWebSocketUseCase()) {
+                    getMyFavoriteWebSocketFlowUseCase().collect(::updateFoodSocket)
+                }
+                delay(200)
+            }
+        }
+    }
+
+    private fun updateFoodSocket(socket: FavoriteWebSocketsResponse?) {
+        launch {
+            updateFavoriteUseCase(socket)
+
+            val foodIdList = uiState.foods.map { it.foodId.toInt() }
+            val isFoodIdUpdate = socket?.foodId in foodIdList
+            if (isFoodIdUpdate) {
+                coState {
+                    copy(
+                        foods = getFoodListByCategoryIdUseCase(
+                            uiState.categoryId ?: CATEGORY_RECOMMEND,
+                        )
+                    )
+                }
+            }
         }
     }
 
@@ -88,17 +141,17 @@ class HomeViewModel(
 
         try {
             val categories = homeContentUseCase()
-            val (categoryName, foods) = getFoodListByCategoryIdUseCase(
-                categoryId = uiState.categoryIdClick ?: CATEGORY_RECOMMEND,
+            val (categoryName, foods) = getFoodListByCategoryIdPairUseCase(
+                categoryId = uiState.categoryId ?: CATEGORY_RECOMMEND,
             )
             setState {
                 copy(
                     dialog = null,
                     isRefreshing = false,
                     categories = categories,
+                    categoryId = uiState.categoryId ?: CATEGORY_RECOMMEND,
                     categoryName = categoryName,
                     foods = foods,
-                    categoryIdClick = uiState.categoryIdClick ?: CATEGORY_RECOMMEND,
                 )
             }
         } catch (exception: ApiServiceException) {
@@ -128,12 +181,12 @@ class HomeViewModel(
         launch {
             when (event) {
                 is HomeUiEvent.CategoryClick -> {
-                    val (categoryName, foods) = getFoodListByCategoryIdUseCase(event.categoryId)
+                    val (categoryName, foods) = getFoodListByCategoryIdPairUseCase(event.categoryId)
                     setState {
                         copy(
+                            categoryId = event.categoryId,
                             categoryName = categoryName,
                             foods = foods,
-                            categoryIdClick = event.categoryId,
                         )
                     }
                 }

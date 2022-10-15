@@ -5,5 +5,8 @@ data class FoodDetailModel(
     val image: String,
     val price: Double,
     val description: String,
+    val favorite: Long,
     val ratingScoreCount: String,
+    val isFavorite: Boolean,
+    val isFavoriteState: Boolean,
 )

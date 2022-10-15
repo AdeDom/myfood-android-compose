@@ -4,7 +4,8 @@ CREATE TABLE FoodEntity(
     created TEXT NOT NULL,
     description TEXT,
     favorite INTEGER,
-    foodId INTEGER NOT NULL PRIMARY KEY,
+    foodIdKey TEXT NOT NULL PRIMARY KEY,
+    foodIdRef INTEGER,
     foodName TEXT NOT NULL,
     search TEXT NOT NULL,
     image TEXT NOT NULL,
@@ -33,7 +34,12 @@ OR search LIKE (:search || '%');
 saveFood:
 INSERT OR REPLACE
 INTO FoodEntity
-VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
+VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
+
+updateFavoriteByFoodId:
+UPDATE FoodEntity
+SET favorite = ?
+WHERE foodIdRef = ?;
 
 deleteFoodAll:
 DELETE FROM FoodEntity;

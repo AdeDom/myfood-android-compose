@@ -84,12 +84,19 @@ android {
     composeOptions {
         kotlinCompilerExtensionVersion = Versions.composeCompilerVersion
     }
+    packagingOptions {
+        resources {
+            excludes += "META-INF/io.netty.versions.properties"
+            excludes += "META-INF/INDEX.LIST"
+        }
+    }
 }
 
 dependencies {
 
     implementation(project(Dependencies.Project.core))
     implementation(project(Dependencies.Project.coreUiComponents))
+    implementation(project(Dependencies.Project.dataFood))
 
     implementation(Dependencies.AndroidXCore.coreKtx)
     implementation(Dependencies.AndroidXActivity.activityCompose)
@@ -101,11 +108,6 @@ dependencies {
     implementation(Dependencies.Lifecycle.viewModelCompose)
     implementation(Dependencies.Lifecycle.livedataKtx)
     implementation(Dependencies.Lifecycle.runtimeKtx)
-
-    implementation(Dependencies.KotlinX.coroutinesCore)
-    implementation(Dependencies.KotlinX.coroutinesAndroid)
-
-    implementation(Dependencies.SquareUp.sqlDelightCoroutinesExt)
 
     debugImplementation(Dependencies.AndroidXCompose.debugUiTooling)
     debugImplementation(Dependencies.AndroidXCompose.debugUiTestManifest)

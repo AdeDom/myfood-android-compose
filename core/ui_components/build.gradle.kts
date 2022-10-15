@@ -84,6 +84,12 @@ android {
     composeOptions {
         kotlinCompilerExtensionVersion = Versions.composeCompilerVersion
     }
+    packagingOptions {
+        resources {
+            excludes += "META-INF/io.netty.versions.properties"
+            excludes += "META-INF/INDEX.LIST"
+        }
+    }
 }
 
 dependencies {
