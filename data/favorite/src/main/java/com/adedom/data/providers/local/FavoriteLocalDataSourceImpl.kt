@@ -51,6 +51,10 @@ class FavoriteLocalDataSourceImpl(
         }
     }
 
+    override suspend fun updateBackupFavorite(favoriteId: String, updated: String) {
+        return queries.updateBackupFavorite(updated, favoriteId)
+    }
+
     override suspend fun deleteFavoriteAll() {
         return queries.deleteFavoriteAll()
     }

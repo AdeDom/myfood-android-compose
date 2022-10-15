@@ -12,7 +12,7 @@ class InsertFavoriteUseCase(
     private val favoriteRepository: FavoriteRepository,
 ) {
 
-    suspend operator fun invoke(foodId: Int?) {
+    suspend operator fun invoke(foodId: Int?): String {
         if (foodId == null) {
             throw Throwable("Food id is null.")
         }
@@ -39,5 +39,7 @@ class InsertFavoriteUseCase(
             updated = null,
         )
         favoriteRepository.insertFavorite(favorite)
+
+        return favoriteId
     }
 }

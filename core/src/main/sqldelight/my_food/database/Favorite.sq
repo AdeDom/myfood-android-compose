@@ -22,5 +22,10 @@ INSERT OR REPLACE
 INTO FavoriteEntity
 VALUES (?, ?, ?, ?, ?, ?, ?);
 
+updateBackupFavorite:
+UPDATE FavoriteEntity
+SET isBackup = 1, updated = ?
+WHERE favoriteId = ?;
+
 deleteFavoriteAll:
 DELETE FROM FavoriteEntity;

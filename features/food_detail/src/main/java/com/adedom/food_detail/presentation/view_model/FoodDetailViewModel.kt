@@ -9,6 +9,7 @@ import com.adedom.food_detail.domain.models.FoodDetailModel
 import com.adedom.food_detail.domain.use_cases.GetFavoriteFlowUseCase
 import com.adedom.food_detail.domain.use_cases.GetFoodDetailUseCase
 import com.adedom.food_detail.domain.use_cases.InsertFavoriteUseCase
+import com.adedom.food_detail.domain.use_cases.UpdateBackupFavoriteUseCase
 import com.adedom.ui_components.base.BaseViewModel
 import com.myfood.server.data.models.base.BaseError
 import kotlinx.coroutines.delay
@@ -35,6 +36,7 @@ class FoodDetailViewModel(
     private val getFoodDetailUseCase: GetFoodDetailUseCase,
     private val insertFavoriteUseCase: InsertFavoriteUseCase,
     private val sendMyFavoriteWebSocketUseCase: SendMyFavoriteWebSocketUseCase,
+    private val updateBackupFavoriteUseCase: UpdateBackupFavoriteUseCase,
     private val getIsActiveFavoriteWebSocketUseCase: GetIsActiveFavoriteWebSocketUseCase,
     private val getMyFavoriteWebSocketFlowUseCase: GetMyFavoriteWebSocketFlowUseCase,
 ) : BaseViewModel<FoodDetailUiEvent, FoodDetailUiState>(FoodDetailUiState()) {
@@ -103,8 +105,9 @@ class FoodDetailViewModel(
                 launch {
                     try {
                         if (getIsActiveFavoriteWebSocketUseCase()) {
-                            insertFavoriteUseCase(event.foodId)
+                            val favoriteId = insertFavoriteUseCase(event.foodId)
                             sendMyFavoriteWebSocketUseCase(event.foodId)
+                            updateBackupFavoriteUseCase(favoriteId)
                         } else {
                             setState {
                                 copy(dialog = FoodDetailUiState.Dialog.Error(BaseError()))

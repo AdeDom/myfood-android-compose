@@ -23,10 +23,10 @@ val featureAuthenticationModule = module {
     // domain
     factory { ValidateEmailUseCase() }
     factory { ValidatePasswordUseCase() }
-    factory { LoginUseCase(get(), get(), get()) }
+    factory { LoginUseCase(get()) }
     factory { FavoriteUseCase(get(), get()) }
 
     // presentation
-    viewModel { LoginViewModel(get(), get(), get()) }
+    viewModel { LoginViewModel(get(), get(), get(), get(), get()) }
     viewModel { RegisterViewModel() }
 }

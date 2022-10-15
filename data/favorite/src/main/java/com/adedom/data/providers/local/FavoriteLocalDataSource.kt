@@ -15,5 +15,7 @@ interface FavoriteLocalDataSource {
 
     suspend fun saveFavoriteAll(favoriteList: List<FavoriteEntity>)
 
+    suspend fun updateBackupFavorite(favoriteId: String, updated: String)
+
     suspend fun deleteFavoriteAll()
 }

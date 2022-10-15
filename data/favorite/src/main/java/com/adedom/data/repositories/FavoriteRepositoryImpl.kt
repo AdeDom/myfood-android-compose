@@ -51,6 +51,12 @@ class FavoriteRepositoryImpl(
         }
     }
 
+    override suspend fun updateBackupFavorite(favoriteId: String, updated: String) {
+        return withContext(ioDispatcher) {
+            favoriteLocalDataSource.updateBackupFavorite(favoriteId, updated)
+        }
+    }
+
     override suspend fun deleteFavoriteAll() {
         return withContext(ioDispatcher) {
             favoriteLocalDataSource.deleteFavoriteAll()
