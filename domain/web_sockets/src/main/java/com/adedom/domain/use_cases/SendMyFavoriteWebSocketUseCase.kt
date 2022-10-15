@@ -9,16 +9,15 @@ class SendMyFavoriteWebSocketUseCase(
     private val favoriteWebSocketRepository: FavoriteWebSocketRepository,
 ) {
 
-    suspend operator fun invoke(foodId: Int?): Boolean {
-        return if (foodId != null) {
-            val role = appDataStore.getAuthRole()
-            if (role == AuthRole.Auth) {
-                favoriteWebSocketRepository.send(foodId) == Unit
-            } else {
-                false
-            }
-        } else {
-            false
+    suspend operator fun invoke(foodId: Int?) {
+        if (foodId == null) {
+            throw Throwable("Food id is null.")
         }
+
+        if (appDataStore.getAuthRole() != AuthRole.Auth) {
+            throw Throwable("Auth incorrect.")
+        }
+
+        favoriteWebSocketRepository.send(foodId)
     }
 }

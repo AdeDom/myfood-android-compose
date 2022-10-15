@@ -11,7 +11,7 @@ interface FavoriteWebSocketDataSource {
 
     fun observe(): Flow<MyFavoriteResponse>
 
-    suspend fun send(foodId: Int): Unit?
+    suspend fun send(foodId: Int)
 
     suspend fun close(): Unit?
 }

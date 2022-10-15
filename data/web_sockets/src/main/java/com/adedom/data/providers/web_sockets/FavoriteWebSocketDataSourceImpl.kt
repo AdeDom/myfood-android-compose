@@ -61,16 +61,11 @@ class FavoriteWebSocketDataSourceImpl(
         }
     }
 
-    override suspend fun send(foodId: Int): Unit? {
-        return try {
-            val request = MyFavoriteRequest(foodId)
-            val json = Json.encodeToString(request)
-            val text = Frame.Text(json)
-            webSocketSession?.outgoing?.send(text)
-        } catch (e: Throwable) {
-            e.printStackTrace()
-            null
-        }
+    override suspend fun send(foodId: Int) {
+        val request = MyFavoriteRequest(foodId)
+        val json = Json.encodeToString(request)
+        val text = Frame.Text(json)
+        return webSocketSession?.outgoing?.send(text) ?: throw Throwable(json)
     }
 
     override suspend fun close(): Unit? {

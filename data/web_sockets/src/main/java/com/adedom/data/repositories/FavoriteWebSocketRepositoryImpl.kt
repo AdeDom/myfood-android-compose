@@ -27,7 +27,7 @@ class FavoriteWebSocketRepositoryImpl(
         return favoriteWebSocketDataSource.observe().flowOn(ioDispatcher)
     }
 
-    override suspend fun send(foodId: Int): Unit? {
+    override suspend fun send(foodId: Int) {
         return withContext(ioDispatcher) {
             favoriteWebSocketDataSource.send(foodId)
         }

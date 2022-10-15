@@ -101,11 +101,18 @@ class FoodDetailViewModel(
         when (event) {
             is FoodDetailUiEvent.MyFavorite -> {
                 launch {
-                    insertFavoriteUseCase(event.foodId)
-                    val result = sendMyFavoriteWebSocketUseCase(event.foodId)
-                    if (!result) {
+                    try {
+                        if (getIsActiveFavoriteWebSocketUseCase()) {
+                            insertFavoriteUseCase(event.foodId)
+                            sendMyFavoriteWebSocketUseCase(event.foodId)
+                        } else {
+                            setState {
+                                copy(dialog = FoodDetailUiState.Dialog.Error(BaseError()))
+                            }
+                        }
+                    } catch (exception: Throwable) {
                         setState {
-                            copy(dialog = FoodDetailUiState.Dialog.Error(BaseError()))
+                            copy(dialog = FoodDetailUiState.Dialog.Error(exception.toBaseError()))
                         }
                     }
                 }
