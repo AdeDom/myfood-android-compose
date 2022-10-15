@@ -17,7 +17,7 @@ SELECT COUNT(*)
 FROM FavoriteEntity
 WHERE foodId = ?;
 
-saveFavoriteAll:
+insertFavorite:
 INSERT OR REPLACE
 INTO FavoriteEntity
 VALUES (?, ?, ?, ?, ?, ?, ?);

@@ -5,6 +5,8 @@ import com.adedom.data.providers.remote.FavoriteRemoteDataSource
 import com.myfood.server.data.models.response.FavoriteResponse
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.withContext
 import myfood.database.FavoriteEntity
 
@@ -30,6 +32,16 @@ class FavoriteRepositoryImpl(
     override suspend fun getFavoriteCountByFoodId(foodId: Long): Long? {
         return withContext(ioDispatcher) {
             favoriteLocalDataSource.getFavoriteCountByFoodId(foodId)
+        }
+    }
+
+    override fun getFavoriteCountByFoodIdFlow(foodId: Long): Flow<Long?> {
+        return favoriteLocalDataSource.getFavoriteCountByFoodIdFlow(foodId).flowOn(ioDispatcher)
+    }
+
+    override suspend fun insertFavorite(favorite: FavoriteEntity) {
+        return withContext(ioDispatcher) {
+            favoriteLocalDataSource.insertFavorite(favorite)
         }
     }
 

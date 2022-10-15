@@ -1,5 +1,6 @@
 package com.adedom.data.providers.local
 
+import kotlinx.coroutines.flow.Flow
 import myfood.database.FavoriteEntity
 
 interface FavoriteLocalDataSource {
@@ -7,6 +8,10 @@ interface FavoriteLocalDataSource {
     suspend fun getFavoriteList(): List<FavoriteEntity>
 
     suspend fun getFavoriteCountByFoodId(foodId: Long): Long?
+
+    fun getFavoriteCountByFoodIdFlow(foodId: Long): Flow<Long?>
+
+    suspend fun insertFavorite(favorite: FavoriteEntity)
 
     suspend fun saveFavoriteAll(favoriteList: List<FavoriteEntity>)
 

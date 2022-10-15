@@ -97,6 +97,7 @@ dependencies {
     implementation(project(Dependencies.Project.core))
     implementation(project(Dependencies.Project.coreUiComponents))
     implementation(project(Dependencies.Project.domainWebsockets))
+    implementation(project(Dependencies.Project.domainUserProfile))
     implementation(project(Dependencies.Project.dataFood))
     implementation(project(Dependencies.Project.dataFavorite))
 

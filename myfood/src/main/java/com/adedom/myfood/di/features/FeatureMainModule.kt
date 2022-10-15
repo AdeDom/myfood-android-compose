@@ -38,7 +38,7 @@ val featureMainModule = module {
     // domain
     factory { HomeContentUseCase(get(), get()) }
     factory { GetImageProfileUseCase(get()) }
-    factory { LogoutUseCase(get(), get()) }
+    factory { LogoutUseCase(get(), get(), get(), get(), get()) }
     factory { GetIsAuthRoleUseCase(get()) }
     factory { SaveUnAuthRoleUseCase(get()) }
     factory { GetFoodListByCategoryIdPairUseCase(get(), get()) }

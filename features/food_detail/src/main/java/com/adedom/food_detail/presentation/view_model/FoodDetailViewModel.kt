@@ -6,10 +6,14 @@ import com.adedom.domain.use_cases.GetIsActiveFavoriteWebSocketUseCase
 import com.adedom.domain.use_cases.GetMyFavoriteWebSocketFlowUseCase
 import com.adedom.domain.use_cases.SendMyFavoriteWebSocketUseCase
 import com.adedom.food_detail.domain.models.FoodDetailModel
+import com.adedom.food_detail.domain.use_cases.GetFavoriteFlowUseCase
 import com.adedom.food_detail.domain.use_cases.GetFoodDetailUseCase
+import com.adedom.food_detail.domain.use_cases.InsertFavoriteUseCase
 import com.adedom.ui_components.base.BaseViewModel
 import com.myfood.server.data.models.base.BaseError
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 
 data class FoodDetailUiState(
@@ -27,7 +31,9 @@ sealed interface FoodDetailUiEvent {
 }
 
 class FoodDetailViewModel(
+    private val getFavoriteFlowUseCase: GetFavoriteFlowUseCase,
     private val getFoodDetailUseCase: GetFoodDetailUseCase,
+    private val insertFavoriteUseCase: InsertFavoriteUseCase,
     private val sendMyFavoriteWebSocketUseCase: SendMyFavoriteWebSocketUseCase,
     private val getIsActiveFavoriteWebSocketUseCase: GetIsActiveFavoriteWebSocketUseCase,
     private val getMyFavoriteWebSocketFlowUseCase: GetMyFavoriteWebSocketFlowUseCase,
@@ -52,6 +58,18 @@ class FoodDetailViewModel(
                 delay(200)
             }
         }
+    }
+
+    fun observeFavoriteState(foodId: Int?) {
+        getFavoriteFlowUseCase(foodId)
+            .onEach {
+                setState {
+                    copy(
+                        foodDetail = foodDetail?.copy(isFavoriteState = it)
+                    )
+                }
+            }
+            .launchIn(this)
     }
 
     fun callFoodDetail(foodId: Int?) {
@@ -83,6 +101,7 @@ class FoodDetailViewModel(
         when (event) {
             is FoodDetailUiEvent.MyFavorite -> {
                 launch {
+                    insertFavoriteUseCase(event.foodId)
                     val result = sendMyFavoriteWebSocketUseCase(event.foodId)
                     if (!result) {
                         setState {

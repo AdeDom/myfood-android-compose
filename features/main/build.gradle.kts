@@ -99,6 +99,7 @@ dependencies {
     implementation(project(Dependencies.Project.dataProfile))
     implementation(project(Dependencies.Project.domainWebsockets))
     implementation(project(Dependencies.Project.dataFood))
+    implementation(project(Dependencies.Project.dataFavorite))
 
     implementation(Dependencies.AndroidXCore.coreKtx)
     implementation(Dependencies.AndroidXActivity.activityCompose)
