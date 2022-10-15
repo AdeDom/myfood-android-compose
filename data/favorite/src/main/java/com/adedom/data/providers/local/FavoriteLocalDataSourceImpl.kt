@@ -25,6 +25,10 @@ class FavoriteLocalDataSourceImpl(
         return queries.getFavoriteCountByFoodId(foodId).asFlow().mapToOneOrNull()
     }
 
+    override suspend fun getIsFavoriteByFoodId(foodId: Long): Long? {
+        return queries.getIsFavoriteByFoodId(foodId).executeAsOneOrNull()
+    }
+
     override suspend fun insertFavorite(favorite: FavoriteEntity) {
         return queries.insertFavorite(
             favoriteId = favorite.favoriteId,

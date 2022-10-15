@@ -11,6 +11,8 @@ interface FavoriteLocalDataSource {
 
     fun getFavoriteCountByFoodIdFlow(foodId: Long): Flow<Long?>
 
+    suspend fun getIsFavoriteByFoodId(foodId: Long): Long?
+
     suspend fun insertFavorite(favorite: FavoriteEntity)
 
     suspend fun saveFavoriteAll(favoriteList: List<FavoriteEntity>)

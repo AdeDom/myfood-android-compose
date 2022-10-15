@@ -39,6 +39,12 @@ class FavoriteRepositoryImpl(
         return favoriteLocalDataSource.getFavoriteCountByFoodIdFlow(foodId).flowOn(ioDispatcher)
     }
 
+    override suspend fun getIsFavoriteByFoodId(foodId: Long): Long? {
+        return withContext(ioDispatcher) {
+            favoriteLocalDataSource.getIsFavoriteByFoodId(foodId)
+        }
+    }
+
     override suspend fun insertFavorite(favorite: FavoriteEntity) {
         return withContext(ioDispatcher) {
             favoriteLocalDataSource.insertFavorite(favorite)

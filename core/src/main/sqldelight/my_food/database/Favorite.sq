@@ -17,6 +17,11 @@ SELECT COUNT(*)
 FROM FavoriteEntity
 WHERE foodId = ?;
 
+getIsFavoriteByFoodId:
+SELECT isFavorite
+FROM FavoriteEntity
+WHERE foodId = ?;
+
 insertFavorite:
 INSERT OR REPLACE
 INTO FavoriteEntity
