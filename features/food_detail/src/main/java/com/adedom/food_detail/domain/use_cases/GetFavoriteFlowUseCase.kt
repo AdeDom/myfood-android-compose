@@ -9,10 +9,10 @@ class GetFavoriteFlowUseCase(
 ) {
 
     operator fun invoke(foodId: Int?): Flow<Boolean> {
-        return favoriteRepository.getFavoriteCountByFoodIdFlow(
+        return favoriteRepository.getIsFavoriteByFoodIdFlow(
             foodId?.toLong() ?: throw Throwable("Food id is null.")
         ).map {
-            it?.mod(2) == 1
+            it == 1L
         }
     }
 }

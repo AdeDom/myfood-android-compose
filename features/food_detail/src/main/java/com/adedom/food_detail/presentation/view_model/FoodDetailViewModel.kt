@@ -8,7 +8,7 @@ import com.adedom.domain.use_cases.SendMyFavoriteWebSocketUseCase
 import com.adedom.food_detail.domain.models.FoodDetailModel
 import com.adedom.food_detail.domain.use_cases.GetFavoriteFlowUseCase
 import com.adedom.food_detail.domain.use_cases.GetFoodDetailUseCase
-import com.adedom.food_detail.domain.use_cases.InsertFavoriteUseCase
+import com.adedom.food_detail.domain.use_cases.InsertOrReplaceFavoriteUseCase
 import com.adedom.food_detail.domain.use_cases.UpdateBackupFavoriteUseCase
 import com.adedom.ui_components.base.BaseViewModel
 import com.myfood.server.data.models.base.BaseError
@@ -34,7 +34,7 @@ sealed interface FoodDetailUiEvent {
 class FoodDetailViewModel(
     private val getFavoriteFlowUseCase: GetFavoriteFlowUseCase,
     private val getFoodDetailUseCase: GetFoodDetailUseCase,
-    private val insertFavoriteUseCase: InsertFavoriteUseCase,
+    private val insertOrReplaceFavoriteUseCase: InsertOrReplaceFavoriteUseCase,
     private val sendMyFavoriteWebSocketUseCase: SendMyFavoriteWebSocketUseCase,
     private val updateBackupFavoriteUseCase: UpdateBackupFavoriteUseCase,
     private val getIsActiveFavoriteWebSocketUseCase: GetIsActiveFavoriteWebSocketUseCase,
@@ -105,7 +105,7 @@ class FoodDetailViewModel(
                 launch {
                     try {
                         if (getIsActiveFavoriteWebSocketUseCase()) {
-                            val favoriteId = insertFavoriteUseCase(event.foodId)
+                            val favoriteId = insertOrReplaceFavoriteUseCase(event.foodId)
                             sendMyFavoriteWebSocketUseCase(event.foodId)
                             updateBackupFavoriteUseCase(favoriteId)
                         } else {

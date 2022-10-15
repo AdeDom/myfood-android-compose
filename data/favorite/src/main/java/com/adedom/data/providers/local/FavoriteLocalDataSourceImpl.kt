@@ -17,20 +17,16 @@ class FavoriteLocalDataSourceImpl(
         return queries.getFavoriteList().executeAsList()
     }
 
-    override suspend fun getFavoriteCountByFoodId(foodId: Long): Long? {
-        return queries.getFavoriteCountByFoodId(foodId).executeAsOneOrNull()
+    override suspend fun getFavoriteByFoodId(foodId: Long): FavoriteEntity? {
+        return queries.getFavoriteByFoodId(foodId).executeAsOneOrNull()
     }
 
-    override fun getFavoriteCountByFoodIdFlow(foodId: Long): Flow<Long?> {
-        return queries.getFavoriteCountByFoodId(foodId).asFlow().mapToOneOrNull()
+    override fun getIsFavoriteByFoodIdFlow(foodId: Long): Flow<Long?> {
+        return queries.getIsFavoriteByFoodId(foodId).asFlow().mapToOneOrNull()
     }
 
-    override suspend fun getIsFavoriteByFoodId(foodId: Long): Long? {
-        return queries.getIsFavoriteByFoodId(foodId).executeAsOneOrNull()
-    }
-
-    override suspend fun insertFavorite(favorite: FavoriteEntity) {
-        return queries.insertFavorite(
+    override suspend fun insertOrReplaceFavorite(favorite: FavoriteEntity) {
+        return queries.insertOrReplaceFavorite(
             favoriteId = favorite.favoriteId,
             userId = favorite.userId,
             foodId = favorite.foodId,
@@ -41,9 +37,9 @@ class FavoriteLocalDataSourceImpl(
         )
     }
 
-    override suspend fun saveFavoriteAll(favoriteList: List<FavoriteEntity>) {
+    override suspend fun insertOrReplaceFavoriteAll(favoriteList: List<FavoriteEntity>) {
         return favoriteList.forEach { favorite ->
-            queries.insertFavorite(
+            queries.insertOrReplaceFavorite(
                 favoriteId = favorite.favoriteId,
                 userId = favorite.userId,
                 foodId = favorite.foodId,

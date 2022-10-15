@@ -23,37 +23,25 @@ class FavoriteRepositoryImpl(
         }
     }
 
-    override suspend fun getFavoriteList(): List<FavoriteEntity> {
+    override suspend fun getFavoriteByFoodId(foodId: Long): FavoriteEntity? {
         return withContext(ioDispatcher) {
-            favoriteLocalDataSource.getFavoriteList()
+            favoriteLocalDataSource.getFavoriteByFoodId(foodId)
         }
     }
 
-    override suspend fun getFavoriteCountByFoodId(foodId: Long): Long? {
+    override fun getIsFavoriteByFoodIdFlow(foodId: Long): Flow<Long?> {
+        return favoriteLocalDataSource.getIsFavoriteByFoodIdFlow(foodId).flowOn(ioDispatcher)
+    }
+
+    override suspend fun insertOrReplaceFavorite(favorite: FavoriteEntity) {
         return withContext(ioDispatcher) {
-            favoriteLocalDataSource.getFavoriteCountByFoodId(foodId)
+            favoriteLocalDataSource.insertOrReplaceFavorite(favorite)
         }
     }
 
-    override fun getFavoriteCountByFoodIdFlow(foodId: Long): Flow<Long?> {
-        return favoriteLocalDataSource.getFavoriteCountByFoodIdFlow(foodId).flowOn(ioDispatcher)
-    }
-
-    override suspend fun getIsFavoriteByFoodId(foodId: Long): Long? {
+    override suspend fun insertOrReplaceFavoriteAll(favoriteList: List<FavoriteEntity>) {
         return withContext(ioDispatcher) {
-            favoriteLocalDataSource.getIsFavoriteByFoodId(foodId)
-        }
-    }
-
-    override suspend fun insertFavorite(favorite: FavoriteEntity) {
-        return withContext(ioDispatcher) {
-            favoriteLocalDataSource.insertFavorite(favorite)
-        }
-    }
-
-    override suspend fun saveFavoriteAll(favoriteList: List<FavoriteEntity>) {
-        return withContext(ioDispatcher) {
-            favoriteLocalDataSource.saveFavoriteAll(favoriteList)
+            favoriteLocalDataSource.insertOrReplaceFavoriteAll(favoriteList)
         }
     }
 

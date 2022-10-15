@@ -7,7 +7,7 @@ import myfood.database.FavoriteEntity
 import java.text.SimpleDateFormat
 import java.util.*
 
-class InsertFavoriteUseCase(
+class InsertOrReplaceFavoriteUseCase(
     private val getMyUserIdUseCase: GetMyUserIdUseCase,
     private val favoriteRepository: FavoriteRepository,
 ) {
@@ -17,17 +17,24 @@ class InsertFavoriteUseCase(
             throw Throwable("Food id is null.")
         }
 
-        val favoriteId = UUID.randomUUID().toString().replace("-", "")
+        val favoriteEntity = favoriteRepository.getFavoriteByFoodId(foodId.toLong())
+
+        val favoriteId = favoriteEntity?.favoriteId ?: UUID.randomUUID().toString().replace("-", "")
 
         val userId = getMyUserIdUseCase().orEmpty()
 
-        val favoriteCount = favoriteRepository.getFavoriteCountByFoodId(foodId.toLong())
-        val isFavorite = if (favoriteCount?.mod(2) == 0) 1L else 0L
+        val isFavorite = if (favoriteEntity == null) {
+            1L
+        } else {
+            if (favoriteEntity.isFavorite == 0L) 1L else 0L
+        }
 
         val isBackup = 0L
 
         val sdf = SimpleDateFormat(AppConstant.DATE_TIME_FORMAT_REQUEST, Locale.getDefault())
         val created = sdf.format(Date())
+
+        val updated = favoriteEntity?.updated
 
         val favorite = FavoriteEntity(
             favoriteId = favoriteId,
@@ -36,9 +43,9 @@ class InsertFavoriteUseCase(
             isFavorite = isFavorite,
             isBackup = isBackup,
             created = created,
-            updated = null,
+            updated = updated,
         )
-        favoriteRepository.insertFavorite(favorite)
+        favoriteRepository.insertOrReplaceFavorite(favorite)
 
         return favoriteId
     }

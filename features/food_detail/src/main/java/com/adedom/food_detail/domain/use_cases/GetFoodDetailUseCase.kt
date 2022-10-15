@@ -23,8 +23,9 @@ class GetFoodDetailUseCase(
         val isFavorite = appDataStore.getAuthRole() == AuthRole.Auth
 
         // isFavoriteState
-        val favoriteCount = favoriteRepository.getIsFavoriteByFoodId(foodId.toLong()) ?: 0L
-        val isFavoriteState = favoriteCount == 1L
+        val favoriteEntity = favoriteRepository.getFavoriteByFoodId(foodId.toLong())
+        val isFavoriteCount = favoriteEntity?.isFavorite ?: 0L
+        val isFavoriteState = isFavoriteCount == 1L
 
         // mapper
         return mapFoodDetailResponseToFoodDetailModel(

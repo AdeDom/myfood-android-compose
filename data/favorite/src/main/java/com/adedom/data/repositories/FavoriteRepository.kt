@@ -8,17 +8,13 @@ interface FavoriteRepository {
 
     suspend fun callFavoriteAll(): List<FavoriteResponse>?
 
-    suspend fun getFavoriteList(): List<FavoriteEntity>
+    suspend fun getFavoriteByFoodId(foodId: Long): FavoriteEntity?
 
-    suspend fun getFavoriteCountByFoodId(foodId: Long): Long?
+    fun getIsFavoriteByFoodIdFlow(foodId: Long): Flow<Long?>
 
-    fun getFavoriteCountByFoodIdFlow(foodId: Long): Flow<Long?>
+    suspend fun insertOrReplaceFavorite(favorite: FavoriteEntity)
 
-    suspend fun getIsFavoriteByFoodId(foodId: Long): Long?
-
-    suspend fun insertFavorite(favorite: FavoriteEntity)
-
-    suspend fun saveFavoriteAll(favoriteList: List<FavoriteEntity>)
+    suspend fun insertOrReplaceFavoriteAll(favoriteList: List<FavoriteEntity>)
 
     suspend fun updateBackupFavorite(favoriteId: String, updated: String)
 

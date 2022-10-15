@@ -14,7 +14,7 @@ class FavoriteUseCase(
         val favoriteResponse = favoriteRepository.callFavoriteAll()
         val favoriteList = mapFavoriteResponseToFavoriteEntity(favoriteResponse)
         favoriteRepository.deleteFavoriteAll()
-        favoriteRepository.saveFavoriteAll(favoriteList)
+        favoriteRepository.insertOrReplaceFavoriteAll(favoriteList)
     }
 
     private suspend fun mapFavoriteResponseToFavoriteEntity(favoriteList: List<FavoriteResponse>?): List<FavoriteEntity> {

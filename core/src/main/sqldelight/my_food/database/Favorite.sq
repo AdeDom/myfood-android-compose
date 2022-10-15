@@ -12,8 +12,8 @@ getFavoriteList:
 SELECT *
 FROM FavoriteEntity;
 
-getFavoriteCountByFoodId:
-SELECT COUNT(*)
+getFavoriteByFoodId:
+SELECT *
 FROM FavoriteEntity
 WHERE foodId = ?;
 
@@ -22,7 +22,7 @@ SELECT isFavorite
 FROM FavoriteEntity
 WHERE foodId = ?;
 
-insertFavorite:
+insertOrReplaceFavorite:
 INSERT OR REPLACE
 INTO FavoriteEntity
 VALUES (?, ?, ?, ?, ?, ?, ?);
