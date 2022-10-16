@@ -73,10 +73,9 @@ fun LoginContent(
                 keyboardType = KeyboardType.Password,
                 imeAction = ImeAction.Done,
             )
-            AppButton(
+            AppColorButton(
                 text = "Login",
                 color = if (state.isLogin) Color(0xFFFFD700) else Color.Gray,
-                border = if (state.isLogin) Color(0xFFFFD700) else Color.Gray,
                 enabled = state.isLogin,
                 onClick = { dispatch(LoginUiEvent.Submit) },
             )

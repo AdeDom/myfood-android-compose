@@ -17,7 +17,7 @@ class WelcomeBottomSectionTest {
     fun welcomeBottomSection() {
         composeTestRule.setContent {
             MyFoodTheme {
-                BottomSection(
+                WelcomeBottomSection(
                     dispatch = {},
                     openLoginPage = {},
                     openRegisterPage = {},

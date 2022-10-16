@@ -15,13 +15,14 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.adedom.ui_components.components.AppBottomText
-import com.adedom.ui_components.components.AppButton
+import com.adedom.ui_components.components.AppColorButton
+import com.adedom.ui_components.components.AppOutlinedButton
 import com.adedom.ui_components.components.AppText
 import com.adedom.ui_components.theme.MyFoodTheme
 import com.adedom.welcome.presentation.view_model.WelcomeUiEvent
 
 @Composable
-fun BottomSection(
+fun WelcomeBottomSection(
     dispatch: (WelcomeUiEvent) -> Unit,
     openLoginPage: () -> Unit,
     openRegisterPage: () -> Unit,
@@ -32,15 +33,13 @@ fun BottomSection(
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = modifier.fillMaxSize(),
     ) {
-        AppButton(
+        AppColorButton(
             text = "Login",
-            color = Color(0xFFFFD700),
             onClick = openLoginPage,
         )
         Spacer(modifier = Modifier.height(20.dp))
-        AppButton(
+        AppOutlinedButton(
             text = "Create an Account",
-            color = Color.White,
             onClick = openRegisterPage,
         )
         Spacer(modifier = Modifier.height(20.dp))
@@ -99,9 +98,9 @@ fun BottomSection(
 
 @Composable
 @Preview(showBackground = true)
-fun BottomSectionPreview() {
+fun WelcomeBottomSectionPreview() {
     MyFoodTheme {
-        BottomSection(
+        WelcomeBottomSection(
             dispatch = {},
             openLoginPage = {},
             openRegisterPage = {},

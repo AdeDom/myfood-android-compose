@@ -10,11 +10,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.adedom.ui_components.components.AppButton
+import com.adedom.ui_components.components.AppColorButton
 import com.adedom.ui_components.components.AppErrorAlertDialog
 import com.adedom.ui_components.components.AppIcon
 import com.adedom.ui_components.components.AppImageNetwork
@@ -102,9 +101,8 @@ fun UserProfileContent(
             }
         }
 
-        AppButton(
+        AppColorButton(
             text = "Back",
-            color = Color(0xFFFFD700),
             onClick = onBackPressed,
             modifier = Modifier.align(Alignment.BottomCenter),
         )

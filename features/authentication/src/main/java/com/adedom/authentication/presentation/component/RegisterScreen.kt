@@ -8,7 +8,6 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -86,10 +85,8 @@ fun RegisterContent(
                 hint = "Confirm Password",
                 imeAction = ImeAction.Next,
             )
-            AppButton(
+            AppColorButton(
                 text = "Sign Up",
-                color = Color(0xFFFFD700),
-                border = Color(0xFFFFD700),
                 onClick = openMainPage,
             )
             Spacer(modifier = Modifier.height(20.dp))

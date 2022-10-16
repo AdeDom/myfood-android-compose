@@ -21,10 +21,49 @@ import androidx.compose.ui.unit.sp
 import com.adedom.ui_components.theme.MyFoodTheme
 
 @Composable
-fun AppButton(
-    modifier: Modifier = Modifier,
+fun AppOutlinedButton(
     text: String,
-    color: Color,
+    modifier: Modifier = Modifier,
+    color: Color = Color.White,
+    border: Color = Color(0xFFFFD700),
+    enabled: Boolean = true,
+    onClick: () -> Unit,
+) {
+    Box(
+        modifier = modifier
+    ) {
+        Surface(
+            shape = RoundedCornerShape(32.dp),
+            color = color,
+            border = BorderStroke(1.dp, border),
+            elevation = 2.dp,
+            modifier = Modifier
+                .width(300.dp)
+                .height(60.dp)
+                .clip(RoundedCornerShape(32.dp))
+                .clickable(
+                    enabled = enabled,
+                    onClick = onClick,
+                ),
+        ) {
+            Box(
+                contentAlignment = Alignment.Center,
+                modifier = Modifier.fillMaxSize(),
+            ) {
+                AppText(
+                    text,
+                    fontSize = 18.sp,
+                )
+            }
+        }
+    }
+}
+
+@Composable
+fun AppColorButton(
+    text: String,
+    modifier: Modifier = Modifier,
+    color: Color = Color(0xFFFFD700),
     border: Color = Color(0xFFFFD700),
     enabled: Boolean = true,
     onClick: () -> Unit,
@@ -61,13 +100,21 @@ fun AppButton(
 
 @Composable
 @Preview(showBackground = true)
-fun ButtonPreview() {
+fun OutlinedButtonPreview() {
     MyFoodTheme {
         val context = LocalContext.current
-        AppButton(
-            text = "Hello",
-            color = Color.White,
-        ) {
+        AppOutlinedButton("Hello") {
+            Toast.makeText(context, "Button", Toast.LENGTH_SHORT).show()
+        }
+    }
+}
+
+@Composable
+@Preview(showBackground = true)
+fun ColorButtonPreview() {
+    MyFoodTheme {
+        val context = LocalContext.current
+        AppColorButton("Hello") {
             Toast.makeText(context, "Button", Toast.LENGTH_SHORT).show()
         }
     }

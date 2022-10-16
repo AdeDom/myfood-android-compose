@@ -22,9 +22,9 @@ fun WelcomeContent(
     Column(
         modifier = Modifier.fillMaxSize(),
     ) {
-        TopSection(modifier = Modifier.semantics { contentDescription = "Welcome top section" })
+        WelcomeTopSection(modifier = Modifier.semantics { contentDescription = "Welcome top section" })
         Spacer(modifier = Modifier.height(64.dp))
-        BottomSection(
+        WelcomeBottomSection(
             dispatch = dispatch,
             openLoginPage = openLoginPage,
             openRegisterPage = openRegisterPage,

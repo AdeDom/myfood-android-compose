@@ -16,7 +16,7 @@ class WelcomeTopSectionTest {
     fun welcomeTopSection() {
         composeTestRule.setContent {
             MyFoodTheme {
-                TopSection()
+                WelcomeTopSection()
             }
         }
 

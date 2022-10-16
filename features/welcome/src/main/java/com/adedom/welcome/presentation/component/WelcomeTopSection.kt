@@ -20,7 +20,7 @@ import com.adedom.ui_components.theme.MyFoodTheme
 import com.adedom.welcome.R
 
 @Composable
-fun TopSection(
+fun WelcomeTopSection(
     modifier: Modifier = Modifier,
 ) {
     val configuration = LocalConfiguration.current
@@ -55,8 +55,8 @@ fun TopSection(
 
 @Composable
 @Preview(showBackground = true)
-fun TopSectionPreview() {
+fun WelcomeTopSectionPreview() {
     MyFoodTheme {
-        TopSection()
+        WelcomeTopSection()
     }
 }
