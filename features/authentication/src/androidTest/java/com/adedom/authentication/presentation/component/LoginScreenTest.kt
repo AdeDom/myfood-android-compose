@@ -3,10 +3,12 @@ package com.adedom.authentication.presentation.component
 import androidx.compose.ui.test.*
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.text.input.ImeAction
+import com.adedom.authentication.domain.use_cases.FavoriteUseCase
 import com.adedom.authentication.domain.use_cases.LoginUseCase
 import com.adedom.authentication.presentation.view_model.LoginViewModel
 import com.adedom.core.utils.ApiServiceException
 import com.adedom.ui_components.theme.MyFoodTheme
+import com.adedom.user_profile.domain.use_cases.FetchUserProfileUseCase
 import com.myfood.server.data.models.base.BaseError
 import com.myfood.server.usecase.validate.ValidateEmailUseCase
 import com.myfood.server.usecase.validate.ValidatePasswordUseCase
@@ -25,6 +27,8 @@ class LoginScreenTest {
     private lateinit var validateEmailUseCase: ValidateEmailUseCase
     private lateinit var validatePasswordUseCase: ValidatePasswordUseCase
     private val loginUseCase: LoginUseCase = mockk()
+    private val fetchUserProfileUseCase: FetchUserProfileUseCase = mockk()
+    private val favoriteUseCase: FavoriteUseCase = mockk()
     lateinit var viewModel: LoginViewModel
 
     @Before
@@ -35,6 +39,8 @@ class LoginScreenTest {
             validateEmailUseCase,
             validatePasswordUseCase,
             loginUseCase,
+            fetchUserProfileUseCase,
+            favoriteUseCase,
         )
 
         composeTestRule.setContent {
@@ -168,6 +174,8 @@ class LoginScreenTest {
         val password = "password1234"
         val messageError = "Email or password incorrect."
         coEvery { loginUseCase(any(), any()) } returns Unit
+        coEvery { fetchUserProfileUseCase() } returns Unit
+        coEvery { favoriteUseCase() } returns Unit
 
         composeTestRule.onNodeWithText("Your Email").performTextInput(email)
         composeTestRule.onNodeWithText("Password").performTextInput(password)
@@ -191,6 +199,8 @@ class LoginScreenTest {
         composeTestRule.onNodeWithText(messageError).assertDoesNotExist()
         composeTestRule.onNode(isDialog()).assertExists()
         coVerify { loginUseCase(any(), any()) }
+        coVerify { fetchUserProfileUseCase() }
+        coVerify { favoriteUseCase() }
     }
 
     @Test
@@ -201,6 +211,8 @@ class LoginScreenTest {
         val baseError = BaseError(message = messageError)
         val exception = ApiServiceException(baseError)
         coEvery { loginUseCase(any(), any()) } throws exception
+        coEvery { fetchUserProfileUseCase() } returns Unit
+        coEvery { favoriteUseCase() } returns Unit
 
         composeTestRule.onNodeWithText("Your Email").performTextInput(email)
         composeTestRule.onNodeWithText("Password").performTextInput(password)
@@ -224,6 +236,8 @@ class LoginScreenTest {
         composeTestRule.onNodeWithText(messageError).assertIsDisplayed()
         composeTestRule.onNode(isDialog()).assertExists()
         coVerify { loginUseCase(any(), any()) }
+        coVerify(exactly = 0) { fetchUserProfileUseCase() }
+        coVerify(exactly = 0) { favoriteUseCase() }
     }
 
     @Test
@@ -233,6 +247,8 @@ class LoginScreenTest {
         val messageError = "Email or password incorrect."
         val exception = Throwable(messageError)
         coEvery { loginUseCase(any(), any()) } throws exception
+        coEvery { fetchUserProfileUseCase() } returns Unit
+        coEvery { favoriteUseCase() } returns Unit
 
         composeTestRule.onNodeWithText("Your Email").performTextInput(email)
         composeTestRule.onNodeWithText("Password").performTextInput(password)
@@ -256,6 +272,8 @@ class LoginScreenTest {
         composeTestRule.onNodeWithText(messageError).assertIsDisplayed()
         composeTestRule.onNode(isDialog()).assertExists()
         coVerify { loginUseCase(any(), any()) }
+        coVerify(exactly = 0) { fetchUserProfileUseCase() }
+        coVerify(exactly = 0) { favoriteUseCase() }
     }
 
     @Test
@@ -266,6 +284,8 @@ class LoginScreenTest {
         val baseError = BaseError(message = messageError)
         val exception = ApiServiceException(baseError)
         coEvery { loginUseCase(any(), any()) } throws exception
+        coEvery { fetchUserProfileUseCase() } returns Unit
+        coEvery { favoriteUseCase() } returns Unit
         composeTestRule.onNodeWithText("Your Email").performTextInput(email)
         composeTestRule.onNodeWithText("Password").performTextInput(password)
         composeTestRule.onAllNodesWithText("Login")[1].performClick()
@@ -307,5 +327,7 @@ class LoginScreenTest {
         composeTestRule.onNodeWithText(messageError).assertDoesNotExist()
         composeTestRule.onNode(isDialog()).assertDoesNotExist()
         coVerify { loginUseCase(any(), any()) }
+        coVerify(exactly = 0) { fetchUserProfileUseCase() }
+        coVerify(exactly = 0) { favoriteUseCase() }
     }
 }

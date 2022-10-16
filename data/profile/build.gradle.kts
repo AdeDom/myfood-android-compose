@@ -95,5 +95,6 @@ dependencies {
     testImplementation(Dependencies.Truth.testTruth)
     testImplementation(Dependencies.KotlinX.testCoroutinesTest)
     testImplementation(Dependencies.Ktor.testClientMock)
+    testImplementation(Dependencies.Ktor.serializationKotlinxJson)
     testImplementation(Dependencies.Mockk.testMockk)
 }

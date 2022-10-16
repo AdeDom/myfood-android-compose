@@ -1,14 +1,13 @@
 package com.adedom.authentication.domain
 
+import com.adedom.authentication.data.providers.data_store.FakeAppDataStore
 import com.adedom.authentication.data.providers.remote.auth.AuthRemoteDataSource
 import com.adedom.authentication.data.repositories.AuthLoginRepositoryImpl
 import com.adedom.authentication.domain.repositories.AuthLoginRepository
 import com.adedom.authentication.domain.use_cases.LoginUseCase
 import com.adedom.core.data.providers.data_store.AppDataStore
-import com.adedom.core.data.providers.data_store.FakeAppDataStore
 import com.adedom.core.utils.ApiServiceException
 import com.adedom.core.utils.AuthRole
-import com.adedom.user_profile.domain.use_cases.FetchUserProfileUseCase
 import com.google.common.truth.Truth.assertThat
 import com.myfood.server.data.models.base.BaseError
 import com.myfood.server.data.models.base.BaseResponse
@@ -22,7 +21,6 @@ import org.junit.Test
 class LoginUseCaseTest {
 
     private val authRemoteDataSource: AuthRemoteDataSource = mockk()
-    private val fetchUserProfileUseCase: FetchUserProfileUseCase = mockk()
     private lateinit var appDataStore: AppDataStore
     private lateinit var authLoginRepository: AuthLoginRepository
     private lateinit var useCase: LoginUseCase
@@ -36,7 +34,6 @@ class LoginUseCaseTest {
         )
         useCase = LoginUseCase(
             authLoginRepository,
-            fetchUserProfileUseCase,
         )
     }
 
@@ -83,7 +80,6 @@ class LoginUseCaseTest {
         )
         val response = BaseResponse(result = tokenResponse)
         coEvery { authRemoteDataSource.callLogin(any()) } returns response
-        coEvery { fetchUserProfileUseCase() } returns Unit
 
         useCase(email, password)
 
@@ -91,32 +87,5 @@ class LoginUseCaseTest {
         assertThat(appDataStore.getRefreshToken()).isEqualTo(refreshToken)
         assertThat(authLoginRepository.getAuthRole()).isEqualTo(AuthRole.Auth)
         coEvery { authRemoteDataSource.callLogin(any()) }
-        coEvery { fetchUserProfileUseCase() }
-    }
-
-    @Test(expected = ApiServiceException::class)
-    fun `login correct fetch user profile error return error`() = runTest {
-        val email = "example@gmail.com"
-        val password = "1234"
-        val accessToken = "accessToken"
-        val refreshToken = "refreshToken"
-        val tokenResponse = TokenResponse(
-            accessToken,
-            refreshToken,
-        )
-        val response = BaseResponse(result = tokenResponse)
-        val messageError = "Api error."
-        val baseError = BaseError(message = messageError)
-        val exception = ApiServiceException(baseError)
-        coEvery { authRemoteDataSource.callLogin(any()) } returns response
-        coEvery { fetchUserProfileUseCase() } throws exception
-
-        useCase(email, password)
-
-        assertThat(appDataStore.getAccessToken()).isEqualTo(accessToken)
-        assertThat(appDataStore.getRefreshToken()).isEqualTo(refreshToken)
-        assertThat(authLoginRepository.getAuthRole()).isEqualTo(AuthRole.Auth)
-        coEvery { authRemoteDataSource.callLogin(any()) }
-        coEvery { fetchUserProfileUseCase() }
     }
 }

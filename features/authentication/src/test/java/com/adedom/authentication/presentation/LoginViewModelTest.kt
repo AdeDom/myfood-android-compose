@@ -1,12 +1,14 @@
 package com.adedom.authentication.presentation
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
+import com.adedom.authentication.domain.use_cases.FavoriteUseCase
 import com.adedom.authentication.domain.use_cases.LoginUseCase
 import com.adedom.authentication.presentation.view_model.LoginUiEvent
 import com.adedom.authentication.presentation.view_model.LoginUiState
 import com.adedom.authentication.presentation.view_model.LoginViewModel
 import com.adedom.authentication.utils.MainCoroutineRule
 import com.adedom.core.utils.ApiServiceException
+import com.adedom.user_profile.domain.use_cases.FetchUserProfileUseCase
 import com.google.common.truth.Truth.assertThat
 import com.myfood.server.data.models.base.BaseError
 import com.myfood.server.usecase.validate.ValidateEmailUseCase
@@ -31,6 +33,8 @@ class LoginViewModelTest {
     var mainCoroutineRule = MainCoroutineRule()
 
     private val loginUseCase: LoginUseCase = mockk()
+    private val fetchUserProfileUseCase: FetchUserProfileUseCase = mockk()
+    private val favoriteUseCase: FavoriteUseCase = mockk()
     private lateinit var validateEmailUseCase: ValidateEmailUseCase
     private lateinit var validatePasswordUseCase: ValidatePasswordUseCase
     private lateinit var viewModel: LoginViewModel
@@ -43,6 +47,8 @@ class LoginViewModelTest {
             validateEmailUseCase,
             validatePasswordUseCase,
             loginUseCase,
+            fetchUserProfileUseCase,
+            favoriteUseCase,
         )
     }
 
@@ -120,6 +126,8 @@ class LoginViewModelTest {
         val baseError = BaseError(message = "Email or password is incorrect")
         val exception = ApiServiceException(baseError)
         coEvery { loginUseCase(any(), any()) } throws exception
+        coEvery { fetchUserProfileUseCase() } returns Unit
+        coEvery { favoriteUseCase() } returns Unit
 
         viewModel.dispatch(LoginUiEvent.SetEmail(email))
         viewModel.dispatch(LoginUiEvent.SetPassword(password))
@@ -129,6 +137,8 @@ class LoginViewModelTest {
         assertThat(state.dialog).isEqualTo(LoginUiState.Dialog.Error(baseError))
         assertThat(state.isLogin).isTrue()
         coVerify { loginUseCase(any(), any()) }
+        coVerify(exactly = 0) { fetchUserProfileUseCase() }
+        coVerify(exactly = 0) { favoriteUseCase() }
     }
 
     @Test
@@ -138,6 +148,8 @@ class LoginViewModelTest {
         val messageError = "Token is null"
         val exception = Throwable(messageError)
         coEvery { loginUseCase(any(), any()) } throws exception
+        coEvery { fetchUserProfileUseCase() } returns Unit
+        coEvery { favoriteUseCase() } returns Unit
 
         viewModel.dispatch(LoginUiEvent.SetEmail(email))
         viewModel.dispatch(LoginUiEvent.SetPassword(password))
@@ -148,6 +160,8 @@ class LoginViewModelTest {
         assertThat(state.dialog).isEqualTo(LoginUiState.Dialog.Error(baseError))
         assertThat(state.isLogin).isTrue()
         coVerify { loginUseCase(any(), any()) }
+        coVerify(exactly = 0) { fetchUserProfileUseCase() }
+        coVerify(exactly = 0) { favoriteUseCase() }
     }
 
     @Test
@@ -155,6 +169,8 @@ class LoginViewModelTest {
         val email = "dom6"
         val password = "1234"
         coEvery { loginUseCase(any(), any()) } returns Unit
+        coEvery { fetchUserProfileUseCase() } returns Unit
+        coEvery { favoriteUseCase() } returns Unit
 
         viewModel.dispatch(LoginUiEvent.SetEmail(email))
         viewModel.dispatch(LoginUiEvent.SetPassword(password))
@@ -163,6 +179,8 @@ class LoginViewModelTest {
         val result = viewModel.nav.firstOrNull()
         assertThat(result).isEqualTo(Unit)
         coVerify { loginUseCase(any(), any()) }
+        coVerify { fetchUserProfileUseCase() }
+        coVerify { favoriteUseCase() }
     }
 
     @Test

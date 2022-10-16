@@ -1,11 +1,11 @@
 package com.adedom.user_profile.domain.use_cases
 
 import com.adedom.core.utils.ApiServiceException
-import com.adedom.profile.providers.local.FakeUserProfileLocalDataSource
 import com.adedom.profile.providers.local.UserProfileLocalDataSource
 import com.adedom.profile.providers.remote.ProfileRemoteDataSource
 import com.adedom.profile.repositories.UserProfileRepository
 import com.adedom.profile.repositories.UserProfileRepositoryImpl
+import com.adedom.user_profile.data.providers.local.FakeUserProfileLocalDataSource
 import com.google.common.truth.Truth.assertThat
 import com.myfood.server.data.models.base.BaseError
 import com.myfood.server.data.models.base.BaseResponse
