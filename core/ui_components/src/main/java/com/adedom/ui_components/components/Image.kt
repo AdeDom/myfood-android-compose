@@ -11,8 +11,8 @@ import com.adedom.ui_components.R
 
 @Composable
 fun AppImage(
-    modifier: Modifier = Modifier,
     @DrawableRes image: Int,
+    modifier: Modifier = Modifier,
     contentDescription: String? = null,
     contentScale: ContentScale = ContentScale.Crop,
 ) {
@@ -26,8 +26,8 @@ fun AppImage(
 
 @Composable
 fun AppImageNetwork(
-    modifier: Modifier = Modifier,
     image: String?,
+    modifier: Modifier = Modifier,
     contentDescription: String? = null,
     contentScale: ContentScale = ContentScale.Crop,
 ) {

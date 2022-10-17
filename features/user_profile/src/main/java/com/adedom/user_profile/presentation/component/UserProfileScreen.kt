@@ -1,6 +1,7 @@
 package com.adedom.user_profile.presentation.component
 
 import android.widget.Toast
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -10,6 +11,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -63,8 +66,7 @@ fun UserProfileContent(
                         .fillMaxWidth()
                         .padding(4.dp),
                 ) {
-                    AppImageNetwork(
-                        image = userProfile.image,
+                    Box(
                         modifier = Modifier
                             .size(
                                 width = 100.dp,
@@ -72,7 +74,25 @@ fun UserProfileContent(
                             )
                             .clip(CircleShape)
                             .align(Alignment.CenterHorizontally),
-                    )
+                    ) {
+                        Box(
+                            modifier = Modifier
+                                .fillMaxSize()
+                                .background(
+                                    Brush.verticalGradient(
+                                        colors = listOf(
+                                            Color.Transparent,
+                                            Color.Black,
+                                        ),
+                                        startY = 200f,
+                                    ),
+                                ),
+                        )
+                        AppImageNetwork(
+                            image = userProfile.image,
+                            modifier = Modifier.fillMaxSize(),
+                        )
+                    }
                     Spacer(modifier = Modifier.height(8.dp))
                     Row {
                         AppIcon(image = R.drawable.ic_account_gray)
