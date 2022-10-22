@@ -8,7 +8,6 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
@@ -29,6 +28,9 @@ import com.adedom.main.presentation.view_model.HomeUiState
 import com.adedom.ui_components.components.*
 import com.adedom.ui_components.domain.models.FoodModel
 import com.adedom.ui_components.theme.MyFoodTheme
+import com.adedom.ui_components.theme.RectangleLargeShape
+import com.adedom.ui_components.theme.RectangleMediumShape
+import com.adedom.ui_components.theme.RectangleSmallShape
 import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 
@@ -108,7 +110,7 @@ private fun HomeContent(
                                 contentAlignment = Alignment.Center,
                                 modifier = Modifier
                                     .fillMaxSize()
-                                    .clip(RoundedCornerShape(32.dp))
+                                    .clip(RectangleLargeShape)
                                     .background(Color.LightGray)
                                     .clickable(onClick = openSearchFoodPage),
                             ) {
@@ -157,7 +159,7 @@ private fun HomeContent(
                                         },
                                 ) {
                                     Card(
-                                        shape = RoundedCornerShape(8.dp),
+                                        shape = RectangleMediumShape,
                                         elevation = 8.dp,
                                     ) {
                                         Column(
@@ -183,7 +185,7 @@ private fun HomeContent(
                                                             width = 64.dp,
                                                             height = 4.dp,
                                                         )
-                                                        .clip(RoundedCornerShape(4.dp))
+                                                        .clip(RectangleSmallShape)
                                                         .background(MaterialTheme.colors.primary),
                                                 )
                                                 Spacer(modifier = Modifier.height(4.dp))

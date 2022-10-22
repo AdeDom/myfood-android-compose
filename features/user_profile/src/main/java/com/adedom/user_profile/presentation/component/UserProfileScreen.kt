@@ -4,7 +4,6 @@ import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -17,6 +16,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.adedom.ui_components.components.*
 import com.adedom.ui_components.theme.MyFoodTheme
+import com.adedom.ui_components.theme.RectangleMediumShape
 import com.adedom.user_profile.R
 import com.adedom.user_profile.domain.models.UserProfileModel
 import com.adedom.user_profile.presentation.view_model.UserProfileUiEvent
@@ -51,7 +51,7 @@ fun UserProfileContent(
     ) {
         state.userProfile?.let { userProfile ->
             Card(
-                shape = RoundedCornerShape(8.dp),
+                shape = RectangleMediumShape,
                 elevation = 8.dp,
                 modifier = Modifier
                     .fillMaxWidth()

@@ -4,7 +4,6 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.TextField
 import androidx.compose.material.TextFieldDefaults
 import androidx.compose.material.icons.Icons
@@ -30,6 +29,7 @@ import com.adedom.ui_components.components.AppText
 import com.adedom.ui_components.components.FoodBoxItem
 import com.adedom.ui_components.domain.models.FoodModel
 import com.adedom.ui_components.theme.MyFoodTheme
+import com.adedom.ui_components.theme.RectangleLargeShape
 
 @Composable
 fun SearchFoodScreen(
@@ -88,7 +88,7 @@ fun SearchFoodContent(
                         focusedIndicatorColor = Color.Transparent,
                         unfocusedIndicatorColor = Color.Transparent,
                     ),
-                    shape = RoundedCornerShape(32.dp),
+                    shape = RectangleLargeShape,
                     modifier = Modifier
                         .fillMaxWidth()
                         .focusRequester(focusRequester),

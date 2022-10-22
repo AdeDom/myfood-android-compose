@@ -5,9 +5,7 @@ import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.layout.size
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
@@ -19,6 +17,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.adedom.ui_components.theme.MyFoodTheme
+import com.adedom.ui_components.theme.RectangleLargeShape
 
 @Composable
 fun AppOutlinedButton(
@@ -33,14 +32,13 @@ fun AppOutlinedButton(
         modifier = modifier
     ) {
         Surface(
-            shape = RoundedCornerShape(32.dp),
+            shape = RectangleLargeShape,
             color = color,
             border = BorderStroke(1.dp, border),
             elevation = 2.dp,
             modifier = Modifier
-                .width(300.dp)
-                .height(60.dp)
-                .clip(RoundedCornerShape(32.dp))
+                .size(300.dp, 60.dp)
+                .clip(RectangleLargeShape)
                 .clickable(
                     enabled = enabled,
                     onClick = onClick,
@@ -69,14 +67,13 @@ fun AppColorButton(
         modifier = modifier
     ) {
         Surface(
-            shape = RoundedCornerShape(32.dp),
+            shape = RectangleLargeShape,
             color = color,
             border = BorderStroke(1.dp, border),
             elevation = 2.dp,
             modifier = Modifier
-                .width(300.dp)
-                .height(60.dp)
-                .clip(RoundedCornerShape(32.dp))
+                .size(300.dp, 60.dp)
+                .clip(RectangleLargeShape)
                 .clickable(
                     enabled = enabled,
                     onClick = onClick,

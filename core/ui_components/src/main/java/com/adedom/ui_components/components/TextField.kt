@@ -5,7 +5,6 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.MaterialTheme
@@ -23,6 +22,7 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.adedom.ui_components.theme.MyFoodTheme
+import com.adedom.ui_components.theme.RectangleLargeShape
 
 @Composable
 fun AppTextField(
@@ -78,7 +78,7 @@ fun AppTextField(
                 focusedIndicatorColor = Color.Transparent,
                 unfocusedIndicatorColor = Color.Transparent,
             ),
-            shape = RoundedCornerShape(32.dp),
+            shape = RectangleLargeShape,
             modifier = Modifier.size(
                 width = 300.dp,
                 height = 60.dp,

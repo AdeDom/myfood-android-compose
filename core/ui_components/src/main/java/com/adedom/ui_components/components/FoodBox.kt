@@ -2,7 +2,6 @@ package com.adedom.ui_components.components
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Favorite
@@ -14,6 +13,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.adedom.ui_components.domain.models.FoodModel
 import com.adedom.ui_components.theme.Amber
+import com.adedom.ui_components.theme.RectangleMediumShape
 
 @Composable
 fun FoodBoxItem(
@@ -36,7 +36,7 @@ fun FoodBoxItem(
                         width = 100.dp,
                         height = 100.dp,
                     )
-                    .clip(RoundedCornerShape(8.dp)),
+                    .clip(RectangleMediumShape),
             )
             Spacer(modifier = Modifier.width(16.dp))
             Column {

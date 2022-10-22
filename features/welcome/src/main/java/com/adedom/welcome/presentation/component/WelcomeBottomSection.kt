@@ -4,7 +4,6 @@ import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -19,6 +18,7 @@ import com.adedom.ui_components.components.AppConcatText
 import com.adedom.ui_components.components.AppOutlinedButton
 import com.adedom.ui_components.components.AppText
 import com.adedom.ui_components.theme.MyFoodTheme
+import com.adedom.ui_components.theme.RectangleLargeShape
 import com.adedom.welcome.presentation.view_model.WelcomeUiEvent
 
 @Composable
@@ -58,7 +58,7 @@ fun WelcomeBottomSection(
                         width = 1.dp,
                         color = MaterialTheme.colors.primary,
                     ),
-                    shape = RoundedCornerShape(32.dp),
+                    shape = RectangleLargeShape,
                 )
                 .semantics {
                     contentDescription = "Border change language"
@@ -71,7 +71,7 @@ fun WelcomeBottomSection(
                     .height(32.dp)
                     .background(
                         color = MaterialTheme.colors.primary,
-                        shape = RoundedCornerShape(32.dp),
+                        shape = RectangleLargeShape,
                     )
                     .semantics {
                         contentDescription = "Background change language th"
