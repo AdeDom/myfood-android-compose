@@ -30,7 +30,7 @@ fun AppEmptyData(
     }
 }
 
-@Preview
+@Preview(showBackground = true)
 @Composable
 fun AppEmptyDataPreview() {
     MyFoodTheme {

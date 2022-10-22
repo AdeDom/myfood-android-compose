@@ -92,7 +92,7 @@ fun FoodBoxItem(
     }
 }
 
-@Preview
+@Preview(showBackground = true)
 @Composable
 fun FoodBoxItemPreview() {
     MyFoodTheme {

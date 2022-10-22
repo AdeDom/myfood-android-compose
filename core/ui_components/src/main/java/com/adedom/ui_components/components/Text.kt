@@ -87,7 +87,7 @@ fun AppConcatText(
     }
 }
 
-@Preview
+@Preview(showBackground = true)
 @Composable
 fun AppTextPreview() {
     MyFoodTheme {
@@ -95,7 +95,7 @@ fun AppTextPreview() {
     }
 }
 
-@Preview
+@Preview(showBackground = true)
 @Composable
 fun AppTitleTextPreview() {
     MyFoodTheme {
@@ -103,7 +103,7 @@ fun AppTitleTextPreview() {
     }
 }
 
-@Preview
+@Preview(showBackground = true)
 @Composable
 fun AppSubTitleTextPreview() {
     MyFoodTheme {
@@ -111,7 +111,7 @@ fun AppSubTitleTextPreview() {
     }
 }
 
-@Preview
+@Preview(showBackground = true)
 @Composable
 fun AppConcatTextPreview() {
     MyFoodTheme {
