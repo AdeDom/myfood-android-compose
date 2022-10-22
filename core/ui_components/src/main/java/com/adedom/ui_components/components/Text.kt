@@ -10,9 +10,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.adedom.ui_components.theme.MyFoodTheme
 
 @Composable
 fun AppText(
@@ -35,10 +37,13 @@ fun AppText(
 fun AppTitleText(
     text: String,
     modifier: Modifier = Modifier,
+    color: Color = Color.Black,
+    fontSize: TextUnit = 24.sp,
 ) {
-    AppText(
+    Text(
         text = text,
-        fontSize = 24.sp,
+        color = color,
+        fontSize = fontSize,
         modifier = modifier,
     )
 }
@@ -47,16 +52,19 @@ fun AppTitleText(
 fun AppSubTitleText(
     text: String,
     modifier: Modifier = Modifier,
+    color: Color = Color.Gray,
+    fontSize: TextUnit = 16.sp,
 ) {
-    AppText(
+    Text(
         text = text,
-        color = Color.Gray,
+        color = color,
+        fontSize = fontSize,
         modifier = modifier,
     )
 }
 
 @Composable
-fun AppBottomText(
+fun AppConcatText(
     firstText: String,
     secondText: String,
     modifier: Modifier = Modifier,
@@ -67,15 +75,53 @@ fun AppBottomText(
             onClick()
         }
     ) {
-        AppText(
-            firstText,
+        Text(
+            text = firstText,
             color = Color.Gray,
+            fontSize = 16.sp,
         )
         Spacer(modifier = Modifier.width(4.dp))
-        AppText(
-            secondText,
+        Text(
+            text = secondText,
             color = MaterialTheme.colors.primary,
+            fontSize = 16.sp,
             fontWeight = FontWeight.Bold,
+        )
+    }
+}
+
+@Preview
+@Composable
+fun AppTextPreview() {
+    MyFoodTheme {
+        AppText(text = "Hello world")
+    }
+}
+
+@Preview
+@Composable
+fun AppTitleTextPreview() {
+    MyFoodTheme {
+        AppTitleText(text = "Hello world")
+    }
+}
+
+@Preview
+@Composable
+fun AppSubTitleTextPreview() {
+    MyFoodTheme {
+        AppSubTitleText(text = "Hello world")
+    }
+}
+
+@Preview
+@Composable
+fun AppConcatTextPreview() {
+    MyFoodTheme {
+        AppConcatText(
+            firstText = "Hello",
+            secondText = "World",
+            onClick = {},
         )
     }
 }

@@ -4,7 +4,6 @@ import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Scaffold
-import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Info
@@ -15,13 +14,13 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import com.adedom.main.R
 import com.adedom.main.presentation.view_model.HomeChannel
 import com.adedom.main.presentation.view_model.HomeUiEvent
 import com.adedom.main.presentation.view_model.HomeUiState
 import com.adedom.main.presentation.view_model.HomeViewModel
 import com.adedom.ui_components.components.AppIcon
+import com.adedom.ui_components.components.AppText
 import com.adedom.ui_components.components.AppTitleText
 import com.adedom.ui_components.theme.MyFoodTheme
 import kotlinx.coroutines.launch
@@ -161,9 +160,8 @@ private fun DrawableItemMenu(
     ) {
         icon()
         Spacer(modifier = Modifier.width(16.dp))
-        Text(
+        AppText(
             text = text,
-            fontSize = 18.sp,
             modifier = Modifier.weight(1f)
         )
     }

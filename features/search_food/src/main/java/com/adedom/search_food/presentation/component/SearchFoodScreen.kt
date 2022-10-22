@@ -5,7 +5,6 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Text
 import androidx.compose.material.TextField
 import androidx.compose.material.TextFieldDefaults
 import androidx.compose.material.icons.Icons
@@ -27,6 +26,7 @@ import com.adedom.search_food.presentation.view_model.SearchFoodUiState
 import com.adedom.search_food.presentation.view_model.SearchFoodViewModel
 import com.adedom.ui_components.components.AppEmptyData
 import com.adedom.ui_components.components.AppIcon
+import com.adedom.ui_components.components.AppText
 import com.adedom.ui_components.components.FoodBoxItem
 import com.adedom.ui_components.domain.models.FoodModel
 import com.adedom.ui_components.theme.MyFoodTheme
@@ -81,7 +81,7 @@ fun SearchFoodContent(
                 TextField(
                     value = state.search,
                     onValueChange = { dispatch(SearchFoodUiEvent.SetSearch(it)) },
-                    placeholder = { Text(text = "Search food") },
+                    placeholder = { AppText("Search food") },
                     leadingIcon = { AppIcon(Icons.Default.Search) },
                     singleLine = true,
                     colors = TextFieldDefaults.textFieldColors(

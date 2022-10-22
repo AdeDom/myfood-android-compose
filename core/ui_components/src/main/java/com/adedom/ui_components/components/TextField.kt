@@ -8,7 +8,6 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material.Text
 import androidx.compose.material.TextField
 import androidx.compose.material.TextFieldDefaults
 import androidx.compose.runtime.*
@@ -52,10 +51,16 @@ fun AppTextField(
             value = value,
             onValueChange = onValueChange,
             label = {
-                Text(hint)
+                AppText(
+                    text = hint,
+                    color = Color.Gray,
+                )
             },
             placeholder = {
-                Text(text = hint)
+                AppText(
+                    text = hint,
+                    color = Color.Gray,
+                )
             },
             leadingIcon = leadingIcon,
             visualTransformation = visualTransformation,

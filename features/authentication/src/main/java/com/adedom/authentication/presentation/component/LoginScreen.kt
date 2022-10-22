@@ -87,7 +87,7 @@ fun LoginContent(
             )
         }
 
-        AppBottomText(
+        AppConcatText(
             firstText = "Don\'t have an Account?",
             secondText = "Sign Up",
             onClick = openRegisterPage,

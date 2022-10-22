@@ -15,8 +15,8 @@ import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.adedom.ui_components.components.AppBottomText
 import com.adedom.ui_components.components.AppColorButton
+import com.adedom.ui_components.components.AppConcatText
 import com.adedom.ui_components.components.AppOutlinedButton
 import com.adedom.ui_components.components.AppText
 import com.adedom.ui_components.theme.MyFoodTheme
@@ -44,7 +44,7 @@ fun WelcomeBottomSection(
             onClick = openRegisterPage,
         )
         Spacer(modifier = Modifier.height(20.dp))
-        AppBottomText(
+        AppConcatText(
             firstText = "Don\'t want login?",
             secondText = "Skip",
             onClick = { dispatch(WelcomeUiEvent.NavSkip) },

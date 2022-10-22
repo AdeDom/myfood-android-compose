@@ -4,7 +4,6 @@ import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -13,12 +12,12 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Popup
 import com.adedom.connectivity.data.models.Status
 import com.adedom.connectivity.presentation.view_model.ConnectivityUiEvent
 import com.adedom.connectivity.presentation.view_model.ConnectivityUiState
 import com.adedom.connectivity.presentation.view_model.ConnectivityViewModel
+import com.adedom.ui_components.components.AppText
 import com.adedom.ui_components.theme.MyFoodTheme
 
 @Composable
@@ -69,11 +68,7 @@ private fun OnlineNetworkPopup(
                     contentDescription = "Background network popup"
                 },
         ) {
-            Text(
-                text = "Online",
-                color = Color.Black,
-                fontSize = 16.sp,
-            )
+            AppText("Online")
         }
     }
 }
@@ -90,11 +85,7 @@ private fun OfflineNetworkPopup() {
                     contentDescription = "Background network popup"
                 },
         ) {
-            Text(
-                text = "Offline",
-                color = Color.Black,
-                fontSize = 16.sp,
-            )
+            AppText("Offline")
         }
     }
 }

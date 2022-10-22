@@ -18,7 +18,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import com.adedom.ui_components.theme.MyFoodTheme
 
 @Composable
@@ -51,10 +50,7 @@ fun AppOutlinedButton(
                 contentAlignment = Alignment.Center,
                 modifier = Modifier.fillMaxSize(),
             ) {
-                AppText(
-                    text,
-                    fontSize = 18.sp,
-                )
+                AppText(text)
             }
         }
     }
@@ -91,8 +87,8 @@ fun AppColorButton(
                 modifier = Modifier.fillMaxSize(),
             ) {
                 AppText(
-                    text,
-                    fontSize = 18.sp,
+                    text = text,
+                    color = Color.White,
                 )
             }
         }

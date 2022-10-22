@@ -90,7 +90,7 @@ fun RegisterContent(
                 onClick = openMainPage,
             )
             Spacer(modifier = Modifier.height(20.dp))
-            AppBottomText(
+            AppConcatText(
                 firstText = "Already have an Account?",
                 secondText = "Login",
                 onClick = openLoginPage,

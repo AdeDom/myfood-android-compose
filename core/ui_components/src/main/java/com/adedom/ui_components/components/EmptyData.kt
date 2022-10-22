@@ -10,7 +10,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import com.adedom.ui_components.R
 import com.adedom.ui_components.theme.MyFoodTheme
 
@@ -30,10 +29,9 @@ fun AppEmptyData(
                 height = 100.dp,
             ),
         )
-        AppText(
+        AppTitleText(
             text = "Empty data...",
             color = Color.Gray,
-            fontSize = 24.sp,
         )
     }
 }
