@@ -64,10 +64,7 @@ fun UserProfileContent(
                 ) {
                     Box(
                         modifier = Modifier
-                            .size(
-                                width = 100.dp,
-                                height = 100.dp,
-                            )
+                            .size(100.dp)
                             .clip(CircleShape)
                             .align(Alignment.CenterHorizontally),
                     ) {

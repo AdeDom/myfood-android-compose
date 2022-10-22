@@ -24,10 +24,7 @@ fun AppEmptyData(
         Image(
             painter = painterResource(id = R.drawable.ic_playlist_remove_gray),
             contentDescription = null,
-            modifier = Modifier.size(
-                width = 100.dp,
-                height = 100.dp,
-            ),
+            modifier = Modifier.size(100.dp),
         )
         AppTitleText(
             text = "Empty data...",

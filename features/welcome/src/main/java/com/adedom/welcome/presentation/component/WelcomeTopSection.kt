@@ -34,7 +34,7 @@ fun WelcomeTopSection(
     ) {
         Box(
             modifier = Modifier
-                .size(558.dp, 549.dp)
+                .size(550.dp)
                 .background(MaterialTheme.colors.primary)
                 .semantics {
                     contentDescription = "Background logo app"

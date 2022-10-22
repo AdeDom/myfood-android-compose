@@ -37,7 +37,10 @@ fun AppOutlinedButton(
             border = BorderStroke(1.dp, border),
             elevation = 2.dp,
             modifier = Modifier
-                .size(300.dp, 60.dp)
+                .size(
+                    width = 300.dp,
+                    height = 60.dp,
+                )
                 .clip(RectangleLargeShape)
                 .clickable(
                     enabled = enabled,
@@ -72,7 +75,10 @@ fun AppColorButton(
             border = BorderStroke(1.dp, border),
             elevation = 2.dp,
             modifier = Modifier
-                .size(300.dp, 60.dp)
+                .size(
+                    width = 300.dp,
+                    height = 60.dp,
+                )
                 .clip(RectangleLargeShape)
                 .clickable(
                     enabled = enabled,

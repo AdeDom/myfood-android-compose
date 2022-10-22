@@ -32,10 +32,7 @@ fun FoodBoxItem(
             AppImageNetwork(
                 image = food.image,
                 modifier = Modifier
-                    .size(
-                        width = 100.dp,
-                        height = 100.dp,
-                    )
+                    .size(100.dp)
                     .clip(RectangleMediumShape),
             )
             Spacer(modifier = Modifier.width(16.dp))

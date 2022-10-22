@@ -134,10 +134,7 @@ private fun HomeContent(
                                         AppImageNetwork(
                                             image = state.imageProfile,
                                             modifier = Modifier
-                                                .size(
-                                                    width = 40.dp,
-                                                    height = 40.dp,
-                                                )
+                                                .size(40.dp)
                                                 .clip(CircleShape)
                                                 .clickable(onClick = openUserProfilePage),
                                         )
@@ -167,10 +164,7 @@ private fun HomeContent(
                                         ) {
                                             AppImageNetwork(
                                                 image = category.image,
-                                                modifier = Modifier.size(
-                                                    width = 100.dp,
-                                                    height = 100.dp,
-                                                ),
+                                                modifier = Modifier.size(100.dp),
                                             )
                                             Spacer(modifier = Modifier.height(4.dp))
                                             AppText(
@@ -202,10 +196,7 @@ private fun HomeContent(
                     item {
                         Row {
                             Spacer(
-                                modifier = Modifier.size(
-                                    width = 4.dp,
-                                    height = 4.dp,
-                                ),
+                                modifier = Modifier.size(4.dp),
                             )
                             AppTitleText(text = state.categoryName)
                         }
