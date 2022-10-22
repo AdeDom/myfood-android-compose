@@ -9,11 +9,9 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import com.adedom.ui_components.theme.MyFoodTheme
 
 @Composable
@@ -21,14 +19,12 @@ fun AppText(
     text: String,
     modifier: Modifier = Modifier,
     color: Color = Color.Black,
-    fontSize: TextUnit = 16.sp,
-    fontWeight: FontWeight? = null,
+    style: TextStyle = MaterialTheme.typography.body1,
 ) {
     Text(
         text = text,
         color = color,
-        fontSize = fontSize,
-        fontWeight = fontWeight,
+        style = style,
         modifier = modifier,
     )
 }
@@ -38,12 +34,12 @@ fun AppTitleText(
     text: String,
     modifier: Modifier = Modifier,
     color: Color = Color.Black,
-    fontSize: TextUnit = 24.sp,
+    style: TextStyle = MaterialTheme.typography.h5,
 ) {
     Text(
         text = text,
         color = color,
-        fontSize = fontSize,
+        style = style,
         modifier = modifier,
     )
 }
@@ -53,12 +49,12 @@ fun AppSubTitleText(
     text: String,
     modifier: Modifier = Modifier,
     color: Color = Color.Gray,
-    fontSize: TextUnit = 16.sp,
+    style: TextStyle = MaterialTheme.typography.h6,
 ) {
     Text(
         text = text,
         color = color,
-        fontSize = fontSize,
+        style = style,
         modifier = modifier,
     )
 }
@@ -78,14 +74,13 @@ fun AppConcatText(
         Text(
             text = firstText,
             color = Color.Gray,
-            fontSize = 16.sp,
+            style = MaterialTheme.typography.body1,
         )
         Spacer(modifier = Modifier.width(4.dp))
         Text(
             text = secondText,
             color = MaterialTheme.colors.primary,
-            fontSize = 16.sp,
-            fontWeight = FontWeight.Bold,
+            style = MaterialTheme.typography.subtitle1,
         )
     }
 }

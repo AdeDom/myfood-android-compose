@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.TextField
 import androidx.compose.material.TextFieldDefaults
 import androidx.compose.runtime.*
@@ -21,7 +22,6 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import com.adedom.ui_components.theme.MyFoodTheme
 
 @Composable
@@ -99,7 +99,7 @@ fun AppTextField(
                 AppText(
                     text = error.orEmpty(),
                     color = Color.Red,
-                    fontSize = 14.sp,
+                    style = MaterialTheme.typography.body2,
                     modifier = Modifier.padding(end = 32.dp),
                 )
             }

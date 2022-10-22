@@ -6,6 +6,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.Star
@@ -15,10 +16,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalConfiguration
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import com.adedom.food_detail.R
 import com.adedom.food_detail.domain.models.FoodDetailModel
 import com.adedom.food_detail.presentation.view_model.FoodDetailUiEvent
@@ -121,7 +120,7 @@ fun FoodDetailContent(
                                                     AppText(
                                                         text = state.foodDetail?.favorite.toString(),
                                                         color = Amber,
-                                                        fontSize = 14.sp,
+                                                        style = MaterialTheme.typography.body2,
                                                     )
                                                 }
                                                 Row {
@@ -134,27 +133,25 @@ fun FoodDetailContent(
                                                     AppText(
                                                         text = state.foodDetail?.ratingScoreCount.toString(),
                                                         color = Amber,
-                                                        fontSize = 14.sp,
+                                                        style = MaterialTheme.typography.body2,
                                                     )
                                                 }
                                             }
                                             Box(modifier = Modifier.weight(1f))
                                             AppText(
                                                 text = "${state.foodDetail?.price}",
-                                                fontSize = 32.sp,
-                                                fontWeight = FontWeight.Bold,
+                                                style = MaterialTheme.typography.h4,
                                             )
                                             Spacer(modifier = Modifier.width(8.dp))
                                             AppText(
                                                 text = "Bath",
-                                                fontSize = 32.sp,
-                                                fontWeight = FontWeight.Bold,
+                                                style = MaterialTheme.typography.h4,
                                             )
                                         }
                                         Spacer(modifier = Modifier.height(32.dp))
                                         AppText(
                                             text = "Description",
-                                            fontWeight = FontWeight.Bold,
+                                            style = MaterialTheme.typography.subtitle1,
                                         )
                                         Spacer(modifier = Modifier.height(8.dp))
                                         AppText(state.foodDetail?.description.toString())

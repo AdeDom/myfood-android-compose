@@ -21,7 +21,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.adedom.main.domain.models.CategoryModel
@@ -174,7 +173,7 @@ private fun HomeContent(
                                             Spacer(modifier = Modifier.height(4.dp))
                                             AppText(
                                                 text = category.categoryName,
-                                                fontWeight = FontWeight.Bold,
+                                                style = MaterialTheme.typography.subtitle1,
                                             )
                                             Spacer(modifier = Modifier.height(4.dp))
                                             if (category.categoryId == state.categoryId) {
