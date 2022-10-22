@@ -12,6 +12,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -83,7 +84,7 @@ fun UserProfileContent(
                                     ),
                                 ),
                         )
-                        AppImageNetwork(
+                        AppImage(
                             image = userProfile.image,
                             modifier = Modifier.fillMaxSize(),
                         )
@@ -91,7 +92,7 @@ fun UserProfileContent(
                     Spacer(modifier = Modifier.height(8.dp))
                     Row {
                         AppIcon(
-                            image = R.drawable.ic_account_gray,
+                            image = painterResource(id = R.drawable.ic_account_gray),
                             contentDescription = stringResource(id = res.string.cd_icon_account),
                         )
                         Spacer(modifier = Modifier.width(8.dp))
@@ -100,7 +101,7 @@ fun UserProfileContent(
                     Spacer(modifier = Modifier.height(8.dp))
                     Row {
                         AppIcon(
-                            image = R.drawable.ic_email_gray,
+                            image = painterResource(id = R.drawable.ic_email_gray),
                             contentDescription = stringResource(id = res.string.cd_icon_email),
                         )
                         Spacer(modifier = Modifier.width(8.dp))
@@ -109,7 +110,7 @@ fun UserProfileContent(
                     Spacer(modifier = Modifier.height(8.dp))
                     Row {
                         AppIcon(
-                            image = R.drawable.ic_location_gray,
+                            image = painterResource(id = R.drawable.ic_location_gray),
                             contentDescription = stringResource(id = res.string.cd_icon_location),
                         )
                         Spacer(modifier = Modifier.width(8.dp))
@@ -118,7 +119,7 @@ fun UserProfileContent(
                     Spacer(modifier = Modifier.height(8.dp))
                     Row {
                         AppIcon(
-                            image = R.drawable.ic_phone_gray,
+                            image = painterResource(id = R.drawable.ic_phone_gray),
                             contentDescription = stringResource(id = res.string.cd_icon_phone),
                         )
                         Spacer(modifier = Modifier.width(8.dp))

@@ -33,7 +33,7 @@ fun FoodBoxItem(
             },
     ) {
         Row {
-            AppImageNetwork(
+            AppImage(
                 image = food.image,
                 modifier = Modifier
                     .size(100.dp)

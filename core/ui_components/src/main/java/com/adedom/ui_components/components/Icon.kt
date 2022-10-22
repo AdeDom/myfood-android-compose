@@ -1,12 +1,11 @@
 package com.adedom.ui_components.components
 
-import androidx.annotation.DrawableRes
 import androidx.compose.material.Icon
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.res.painterResource
 
 @Composable
 fun AppIcon(
@@ -25,12 +24,12 @@ fun AppIcon(
 
 @Composable
 fun AppIcon(
-    @DrawableRes image: Int,
+    image: Painter,
     modifier: Modifier = Modifier,
     contentDescription: String,
 ) {
     Icon(
-        painter = painterResource(id = image),
+        painter = image,
         contentDescription = contentDescription,
         modifier = modifier,
     )

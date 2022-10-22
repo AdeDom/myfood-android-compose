@@ -16,6 +16,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -73,7 +74,7 @@ fun FoodDetailContent(
                 )
             }
             null -> {
-                AppImageNetwork(
+                AppImage(
                     image = state.foodDetail?.image,
                     modifier = Modifier
                         .fillMaxWidth()
@@ -164,7 +165,7 @@ fun FoodDetailContent(
                             }
                             if (state.foodDetail?.isFavorite == true) {
                                 AppImage(
-                                    image = if (state.foodDetail.isFavoriteState) R.drawable.favorite_active else R.drawable.favorite_inactive,
+                                    image = painterResource(id = if (state.foodDetail.isFavoriteState) R.drawable.favorite_active else R.drawable.favorite_inactive),
                                     modifier = Modifier
                                         .size(80.dp)
                                         .offset(

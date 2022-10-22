@@ -132,7 +132,7 @@ private fun HomeContent(
                                         modifier = Modifier.weight(1f),
                                     )
                                     state.imageProfile?.let {
-                                        AppImageNetwork(
+                                        AppImage(
                                             image = state.imageProfile,
                                             modifier = Modifier
                                                 .size(40.dp)
@@ -163,7 +163,7 @@ private fun HomeContent(
                                         Column(
                                             horizontalAlignment = Alignment.CenterHorizontally,
                                         ) {
-                                            AppImageNetwork(
+                                            AppImage(
                                                 image = category.image,
                                                 modifier = Modifier.size(100.dp),
                                             )
