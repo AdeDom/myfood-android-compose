@@ -29,7 +29,9 @@ getFoodListBySearch:
 SELECT *
 FROM FoodEntity
 WHERE search LIKE ('%' || :search)
-OR search LIKE (:search || '%');
+OR search LIKE (:search || '%')
+GROUP BY foodIdRef
+ORDER BY favorite DESC, ratingScore DESC;
 
 saveFood:
 INSERT OR REPLACE
