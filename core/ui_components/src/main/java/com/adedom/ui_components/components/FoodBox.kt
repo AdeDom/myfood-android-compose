@@ -14,6 +14,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.adedom.ui_components.domain.models.FoodModel
+import com.adedom.ui_components.theme.Amber
 
 @Composable
 fun FoodBoxItem(
@@ -57,13 +58,13 @@ fun FoodBoxItem(
                     Row {
                         AppIcon(
                             image = Icons.Default.Favorite,
-                            color = Color(0xFFFFC107),
+                            color = Amber,
                             modifier = Modifier.size(18.dp),
                         )
                         Spacer(modifier = Modifier.width(4.dp))
                         AppText(
                             text = favorite.toString(),
-                            color = Color(0xFFFFC107),
+                            color = Amber,
                             fontSize = 14.sp,
                         )
                     }
@@ -73,13 +74,13 @@ fun FoodBoxItem(
                     Row {
                         AppIcon(
                             image = Icons.Default.Star,
-                            color = Color(0xFFFFC107),
+                            color = Amber,
                             modifier = Modifier.size(18.dp),
                         )
                         Spacer(modifier = Modifier.width(4.dp))
                         AppText(
                             text = ratingScoreCount,
-                            color = Color(0xFFFFC107),
+                            color = Amber,
                             fontSize = 14.sp,
                         )
                     }

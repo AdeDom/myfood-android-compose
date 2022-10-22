@@ -27,6 +27,7 @@ import com.adedom.food_detail.presentation.view_model.FoodDetailUiEvent
 import com.adedom.food_detail.presentation.view_model.FoodDetailUiState
 import com.adedom.food_detail.presentation.view_model.FoodDetailViewModel
 import com.adedom.ui_components.components.*
+import com.adedom.ui_components.theme.Amber
 import com.adedom.ui_components.theme.MyFoodTheme
 
 @Composable
@@ -119,26 +120,26 @@ fun FoodDetailContent(
                                                 Row {
                                                     AppIcon(
                                                         image = Icons.Default.Favorite,
-                                                        color = Color(0xFFFFC107),
+                                                        color = Amber,
                                                         modifier = Modifier.size(18.dp),
                                                     )
                                                     Spacer(modifier = Modifier.width(4.dp))
                                                     Text(
                                                         text = state.foodDetail?.favorite.toString(),
-                                                        color = Color(0xFFFFC107),
+                                                        color = Amber,
                                                         fontSize = 14.sp,
                                                     )
                                                 }
                                                 Row {
                                                     AppIcon(
                                                         image = Icons.Default.Star,
-                                                        color = Color(0xFFFFC107),
+                                                        color = Amber,
                                                         modifier = Modifier.size(18.dp),
                                                     )
                                                     Spacer(modifier = Modifier.width(4.dp))
                                                     Text(
                                                         text = state.foodDetail?.ratingScoreCount.toString(),
-                                                        color = Color(0xFFFFC107),
+                                                        color = Amber,
                                                         fontSize = 14.sp,
                                                     )
                                                 }

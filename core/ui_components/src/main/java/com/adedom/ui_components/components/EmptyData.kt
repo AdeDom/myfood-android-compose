@@ -8,9 +8,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.adedom.ui_components.R
+import com.adedom.ui_components.theme.MyFoodTheme
 
 @Composable
 fun AppEmptyData(
@@ -30,8 +32,16 @@ fun AppEmptyData(
         )
         AppText(
             text = "Empty data...",
-            color = Color(0xFF888888),
+            color = Color.Gray,
             fontSize = 24.sp,
         )
+    }
+}
+
+@Preview
+@Composable
+fun AppEmptyDataPreview() {
+    MyFoodTheme {
+        AppEmptyData()
     }
 }
