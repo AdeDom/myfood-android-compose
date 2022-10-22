@@ -1,9 +1,9 @@
 package com.adedom.ui_components.components
 
-import androidx.annotation.DrawableRes
 import androidx.compose.foundation.Image
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import coil.compose.AsyncImage
@@ -11,13 +11,13 @@ import com.adedom.ui_components.R
 
 @Composable
 fun AppImage(
-    @DrawableRes image: Int,
+    image: Painter,
     modifier: Modifier = Modifier,
     contentDescription: String? = null,
     contentScale: ContentScale = ContentScale.Crop,
 ) {
     Image(
-        painter = painterResource(id = image),
+        painter = image,
         contentDescription = contentDescription,
         contentScale = contentScale,
         modifier = modifier,
@@ -25,15 +25,15 @@ fun AppImage(
 }
 
 @Composable
-fun AppImageNetwork(
+fun AppImage(
     image: String?,
     modifier: Modifier = Modifier,
     contentDescription: String? = null,
     contentScale: ContentScale = ContentScale.Crop,
 ) {
     if (image.isNullOrEmpty()) {
-        AppImage(
-            image = R.drawable.logo_black,
+        Image(
+            painter = painterResource(id = R.drawable.logo_black),
             contentDescription = contentDescription,
             contentScale = contentScale,
             modifier = modifier,

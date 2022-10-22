@@ -1,12 +1,14 @@
 package com.adedom.authentication.presentation.component
 
+import androidx.activity.ComponentActivity
 import androidx.compose.ui.test.*
-import androidx.compose.ui.test.junit4.createComposeRule
+import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import androidx.compose.ui.text.input.ImeAction
 import com.adedom.authentication.domain.use_cases.FavoriteUseCase
 import com.adedom.authentication.domain.use_cases.LoginUseCase
 import com.adedom.authentication.presentation.view_model.LoginViewModel
 import com.adedom.core.utils.ApiServiceException
+import com.adedom.ui_components.R
 import com.adedom.ui_components.theme.MyFoodTheme
 import com.adedom.user_profile.domain.use_cases.FetchUserProfileUseCase
 import com.myfood.server.data.models.base.BaseError
@@ -22,7 +24,7 @@ import org.junit.Test
 class LoginScreenTest {
 
     @get:Rule
-    val composeTestRule = createComposeRule()
+    val composeTestRule = createAndroidComposeRule<ComponentActivity>()
 
     private lateinit var validateEmailUseCase: ValidateEmailUseCase
     private lateinit var validatePasswordUseCase: ValidatePasswordUseCase
@@ -56,17 +58,28 @@ class LoginScreenTest {
 
     @Test
     fun loginScreen_initialState() {
-        composeTestRule.onAllNodesWithText("Login")[0].assertIsDisplayed()
-        composeTestRule.onNodeWithText("Add your details to login").assertIsDisplayed()
-        composeTestRule.onNodeWithText("Your Email").assertIsDisplayed()
-        composeTestRule.onNodeWithText("Email is incorrect").assertDoesNotExist()
-        composeTestRule.onNodeWithText("Password").assertIsDisplayed()
-        composeTestRule.onNodeWithText("Password is incorrect").assertDoesNotExist()
-        composeTestRule.onAllNodesWithText("Login")[1].assertIsDisplayed()
-        composeTestRule.onAllNodesWithText("Login")[1].assertIsNotEnabled()
-        composeTestRule.onNodeWithText("Forget your password?").assertIsDisplayed()
-        composeTestRule.onNodeWithText("Don\'t have an Account?").assertIsDisplayed()
-        composeTestRule.onNodeWithText("Sign Up").assertIsDisplayed()
+        composeTestRule.onAllNodesWithText(composeTestRule.activity.getString(R.string.str_login))[0]
+            .assertIsDisplayed()
+        composeTestRule.onNodeWithText(composeTestRule.activity.getString(R.string.str_add_your_details_to_login))
+            .assertIsDisplayed()
+        composeTestRule.onNodeWithText(composeTestRule.activity.getString(R.string.str_your_email))
+            .assertIsDisplayed()
+        composeTestRule.onNodeWithText(composeTestRule.activity.getString(R.string.str_email_is_incorrect))
+            .assertDoesNotExist()
+        composeTestRule.onNodeWithText(composeTestRule.activity.getString(R.string.str_password))
+            .assertIsDisplayed()
+        composeTestRule.onNodeWithText(composeTestRule.activity.getString(R.string.str_password_is_incorrect))
+            .assertDoesNotExist()
+        composeTestRule.onAllNodesWithText(composeTestRule.activity.getString(R.string.str_login))[1]
+            .assertIsDisplayed()
+        composeTestRule.onAllNodesWithText(composeTestRule.activity.getString(R.string.str_login))[1]
+            .assertIsNotEnabled()
+        composeTestRule.onNodeWithText(composeTestRule.activity.getString(R.string.str_forget_your_password))
+            .assertIsDisplayed()
+        composeTestRule.onNodeWithText(composeTestRule.activity.getString(R.string.str_don_t_have_an_account))
+            .assertIsDisplayed()
+        composeTestRule.onNodeWithText(composeTestRule.activity.getString(R.string.str_sign_up))
+            .assertIsDisplayed()
         composeTestRule.onNodeWithContentDescription("Loading dialog").assertDoesNotExist()
         composeTestRule.onNodeWithContentDescription("Error dialog").assertDoesNotExist()
         composeTestRule.onNode(isDialog()).assertDoesNotExist()
@@ -76,21 +89,34 @@ class LoginScreenTest {
     fun textFieldEmail_performTextInputEmailIncorrect_returnErrorEmail() {
         val email = "ema"
 
-        composeTestRule.onNodeWithText("Your Email").performTextInput(email)
+        composeTestRule.onNodeWithText(composeTestRule.activity.getString(R.string.str_your_email))
+            .performTextInput(email)
 
-        composeTestRule.onAllNodesWithText("Login")[0].assertIsDisplayed()
-        composeTestRule.onNodeWithText("Add your details to login").assertIsDisplayed()
+        composeTestRule.onAllNodesWithText(composeTestRule.activity.getString(R.string.str_login))[0]
+            .assertIsDisplayed()
+        composeTestRule.onNodeWithText(composeTestRule.activity.getString(R.string.str_add_your_details_to_login))
+            .assertIsDisplayed()
         composeTestRule.onNodeWithText(email).assertIsDisplayed()
-        composeTestRule.onNodeWithText("Your Email").assertIsDisplayed()
-        composeTestRule.onNodeWithText("Email is incorrect").assertIsDisplayed()
-        composeTestRule.onNodeWithText("Your Email").assert(hasImeAction(ImeAction.Next))
-        composeTestRule.onNodeWithText("Password").assertIsDisplayed()
-        composeTestRule.onNodeWithText("Password is incorrect").assertDoesNotExist()
-        composeTestRule.onAllNodesWithText("Login")[1].assertIsDisplayed()
-        composeTestRule.onAllNodesWithText("Login")[1].assertIsNotEnabled()
-        composeTestRule.onNodeWithText("Forget your password?").assertIsDisplayed()
-        composeTestRule.onNodeWithText("Don\'t have an Account?").assertIsDisplayed()
-        composeTestRule.onNodeWithText("Sign Up").assertIsDisplayed()
+        composeTestRule.onNodeWithText(composeTestRule.activity.getString(R.string.str_your_email))
+            .assertIsDisplayed()
+        composeTestRule.onNodeWithText(composeTestRule.activity.getString(R.string.str_email_is_incorrect))
+            .assertIsDisplayed()
+        composeTestRule.onNodeWithText(composeTestRule.activity.getString(R.string.str_your_email))
+            .assert(hasImeAction(ImeAction.Next))
+        composeTestRule.onNodeWithText(composeTestRule.activity.getString(R.string.str_password))
+            .assertIsDisplayed()
+        composeTestRule.onNodeWithText(composeTestRule.activity.getString(R.string.str_password_is_incorrect))
+            .assertDoesNotExist()
+        composeTestRule.onAllNodesWithText(composeTestRule.activity.getString(R.string.str_login))[1]
+            .assertIsDisplayed()
+        composeTestRule.onAllNodesWithText(composeTestRule.activity.getString(R.string.str_login))[1]
+            .assertIsNotEnabled()
+        composeTestRule.onNodeWithText(composeTestRule.activity.getString(R.string.str_forget_your_password))
+            .assertIsDisplayed()
+        composeTestRule.onNodeWithText(composeTestRule.activity.getString(R.string.str_don_t_have_an_account))
+            .assertIsDisplayed()
+        composeTestRule.onNodeWithText(composeTestRule.activity.getString(R.string.str_sign_up))
+            .assertIsDisplayed()
         composeTestRule.onNodeWithContentDescription("Loading dialog").assertDoesNotExist()
         composeTestRule.onNodeWithContentDescription("Error dialog").assertDoesNotExist()
         composeTestRule.onNode(isDialog()).assertDoesNotExist()
@@ -100,21 +126,34 @@ class LoginScreenTest {
     fun textFieldEmail_performTextInputEmailCorrect_returnEmail() {
         val email = "email@gmail.com"
 
-        composeTestRule.onNodeWithText("Your Email").performTextInput(email)
+        composeTestRule.onNodeWithText(composeTestRule.activity.getString(R.string.str_your_email))
+            .performTextInput(email)
 
-        composeTestRule.onAllNodesWithText("Login")[0].assertIsDisplayed()
-        composeTestRule.onNodeWithText("Add your details to login").assertIsDisplayed()
+        composeTestRule.onAllNodesWithText(composeTestRule.activity.getString(R.string.str_login))[0]
+            .assertIsDisplayed()
+        composeTestRule.onNodeWithText(composeTestRule.activity.getString(R.string.str_add_your_details_to_login))
+            .assertIsDisplayed()
         composeTestRule.onNodeWithText(email).assertIsDisplayed()
-        composeTestRule.onNodeWithText("Your Email").assertIsDisplayed()
-        composeTestRule.onNodeWithText("Email is incorrect").assertDoesNotExist()
-        composeTestRule.onNodeWithText("Your Email").assert(hasImeAction(ImeAction.Next))
-        composeTestRule.onNodeWithText("Password").assertIsDisplayed()
-        composeTestRule.onNodeWithText("Password is incorrect").assertDoesNotExist()
-        composeTestRule.onAllNodesWithText("Login")[1].assertIsDisplayed()
-        composeTestRule.onAllNodesWithText("Login")[1].assertIsNotEnabled()
-        composeTestRule.onNodeWithText("Forget your password?").assertIsDisplayed()
-        composeTestRule.onNodeWithText("Don\'t have an Account?").assertIsDisplayed()
-        composeTestRule.onNodeWithText("Sign Up").assertIsDisplayed()
+        composeTestRule.onNodeWithText(composeTestRule.activity.getString(R.string.str_your_email))
+            .assertIsDisplayed()
+        composeTestRule.onNodeWithText(composeTestRule.activity.getString(R.string.str_email_is_incorrect))
+            .assertDoesNotExist()
+        composeTestRule.onNodeWithText(composeTestRule.activity.getString(R.string.str_your_email))
+            .assert(hasImeAction(ImeAction.Next))
+        composeTestRule.onNodeWithText(composeTestRule.activity.getString(R.string.str_password))
+            .assertIsDisplayed()
+        composeTestRule.onNodeWithText(composeTestRule.activity.getString(R.string.str_password_is_incorrect))
+            .assertDoesNotExist()
+        composeTestRule.onAllNodesWithText(composeTestRule.activity.getString(R.string.str_login))[1]
+            .assertIsDisplayed()
+        composeTestRule.onAllNodesWithText(composeTestRule.activity.getString(R.string.str_login))[1]
+            .assertIsNotEnabled()
+        composeTestRule.onNodeWithText(composeTestRule.activity.getString(R.string.str_forget_your_password))
+            .assertIsDisplayed()
+        composeTestRule.onNodeWithText(composeTestRule.activity.getString(R.string.str_don_t_have_an_account))
+            .assertIsDisplayed()
+        composeTestRule.onNodeWithText(composeTestRule.activity.getString(R.string.str_sign_up))
+            .assertIsDisplayed()
         composeTestRule.onNodeWithContentDescription("Loading dialog").assertDoesNotExist()
         composeTestRule.onNodeWithContentDescription("Error dialog").assertDoesNotExist()
         composeTestRule.onNode(isDialog()).assertDoesNotExist()
@@ -124,21 +163,34 @@ class LoginScreenTest {
     fun textFieldPassword_performTextInputPasswordIncorrect_returnErrorPassword() {
         val password = "pas"
 
-        composeTestRule.onNodeWithText("Password").performTextInput(password)
+        composeTestRule.onNodeWithText(composeTestRule.activity.getString(R.string.str_password))
+            .performTextInput(password)
 
-        composeTestRule.onAllNodesWithText("Login")[0].assertIsDisplayed()
-        composeTestRule.onNodeWithText("Add your details to login").assertIsDisplayed()
-        composeTestRule.onNodeWithText("Your Email").assertIsDisplayed()
-        composeTestRule.onNodeWithText("Email is incorrect").assertDoesNotExist()
+        composeTestRule.onAllNodesWithText(composeTestRule.activity.getString(R.string.str_login))[0]
+            .assertIsDisplayed()
+        composeTestRule.onNodeWithText(composeTestRule.activity.getString(R.string.str_add_your_details_to_login))
+            .assertIsDisplayed()
+        composeTestRule.onNodeWithText(composeTestRule.activity.getString(R.string.str_your_email))
+            .assertIsDisplayed()
+        composeTestRule.onNodeWithText(composeTestRule.activity.getString(R.string.str_email_is_incorrect))
+            .assertDoesNotExist()
         composeTestRule.onNodeWithText(password).assertDoesNotExist()
-        composeTestRule.onNodeWithText("Password").assertIsDisplayed()
-        composeTestRule.onNodeWithText("Password is incorrect").assertIsDisplayed()
-        composeTestRule.onNodeWithText("Password").assert(hasImeAction(ImeAction.Done))
-        composeTestRule.onAllNodesWithText("Login")[1].assertIsDisplayed()
-        composeTestRule.onAllNodesWithText("Login")[1].assertIsNotEnabled()
-        composeTestRule.onNodeWithText("Forget your password?").assertIsDisplayed()
-        composeTestRule.onNodeWithText("Don\'t have an Account?").assertIsDisplayed()
-        composeTestRule.onNodeWithText("Sign Up").assertIsDisplayed()
+        composeTestRule.onNodeWithText(composeTestRule.activity.getString(R.string.str_password))
+            .assertIsDisplayed()
+        composeTestRule.onNodeWithText(composeTestRule.activity.getString(R.string.str_password_is_incorrect))
+            .assertIsDisplayed()
+        composeTestRule.onNodeWithText(composeTestRule.activity.getString(R.string.str_password))
+            .assert(hasImeAction(ImeAction.Done))
+        composeTestRule.onAllNodesWithText(composeTestRule.activity.getString(R.string.str_login))[1]
+            .assertIsDisplayed()
+        composeTestRule.onAllNodesWithText(composeTestRule.activity.getString(R.string.str_login))[1]
+            .assertIsNotEnabled()
+        composeTestRule.onNodeWithText(composeTestRule.activity.getString(R.string.str_forget_your_password))
+            .assertIsDisplayed()
+        composeTestRule.onNodeWithText(composeTestRule.activity.getString(R.string.str_don_t_have_an_account))
+            .assertIsDisplayed()
+        composeTestRule.onNodeWithText(composeTestRule.activity.getString(R.string.str_sign_up))
+            .assertIsDisplayed()
         composeTestRule.onNodeWithContentDescription("Loading dialog").assertDoesNotExist()
         composeTestRule.onNodeWithContentDescription("Error dialog").assertDoesNotExist()
         composeTestRule.onNode(isDialog()).assertDoesNotExist()
@@ -148,21 +200,34 @@ class LoginScreenTest {
     fun textFieldPassword_performTextInputPasswordCorrect_returnPassword() {
         val password = "password1234"
 
-        composeTestRule.onNodeWithText("Password").performTextInput(password)
+        composeTestRule.onNodeWithText(composeTestRule.activity.getString(R.string.str_password))
+            .performTextInput(password)
 
-        composeTestRule.onAllNodesWithText("Login")[0].assertIsDisplayed()
-        composeTestRule.onNodeWithText("Add your details to login").assertIsDisplayed()
-        composeTestRule.onNodeWithText("Your Email").assertIsDisplayed()
-        composeTestRule.onNodeWithText("Email is incorrect").assertDoesNotExist()
+        composeTestRule.onAllNodesWithText(composeTestRule.activity.getString(R.string.str_login))[0]
+            .assertIsDisplayed()
+        composeTestRule.onNodeWithText(composeTestRule.activity.getString(R.string.str_add_your_details_to_login))
+            .assertIsDisplayed()
+        composeTestRule.onNodeWithText(composeTestRule.activity.getString(R.string.str_your_email))
+            .assertIsDisplayed()
+        composeTestRule.onNodeWithText(composeTestRule.activity.getString(R.string.str_email_is_incorrect))
+            .assertDoesNotExist()
         composeTestRule.onNodeWithText(password).assertDoesNotExist()
-        composeTestRule.onNodeWithText("Password").assertIsDisplayed()
-        composeTestRule.onNodeWithText("Password is incorrect").assertDoesNotExist()
-        composeTestRule.onNodeWithText("Password").assert(hasImeAction(ImeAction.Done))
-        composeTestRule.onAllNodesWithText("Login")[1].assertIsDisplayed()
-        composeTestRule.onAllNodesWithText("Login")[1].assertIsNotEnabled()
-        composeTestRule.onNodeWithText("Forget your password?").assertIsDisplayed()
-        composeTestRule.onNodeWithText("Don\'t have an Account?").assertIsDisplayed()
-        composeTestRule.onNodeWithText("Sign Up").assertIsDisplayed()
+        composeTestRule.onNodeWithText(composeTestRule.activity.getString(R.string.str_password))
+            .assertIsDisplayed()
+        composeTestRule.onNodeWithText(composeTestRule.activity.getString(R.string.str_password_is_incorrect))
+            .assertDoesNotExist()
+        composeTestRule.onNodeWithText(composeTestRule.activity.getString(R.string.str_password))
+            .assert(hasImeAction(ImeAction.Done))
+        composeTestRule.onAllNodesWithText(composeTestRule.activity.getString(R.string.str_login))[1]
+            .assertIsDisplayed()
+        composeTestRule.onAllNodesWithText(composeTestRule.activity.getString(R.string.str_login))[1]
+            .assertIsNotEnabled()
+        composeTestRule.onNodeWithText(composeTestRule.activity.getString(R.string.str_forget_your_password))
+            .assertIsDisplayed()
+        composeTestRule.onNodeWithText(composeTestRule.activity.getString(R.string.str_don_t_have_an_account))
+            .assertIsDisplayed()
+        composeTestRule.onNodeWithText(composeTestRule.activity.getString(R.string.str_sign_up))
+            .assertIsDisplayed()
         composeTestRule.onNodeWithContentDescription("Loading dialog").assertDoesNotExist()
         composeTestRule.onNodeWithContentDescription("Error dialog").assertDoesNotExist()
         composeTestRule.onNode(isDialog()).assertDoesNotExist()
@@ -177,23 +242,37 @@ class LoginScreenTest {
         coEvery { fetchUserProfileUseCase() } returns Unit
         coEvery { favoriteUseCase() } returns Unit
 
-        composeTestRule.onNodeWithText("Your Email").performTextInput(email)
-        composeTestRule.onNodeWithText("Password").performTextInput(password)
-        composeTestRule.onAllNodesWithText("Login")[1].performClick()
+        composeTestRule.onNodeWithText(composeTestRule.activity.getString(R.string.str_your_email))
+            .performTextInput(email)
+        composeTestRule.onNodeWithText(composeTestRule.activity.getString(R.string.str_password))
+            .performTextInput(password)
+        composeTestRule.onAllNodesWithText(composeTestRule.activity.getString(R.string.str_login))[1]
+            .performClick()
 
-        composeTestRule.onAllNodesWithText("Login")[0].assertIsDisplayed()
-        composeTestRule.onNodeWithText("Add your details to login").assertIsDisplayed()
+        composeTestRule.onAllNodesWithText(composeTestRule.activity.getString(R.string.str_login))[0]
+            .assertIsDisplayed()
+        composeTestRule.onNodeWithText(composeTestRule.activity.getString(R.string.str_add_your_details_to_login))
+            .assertIsDisplayed()
         composeTestRule.onNodeWithText(email).assertIsDisplayed()
-        composeTestRule.onNodeWithText("Your Email").assertIsDisplayed()
-        composeTestRule.onNodeWithText("Email is incorrect").assertDoesNotExist()
+        composeTestRule.onNodeWithText(composeTestRule.activity.getString(R.string.str_your_email))
+            .assertIsDisplayed()
+        composeTestRule.onNodeWithText(composeTestRule.activity.getString(R.string.str_email_is_incorrect))
+            .assertDoesNotExist()
         composeTestRule.onNodeWithText(password).assertDoesNotExist()
-        composeTestRule.onNodeWithText("Password").assertIsDisplayed()
-        composeTestRule.onNodeWithText("Password is incorrect").assertDoesNotExist()
-        composeTestRule.onAllNodesWithText("Login")[1].assertIsDisplayed()
-        composeTestRule.onAllNodesWithText("Login")[1].assertIsNotEnabled()
-        composeTestRule.onNodeWithText("Forget your password?").assertIsDisplayed()
-        composeTestRule.onNodeWithText("Don\'t have an Account?").assertIsDisplayed()
-        composeTestRule.onNodeWithText("Sign Up").assertIsDisplayed()
+        composeTestRule.onNodeWithText(composeTestRule.activity.getString(R.string.str_password))
+            .assertIsDisplayed()
+        composeTestRule.onNodeWithText(composeTestRule.activity.getString(R.string.str_password_is_incorrect))
+            .assertDoesNotExist()
+        composeTestRule.onAllNodesWithText(composeTestRule.activity.getString(R.string.str_login))[1]
+            .assertIsDisplayed()
+        composeTestRule.onAllNodesWithText(composeTestRule.activity.getString(R.string.str_login))[1]
+            .assertIsNotEnabled()
+        composeTestRule.onNodeWithText(composeTestRule.activity.getString(R.string.str_forget_your_password))
+            .assertIsDisplayed()
+        composeTestRule.onNodeWithText(composeTestRule.activity.getString(R.string.str_don_t_have_an_account))
+            .assertIsDisplayed()
+        composeTestRule.onNodeWithText(composeTestRule.activity.getString(R.string.str_sign_up))
+            .assertIsDisplayed()
         composeTestRule.onNodeWithContentDescription("Loading dialog").assertExists()
         composeTestRule.onNodeWithContentDescription("Error dialog").assertDoesNotExist()
         composeTestRule.onNodeWithText(messageError).assertDoesNotExist()
@@ -214,23 +293,37 @@ class LoginScreenTest {
         coEvery { fetchUserProfileUseCase() } returns Unit
         coEvery { favoriteUseCase() } returns Unit
 
-        composeTestRule.onNodeWithText("Your Email").performTextInput(email)
-        composeTestRule.onNodeWithText("Password").performTextInput(password)
-        composeTestRule.onAllNodesWithText("Login")[1].performClick()
+        composeTestRule.onNodeWithText(composeTestRule.activity.getString(R.string.str_your_email))
+            .performTextInput(email)
+        composeTestRule.onNodeWithText(composeTestRule.activity.getString(R.string.str_password))
+            .performTextInput(password)
+        composeTestRule.onAllNodesWithText(composeTestRule.activity.getString(R.string.str_login))[1]
+            .performClick()
 
-        composeTestRule.onAllNodesWithText("Login")[0].assertIsDisplayed()
-        composeTestRule.onNodeWithText("Add your details to login").assertIsDisplayed()
+        composeTestRule.onAllNodesWithText(composeTestRule.activity.getString(R.string.str_login))[0]
+            .assertIsDisplayed()
+        composeTestRule.onNodeWithText(composeTestRule.activity.getString(R.string.str_add_your_details_to_login))
+            .assertIsDisplayed()
         composeTestRule.onNodeWithText(email).assertIsDisplayed()
-        composeTestRule.onNodeWithText("Your Email").assertIsDisplayed()
-        composeTestRule.onNodeWithText("Email is incorrect").assertDoesNotExist()
+        composeTestRule.onNodeWithText(composeTestRule.activity.getString(R.string.str_your_email))
+            .assertIsDisplayed()
+        composeTestRule.onNodeWithText(composeTestRule.activity.getString(R.string.str_email_is_incorrect))
+            .assertDoesNotExist()
         composeTestRule.onNodeWithText(password).assertDoesNotExist()
-        composeTestRule.onNodeWithText("Password").assertIsDisplayed()
-        composeTestRule.onNodeWithText("Password is incorrect").assertDoesNotExist()
-        composeTestRule.onAllNodesWithText("Login")[1].assertIsDisplayed()
-        composeTestRule.onAllNodesWithText("Login")[1].assertIsEnabled()
-        composeTestRule.onNodeWithText("Forget your password?").assertIsDisplayed()
-        composeTestRule.onNodeWithText("Don\'t have an Account?").assertIsDisplayed()
-        composeTestRule.onNodeWithText("Sign Up").assertIsDisplayed()
+        composeTestRule.onNodeWithText(composeTestRule.activity.getString(R.string.str_password))
+            .assertIsDisplayed()
+        composeTestRule.onNodeWithText(composeTestRule.activity.getString(R.string.str_password_is_incorrect))
+            .assertDoesNotExist()
+        composeTestRule.onAllNodesWithText(composeTestRule.activity.getString(R.string.str_login))[1]
+            .assertIsDisplayed()
+        composeTestRule.onAllNodesWithText(composeTestRule.activity.getString(R.string.str_login))[1]
+            .assertIsEnabled()
+        composeTestRule.onNodeWithText(composeTestRule.activity.getString(R.string.str_forget_your_password))
+            .assertIsDisplayed()
+        composeTestRule.onNodeWithText(composeTestRule.activity.getString(R.string.str_don_t_have_an_account))
+            .assertIsDisplayed()
+        composeTestRule.onNodeWithText(composeTestRule.activity.getString(R.string.str_sign_up))
+            .assertIsDisplayed()
         composeTestRule.onNodeWithContentDescription("Loading dialog").assertDoesNotExist()
         composeTestRule.onNodeWithContentDescription("Error dialog").assertExists()
         composeTestRule.onNodeWithText(messageError).assertIsDisplayed()
@@ -250,23 +343,37 @@ class LoginScreenTest {
         coEvery { fetchUserProfileUseCase() } returns Unit
         coEvery { favoriteUseCase() } returns Unit
 
-        composeTestRule.onNodeWithText("Your Email").performTextInput(email)
-        composeTestRule.onNodeWithText("Password").performTextInput(password)
-        composeTestRule.onAllNodesWithText("Login")[1].performClick()
+        composeTestRule.onNodeWithText(composeTestRule.activity.getString(R.string.str_your_email))
+            .performTextInput(email)
+        composeTestRule.onNodeWithText(composeTestRule.activity.getString(R.string.str_password))
+            .performTextInput(password)
+        composeTestRule.onAllNodesWithText(composeTestRule.activity.getString(R.string.str_login))[1]
+            .performClick()
 
-        composeTestRule.onAllNodesWithText("Login")[0].assertIsDisplayed()
-        composeTestRule.onNodeWithText("Add your details to login").assertIsDisplayed()
+        composeTestRule.onAllNodesWithText(composeTestRule.activity.getString(R.string.str_login))[0]
+            .assertIsDisplayed()
+        composeTestRule.onNodeWithText(composeTestRule.activity.getString(R.string.str_add_your_details_to_login))
+            .assertIsDisplayed()
         composeTestRule.onNodeWithText(email).assertIsDisplayed()
-        composeTestRule.onNodeWithText("Your Email").assertIsDisplayed()
-        composeTestRule.onNodeWithText("Email is incorrect").assertDoesNotExist()
+        composeTestRule.onNodeWithText(composeTestRule.activity.getString(R.string.str_your_email))
+            .assertIsDisplayed()
+        composeTestRule.onNodeWithText(composeTestRule.activity.getString(R.string.str_email_is_incorrect))
+            .assertDoesNotExist()
         composeTestRule.onNodeWithText(password).assertDoesNotExist()
-        composeTestRule.onNodeWithText("Password").assertIsDisplayed()
-        composeTestRule.onNodeWithText("Password is incorrect").assertDoesNotExist()
-        composeTestRule.onAllNodesWithText("Login")[1].assertIsDisplayed()
-        composeTestRule.onAllNodesWithText("Login")[1].assertIsEnabled()
-        composeTestRule.onNodeWithText("Forget your password?").assertIsDisplayed()
-        composeTestRule.onNodeWithText("Don\'t have an Account?").assertIsDisplayed()
-        composeTestRule.onNodeWithText("Sign Up").assertIsDisplayed()
+        composeTestRule.onNodeWithText(composeTestRule.activity.getString(R.string.str_password))
+            .assertIsDisplayed()
+        composeTestRule.onNodeWithText(composeTestRule.activity.getString(R.string.str_password_is_incorrect))
+            .assertDoesNotExist()
+        composeTestRule.onAllNodesWithText(composeTestRule.activity.getString(R.string.str_login))[1]
+            .assertIsDisplayed()
+        composeTestRule.onAllNodesWithText(composeTestRule.activity.getString(R.string.str_login))[1]
+            .assertIsEnabled()
+        composeTestRule.onNodeWithText(composeTestRule.activity.getString(R.string.str_forget_your_password))
+            .assertIsDisplayed()
+        composeTestRule.onNodeWithText(composeTestRule.activity.getString(R.string.str_don_t_have_an_account))
+            .assertIsDisplayed()
+        composeTestRule.onNodeWithText(composeTestRule.activity.getString(R.string.str_sign_up))
+            .assertIsDisplayed()
         composeTestRule.onNodeWithContentDescription("Loading dialog").assertDoesNotExist()
         composeTestRule.onNodeWithContentDescription("Error dialog").assertExists()
         composeTestRule.onNodeWithText(messageError).assertIsDisplayed()
@@ -286,42 +393,68 @@ class LoginScreenTest {
         coEvery { loginUseCase(any(), any()) } throws exception
         coEvery { fetchUserProfileUseCase() } returns Unit
         coEvery { favoriteUseCase() } returns Unit
-        composeTestRule.onNodeWithText("Your Email").performTextInput(email)
-        composeTestRule.onNodeWithText("Password").performTextInput(password)
-        composeTestRule.onAllNodesWithText("Login")[1].performClick()
-        composeTestRule.onAllNodesWithText("Login")[0].assertIsDisplayed()
-        composeTestRule.onNodeWithText("Add your details to login").assertIsDisplayed()
+        composeTestRule.onNodeWithText(composeTestRule.activity.getString(R.string.str_your_email))
+            .performTextInput(email)
+        composeTestRule.onNodeWithText(composeTestRule.activity.getString(R.string.str_password))
+            .performTextInput(password)
+        composeTestRule.onAllNodesWithText(composeTestRule.activity.getString(R.string.str_login))[1]
+            .performClick()
+        composeTestRule.onAllNodesWithText(composeTestRule.activity.getString(R.string.str_login))[0]
+            .assertIsDisplayed()
+        composeTestRule.onNodeWithText(composeTestRule.activity.getString(R.string.str_add_your_details_to_login))
+            .assertIsDisplayed()
         composeTestRule.onNodeWithText(email).assertIsDisplayed()
-        composeTestRule.onNodeWithText("Your Email").assertIsDisplayed()
-        composeTestRule.onNodeWithText("Email is incorrect").assertDoesNotExist()
+        composeTestRule.onNodeWithText(composeTestRule.activity.getString(R.string.str_your_email))
+            .assertIsDisplayed()
+        composeTestRule.onNodeWithText(composeTestRule.activity.getString(R.string.str_email_is_incorrect))
+            .assertDoesNotExist()
         composeTestRule.onNodeWithText(password).assertDoesNotExist()
-        composeTestRule.onNodeWithText("Password").assertIsDisplayed()
-        composeTestRule.onNodeWithText("Password is incorrect").assertDoesNotExist()
-        composeTestRule.onAllNodesWithText("Login")[1].assertIsDisplayed()
-        composeTestRule.onAllNodesWithText("Login")[1].assertIsEnabled()
-        composeTestRule.onNodeWithText("Forget your password?").assertIsDisplayed()
-        composeTestRule.onNodeWithText("Don\'t have an Account?").assertIsDisplayed()
-        composeTestRule.onNodeWithText("Sign Up").assertIsDisplayed()
+        composeTestRule.onNodeWithText(composeTestRule.activity.getString(R.string.str_password))
+            .assertIsDisplayed()
+        composeTestRule.onNodeWithText(composeTestRule.activity.getString(R.string.str_password_is_incorrect))
+            .assertDoesNotExist()
+        composeTestRule.onAllNodesWithText(composeTestRule.activity.getString(R.string.str_login))[1]
+            .assertIsDisplayed()
+        composeTestRule.onAllNodesWithText(composeTestRule.activity.getString(R.string.str_login))[1]
+            .assertIsEnabled()
+        composeTestRule.onNodeWithText(composeTestRule.activity.getString(R.string.str_forget_your_password))
+            .assertIsDisplayed()
+        composeTestRule.onNodeWithText(composeTestRule.activity.getString(R.string.str_don_t_have_an_account))
+            .assertIsDisplayed()
+        composeTestRule.onNodeWithText(composeTestRule.activity.getString(R.string.str_sign_up))
+            .assertIsDisplayed()
         composeTestRule.onNodeWithContentDescription("Loading dialog").assertDoesNotExist()
         composeTestRule.onNodeWithContentDescription("Error dialog").assertExists()
         composeTestRule.onNodeWithText(messageError).assertIsDisplayed()
         composeTestRule.onNode(isDialog()).assertExists()
 
-        composeTestRule.onNodeWithText("OK").performClick()
+        composeTestRule.onNodeWithText(composeTestRule.activity.getString(R.string.str_ok))
+            .performClick()
 
-        composeTestRule.onAllNodesWithText("Login")[0].assertIsDisplayed()
-        composeTestRule.onNodeWithText("Add your details to login").assertIsDisplayed()
+        composeTestRule.onAllNodesWithText(composeTestRule.activity.getString(R.string.str_login))[0]
+            .assertIsDisplayed()
+        composeTestRule.onNodeWithText(composeTestRule.activity.getString(R.string.str_add_your_details_to_login))
+            .assertIsDisplayed()
         composeTestRule.onNodeWithText(email).assertIsDisplayed()
-        composeTestRule.onNodeWithText("Your Email").assertIsDisplayed()
-        composeTestRule.onNodeWithText("Email is incorrect").assertDoesNotExist()
+        composeTestRule.onNodeWithText(composeTestRule.activity.getString(R.string.str_your_email))
+            .assertIsDisplayed()
+        composeTestRule.onNodeWithText(composeTestRule.activity.getString(R.string.str_email_is_incorrect))
+            .assertDoesNotExist()
         composeTestRule.onNodeWithText(password).assertDoesNotExist()
-        composeTestRule.onNodeWithText("Password").assertIsDisplayed()
-        composeTestRule.onNodeWithText("Password is incorrect").assertDoesNotExist()
-        composeTestRule.onAllNodesWithText("Login")[1].assertIsDisplayed()
-        composeTestRule.onAllNodesWithText("Login")[1].assertIsEnabled()
-        composeTestRule.onNodeWithText("Forget your password?").assertIsDisplayed()
-        composeTestRule.onNodeWithText("Don\'t have an Account?").assertIsDisplayed()
-        composeTestRule.onNodeWithText("Sign Up").assertIsDisplayed()
+        composeTestRule.onNodeWithText(composeTestRule.activity.getString(R.string.str_password))
+            .assertIsDisplayed()
+        composeTestRule.onNodeWithText(composeTestRule.activity.getString(R.string.str_password_is_incorrect))
+            .assertDoesNotExist()
+        composeTestRule.onAllNodesWithText(composeTestRule.activity.getString(R.string.str_login))[1]
+            .assertIsDisplayed()
+        composeTestRule.onAllNodesWithText(composeTestRule.activity.getString(R.string.str_login))[1]
+            .assertIsEnabled()
+        composeTestRule.onNodeWithText(composeTestRule.activity.getString(R.string.str_forget_your_password))
+            .assertIsDisplayed()
+        composeTestRule.onNodeWithText(composeTestRule.activity.getString(R.string.str_don_t_have_an_account))
+            .assertIsDisplayed()
+        composeTestRule.onNodeWithText(composeTestRule.activity.getString(R.string.str_sign_up))
+            .assertIsDisplayed()
         composeTestRule.onNodeWithContentDescription("Loading dialog").assertDoesNotExist()
         composeTestRule.onNodeWithContentDescription("Error dialog").assertDoesNotExist()
         composeTestRule.onNodeWithText(messageError).assertDoesNotExist()

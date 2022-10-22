@@ -4,28 +4,29 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.width
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.unit.TextUnit
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
+import com.adedom.ui_components.R
+import com.adedom.ui_components.theme.MyFoodTheme
 
 @Composable
 fun AppText(
     text: String,
     modifier: Modifier = Modifier,
     color: Color = Color.Black,
-    fontSize: TextUnit = 16.sp,
-    fontWeight: FontWeight? = null,
+    style: TextStyle = MaterialTheme.typography.body1,
 ) {
     Text(
         text = text,
         color = color,
-        fontSize = fontSize,
-        fontWeight = fontWeight,
+        style = style,
         modifier = modifier,
     )
 }
@@ -34,10 +35,13 @@ fun AppText(
 fun AppTitleText(
     text: String,
     modifier: Modifier = Modifier,
+    color: Color = Color.Black,
+    style: TextStyle = MaterialTheme.typography.h5,
 ) {
-    AppText(
+    Text(
         text = text,
-        fontSize = 24.sp,
+        color = color,
+        style = style,
         modifier = modifier,
     )
 }
@@ -46,16 +50,19 @@ fun AppTitleText(
 fun AppSubTitleText(
     text: String,
     modifier: Modifier = Modifier,
+    color: Color = Color.Gray,
+    style: TextStyle = MaterialTheme.typography.h6,
 ) {
-    AppText(
+    Text(
         text = text,
-        color = Color.Gray,
+        color = color,
+        style = style,
         modifier = modifier,
     )
 }
 
 @Composable
-fun AppBottomText(
+fun AppConcatText(
     firstText: String,
     secondText: String,
     modifier: Modifier = Modifier,
@@ -66,15 +73,52 @@ fun AppBottomText(
             onClick()
         }
     ) {
-        AppText(
-            firstText,
+        Text(
+            text = firstText,
             color = Color.Gray,
+            style = MaterialTheme.typography.body1,
         )
         Spacer(modifier = Modifier.width(4.dp))
-        AppText(
-            secondText,
-            color = Color(0xFFFFD700),
-            fontWeight = FontWeight.Bold,
+        Text(
+            text = secondText,
+            color = MaterialTheme.colors.primary,
+            style = MaterialTheme.typography.subtitle1,
+        )
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun AppTextPreview() {
+    MyFoodTheme {
+        AppText(text = stringResource(id = R.string.app_name))
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun AppTitleTextPreview() {
+    MyFoodTheme {
+        AppTitleText(text = stringResource(id = R.string.app_name))
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun AppSubTitleTextPreview() {
+    MyFoodTheme {
+        AppSubTitleText(text = stringResource(id = R.string.app_name))
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun AppConcatTextPreview() {
+    MyFoodTheme {
+        AppConcatText(
+            firstText = stringResource(id = R.string.str_don_t_want_login),
+            secondText = stringResource(id = R.string.str_skip),
+            onClick = {},
         )
     }
 }

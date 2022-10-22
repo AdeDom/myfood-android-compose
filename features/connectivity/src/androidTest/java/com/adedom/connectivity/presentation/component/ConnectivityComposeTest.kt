@@ -1,9 +1,11 @@
 package com.adedom.connectivity.presentation.component
 
+import androidx.activity.ComponentActivity
 import androidx.compose.ui.test.*
-import androidx.compose.ui.test.junit4.createComposeRule
+import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import com.adedom.connectivity.data.models.Status
 import com.adedom.connectivity.presentation.view_model.ConnectivityUiState
+import com.adedom.ui_components.R
 import com.adedom.ui_components.theme.MyFoodTheme
 import org.junit.Rule
 import org.junit.Test
@@ -11,7 +13,7 @@ import org.junit.Test
 class ConnectivityComposeTest {
 
     @get:Rule
-    val composeTestRule = createComposeRule()
+    val composeTestRule = createAndroidComposeRule<ComponentActivity>()
 
     @Test
     fun connectivityContent_statusAvailable_returnOnlineNetworkPopup() {
@@ -28,7 +30,8 @@ class ConnectivityComposeTest {
 
         composeTestRule.onNode(isPopup()).assertIsDisplayed()
         composeTestRule.onNodeWithContentDescription("Background network popup").assertIsDisplayed()
-        composeTestRule.onNodeWithText("Online").assertIsDisplayed()
+        composeTestRule.onNodeWithText(composeTestRule.activity.getString(R.string.str_online))
+            .assertIsDisplayed()
     }
 
     @Test
@@ -46,7 +49,8 @@ class ConnectivityComposeTest {
 
         composeTestRule.onNode(isPopup()).assertIsDisplayed()
         composeTestRule.onNodeWithContentDescription("Background network popup").assertIsDisplayed()
-        composeTestRule.onNodeWithText("Offline").assertIsDisplayed()
+        composeTestRule.onNodeWithText(composeTestRule.activity.getString(R.string.str_offline))
+            .assertIsDisplayed()
     }
 
     @Test
@@ -64,7 +68,8 @@ class ConnectivityComposeTest {
 
         composeTestRule.onNode(isPopup()).assertIsDisplayed()
         composeTestRule.onNodeWithContentDescription("Background network popup").assertIsDisplayed()
-        composeTestRule.onNodeWithText("Offline").assertIsDisplayed()
+        composeTestRule.onNodeWithText(composeTestRule.activity.getString(R.string.str_offline))
+            .assertIsDisplayed()
     }
 
     @Test
@@ -82,7 +87,8 @@ class ConnectivityComposeTest {
 
         composeTestRule.onNode(isPopup()).assertIsDisplayed()
         composeTestRule.onNodeWithContentDescription("Background network popup").assertIsDisplayed()
-        composeTestRule.onNodeWithText("Offline").assertIsDisplayed()
+        composeTestRule.onNodeWithText(composeTestRule.activity.getString(R.string.str_offline))
+            .assertIsDisplayed()
     }
 
     @Test

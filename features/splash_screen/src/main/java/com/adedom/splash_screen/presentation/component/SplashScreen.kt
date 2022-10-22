@@ -12,6 +12,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.tooling.preview.Preview
@@ -19,6 +20,7 @@ import com.adedom.splash_screen.R
 import com.adedom.splash_screen.presentation.view_model.SplashScreenViewModel
 import com.adedom.ui_components.components.LogoApp
 import com.adedom.ui_components.theme.MyFoodTheme
+import com.adedom.ui_components.R as res
 
 @Composable
 fun SplashScreen(
@@ -56,7 +58,7 @@ fun SplashScreenContent() {
 
     Image(
         painter = painterResource(id = R.drawable.bg),
-        contentDescription = "Background splash screen",
+        contentDescription = stringResource(id = res.string.str_background_splash_screen),
         contentScale = ContentScale.Crop,
         modifier = Modifier.fillMaxSize(),
     )

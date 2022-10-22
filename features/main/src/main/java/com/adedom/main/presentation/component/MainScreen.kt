@@ -4,7 +4,6 @@ import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Scaffold
-import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Info
@@ -13,18 +12,21 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import com.adedom.main.R
 import com.adedom.main.presentation.view_model.HomeChannel
 import com.adedom.main.presentation.view_model.HomeUiEvent
 import com.adedom.main.presentation.view_model.HomeUiState
 import com.adedom.main.presentation.view_model.HomeViewModel
 import com.adedom.ui_components.components.AppIcon
+import com.adedom.ui_components.components.AppText
 import com.adedom.ui_components.components.AppTitleText
 import com.adedom.ui_components.theme.MyFoodTheme
 import kotlinx.coroutines.launch
+import com.adedom.ui_components.R as res
 
 @Composable
 fun MainScreen(
@@ -86,15 +88,20 @@ fun MainContent(
                 modifier = Modifier.fillMaxSize(),
             ) {
                 AppTitleText(
-                    text = "My Food",
+                    text = stringResource(id = res.string.app_name),
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(8.dp),
                 )
                 Spacer(modifier = Modifier.height(16.dp))
                 DrawableItemMenu(
-                    text = "Home",
-                    icon = { AppIcon(image = Icons.Default.Home) },
+                    text = stringResource(id = res.string.str_home),
+                    icon = {
+                        AppIcon(
+                            image = Icons.Default.Home,
+                            contentDescription = stringResource(id = res.string.cd_icon_home),
+                        )
+                    },
                     onClick = {
                         scope.launch {
                             scaffoldState.drawerState.close()
@@ -102,15 +109,25 @@ fun MainContent(
                     },
                 )
                 DrawableItemMenu(
-                    text = "Info",
-                    icon = { AppIcon(image = Icons.Default.Info) },
+                    text = stringResource(id = res.string.str_info),
+                    icon = {
+                        AppIcon(
+                            image = Icons.Default.Info,
+                            contentDescription = stringResource(id = res.string.cd_icon_info),
+                        )
+                    },
                     onClick = openInfoPage,
                 )
                 Spacer(modifier = Modifier.weight(1f))
                 if (state.isExitAuth) {
                     DrawableItemMenu(
-                        text = "Logout",
-                        icon = { AppIcon(image = R.drawable.ic_logout_gray) },
+                        text = stringResource(id = res.string.str_logout),
+                        icon = {
+                            AppIcon(
+                                image = painterResource(id = R.drawable.ic_logout_gray),
+                                contentDescription = stringResource(id = res.string.cd_icon_logout),
+                            )
+                        },
                         onClick = {
                             dispatch(HomeUiEvent.Logout)
                             scope.launch {
@@ -120,8 +137,13 @@ fun MainContent(
                     )
                 } else {
                     DrawableItemMenu(
-                        text = "Back to the welcome",
-                        icon = { AppIcon(image = R.drawable.ic_logout_gray) },
+                        text = stringResource(id = res.string.str_back_to_welcome),
+                        icon = {
+                            AppIcon(
+                                image = painterResource(id = R.drawable.ic_logout_gray),
+                                contentDescription = stringResource(id = res.string.cd_icon_logout),
+                            )
+                        },
                         onClick = { dispatch(HomeUiEvent.NavLogout) },
                     )
                 }
@@ -161,9 +183,8 @@ private fun DrawableItemMenu(
     ) {
         icon()
         Spacer(modifier = Modifier.width(16.dp))
-        Text(
+        AppText(
             text = text,
-            fontSize = 18.sp,
             modifier = Modifier.weight(1f)
         )
     }
