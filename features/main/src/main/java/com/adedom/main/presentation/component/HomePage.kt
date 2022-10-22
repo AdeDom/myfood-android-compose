@@ -12,6 +12,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.runtime.Composable
@@ -184,7 +185,7 @@ private fun HomeContent(
                                                             height = 4.dp,
                                                         )
                                                         .clip(RoundedCornerShape(4.dp))
-                                                        .background(Color(0xFFFFD700)),
+                                                        .background(MaterialTheme.colors.primary),
                                                 )
                                                 Spacer(modifier = Modifier.height(4.dp))
                                             } else {

@@ -1,6 +1,7 @@
 package com.adedom.authentication.presentation.component
 
 import androidx.compose.foundation.layout.*
+import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
@@ -75,7 +76,7 @@ fun LoginContent(
             )
             AppColorButton(
                 text = "Login",
-                color = if (state.isLogin) Color(0xFFFFD700) else Color.Gray,
+                color = if (state.isLogin) MaterialTheme.colors.primary else Color.Gray,
                 enabled = state.isLogin,
                 onClick = { dispatch(LoginUiEvent.Submit) },
             )

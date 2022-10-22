@@ -4,6 +4,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.width
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -73,7 +74,7 @@ fun AppBottomText(
         Spacer(modifier = Modifier.width(4.dp))
         AppText(
             secondText,
-            color = Color(0xFFFFD700),
+            color = MaterialTheme.colors.primary,
             fontWeight = FontWeight.Bold,
         )
     }

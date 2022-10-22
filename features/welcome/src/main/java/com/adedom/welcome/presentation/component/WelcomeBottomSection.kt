@@ -5,6 +5,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -56,7 +57,7 @@ fun WelcomeBottomSection(
                 .border(
                     border = BorderStroke(
                         width = 1.dp,
-                        color = Color(0xFFFFD700),
+                        color = MaterialTheme.colors.primary,
                     ),
                     shape = RoundedCornerShape(32.dp),
                 )
@@ -70,7 +71,7 @@ fun WelcomeBottomSection(
                     .width(40.dp)
                     .height(32.dp)
                     .background(
-                        color = Color(0xFFFFD700),
+                        color = MaterialTheme.colors.primary,
                         shape = RoundedCornerShape(32.dp),
                     )
                     .semantics {
