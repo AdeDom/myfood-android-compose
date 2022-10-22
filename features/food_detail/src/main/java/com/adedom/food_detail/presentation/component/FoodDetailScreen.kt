@@ -16,6 +16,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.adedom.food_detail.R
@@ -26,6 +27,7 @@ import com.adedom.food_detail.presentation.view_model.FoodDetailViewModel
 import com.adedom.ui_components.components.*
 import com.adedom.ui_components.theme.Amber
 import com.adedom.ui_components.theme.MyFoodTheme
+import com.adedom.ui_components.R as res
 
 @Composable
 fun FoodDetailScreen(
@@ -115,6 +117,7 @@ fun FoodDetailContent(
                                                         image = Icons.Default.Favorite,
                                                         color = Amber,
                                                         modifier = Modifier.size(18.dp),
+                                                        contentDescription = stringResource(id = res.string.cd_icon_favorite),
                                                     )
                                                     Spacer(modifier = Modifier.width(4.dp))
                                                     AppText(
@@ -128,6 +131,7 @@ fun FoodDetailContent(
                                                         image = Icons.Default.Star,
                                                         color = Amber,
                                                         modifier = Modifier.size(18.dp),
+                                                        contentDescription = stringResource(id = res.string.cd_icon_star),
                                                     )
                                                     Spacer(modifier = Modifier.width(4.dp))
                                                     AppText(
@@ -139,18 +143,18 @@ fun FoodDetailContent(
                                             }
                                             Box(modifier = Modifier.weight(1f))
                                             AppText(
-                                                text = "${state.foodDetail?.price}",
+                                                text = state.foodDetail?.price.toString(),
                                                 style = MaterialTheme.typography.h4,
                                             )
                                             Spacer(modifier = Modifier.width(8.dp))
                                             AppText(
-                                                text = "Bath",
+                                                text = stringResource(id = res.string.str_baht),
                                                 style = MaterialTheme.typography.h4,
                                             )
                                         }
                                         Spacer(modifier = Modifier.height(32.dp))
                                         AppText(
-                                            text = "Description",
+                                            text = stringResource(id = res.string.str_description),
                                             style = MaterialTheme.typography.subtitle1,
                                         )
                                         Spacer(modifier = Modifier.height(8.dp))

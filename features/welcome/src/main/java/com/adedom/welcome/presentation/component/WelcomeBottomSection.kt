@@ -9,10 +9,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.adedom.ui_components.R
 import com.adedom.ui_components.components.AppColorButton
 import com.adedom.ui_components.components.AppConcatText
 import com.adedom.ui_components.components.AppOutlinedButton
@@ -34,18 +36,18 @@ fun WelcomeBottomSection(
         modifier = modifier.fillMaxSize(),
     ) {
         AppColorButton(
-            text = "Login",
+            text = stringResource(id = R.string.str_login),
             onClick = openLoginPage,
         )
         Spacer(modifier = Modifier.height(20.dp))
         AppOutlinedButton(
-            text = "Create an Account",
+            text = stringResource(id = R.string.str_create_an_account),
             onClick = openRegisterPage,
         )
         Spacer(modifier = Modifier.height(20.dp))
         AppConcatText(
-            firstText = "Don\'t want login?",
-            secondText = "Skip",
+            firstText = stringResource(id = R.string.str_don_t_want_login),
+            secondText = stringResource(id = R.string.str_skip),
             onClick = { dispatch(WelcomeUiEvent.NavSkip) },
         )
         Spacer(modifier = Modifier.height(20.dp))
@@ -78,7 +80,7 @@ fun WelcomeBottomSection(
                     },
             ) {
                 AppText(
-                    text = "TH",
+                    text = stringResource(id = R.string.str_th),
                     color = Color.White,
                     style = MaterialTheme.typography.subtitle1,
                 )
@@ -90,7 +92,7 @@ fun WelcomeBottomSection(
                     height = 32.dp,
                 ),
             ) {
-                AppText(text = "EN")
+                AppText(text = stringResource(id = R.string.str_en))
             }
         }
     }

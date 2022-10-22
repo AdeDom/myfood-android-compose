@@ -10,9 +10,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.adedom.ui_components.R
 import com.adedom.ui_components.domain.models.FoodModel
 import com.adedom.ui_components.theme.Amber
+import com.adedom.ui_components.theme.MyFoodTheme
 import com.adedom.ui_components.theme.RectangleMediumShape
 
 @Composable
@@ -56,6 +60,7 @@ fun FoodBoxItem(
                             image = Icons.Default.Favorite,
                             color = Amber,
                             modifier = Modifier.size(18.dp),
+                            contentDescription = stringResource(id = R.string.cd_icon_favorite),
                         )
                         Spacer(modifier = Modifier.width(4.dp))
                         AppText(
@@ -72,6 +77,7 @@ fun FoodBoxItem(
                             image = Icons.Default.Star,
                             color = Amber,
                             modifier = Modifier.size(18.dp),
+                            contentDescription = stringResource(id = R.string.cd_icon_star),
                         )
                         Spacer(modifier = Modifier.width(4.dp))
                         AppText(
@@ -83,5 +89,24 @@ fun FoodBoxItem(
                 }
             }
         }
+    }
+}
+
+@Preview
+@Composable
+fun FoodBoxItemPreview() {
+    MyFoodTheme {
+        FoodBoxItem(
+            food = FoodModel(
+                foodId = 1,
+                foodName = "foodName",
+                alias = "alias",
+                image = "",
+                favorite = 5,
+                ratingScoreCount = "ratingScoreCount",
+                categoryId = 2,
+            ),
+            onFoodClick = {},
+        )
     }
 }

@@ -9,7 +9,6 @@ import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.Card
-import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.icons.Icons
@@ -20,11 +19,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.adedom.main.domain.models.CategoryModel
 import com.adedom.main.presentation.view_model.HomeUiEvent
 import com.adedom.main.presentation.view_model.HomeUiState
+import com.adedom.ui_components.R
 import com.adedom.ui_components.components.*
 import com.adedom.ui_components.domain.models.FoodModel
 import com.adedom.ui_components.theme.MyFoodTheme
@@ -57,8 +58,8 @@ fun HomePage(
         }
         HomeUiState.Dialog.Logout -> {
             AppInteractAlertDialog(
-                title = "Logout",
-                text = "Are you sure to logout the app?",
+                title = stringResource(id = R.string.str_logout),
+                text = stringResource(id = R.string.str_logout_message),
                 confirmButton = onLogoutClick,
                 dismissButton = { dispatch(HomeUiEvent.HideDialog) },
                 modifier = Modifier.wrapContentSize(),
@@ -119,14 +120,14 @@ private fun HomeContent(
                                 ) {
                                     Spacer(modifier = Modifier.width(8.dp))
                                     IconButton(onClick = onMenuClick) {
-                                        Icon(
-                                            imageVector = Icons.Default.Menu,
-                                            contentDescription = null,
+                                        AppIcon(
+                                            image = Icons.Default.Menu,
+                                            contentDescription = stringResource(id = R.string.cd_icon_menu),
                                         )
                                     }
                                     Spacer(modifier = Modifier.width(8.dp))
                                     AppText(
-                                        text = "Search food",
+                                        text = stringResource(id = R.string.str_search_food),
                                         color = Color.Gray,
                                         modifier = Modifier.weight(1f),
                                     )

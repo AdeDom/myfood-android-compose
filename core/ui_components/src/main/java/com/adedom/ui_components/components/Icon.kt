@@ -13,10 +13,11 @@ fun AppIcon(
     image: ImageVector,
     modifier: Modifier = Modifier,
     color: Color = Color.Black,
+    contentDescription: String,
 ) {
     Icon(
         imageVector = image,
-        contentDescription = null,
+        contentDescription = contentDescription,
         tint = color,
         modifier = modifier,
     )
@@ -26,10 +27,11 @@ fun AppIcon(
 fun AppIcon(
     @DrawableRes image: Int,
     modifier: Modifier = Modifier,
+    contentDescription: String,
 ) {
     Icon(
         painter = painterResource(id = image),
-        contentDescription = null,
+        contentDescription = contentDescription,
         modifier = modifier,
     )
 }

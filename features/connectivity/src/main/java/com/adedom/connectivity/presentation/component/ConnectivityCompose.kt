@@ -9,6 +9,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.tooling.preview.Preview
@@ -17,6 +18,7 @@ import com.adedom.connectivity.data.models.Status
 import com.adedom.connectivity.presentation.view_model.ConnectivityUiEvent
 import com.adedom.connectivity.presentation.view_model.ConnectivityUiState
 import com.adedom.connectivity.presentation.view_model.ConnectivityViewModel
+import com.adedom.ui_components.R
 import com.adedom.ui_components.components.AppText
 import com.adedom.ui_components.theme.MyFoodTheme
 
@@ -68,7 +70,7 @@ private fun OnlineNetworkPopup(
                     contentDescription = "Background network popup"
                 },
         ) {
-            AppText("Online")
+            AppText(stringResource(id = R.string.str_online))
         }
     }
 }
@@ -85,7 +87,7 @@ private fun OfflineNetworkPopup() {
                     contentDescription = "Background network popup"
                 },
         ) {
-            AppText("Offline")
+            AppText(stringResource(id = R.string.str_offline))
         }
     }
 }

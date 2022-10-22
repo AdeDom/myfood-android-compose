@@ -12,6 +12,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.adedom.ui_components.components.*
@@ -22,6 +23,7 @@ import com.adedom.user_profile.domain.models.UserProfileModel
 import com.adedom.user_profile.presentation.view_model.UserProfileUiEvent
 import com.adedom.user_profile.presentation.view_model.UserProfileUiState
 import com.adedom.user_profile.presentation.view_model.UserProfileViewModel
+import com.adedom.ui_components.R as res
 
 @Composable
 fun UserProfileScreen(
@@ -88,25 +90,37 @@ fun UserProfileContent(
                     }
                     Spacer(modifier = Modifier.height(8.dp))
                     Row {
-                        AppIcon(image = R.drawable.ic_account_gray)
+                        AppIcon(
+                            image = R.drawable.ic_account_gray,
+                            contentDescription = stringResource(id = res.string.cd_icon_account),
+                        )
                         Spacer(modifier = Modifier.width(8.dp))
                         AppText(userProfile.name)
                     }
                     Spacer(modifier = Modifier.height(8.dp))
                     Row {
-                        AppIcon(image = R.drawable.ic_email_gray)
+                        AppIcon(
+                            image = R.drawable.ic_email_gray,
+                            contentDescription = stringResource(id = res.string.cd_icon_email),
+                        )
                         Spacer(modifier = Modifier.width(8.dp))
                         AppText(userProfile.email)
                     }
                     Spacer(modifier = Modifier.height(8.dp))
                     Row {
-                        AppIcon(image = R.drawable.ic_location_gray)
+                        AppIcon(
+                            image = R.drawable.ic_location_gray,
+                            contentDescription = stringResource(id = res.string.cd_icon_location),
+                        )
                         Spacer(modifier = Modifier.width(8.dp))
                         AppText(userProfile.address)
                     }
                     Spacer(modifier = Modifier.height(8.dp))
                     Row {
-                        AppIcon(image = R.drawable.ic_phone_gray)
+                        AppIcon(
+                            image = R.drawable.ic_phone_gray,
+                            contentDescription = stringResource(id = res.string.cd_icon_phone),
+                        )
                         Spacer(modifier = Modifier.width(8.dp))
                         AppText(userProfile.mobileNo)
                     }
@@ -115,7 +129,7 @@ fun UserProfileContent(
         }
 
         AppColorButton(
-            text = "Back",
+            text = stringResource(id = res.string.str_back),
             onClick = onBackPressed,
             modifier = Modifier.align(Alignment.BottomCenter),
         )
@@ -129,7 +143,7 @@ fun UserProfileContent(
             }
             is UserProfileUiState.Dialog.RefreshTokenExpired -> {
                 AppErrorAlertDialog(
-                    title = "Token expired!!!",
+                    title = stringResource(id = res.string.str_error_token_expired),
                     error = state.dialog.error,
                     onDismiss = refreshTokenExpired,
                 )
