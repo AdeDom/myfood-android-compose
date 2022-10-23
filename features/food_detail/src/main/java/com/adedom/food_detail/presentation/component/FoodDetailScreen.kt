@@ -96,14 +96,10 @@ fun FoodDetailContent(
                 )
                 LazyColumn {
                     item {
-                        Spacer(
-                            modifier = Modifier.height((screenHeightDp / 2) - 128.dp),
-                        )
+                        Spacer(modifier = Modifier.height((screenHeightDp / 2) - 128.dp))
                         Box {
                             Column {
-                                Spacer(
-                                    modifier = Modifier.height(64.dp),
-                                )
+                                Spacer(modifier = Modifier.height(64.dp))
                                 Card(
                                     shape = RoundedCornerShape(
                                         topStart = 64.dp,

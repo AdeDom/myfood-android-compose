@@ -1,6 +1,7 @@
 package com.adedom.main.presentation.component
 
 import android.widget.Toast
+import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -8,12 +9,14 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
 import androidx.compose.material.IconButton
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -29,7 +32,6 @@ import com.adedom.ui_components.components.*
 import com.adedom.ui_components.domain.models.FoodModel
 import com.adedom.ui_components.theme.MyFoodTheme
 import com.adedom.ui_components.theme.RectangleLargeShape
-import com.adedom.ui_components.theme.RectangleMediumShape
 import com.adedom.ui_components.theme.RectangleSmallShape
 import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
@@ -150,57 +152,18 @@ private fun HomeContent(
                     item {
                         LazyRow {
                             items(state.categories) { category ->
-                                Box(
-                                    modifier = Modifier
-                                        .padding(4.dp)
-                                        .clickable {
-                                            dispatch(HomeUiEvent.CategoryClick(category.categoryId))
-                                        },
-                                ) {
-                                    Card(
-                                        shape = RectangleMediumShape,
-                                        elevation = 8.dp,
-                                    ) {
-                                        Column(
-                                            horizontalAlignment = Alignment.CenterHorizontally,
-                                        ) {
-                                            AppImage(
-                                                image = category.image,
-                                                contentDescription = stringResource(id = res.string.cd_category_image),
-                                                modifier = Modifier.size(100.dp),
-                                            )
-                                            Spacer(modifier = Modifier.height(4.dp))
-                                            AppText(
-                                                text = category.categoryName,
-                                                style = MaterialTheme.typography.subtitle1,
-                                            )
-                                            Spacer(modifier = Modifier.height(4.dp))
-                                            if (category.categoryId == state.categoryId) {
-                                                Box(
-                                                    modifier = Modifier
-                                                        .size(
-                                                            width = 64.dp,
-                                                            height = 4.dp,
-                                                        )
-                                                        .clip(RectangleSmallShape)
-                                                        .background(MaterialTheme.colors.primary),
-                                                )
-                                                Spacer(modifier = Modifier.height(4.dp))
-                                            } else {
-                                                Spacer(modifier = Modifier.height(8.dp))
-                                            }
-                                        }
-                                    }
-                                }
+                                CategoryBoxItem(
+                                    categoryId = state.categoryId,
+                                    category = category,
+                                    onClick = { dispatch(HomeUiEvent.CategoryClick(category.categoryId)) },
+                                )
                             }
                         }
                     }
 
                     item {
                         Row {
-                            Spacer(
-                                modifier = Modifier.size(4.dp),
-                            )
+                            Spacer(modifier = Modifier.size(4.dp))
                             AppTitleText(text = state.categoryName)
                         }
                     }
@@ -219,6 +182,58 @@ private fun HomeContent(
                             )
                         }
                     }
+                }
+            }
+        }
+    }
+}
+
+@Composable
+fun CategoryBoxItem(
+    categoryId: Long?,
+    category: CategoryModel,
+    onClick: () -> Unit,
+) {
+    val borderRadius by animateDpAsState(
+        targetValue = if (category.categoryId == categoryId) 2.dp else 16.dp,
+    )
+
+    Box(
+        modifier = Modifier
+            .padding(4.dp)
+            .clickable(onClick = onClick),
+    ) {
+        Card(
+            shape = RoundedCornerShape(borderRadius),
+            elevation = 8.dp,
+        ) {
+            Column(
+                horizontalAlignment = Alignment.CenterHorizontally,
+            ) {
+                AppImage(
+                    image = category.image,
+                    contentDescription = stringResource(id = res.string.cd_category_image),
+                    modifier = Modifier.size(100.dp),
+                )
+                Spacer(modifier = Modifier.height(4.dp))
+                AppText(
+                    text = category.categoryName,
+                    style = MaterialTheme.typography.subtitle1,
+                )
+                Spacer(modifier = Modifier.height(4.dp))
+                if (category.categoryId == categoryId) {
+                    Box(
+                        modifier = Modifier
+                            .size(
+                                width = 64.dp,
+                                height = 4.dp,
+                            )
+                            .clip(RectangleSmallShape)
+                            .background(MaterialTheme.colors.primary),
+                    )
+                    Spacer(modifier = Modifier.height(4.dp))
+                } else {
+                    Spacer(modifier = Modifier.height(8.dp))
                 }
             }
         }
