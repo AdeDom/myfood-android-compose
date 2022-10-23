@@ -4,6 +4,7 @@ import com.adedom.authentication.BuildConfig
 import com.adedom.core.data.providers.remote.DataProviderRemote
 import com.myfood.server.data.models.base.BaseResponse
 import com.myfood.server.data.models.request.LoginRequest
+import com.myfood.server.data.models.request.RegisterRequest
 import com.myfood.server.data.models.response.TokenResponse
 import io.ktor.client.call.*
 import io.ktor.client.request.*
@@ -18,6 +19,15 @@ class AuthRemoteDataSourceImpl(
             .post(BuildConfig.BASE_URL + "api/auth/login") {
                 contentType(ContentType.Application.Json)
                 setBody(loginRequest)
+            }
+            .body()
+    }
+
+    override suspend fun callRegister(registerRequest: RegisterRequest): BaseResponse<TokenResponse> {
+        return dataProviderRemote.getHttpClient()
+            .post(BuildConfig.BASE_URL + "api/auth/register") {
+                contentType(ContentType.Application.Json)
+                setBody(registerRequest)
             }
             .body()
     }

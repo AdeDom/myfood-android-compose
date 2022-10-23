@@ -2,8 +2,8 @@ package com.adedom.myfood.di.features
 
 import com.adedom.authentication.data.providers.remote.auth.AuthRemoteDataSource
 import com.adedom.authentication.data.providers.remote.auth.AuthRemoteDataSourceImpl
-import com.adedom.authentication.data.repositories.AuthLoginRepositoryImpl
-import com.adedom.authentication.domain.repositories.AuthLoginRepository
+import com.adedom.authentication.data.repositories.AuthRepositoryImpl
+import com.adedom.authentication.domain.repositories.AuthRepository
 import com.adedom.authentication.domain.use_cases.FavoriteUseCase
 import com.adedom.authentication.domain.use_cases.LoginUseCase
 import com.adedom.authentication.presentation.view_model.LoginViewModel
@@ -18,7 +18,7 @@ val featureAuthenticationModule = module {
     // data
     factory<AuthRemoteDataSource> { AuthRemoteDataSourceImpl(get()) }
 
-    factory<AuthLoginRepository> { AuthLoginRepositoryImpl(get(), get()) }
+    factory<AuthRepository> { AuthRepositoryImpl(get(), get()) }
 
     // domain
     factory { ValidateEmailUseCase() }

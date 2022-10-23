@@ -2,8 +2,8 @@ package com.adedom.authentication.domain
 
 import com.adedom.authentication.data.providers.data_store.FakeAppDataStore
 import com.adedom.authentication.data.providers.remote.auth.AuthRemoteDataSource
-import com.adedom.authentication.data.repositories.AuthLoginRepositoryImpl
-import com.adedom.authentication.domain.repositories.AuthLoginRepository
+import com.adedom.authentication.data.repositories.AuthRepositoryImpl
+import com.adedom.authentication.domain.repositories.AuthRepository
 import com.adedom.authentication.domain.use_cases.LoginUseCase
 import com.adedom.core.data.providers.data_store.AppDataStore
 import com.adedom.core.utils.ApiServiceException
@@ -22,18 +22,18 @@ class LoginUseCaseTest {
 
     private val authRemoteDataSource: AuthRemoteDataSource = mockk()
     private lateinit var appDataStore: AppDataStore
-    private lateinit var authLoginRepository: AuthLoginRepository
+    private lateinit var authRepository: AuthRepository
     private lateinit var useCase: LoginUseCase
 
     @Before
     fun setUp() {
         appDataStore = FakeAppDataStore()
-        authLoginRepository = AuthLoginRepositoryImpl(
+        authRepository = AuthRepositoryImpl(
             appDataStore,
             authRemoteDataSource,
         )
         useCase = LoginUseCase(
-            authLoginRepository,
+            authRepository,
         )
     }
 
@@ -50,7 +50,7 @@ class LoginUseCaseTest {
 
         assertThat(appDataStore.getAccessToken()).isNull()
         assertThat(appDataStore.getRefreshToken()).isNull()
-        assertThat(authLoginRepository.getAuthRole()).isEqualTo(AuthRole.Unknown)
+        assertThat(authRepository.getAuthRole()).isEqualTo(AuthRole.Unknown)
         coEvery { authRemoteDataSource.callLogin(any()) }
     }
 
@@ -64,7 +64,7 @@ class LoginUseCaseTest {
 
         assertThat(appDataStore.getAccessToken()).isNull()
         assertThat(appDataStore.getRefreshToken()).isNull()
-        assertThat(authLoginRepository.getAuthRole()).isEqualTo(AuthRole.Unknown)
+        assertThat(authRepository.getAuthRole()).isEqualTo(AuthRole.Unknown)
         coEvery { authRemoteDataSource.callLogin(any()) }
     }
 
@@ -85,7 +85,7 @@ class LoginUseCaseTest {
 
         assertThat(appDataStore.getAccessToken()).isEqualTo(accessToken)
         assertThat(appDataStore.getRefreshToken()).isEqualTo(refreshToken)
-        assertThat(authLoginRepository.getAuthRole()).isEqualTo(AuthRole.Auth)
+        assertThat(authRepository.getAuthRole()).isEqualTo(AuthRole.Auth)
         coEvery { authRemoteDataSource.callLogin(any()) }
     }
 }
