@@ -8,6 +8,7 @@ import com.adedom.core.utils.ApiServiceException
 import com.google.common.truth.Truth.assertThat
 import com.myfood.server.data.models.base.BaseResponse
 import com.myfood.server.data.models.request.LoginRequest
+import com.myfood.server.data.models.request.RegisterRequest
 import com.myfood.server.data.models.response.TokenResponse
 import io.ktor.client.engine.*
 import io.ktor.client.engine.mock.*
@@ -96,5 +97,81 @@ class AuthRemoteDataSourceImplTest {
         val dataSource = AuthRemoteDataSourceImpl(dataProviderRemote)
 
         dataSource.callLogin(loginRequest)
+    }
+
+    @Test
+    fun `call register should correct return success`() = runTest {
+        val registerRequest = RegisterRequest(
+            email = "email",
+            password = "password",
+            name = "name",
+            mobileNo = null,
+            address = null,
+        )
+        val jsonString = """
+            {
+                "version": "1.0",
+                "status": "success",
+                "result": {
+                    "accessToken": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJhdWQiOiJteS1mb29kIiwidXNlcl9pZCI6IjdlNmU0ZGI2YTA5YzQzZDFhMWUzZWQ4MTU2NzUwZTg4IiwiaXNzIjoiaHR0cHM6Ly9naXRodWIuY29tL0FkZURvbSIsImV4cCI6MTY1OTkwOTIxN30.lNsomHLL1q2wrkVxt2jjrVRpX2vWHU0u966-nMo7aHpp_V5Ym1b05Wz0ffqo18orts667LqA3PCef15IFxIbtQ",
+                    "refreshToken": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJhdWQiOiJteS1mb29kIiwidXNlcl9pZCI6IjdlNmU0ZGI2YTA5YzQzZDFhMWUzZWQ4MTU2NzUwZTg4IiwiaXNzIjoiaHR0cHM6Ly9naXRodWIuY29tL0FkZURvbSIsImV4cCI6MTY2MDQyNzYxN30.tME-OIro476Byg-FZGHDYl2iImVlkSIXOul-PfclMhRDA1WPSRT8PQ4DHrQWfDHpxk-pvuywVT3eO6sahdbVPw"
+                }
+            }
+        """.trimIndent()
+        val appHttpClientEngine = object : AppHttpClientEngine {
+            override val engine: HttpClientEngine = MockEngine {
+                respond(
+                    content = ByteReadChannel(jsonString),
+                    status = HttpStatusCode.OK,
+                    headers = headersOf(
+                        HttpHeaders.ContentType,
+                        ContentType.Application.Json.toString(),
+                    )
+                )
+            }
+        }
+        val dataProviderRemote = DataProviderRemote(appHttpClientEngine, appDataStore)
+        val dataSource = AuthRemoteDataSourceImpl(dataProviderRemote)
+
+        val result = dataSource.callRegister(registerRequest)
+
+        val response = Json.decodeFromString<BaseResponse<TokenResponse>>(jsonString)
+        assertThat(result).isEqualTo(response)
+    }
+
+    @Test(expected = ApiServiceException::class)
+    fun `call register should incorrect return error`() = runTest {
+        val registerRequest = RegisterRequest(
+            email = "email",
+            password = "password",
+            name = "name",
+            mobileNo = null,
+            address = null,
+        )
+        val jsonString = """
+            {
+                "version": "1.0",
+                "status": "error",
+                "error": {
+                    "message": "Email or password incorrect."
+                }
+            }
+        """.trimIndent()
+        val appHttpClientEngine = object : AppHttpClientEngine {
+            override val engine: HttpClientEngine = MockEngine {
+                respond(
+                    content = ByteReadChannel(jsonString),
+                    status = HttpStatusCode.BadRequest,
+                    headers = headersOf(
+                        HttpHeaders.ContentType,
+                        ContentType.Application.Json.toString(),
+                    )
+                )
+            }
+        }
+        val dataProviderRemote = DataProviderRemote(appHttpClientEngine, appDataStore)
+        val dataSource = AuthRemoteDataSourceImpl(dataProviderRemote)
+
+        dataSource.callRegister(registerRequest)
     }
 }
