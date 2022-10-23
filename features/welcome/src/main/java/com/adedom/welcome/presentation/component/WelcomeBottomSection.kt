@@ -20,14 +20,13 @@ import com.adedom.ui_components.components.AppOutlinedButton
 import com.adedom.ui_components.components.AppText
 import com.adedom.ui_components.theme.MyFoodTheme
 import com.adedom.ui_components.theme.RectangleLargeShape
-import com.adedom.welcome.presentation.view_model.WelcomeUiEvent
 import com.adedom.ui_components.R as res
 
 @Composable
 fun WelcomeBottomSection(
-    dispatch: (WelcomeUiEvent) -> Unit,
     openLoginPage: () -> Unit,
     openRegisterPage: () -> Unit,
+    openHomePage: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Column(
@@ -48,7 +47,7 @@ fun WelcomeBottomSection(
         AppConcatText(
             firstText = stringResource(id = res.string.str_don_t_want_login),
             secondText = stringResource(id = res.string.str_skip),
-            onClick = { dispatch(WelcomeUiEvent.NavSkip) },
+            onClick = openHomePage,
         )
         Spacer(modifier = Modifier.height(20.dp))
         Row(
@@ -103,9 +102,9 @@ fun WelcomeBottomSection(
 fun WelcomeBottomSectionPreview() {
     MyFoodTheme {
         WelcomeBottomSection(
-            dispatch = {},
             openLoginPage = {},
             openRegisterPage = {},
+            openHomePage = {},
         )
     }
 }

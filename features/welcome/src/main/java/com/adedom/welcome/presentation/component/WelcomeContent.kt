@@ -25,9 +25,9 @@ fun WelcomeContent(
         WelcomeTopSection(modifier = Modifier.semantics { contentDescription = "Welcome top section" })
         Spacer(modifier = Modifier.height(64.dp))
         WelcomeBottomSection(
-            dispatch = dispatch,
             openLoginPage = openLoginPage,
             openRegisterPage = openRegisterPage,
+            openHomePage = { dispatch(WelcomeUiEvent.NavSkip) },
             modifier = Modifier.semantics { contentDescription = "Welcome bottom section" },
         )
     }

@@ -20,9 +20,9 @@ class WelcomeBottomSectionTest {
         composeTestRule.setContent {
             MyFoodTheme {
                 WelcomeBottomSection(
-                    dispatch = {},
                     openLoginPage = {},
                     openRegisterPage = {},
+                    openHomePage = {},
                 )
             }
         }
