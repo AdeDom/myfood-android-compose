@@ -1,5 +1,7 @@
 package com.adedom.food_detail.presentation.component
 
+import androidx.compose.animation.animateColor
+import androidx.compose.animation.core.*
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -12,6 +14,7 @@ import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.Star
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -59,6 +62,16 @@ fun FoodDetailContent(
     val configuration = LocalConfiguration.current
     val screenWidthDp = configuration.screenWidthDp.dp
     val screenHeightDp = configuration.screenHeightDp.dp
+
+    val infiniteTransition = rememberInfiniteTransition()
+    val priceTextColor by infiniteTransition.animateColor(
+        initialValue = MaterialTheme.colors.primary,
+        targetValue = Amber,
+        animationSpec = infiniteRepeatable(
+            animation = tween(1000, easing = LinearEasing),
+            repeatMode = RepeatMode.Reverse,
+        ),
+    )
 
     Box(
         modifier = Modifier.fillMaxSize(),
@@ -146,11 +159,13 @@ fun FoodDetailContent(
                                             AppText(
                                                 text = state.foodDetail?.price.toString(),
                                                 style = MaterialTheme.typography.h4,
+                                                color = priceTextColor,
                                             )
                                             Spacer(modifier = Modifier.width(8.dp))
                                             AppText(
                                                 text = stringResource(id = res.string.str_baht),
                                                 style = MaterialTheme.typography.h4,
+                                                color = priceTextColor,
                                             )
                                         }
                                         Spacer(modifier = Modifier.height(32.dp))
