@@ -5,10 +5,10 @@ import androidx.compose.ui.test.*
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import com.adedom.connectivity.data.models.Status
 import com.adedom.connectivity.presentation.view_model.ConnectivityUiState
-import com.adedom.ui_components.R
 import com.adedom.ui_components.theme.MyFoodTheme
 import org.junit.Rule
 import org.junit.Test
+import com.adedom.ui_components.R as res
 
 class ConnectivityComposeTest {
 
@@ -30,7 +30,7 @@ class ConnectivityComposeTest {
 
         composeTestRule.onNode(isPopup()).assertIsDisplayed()
         composeTestRule.onNodeWithContentDescription("Background network popup").assertIsDisplayed()
-        composeTestRule.onNodeWithText(composeTestRule.activity.getString(R.string.str_online))
+        composeTestRule.onNodeWithText(composeTestRule.activity.getString(res.string.str_online))
             .assertIsDisplayed()
     }
 
@@ -49,7 +49,7 @@ class ConnectivityComposeTest {
 
         composeTestRule.onNode(isPopup()).assertIsDisplayed()
         composeTestRule.onNodeWithContentDescription("Background network popup").assertIsDisplayed()
-        composeTestRule.onNodeWithText(composeTestRule.activity.getString(R.string.str_offline))
+        composeTestRule.onNodeWithText(composeTestRule.activity.getString(res.string.str_offline))
             .assertIsDisplayed()
     }
 
@@ -68,7 +68,7 @@ class ConnectivityComposeTest {
 
         composeTestRule.onNode(isPopup()).assertIsDisplayed()
         composeTestRule.onNodeWithContentDescription("Background network popup").assertIsDisplayed()
-        composeTestRule.onNodeWithText(composeTestRule.activity.getString(R.string.str_offline))
+        composeTestRule.onNodeWithText(composeTestRule.activity.getString(res.string.str_offline))
             .assertIsDisplayed()
     }
 
@@ -87,7 +87,7 @@ class ConnectivityComposeTest {
 
         composeTestRule.onNode(isPopup()).assertIsDisplayed()
         composeTestRule.onNodeWithContentDescription("Background network popup").assertIsDisplayed()
-        composeTestRule.onNodeWithText(composeTestRule.activity.getString(R.string.str_offline))
+        composeTestRule.onNodeWithText(composeTestRule.activity.getString(res.string.str_offline))
             .assertIsDisplayed()
     }
 

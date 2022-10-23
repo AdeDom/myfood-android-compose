@@ -24,7 +24,6 @@ import androidx.compose.ui.unit.dp
 import com.adedom.search_food.presentation.view_model.SearchFoodUiEvent
 import com.adedom.search_food.presentation.view_model.SearchFoodUiState
 import com.adedom.search_food.presentation.view_model.SearchFoodViewModel
-import com.adedom.ui_components.R
 import com.adedom.ui_components.components.AppEmptyData
 import com.adedom.ui_components.components.AppIcon
 import com.adedom.ui_components.components.AppText
@@ -32,6 +31,7 @@ import com.adedom.ui_components.components.FoodBoxItem
 import com.adedom.ui_components.domain.models.FoodModel
 import com.adedom.ui_components.theme.MyFoodTheme
 import com.adedom.ui_components.theme.RectangleLargeShape
+import com.adedom.ui_components.R as res
 
 @Composable
 fun SearchFoodScreen(
@@ -78,17 +78,17 @@ fun SearchFoodContent(
                 AppIcon(
                     image = Icons.Default.ArrowBack,
                     modifier = Modifier.clickable(onClick = onBackPressed),
-                    contentDescription = stringResource(id = R.string.cd_icon_back),
+                    contentDescription = stringResource(id = res.string.cd_icon_back),
                 )
                 Spacer(modifier = Modifier.width(8.dp))
                 TextField(
                     value = state.search,
                     onValueChange = { dispatch(SearchFoodUiEvent.SetSearch(it)) },
-                    placeholder = { AppText(stringResource(id = R.string.str_search_food)) },
+                    placeholder = { AppText(stringResource(id = res.string.str_search_food)) },
                     leadingIcon = {
                         AppIcon(
                             Icons.Default.Search,
-                            contentDescription = stringResource(id = R.string.cd_icon_search),
+                            contentDescription = stringResource(id = res.string.cd_icon_search),
                         )
                     },
                     singleLine = true,

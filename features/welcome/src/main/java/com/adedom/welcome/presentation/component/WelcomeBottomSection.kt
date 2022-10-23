@@ -14,7 +14,6 @@ import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.adedom.ui_components.R
 import com.adedom.ui_components.components.AppColorButton
 import com.adedom.ui_components.components.AppConcatText
 import com.adedom.ui_components.components.AppOutlinedButton
@@ -22,6 +21,7 @@ import com.adedom.ui_components.components.AppText
 import com.adedom.ui_components.theme.MyFoodTheme
 import com.adedom.ui_components.theme.RectangleLargeShape
 import com.adedom.welcome.presentation.view_model.WelcomeUiEvent
+import com.adedom.ui_components.R as res
 
 @Composable
 fun WelcomeBottomSection(
@@ -36,18 +36,18 @@ fun WelcomeBottomSection(
         modifier = modifier.fillMaxSize(),
     ) {
         AppColorButton(
-            text = stringResource(id = R.string.str_login),
+            text = stringResource(id = res.string.str_login),
             onClick = openLoginPage,
         )
         Spacer(modifier = Modifier.height(20.dp))
         AppOutlinedButton(
-            text = stringResource(id = R.string.str_create_an_account),
+            text = stringResource(id = res.string.str_create_an_account),
             onClick = openRegisterPage,
         )
         Spacer(modifier = Modifier.height(20.dp))
         AppConcatText(
-            firstText = stringResource(id = R.string.str_don_t_want_login),
-            secondText = stringResource(id = R.string.str_skip),
+            firstText = stringResource(id = res.string.str_don_t_want_login),
+            secondText = stringResource(id = res.string.str_skip),
             onClick = { dispatch(WelcomeUiEvent.NavSkip) },
         )
         Spacer(modifier = Modifier.height(20.dp))
@@ -80,7 +80,7 @@ fun WelcomeBottomSection(
                     },
             ) {
                 AppText(
-                    text = stringResource(id = R.string.str_th),
+                    text = stringResource(id = res.string.str_th),
                     color = Color.White,
                     style = MaterialTheme.typography.subtitle1,
                 )
@@ -92,7 +92,7 @@ fun WelcomeBottomSection(
                     height = 32.dp,
                 ),
             ) {
-                AppText(text = stringResource(id = R.string.str_en))
+                AppText(text = stringResource(id = res.string.str_en))
             }
         }
     }

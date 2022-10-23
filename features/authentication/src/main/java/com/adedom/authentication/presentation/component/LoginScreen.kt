@@ -17,8 +17,8 @@ import androidx.compose.ui.unit.dp
 import com.adedom.authentication.presentation.view_model.LoginUiEvent
 import com.adedom.authentication.presentation.view_model.LoginUiState
 import com.adedom.authentication.presentation.view_model.LoginViewModel
-import com.adedom.ui_components.R
 import com.adedom.ui_components.components.*
+import com.adedom.ui_components.R as res
 
 @Composable
 fun LoginScreen(
@@ -54,44 +54,44 @@ fun LoginContent(
             modifier = Modifier.fillMaxWidth(),
         ) {
             AppTitleText(
-                text = stringResource(id = R.string.str_login),
+                text = stringResource(id = res.string.str_login),
                 modifier = Modifier.padding(top = 64.dp),
             )
             Spacer(modifier = Modifier.height(20.dp))
-            AppSubTitleText(stringResource(id = R.string.str_add_your_details_to_login))
+            AppSubTitleText(stringResource(id = res.string.str_add_your_details_to_login))
             Spacer(modifier = Modifier.height(20.dp))
             AppTextField(
                 value = state.email,
                 onValueChange = { dispatch(LoginUiEvent.SetEmail(it)) },
-                hint = stringResource(id = R.string.str_your_email),
-                error = if (state.isErrorEmail) stringResource(id = R.string.str_email_is_incorrect) else null,
+                hint = stringResource(id = res.string.str_your_email),
+                error = if (state.isErrorEmail) stringResource(id = res.string.str_email_is_incorrect) else null,
                 keyboardType = KeyboardType.Email,
                 imeAction = ImeAction.Next,
             )
             AppTextField(
                 value = state.password,
                 onValueChange = { dispatch(LoginUiEvent.SetPassword(it)) },
-                hint = stringResource(id = R.string.str_password),
-                error = if (state.isErrorPassword) stringResource(id = R.string.str_password_is_incorrect) else null,
+                hint = stringResource(id = res.string.str_password),
+                error = if (state.isErrorPassword) stringResource(id = res.string.str_password_is_incorrect) else null,
                 keyboardType = KeyboardType.Password,
                 imeAction = ImeAction.Done,
             )
             AppColorButton(
-                text = stringResource(id = R.string.str_login),
+                text = stringResource(id = res.string.str_login),
                 color = if (state.isLogin) MaterialTheme.colors.primary else Color.Gray,
                 enabled = state.isLogin,
                 onClick = { dispatch(LoginUiEvent.Submit) },
             )
             Spacer(modifier = Modifier.height(20.dp))
             AppText(
-                text = stringResource(id = R.string.str_forget_your_password),
+                text = stringResource(id = res.string.str_forget_your_password),
                 color = Color.Gray,
             )
         }
 
         AppConcatText(
-            firstText = stringResource(id = R.string.str_don_t_have_an_account),
-            secondText = stringResource(id = R.string.str_sign_up),
+            firstText = stringResource(id = res.string.str_don_t_have_an_account),
+            secondText = stringResource(id = res.string.str_sign_up),
             onClick = openRegisterPage,
             modifier = Modifier
                 .align(Alignment.BottomCenter)
