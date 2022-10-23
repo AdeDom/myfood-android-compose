@@ -1,12 +1,8 @@
 package com.adedom.authentication.presentation.component
 
-import androidx.compose.animation.animateColorAsState
-import androidx.compose.animation.core.tween
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -48,11 +44,6 @@ fun LoginContent(
     dispatch: (LoginUiEvent) -> Unit,
     openRegisterPage: () -> Unit,
 ) {
-    val loginButtonColor by animateColorAsState(
-        targetValue = if (state.isLogin) MaterialTheme.colors.primary else Color.Gray,
-        animationSpec = tween(durationMillis = 500),
-    )
-
     Box(
         modifier = Modifier.fillMaxSize(),
     ) {
@@ -86,7 +77,6 @@ fun LoginContent(
             )
             AppColorButton(
                 text = stringResource(id = res.string.str_login),
-                color = loginButtonColor,
                 enabled = state.isLogin,
                 onClick = { dispatch(LoginUiEvent.Submit) },
             )
