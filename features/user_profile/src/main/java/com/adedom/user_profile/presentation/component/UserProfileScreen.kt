@@ -1,19 +1,13 @@
 package com.adedom.user_profile.presentation.component
 
 import android.widget.Toast
-import androidx.compose.animation.animateColor
-import androidx.compose.animation.core.*
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.Card
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Brush
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -50,16 +44,6 @@ fun UserProfileContent(
     onBackPressed: () -> Unit,
     refreshTokenExpired: () -> Unit,
 ) {
-    val infiniteTransition = rememberInfiniteTransition()
-    val imageBrushColor by infiniteTransition.animateColor(
-        initialValue = Color.Black,
-        targetValue = Color.White,
-        animationSpec = infiniteRepeatable(
-            animation = tween(1000, easing = LinearEasing),
-            repeatMode = RepeatMode.Reverse,
-        ),
-    )
-
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -88,19 +72,7 @@ fun UserProfileContent(
                             image = userProfile.image,
                             modifier = Modifier.fillMaxSize(),
                         )
-                        Box(
-                            modifier = Modifier
-                                .fillMaxSize()
-                                .background(
-                                    Brush.verticalGradient(
-                                        colors = listOf(
-                                            Color.Transparent,
-                                            imageBrushColor,
-                                        ),
-                                        startY = 150f,
-                                    ),
-                                ),
-                        )
+                        AnimatedBrushBox(modifier = Modifier.fillMaxSize())
                     }
                     Spacer(modifier = Modifier.height(8.dp))
                     Row {
