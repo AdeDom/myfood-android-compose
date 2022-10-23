@@ -157,13 +157,10 @@ fun FoodDetailContent(
                                             }
                                             Box(modifier = Modifier.weight(1f))
                                             AppText(
-                                                text = state.foodDetail?.price.toString(),
-                                                style = MaterialTheme.typography.h4,
-                                                color = priceTextColor,
-                                            )
-                                            Spacer(modifier = Modifier.width(8.dp))
-                                            AppText(
-                                                text = stringResource(id = res.string.str_baht),
+                                                text = stringResource(
+                                                    id = res.string.str_baht,
+                                                    state.foodDetail?.price ?: 0,
+                                                ),
                                                 style = MaterialTheme.typography.h4,
                                                 color = priceTextColor,
                                             )
