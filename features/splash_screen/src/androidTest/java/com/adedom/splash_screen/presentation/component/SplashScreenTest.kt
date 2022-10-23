@@ -26,7 +26,7 @@ class SplashScreenTest {
             .onNodeWithContentDescription(composeTestRule.activity.getString(res.string.str_background_splash_screen))
             .assertIsDisplayed()
         composeTestRule
-            .onNodeWithContentDescription("Logo app")
+            .onNodeWithContentDescription(composeTestRule.activity.getString(res.string.cd_logo_app))
             .assertIsDisplayed()
     }
 }

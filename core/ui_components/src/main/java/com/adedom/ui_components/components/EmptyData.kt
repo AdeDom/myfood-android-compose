@@ -1,6 +1,5 @@
 package com.adedom.ui_components.components
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.size
 import androidx.compose.runtime.Composable
@@ -21,8 +20,8 @@ fun AppEmptyData(
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = modifier,
     ) {
-        Image(
-            painter = painterResource(id = R.drawable.ic_playlist_remove_gray),
+        AppImage(
+            image = painterResource(id = R.drawable.ic_playlist_remove_gray),
             contentDescription = stringResource(id = R.string.str_empty_data),
             modifier = Modifier.size(100.dp),
         )

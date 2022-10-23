@@ -7,6 +7,7 @@ import androidx.compose.ui.test.onNodeWithContentDescription
 import com.adedom.ui_components.theme.MyFoodTheme
 import org.junit.Rule
 import org.junit.Test
+import com.adedom.ui_components.R as res
 
 class WelcomeTopSectionTest {
 
@@ -22,6 +23,7 @@ class WelcomeTopSectionTest {
         }
 
         composeTestRule.onNodeWithContentDescription("Background logo app").assertIsDisplayed()
-        composeTestRule.onNodeWithContentDescription("Logo app").assertIsDisplayed()
+        composeTestRule.onNodeWithContentDescription(composeTestRule.activity.getString(res.string.cd_logo_app))
+            .assertIsDisplayed()
     }
 }
