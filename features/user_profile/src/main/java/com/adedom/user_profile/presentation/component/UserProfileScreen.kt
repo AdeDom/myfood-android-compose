@@ -1,11 +1,14 @@
 package com.adedom.user_profile.presentation.component
 
 import android.widget.Toast
+import androidx.compose.animation.animateColor
+import androidx.compose.animation.core.*
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.Card
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -47,6 +50,16 @@ fun UserProfileContent(
     onBackPressed: () -> Unit,
     refreshTokenExpired: () -> Unit,
 ) {
+    val infiniteTransition = rememberInfiniteTransition()
+    val imageBrushColor by infiniteTransition.animateColor(
+        initialValue = Color.Black,
+        targetValue = Color.White,
+        animationSpec = infiniteRepeatable(
+            animation = tween(1000, easing = LinearEasing),
+            repeatMode = RepeatMode.Reverse,
+        ),
+    )
+
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -71,6 +84,10 @@ fun UserProfileContent(
                             .clip(CircleShape)
                             .align(Alignment.CenterHorizontally),
                     ) {
+                        AppImage(
+                            image = userProfile.image,
+                            modifier = Modifier.fillMaxSize(),
+                        )
                         Box(
                             modifier = Modifier
                                 .fillMaxSize()
@@ -78,15 +95,11 @@ fun UserProfileContent(
                                     Brush.verticalGradient(
                                         colors = listOf(
                                             Color.Transparent,
-                                            Color.Black,
+                                            imageBrushColor,
                                         ),
-                                        startY = 200f,
+                                        startY = 150f,
                                     ),
                                 ),
-                        )
-                        AppImage(
-                            image = userProfile.image,
-                            modifier = Modifier.fillMaxSize(),
                         )
                     }
                     Spacer(modifier = Modifier.height(8.dp))
