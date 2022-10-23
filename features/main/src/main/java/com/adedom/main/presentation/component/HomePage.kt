@@ -198,43 +198,40 @@ fun CategoryBoxItem(
         targetValue = if (category.categoryId == categoryId) 2.dp else 16.dp,
     )
 
-    Box(
+    Card(
+        shape = RoundedCornerShape(borderRadius),
+        elevation = 8.dp,
         modifier = Modifier
             .padding(4.dp)
             .clickable(onClick = onClick),
     ) {
-        Card(
-            shape = RoundedCornerShape(borderRadius),
-            elevation = 8.dp,
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally,
         ) {
-            Column(
-                horizontalAlignment = Alignment.CenterHorizontally,
-            ) {
-                AppImage(
-                    image = category.image,
-                    contentDescription = stringResource(id = res.string.cd_category_image),
-                    modifier = Modifier.size(100.dp),
+            AppImage(
+                image = category.image,
+                contentDescription = stringResource(id = res.string.cd_category_image),
+                modifier = Modifier.size(100.dp),
+            )
+            Spacer(modifier = Modifier.height(4.dp))
+            AppText(
+                text = category.categoryName,
+                style = MaterialTheme.typography.subtitle1,
+            )
+            Spacer(modifier = Modifier.height(4.dp))
+            if (category.categoryId == categoryId) {
+                Box(
+                    modifier = Modifier
+                        .size(
+                            width = 64.dp,
+                            height = 4.dp,
+                        )
+                        .clip(RectangleSmallShape)
+                        .background(MaterialTheme.colors.primary),
                 )
                 Spacer(modifier = Modifier.height(4.dp))
-                AppText(
-                    text = category.categoryName,
-                    style = MaterialTheme.typography.subtitle1,
-                )
-                Spacer(modifier = Modifier.height(4.dp))
-                if (category.categoryId == categoryId) {
-                    Box(
-                        modifier = Modifier
-                            .size(
-                                width = 64.dp,
-                                height = 4.dp,
-                            )
-                            .clip(RectangleSmallShape)
-                            .background(MaterialTheme.colors.primary),
-                    )
-                    Spacer(modifier = Modifier.height(4.dp))
-                } else {
-                    Spacer(modifier = Modifier.height(8.dp))
-                }
+            } else {
+                Spacer(modifier = Modifier.height(8.dp))
             }
         }
     }
