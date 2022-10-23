@@ -25,7 +25,6 @@ import androidx.compose.ui.unit.dp
 import com.adedom.main.domain.models.CategoryModel
 import com.adedom.main.presentation.view_model.HomeUiEvent
 import com.adedom.main.presentation.view_model.HomeUiState
-import com.adedom.ui_components.R
 import com.adedom.ui_components.components.*
 import com.adedom.ui_components.domain.models.FoodModel
 import com.adedom.ui_components.theme.MyFoodTheme
@@ -34,6 +33,7 @@ import com.adedom.ui_components.theme.RectangleMediumShape
 import com.adedom.ui_components.theme.RectangleSmallShape
 import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
+import com.adedom.ui_components.R as res
 
 @Composable
 fun HomePage(
@@ -58,8 +58,8 @@ fun HomePage(
         }
         HomeUiState.Dialog.Logout -> {
             AppInteractAlertDialog(
-                title = stringResource(id = R.string.str_logout),
-                text = stringResource(id = R.string.str_logout_message),
+                title = stringResource(id = res.string.str_logout),
+                text = stringResource(id = res.string.str_logout_message),
                 confirmButton = onLogoutClick,
                 dismissButton = { dispatch(HomeUiEvent.HideDialog) },
                 modifier = Modifier.wrapContentSize(),
@@ -122,12 +122,12 @@ private fun HomeContent(
                                     IconButton(onClick = onMenuClick) {
                                         AppIcon(
                                             image = Icons.Default.Menu,
-                                            contentDescription = stringResource(id = R.string.cd_icon_menu),
+                                            contentDescription = stringResource(id = res.string.cd_icon_menu),
                                         )
                                     }
                                     Spacer(modifier = Modifier.width(8.dp))
                                     AppText(
-                                        text = stringResource(id = R.string.str_search_food),
+                                        text = stringResource(id = res.string.str_search_food),
                                         color = Color.Gray,
                                         modifier = Modifier.weight(1f),
                                     )

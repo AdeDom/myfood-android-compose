@@ -18,9 +18,9 @@ import com.adedom.connectivity.data.models.Status
 import com.adedom.connectivity.presentation.view_model.ConnectivityUiEvent
 import com.adedom.connectivity.presentation.view_model.ConnectivityUiState
 import com.adedom.connectivity.presentation.view_model.ConnectivityViewModel
-import com.adedom.ui_components.R
 import com.adedom.ui_components.components.AppText
 import com.adedom.ui_components.theme.MyFoodTheme
+import com.adedom.ui_components.R as res
 
 @Composable
 fun ConnectivityScreen(
@@ -70,7 +70,7 @@ private fun OnlineNetworkPopup(
                     contentDescription = "Background network popup"
                 },
         ) {
-            AppText(stringResource(id = R.string.str_online))
+            AppText(stringResource(id = res.string.str_online))
         }
     }
 }
@@ -87,7 +87,7 @@ private fun OfflineNetworkPopup() {
                     contentDescription = "Background network popup"
                 },
         ) {
-            AppText(stringResource(id = R.string.str_offline))
+            AppText(stringResource(id = res.string.str_offline))
         }
     }
 }
