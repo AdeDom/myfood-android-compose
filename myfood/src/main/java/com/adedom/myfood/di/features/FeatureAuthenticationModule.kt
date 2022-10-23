@@ -6,6 +6,7 @@ import com.adedom.authentication.data.repositories.AuthRepositoryImpl
 import com.adedom.authentication.domain.repositories.AuthRepository
 import com.adedom.authentication.domain.use_cases.FavoriteUseCase
 import com.adedom.authentication.domain.use_cases.LoginUseCase
+import com.adedom.authentication.domain.use_cases.RegisterUseCase
 import com.adedom.authentication.presentation.view_model.LoginViewModel
 import com.adedom.authentication.presentation.view_model.RegisterViewModel
 import com.myfood.server.usecase.validate.ValidateEmailUseCase
@@ -24,6 +25,7 @@ val featureAuthenticationModule = module {
     factory { ValidateEmailUseCase() }
     factory { ValidatePasswordUseCase() }
     factory { LoginUseCase(get()) }
+    factory { RegisterUseCase(get()) }
     factory { FavoriteUseCase(get(), get()) }
 
     // presentation
