@@ -159,7 +159,7 @@ fun FoodDetailContent(
                                             AppText(
                                                 text = stringResource(
                                                     id = res.string.str_baht,
-                                                    state.foodDetail?.price ?: 0,
+                                                    state.foodDetail?.price.toString(),
                                                 ),
                                                 style = MaterialTheme.typography.h4,
                                                 color = priceTextColor,

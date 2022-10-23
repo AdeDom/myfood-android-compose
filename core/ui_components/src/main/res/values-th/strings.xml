@@ -35,7 +35,7 @@
     <string name="str_logout_message">คุณแน่ใจว่าจะออกจากระบบแอป?</string>
     <string name="str_back_to_welcome">กลับไปหน้าต้อนรับ</string>
     <string name="str_search_food">ค้นหาอาหาร</string>
-    <string name="str_baht">%1$.0f ฿</string>
+    <string name="str_baht">%1$s ฿</string>
     <string name="str_description">คำอธิบาย</string>
     <string name="str_back">กลับ</string>
     <string name="str_background_splash_screen">พื้นหลังหน้าจอเริ่มต้น</string>

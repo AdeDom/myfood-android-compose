@@ -35,7 +35,7 @@
     <string name="str_logout_message">Are you sure to logout the app?</string>
     <string name="str_back_to_welcome">Back to the welcome</string>
     <string name="str_search_food">Search food</string>
-    <string name="str_baht">%1$.0f ฿</string>
+    <string name="str_baht">%1$s ฿</string>
     <string name="str_description">Description</string>
     <string name="str_back">Back</string>
     <string name="str_background_splash_screen">Background splash screen</string>
