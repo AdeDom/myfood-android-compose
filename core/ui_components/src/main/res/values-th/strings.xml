@@ -52,4 +52,9 @@
     <string name="cd_icon_phone">ไอคอนมือถือ</string>
     <string name="cd_icon_back">ไอคอนกลับ</string>
     <string name="cd_icon_search">ไอคอนค้นหา</string>
+    <string name="cd_logo_app">โลโก้แอพ</string>
+    <string name="cd_category_image">รูปภาพหมวดหมู่อาหาร</string>
+    <string name="cd_food_image">รูปภาพอาหาร</string>
+    <string name="cd_favorite_button">ปุ่มขื่นชอบ</string>
+    <string name="cd_image_profile">รูปภาพโปรไฟล์</string>
 </resources>

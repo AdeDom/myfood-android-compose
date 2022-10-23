@@ -70,6 +70,7 @@ fun UserProfileContent(
                     ) {
                         AppImage(
                             image = userProfile.image,
+                            contentDescription = stringResource(id = res.string.cd_image_profile),
                             modifier = Modifier.fillMaxSize(),
                         )
                         AnimatedBrushBox(modifier = Modifier.fillMaxSize())

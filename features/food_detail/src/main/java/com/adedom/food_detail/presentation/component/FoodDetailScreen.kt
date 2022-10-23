@@ -89,6 +89,7 @@ fun FoodDetailContent(
             null -> {
                 AppImage(
                     image = state.foodDetail?.image,
+                    contentDescription = stringResource(id = res.string.cd_food_image),
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(screenHeightDp / 2),
@@ -178,6 +179,7 @@ fun FoodDetailContent(
                             if (state.foodDetail?.isFavorite == true) {
                                 AppImage(
                                     image = painterResource(id = if (state.foodDetail.isFavoriteState) R.drawable.favorite_active else R.drawable.favorite_inactive),
+                                    contentDescription = stringResource(id = res.string.cd_favorite_button),
                                     modifier = Modifier
                                         .size(80.dp)
                                         .offset(

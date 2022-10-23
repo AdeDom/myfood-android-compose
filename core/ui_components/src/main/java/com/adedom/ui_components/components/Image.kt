@@ -13,7 +13,7 @@ import com.adedom.ui_components.R
 fun AppImage(
     image: Painter,
     modifier: Modifier = Modifier,
-    contentDescription: String? = null,
+    contentDescription: String,
     contentScale: ContentScale = ContentScale.Crop,
 ) {
     Image(
@@ -28,7 +28,7 @@ fun AppImage(
 fun AppImage(
     image: String?,
     modifier: Modifier = Modifier,
-    contentDescription: String? = null,
+    contentDescription: String,
     contentScale: ContentScale = ContentScale.Crop,
 ) {
     if (image.isNullOrEmpty()) {

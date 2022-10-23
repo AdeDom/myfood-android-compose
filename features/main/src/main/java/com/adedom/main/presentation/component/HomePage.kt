@@ -134,6 +134,7 @@ private fun HomeContent(
                                     state.imageProfile?.let {
                                         AppImage(
                                             image = state.imageProfile,
+                                            contentDescription = stringResource(id = res.string.cd_image_profile),
                                             modifier = Modifier
                                                 .size(40.dp)
                                                 .clip(CircleShape)
@@ -165,6 +166,7 @@ private fun HomeContent(
                                         ) {
                                             AppImage(
                                                 image = category.image,
+                                                contentDescription = stringResource(id = res.string.cd_category_image),
                                                 modifier = Modifier.size(100.dp),
                                             )
                                             Spacer(modifier = Modifier.height(4.dp))

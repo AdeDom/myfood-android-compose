@@ -35,6 +35,7 @@ fun FoodBoxItem(
         Row {
             AppImage(
                 image = food.image,
+                contentDescription = stringResource(id = R.string.cd_food_image),
                 modifier = Modifier
                     .size(100.dp)
                     .clip(RectangleMediumShape),

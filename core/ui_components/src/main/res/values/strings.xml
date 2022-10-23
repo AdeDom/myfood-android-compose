@@ -52,4 +52,9 @@
     <string name="cd_icon_phone">Icon phone</string>
     <string name="cd_icon_back">Icon back</string>
     <string name="cd_icon_search">Icon search</string>
+    <string name="cd_logo_app">Logo app</string>
+    <string name="cd_category_image">Category image</string>
+    <string name="cd_food_image">Food image</string>
+    <string name="cd_favorite_button">Favorite button</string>
+    <string name="cd_image_profile">Image profile</string>
 </resources>
