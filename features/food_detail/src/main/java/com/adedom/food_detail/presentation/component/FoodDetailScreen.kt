@@ -194,7 +194,11 @@ fun FoodDetailContent(
     }
 }
 
-@Preview(showBackground = true)
+@Preview(
+    name = "Food detail content",
+    group = "Feature - Food detail",
+    showBackground = true,
+)
 @Composable
 fun FoodDetailContentPreview() {
     MyFoodTheme {

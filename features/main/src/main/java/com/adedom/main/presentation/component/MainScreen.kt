@@ -190,8 +190,12 @@ private fun DrawableItemMenu(
     }
 }
 
+@Preview(
+    name = "Main content",
+    group = "Feature - Main",
+    showBackground = true,
+)
 @Composable
-@Preview(showBackground = true)
 fun MainContentPreview() {
     MyFoodTheme {
         MainContent(

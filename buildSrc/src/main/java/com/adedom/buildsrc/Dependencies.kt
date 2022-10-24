@@ -3,6 +3,8 @@ package com.adedom.buildsrc
 object Versions {
     const val minSdkVersion = 24
     const val targetAndCompileVersion = 33
+    const val versionCode = 1
+    const val versionName = "1.0"
     const val composeCompilerVersion = "1.3.0"
 }
 
@@ -142,9 +144,15 @@ object Dependencies {
         const val coilCompose = "io.coil-kt:coil-compose:$version"
     }
 
-    object AirBnb {
+    object AirBnbLottie {
         private const val version = "5.2.0"
         const val lottieCompose = "com.airbnb.android:lottie-compose:$version"
+    }
+
+    object AirBnbShowkase {
+        private const val version = "1.0.0-beta14"
+        const val showkase = "com.airbnb.android:showkase:$version"
+        const val showkaseProcessor = "com.airbnb.android:showkase-processor:$version"
     }
 
     object Junit {

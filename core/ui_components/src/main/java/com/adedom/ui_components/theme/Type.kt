@@ -5,36 +5,57 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
+import com.airbnb.android.showkase.annotation.ShowkaseTypography
 
-val Typography = Typography(
-    h4 = TextStyle(
+object Material {
+    @ShowkaseTypography
+    val h4 = TextStyle(
         fontFamily = FontFamily.Default,
         fontWeight = FontWeight.Bold,
         fontSize = 34.sp,
-    ),
-    h5 = TextStyle(
+    )
+
+    @ShowkaseTypography
+    val h5 = TextStyle(
         fontFamily = FontFamily.Default,
         fontWeight = FontWeight.Bold,
         fontSize = 24.sp,
-    ),
-    h6 = TextStyle(
+    )
+
+    @ShowkaseTypography
+    val h6 = TextStyle(
         fontFamily = FontFamily.Default,
         fontWeight = FontWeight.Normal,
         fontSize = 20.sp,
-    ),
-    subtitle1 = TextStyle(
+    )
+
+    @ShowkaseTypography
+    val subtitle1 = TextStyle(
         fontFamily = FontFamily.Default,
         fontWeight = FontWeight.Bold,
         fontSize = 16.sp,
-    ),
-    body1 = TextStyle(
+    )
+
+    @ShowkaseTypography
+    val body1 = TextStyle(
         fontFamily = FontFamily.Default,
         fontWeight = FontWeight.Normal,
         fontSize = 16.sp,
-    ),
-    body2 = TextStyle(
+    )
+
+    @ShowkaseTypography
+    val body2 = TextStyle(
         fontFamily = FontFamily.Default,
         fontWeight = FontWeight.Normal,
         fontSize = 14.sp,
-    ),
+    )
+}
+
+val Typography = Typography(
+    h4 = Material.h4,
+    h5 = Material.h5,
+    h6 = Material.h6,
+    subtitle1 = Material.subtitle1,
+    body1 = Material.body1,
+    body2 = Material.body2,
 )

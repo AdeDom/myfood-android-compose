@@ -96,7 +96,11 @@ fun FoodBoxItem(
     }
 }
 
-@Preview(showBackground = true)
+@Preview(
+    name = "Food item",
+    group = "Component - FoodBox",
+    showBackground = true,
+)
 @Composable
 fun FoodBoxItemPreview() {
     MyFoodTheme {

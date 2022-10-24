@@ -87,7 +87,11 @@ fun AppConcatText(
     }
 }
 
-@Preview(showBackground = true)
+@Preview(
+    name = "Text",
+    group = "Component - Text",
+    showBackground = true,
+)
 @Composable
 fun AppTextPreview() {
     MyFoodTheme {
@@ -95,7 +99,11 @@ fun AppTextPreview() {
     }
 }
 
-@Preview(showBackground = true)
+@Preview(
+    name = "Title text",
+    group = "Component - Text",
+    showBackground = true,
+)
 @Composable
 fun AppTitleTextPreview() {
     MyFoodTheme {
@@ -103,7 +111,11 @@ fun AppTitleTextPreview() {
     }
 }
 
-@Preview(showBackground = true)
+@Preview(
+    name = "Sub title text",
+    group = "Component - Text",
+    showBackground = true,
+)
 @Composable
 fun AppSubTitleTextPreview() {
     MyFoodTheme {
@@ -111,7 +123,11 @@ fun AppSubTitleTextPreview() {
     }
 }
 
-@Preview(showBackground = true)
+@Preview(
+    name = "Concat text",
+    group = "Component - Text",
+    showBackground = true,
+)
 @Composable
 fun AppConcatTextPreview() {
     MyFoodTheme {

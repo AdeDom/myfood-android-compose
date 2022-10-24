@@ -64,8 +64,12 @@ fun WelcomeTopSection(
     }
 }
 
+@Preview(
+    name = "Welcome top",
+    group = "Feature - Welcome",
+    showBackground = true,
+)
 @Composable
-@Preview(showBackground = true)
 fun WelcomeTopSectionPreview() {
     MyFoodTheme {
         WelcomeTopSection()

@@ -101,8 +101,12 @@ fun AppInteractAlertDialog(
     )
 }
 
+@Preview(
+    name = "Loading",
+    group = "Component - AlertDialog",
+    showBackground = true,
+)
 @Composable
-@Preview(showBackground = true)
 fun AlertDialogPreview() {
     MyFoodTheme {
         AppLoadingAlertDialog()

@@ -113,8 +113,12 @@ fun AppColorButton(
     }
 }
 
+@Preview(
+    name = "Outline button",
+    group = "Component - Button",
+    showBackground = true,
+)
 @Composable
-@Preview(showBackground = true)
 fun OutlinedButtonPreview() {
     MyFoodTheme {
         val context = LocalContext.current
@@ -127,8 +131,12 @@ fun OutlinedButtonPreview() {
     }
 }
 
+@Preview(
+    name = "Color button",
+    group = "Component - Button",
+    showBackground = true,
+)
 @Composable
-@Preview(showBackground = true)
 fun ColorButtonPreview() {
     MyFoodTheme {
         val context = LocalContext.current

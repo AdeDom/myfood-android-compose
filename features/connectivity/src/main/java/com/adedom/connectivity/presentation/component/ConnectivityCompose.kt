@@ -92,8 +92,12 @@ private fun OfflineNetworkPopup() {
     }
 }
 
+@Preview(
+    name = "Connectivity content available",
+    group = "Feature - Connectivity",
+    showBackground = true,
+)
 @Composable
-@Preview(showBackground = true)
 fun ConnectivityContentAvailablePreview() {
     val context = LocalContext.current
     MyFoodTheme {
@@ -112,8 +116,12 @@ fun ConnectivityContentAvailablePreview() {
     }
 }
 
+@Preview(
+    name = "Connectivity content unavailable",
+    group = "Feature - Connectivity",
+    showBackground = true,
+)
 @Composable
-@Preview(showBackground = true)
 fun ConnectivityContentUnavailablePreview() {
     val context = LocalContext.current
     MyFoodTheme {

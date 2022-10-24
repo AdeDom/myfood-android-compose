@@ -109,8 +109,12 @@ fun AppTextField(
     }
 }
 
+@Preview(
+    name = "Text field",
+    group = "Component - TextField",
+    showBackground = true,
+)
 @Composable
-@Preview(showBackground = true)
 fun TextFieldPreview() {
     MyFoodTheme {
         var text by remember { mutableStateOf("") }

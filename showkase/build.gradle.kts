@@ -3,22 +3,26 @@ import com.adedom.buildsrc.Flavors
 import com.adedom.buildsrc.Versions
 
 plugins {
-    id("com.android.library")
+    id("com.android.application")
     id("org.jetbrains.kotlin.android")
-    id("kotlin-android")
     id("com.google.devtools.ksp") version "1.7.10-1.0.6"
 }
 
 android {
-    namespace = "com.adedom.food_detail"
+    namespace = "com.adedom.showkase"
     compileSdk = Versions.targetAndCompileVersion
 
     defaultConfig {
+        applicationId = "com.adedom.showkase"
         minSdk = Versions.minSdkVersion
         targetSdk = Versions.targetAndCompileVersion
+        versionCode = Versions.versionCode
+        versionName = Versions.versionName
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-        consumerProguardFiles("consumer-rules.pro")
+        vectorDrawables {
+            useSupportLibrary = true
+        }
     }
 
     buildTypes {
@@ -95,29 +99,19 @@ android {
 
 dependencies {
 
-    implementation(project(Dependencies.Project.core))
     implementation(project(Dependencies.Project.coreUiComponents))
-    implementation(project(Dependencies.Project.domainWebsockets))
-    implementation(project(Dependencies.Project.domainUserProfile))
-    implementation(project(Dependencies.Project.dataFood))
-    implementation(project(Dependencies.Project.dataFavorite))
+    implementation(project(Dependencies.Project.featuresAuthentication))
+    implementation(project(Dependencies.Project.featuresConnectivity))
+    implementation(project(Dependencies.Project.featuresFoodDetail))
+    implementation(project(Dependencies.Project.featuresMain))
+    implementation(project(Dependencies.Project.featuresSearchFood))
+    implementation(project(Dependencies.Project.featuresSplashScreen))
+    implementation(project(Dependencies.Project.featuresUserProfile))
+    implementation(project(Dependencies.Project.featuresWelcome))
 
     implementation(Dependencies.AndroidXCore.coreKtx)
     implementation(Dependencies.AndroidXActivity.activityCompose)
-    implementation(Dependencies.AndroidXCompose.material)
-    implementation(Dependencies.AndroidXCompose.ui)
-    implementation(Dependencies.AndroidXCompose.uiToolingPreview)
-
-    implementation(Dependencies.Lifecycle.viewModelKtx)
-    implementation(Dependencies.Lifecycle.viewModelCompose)
-    implementation(Dependencies.Lifecycle.livedataKtx)
-    implementation(Dependencies.Lifecycle.runtimeKtx)
-
-    implementation(Dependencies.AdeDom.myFoodKtorServer)
 
     implementation(Dependencies.AirBnbShowkase.showkase)
     ksp(Dependencies.AirBnbShowkase.showkaseProcessor)
-
-    debugImplementation(Dependencies.AndroidXCompose.debugUiTooling)
-    debugImplementation(Dependencies.AndroidXCompose.debugUiTestManifest)
 }

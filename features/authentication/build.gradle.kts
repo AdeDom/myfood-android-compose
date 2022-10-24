@@ -6,6 +6,7 @@ plugins {
     id("com.android.library")
     id("org.jetbrains.kotlin.android")
     id("kotlin-android")
+    id("com.google.devtools.ksp") version "1.7.10-1.0.6"
 }
 
 android {
@@ -118,6 +119,9 @@ dependencies {
     implementation(Dependencies.Ktor.clientCore)
 
     implementation(Dependencies.AdeDom.myFoodKtorServer)
+
+    implementation(Dependencies.AirBnbShowkase.showkase)
+    ksp(Dependencies.AirBnbShowkase.showkaseProcessor)
 
     testImplementation(Dependencies.Junit.testJunit)
     testImplementation(Dependencies.Truth.testTruth)

@@ -97,8 +97,12 @@ fun WelcomeBottomSection(
     }
 }
 
+@Preview(
+    name = "Welcome bottom",
+    group = "Feature - Welcome",
+    showBackground = true,
+)
 @Composable
-@Preview(showBackground = true)
 fun WelcomeBottomSectionPreview() {
     MyFoodTheme {
         WelcomeBottomSection(
