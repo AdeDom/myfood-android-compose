@@ -117,8 +117,12 @@ fun LoginContent(
     }
 }
 
+@Preview(
+    name = "Login content",
+    group = "Feature - Authentication",
+    showBackground = true,
+)
 @Composable
-@Preview(showBackground = true)
 fun LoginContentPreview() {
     MyFoodTheme {
         LoginContent(

@@ -140,8 +140,12 @@ fun UserProfileContent(
     }
 }
 
+@Preview(
+    name = "User profile content",
+    group = "Feature - User profile",
+    showBackground = true,
+)
 @Composable
-@Preview(showBackground = true)
 fun UserProfileContentPreview() {
     MyFoodTheme {
         val context = LocalContext.current

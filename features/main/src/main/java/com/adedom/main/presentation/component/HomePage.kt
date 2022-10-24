@@ -237,8 +237,12 @@ fun CategoryBoxItem(
     }
 }
 
+@Preview(
+    name = "Home page",
+    group = "Feature - Main",
+    showBackground = true,
+)
 @Composable
-@Preview(showBackground = true)
 fun HomePagePreview() {
     val context = LocalContext.current
     MyFoodTheme {

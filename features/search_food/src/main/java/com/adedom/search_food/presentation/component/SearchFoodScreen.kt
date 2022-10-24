@@ -121,8 +121,12 @@ fun SearchFoodContent(
     }
 }
 
+@Preview(
+    name = "Search food content",
+    group = "Feature - Search food",
+    showBackground = true,
+)
 @Composable
-@Preview(showBackground = true)
 fun SearchFoodContentPreview() {
     MyFoodTheme {
         val inputService = LocalTextInputService.current

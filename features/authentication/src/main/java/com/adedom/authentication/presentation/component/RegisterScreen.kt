@@ -120,8 +120,12 @@ fun RegisterContent(
     }
 }
 
+@Preview(
+    name = "Register content",
+    group = "Feature - Authentication",
+    showBackground = true,
+)
 @Composable
-@Preview(showBackground = true)
 fun RegisterContentPreview() {
     MyFoodTheme {
         RegisterContent(

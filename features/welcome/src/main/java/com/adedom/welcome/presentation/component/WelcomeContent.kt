@@ -33,8 +33,12 @@ fun WelcomeContent(
     }
 }
 
+@Preview(
+    name = "Welcome content",
+    group = "Feature - Welcome",
+    showBackground = true,
+)
 @Composable
-@Preview(showBackground = true)
 fun WelcomeContentPreview() {
     MyFoodTheme {
         WelcomeContent(

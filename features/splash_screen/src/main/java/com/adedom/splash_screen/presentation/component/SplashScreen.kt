@@ -78,8 +78,12 @@ fun SplashScreenContent() {
     }
 }
 
+@Preview(
+    name = "Splash screen content",
+    group = "Feature - Splash screen",
+    showBackground = true,
+)
 @Composable
-@Preview(showBackground = true)
 fun SplashScreenPreview() {
     MyFoodTheme {
         SplashScreenContent()

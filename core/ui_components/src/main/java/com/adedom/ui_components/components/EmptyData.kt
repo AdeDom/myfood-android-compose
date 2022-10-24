@@ -29,7 +29,11 @@ fun AppEmptyData(
     }
 }
 
-@Preview(showBackground = true)
+@Preview(
+    name = "Empty data",
+    group = "Component - EmptyData",
+    showBackground = true,
+)
 @Composable
 fun AppEmptyDataPreview() {
     MyFoodTheme {
