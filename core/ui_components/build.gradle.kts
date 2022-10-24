@@ -6,6 +6,7 @@ plugins {
     id("com.android.library")
     id("org.jetbrains.kotlin.android")
     id("kotlin-android")
+    id("com.google.devtools.ksp") version "1.7.10-1.0.6"
 }
 
 android {
@@ -112,6 +113,9 @@ dependencies {
     implementation(Dependencies.Coil.coilCompose)
 
     implementation(Dependencies.AirBnbLottie.lottieCompose)
+
+    implementation(Dependencies.AirBnbShowkase.showkase)
+    ksp(Dependencies.AirBnbShowkase.showkaseProcessor)
 
     debugImplementation(Dependencies.AndroidXCompose.debugUiTooling)
     debugImplementation(Dependencies.AndroidXCompose.debugUiTestManifest)

@@ -17,6 +17,7 @@ import com.adedom.authentication.presentation.view_model.LoginUiEvent
 import com.adedom.authentication.presentation.view_model.LoginUiState
 import com.adedom.authentication.presentation.view_model.LoginViewModel
 import com.adedom.ui_components.components.*
+import com.adedom.ui_components.theme.MyFoodTheme
 import com.adedom.ui_components.R as res
 
 @Composable
@@ -119,12 +120,11 @@ fun LoginContent(
 @Composable
 @Preview(showBackground = true)
 fun LoginContentPreview() {
-    LoginContent(
-        state = LoginUiState(
-//            dialog = LoginUiState.Dialog.Loading,
-//            dialog = LoginUiState.Dialog.Error(BaseError()),
-        ),
-        dispatch = {},
-        openRegisterPage = {},
-    )
+    MyFoodTheme {
+        LoginContent(
+            state = LoginUiState(),
+            dispatch = {},
+            openRegisterPage = {},
+        )
+    }
 }

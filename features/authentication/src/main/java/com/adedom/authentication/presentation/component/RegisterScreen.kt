@@ -16,6 +16,7 @@ import com.adedom.authentication.presentation.view_model.RegisterUiEvent
 import com.adedom.authentication.presentation.view_model.RegisterUiState
 import com.adedom.authentication.presentation.view_model.RegisterViewModel
 import com.adedom.ui_components.components.*
+import com.adedom.ui_components.theme.MyFoodTheme
 import com.adedom.ui_components.R as res
 
 @Composable
@@ -122,9 +123,11 @@ fun RegisterContent(
 @Composable
 @Preview(showBackground = true)
 fun RegisterContentPreview() {
-    RegisterContent(
-        state = RegisterUiState(),
-        dispatch = {},
-        openLoginPage = {},
-    )
+    MyFoodTheme {
+        RegisterContent(
+            state = RegisterUiState(),
+            dispatch = {},
+            openLoginPage = {},
+        )
+    }
 }
