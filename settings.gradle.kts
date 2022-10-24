@@ -15,6 +15,7 @@ dependencyResolutionManagement {
     }
 }
 rootProject.name = "My Food"
+include(":showkase")
 include(":app")
 include(":core")
 include(":core:ui_components")
