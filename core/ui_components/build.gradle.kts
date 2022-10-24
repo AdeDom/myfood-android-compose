@@ -111,7 +111,7 @@ dependencies {
 
     implementation(Dependencies.Coil.coilCompose)
 
-    implementation(Dependencies.AirBnb.lottieCompose)
+    implementation(Dependencies.AirBnbLottie.lottieCompose)
 
     debugImplementation(Dependencies.AndroidXCompose.debugUiTooling)
     debugImplementation(Dependencies.AndroidXCompose.debugUiTestManifest)

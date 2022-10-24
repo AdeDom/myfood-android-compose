@@ -1,18 +1,23 @@
+import com.adedom.buildsrc.Dependencies
+import com.adedom.buildsrc.Flavors
+import com.adedom.buildsrc.Versions
+
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
+    id("com.google.devtools.ksp") version "1.7.10-1.0.6"
 }
 
 android {
     namespace = "com.adedom.showkase"
-    compileSdk = 32
+    compileSdk = Versions.targetAndCompileVersion
 
     defaultConfig {
         applicationId = "com.adedom.showkase"
-        minSdk = 24
-        targetSdk = 32
-        versionCode = 1
-        versionName = "1.0"
+        minSdk = Versions.minSdkVersion
+        targetSdk = Versions.targetAndCompileVersion
+        versionCode = Versions.versionCode
+        versionName = Versions.versionName
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
@@ -29,6 +34,48 @@ android {
             )
         }
     }
+
+    flavorDimensions += Flavors.flavorDimensions
+    productFlavors {
+        create(Flavors.developDimension) {
+            dimension = Flavors.flavorDimensions
+            buildConfigField(
+                Flavors.booleanTypeField,
+                Flavors.isDevelopModeNameField,
+                Flavors.DevelopValueField.isDevelopMode,
+            )
+            buildConfigField(
+                Flavors.stringTypeField,
+                Flavors.baseUrlNameField,
+                Flavors.DevelopValueField.baseUrl,
+            )
+            buildConfigField(
+                Flavors.stringTypeField,
+                Flavors.hostNameField,
+                Flavors.DevelopValueField.host,
+            )
+        }
+
+        create(Flavors.productionDimension) {
+            dimension = Flavors.flavorDimensions
+            buildConfigField(
+                Flavors.booleanTypeField,
+                Flavors.isDevelopModeNameField,
+                Flavors.ProductionValueField.isDevelopMode,
+            )
+            buildConfigField(
+                Flavors.stringTypeField,
+                Flavors.baseUrlNameField,
+                Flavors.ProductionValueField.baseUrl,
+            )
+            buildConfigField(
+                Flavors.stringTypeField,
+                Flavors.hostNameField,
+                Flavors.ProductionValueField.host,
+            )
+        }
+    }
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
@@ -40,27 +87,31 @@ android {
         compose = true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.1.1"
+        kotlinCompilerExtensionVersion = Versions.composeCompilerVersion
     }
     packagingOptions {
         resources {
-            excludes += "/META-INF/{AL2.0,LGPL2.1}"
+            excludes += "META-INF/io.netty.versions.properties"
+            excludes += "META-INF/INDEX.LIST"
         }
     }
 }
 
 dependencies {
 
-    implementation("androidx.core:core-ktx:1.7.0")
-    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.3.1")
-    implementation("androidx.activity:activity-compose:1.3.1")
-    implementation("androidx.compose.ui:ui:1.1.1")
-    implementation("androidx.compose.ui:ui-tooling-preview:1.1.1")
-    implementation("androidx.compose.material:material:1.1.1")
-    testImplementation("junit:junit:4.13.2")
-    androidTestImplementation("androidx.test.ext:junit:1.1.3")
-    androidTestImplementation("androidx.test.espresso:espresso-core:3.4.0")
-    androidTestImplementation("androidx.compose.ui:ui-test-junit4:1.1.1")
-    debugImplementation("androidx.compose.ui:ui-tooling:1.1.1")
-    debugImplementation("androidx.compose.ui:ui-test-manifest:1.1.1")
+    implementation(project(Dependencies.Project.coreUiComponents))
+    implementation(project(Dependencies.Project.featuresAuthentication))
+    implementation(project(Dependencies.Project.featuresConnectivity))
+    implementation(project(Dependencies.Project.featuresFoodDetail))
+    implementation(project(Dependencies.Project.featuresMain))
+    implementation(project(Dependencies.Project.featuresSearchFood))
+    implementation(project(Dependencies.Project.featuresSplashScreen))
+    implementation(project(Dependencies.Project.featuresUserProfile))
+    implementation(project(Dependencies.Project.featuresWelcome))
+
+    implementation(Dependencies.AndroidXCore.coreKtx)
+    implementation(Dependencies.AndroidXActivity.activityCompose)
+
+    implementation(Dependencies.AirBnbShowkase.showkase)
+    ksp(Dependencies.AirBnbShowkase.showkaseProcessor)
 }
