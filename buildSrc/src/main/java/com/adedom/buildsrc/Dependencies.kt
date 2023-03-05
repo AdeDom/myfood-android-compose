@@ -5,7 +5,7 @@ object Versions {
     const val targetAndCompileVersion = 33
     const val versionCode = 1
     const val versionName = "1.0"
-    const val composeCompilerVersion = "1.3.0"
+    const val composeCompilerVersion = "1.4.3"
 }
 
 object Flavors {
@@ -70,13 +70,17 @@ object Dependencies {
     }
 
     object AndroidXCompose {
-        private const val version = "1.2.1"
-        const val material = "androidx.compose.material:material:$version"
+        private const val version = "1.3.3"
         const val ui = "androidx.compose.ui:ui:$version"
         const val uiToolingPreview = "androidx.compose.ui:ui-tooling-preview:$version"
+        const val androidTestUiTestJunit4 = "androidx.compose.ui:ui-test-junit4:$version"
         const val debugUiTooling = "androidx.compose.ui:ui-tooling:$version"
         const val debugUiTestManifest = "androidx.compose.ui:ui-test-manifest:$version"
-        const val androidTestUiTestJunit4 = "androidx.compose.ui:ui-test-junit4:$version"
+    }
+
+    object AndroidMaterial {
+        private const val version = "1.3.1"
+        const val material = "androidx.compose.material:material:$version"
     }
 
     object AndroidXNavigation {

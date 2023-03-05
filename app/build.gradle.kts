@@ -15,8 +15,8 @@ android {
         applicationId = "com.adedom.myfood"
         minSdk = Versions.minSdkVersion
         targetSdk = Versions.targetAndCompileVersion
-        versionCode = 1
-        versionName = "1.0"
+        versionCode = Versions.versionCode
+        versionName = Versions.versionName
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {

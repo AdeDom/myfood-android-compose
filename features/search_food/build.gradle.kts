@@ -6,7 +6,7 @@ plugins {
     id("com.android.library")
     id("org.jetbrains.kotlin.android")
     id("kotlin-android")
-    id("com.google.devtools.ksp") version "1.7.10-1.0.6"
+    id("com.google.devtools.ksp") version "1.8.10-1.0.9"
 }
 
 android {
@@ -101,7 +101,7 @@ dependencies {
 
     implementation(Dependencies.AndroidXCore.coreKtx)
     implementation(Dependencies.AndroidXActivity.activityCompose)
-    implementation(Dependencies.AndroidXCompose.material)
+    implementation(Dependencies.AndroidMaterial.material)
     implementation(Dependencies.AndroidXCompose.ui)
     implementation(Dependencies.AndroidXCompose.uiToolingPreview)
 

@@ -13,11 +13,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalTextInputService
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -33,19 +34,20 @@ import com.adedom.ui_components.theme.MyFoodTheme
 import com.adedom.ui_components.theme.RectangleLargeShape
 import com.adedom.ui_components.R as res
 
+@ExperimentalComposeUiApi
 @Composable
 fun SearchFoodScreen(
     viewModel: SearchFoodViewModel,
     openFoodDetailPage: (Long) -> Unit,
     onBackPressed: () -> Unit,
 ) {
-    val inputService = LocalTextInputService.current
+    val keyboardController = LocalSoftwareKeyboardController.current
     val focusRequester = remember { FocusRequester() }
 
     LaunchedEffect(Unit) {
         if (viewModel.uiState.initial == null) {
             focusRequester.requestFocus()
-            inputService?.showSoftwareKeyboard()
+            keyboardController?.show()
             viewModel.dispatch(SearchFoodUiEvent.Initial)
         }
     }
@@ -121,6 +123,7 @@ fun SearchFoodContent(
     }
 }
 
+@ExperimentalComposeUiApi
 @Preview(
     name = "Search food content",
     group = "Feature - Search food",
@@ -129,12 +132,12 @@ fun SearchFoodContent(
 @Composable
 fun SearchFoodContentPreview() {
     MyFoodTheme {
-        val inputService = LocalTextInputService.current
+        val keyboardController = LocalSoftwareKeyboardController.current
         val focusRequester = remember { FocusRequester() }
 
         LaunchedEffect(Unit) {
             focusRequester.requestFocus()
-            inputService?.showSoftwareKeyboard()
+            keyboardController?.show()
         }
 
         SearchFoodContent(
