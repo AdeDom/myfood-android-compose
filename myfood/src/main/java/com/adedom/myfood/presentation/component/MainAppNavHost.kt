@@ -2,6 +2,7 @@ package com.adedom.myfood.presentation.component
 
 import android.app.Activity
 import android.widget.Toast
+import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
@@ -33,6 +34,7 @@ import com.adedom.welcome.presentation.component.WelcomeScreen
 import com.adedom.welcome.presentation.view_model.WelcomeViewModel
 import org.koin.androidx.compose.getViewModel
 
+@ExperimentalMaterialApi
 @ExperimentalComposeUiApi
 @Composable
 fun MyFood() {
@@ -42,6 +44,7 @@ fun MyFood() {
     }
 }
 
+@ExperimentalMaterialApi
 @ExperimentalComposeUiApi
 @Composable
 fun MainAppNavHost(
@@ -140,6 +143,7 @@ fun NavGraphBuilder.authGraph(navController: NavController) {
     }
 }
 
+@ExperimentalMaterialApi
 @ExperimentalComposeUiApi
 fun NavGraphBuilder.mainGraph(navController: NavController) {
     navigation(

@@ -20,8 +20,8 @@ object Flavors {
 
     object DevelopValueField {
         const val isDevelopMode = "true"
-        const val baseUrl = "\"https://myfood-server.herokuapp.com/\""
-        const val host = "\"myfood-server.herokuapp.com\""
+        const val baseUrl = "\"http://192.168.220.110:8080/\""
+        const val host = "\"192.168.220.110:8080\""
     }
 
     object ProductionValueField {

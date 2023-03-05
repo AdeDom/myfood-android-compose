@@ -110,6 +110,7 @@ dependencies {
     implementation(project(Dependencies.Project.featuresWelcome))
 
     implementation(Dependencies.AndroidXCore.coreKtx)
+    implementation(Dependencies.AndroidMaterial.material)
 
     implementation(Dependencies.Koin.koinAndroidxCompose)
 

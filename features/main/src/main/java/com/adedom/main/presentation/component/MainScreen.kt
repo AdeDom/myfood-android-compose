@@ -3,6 +3,7 @@ package com.adedom.main.presentation.component
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Scaffold
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Home
@@ -14,7 +15,6 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.adedom.main.R
 import com.adedom.main.presentation.view_model.HomeChannel
@@ -24,10 +24,10 @@ import com.adedom.main.presentation.view_model.HomeViewModel
 import com.adedom.ui_components.components.AppIcon
 import com.adedom.ui_components.components.AppText
 import com.adedom.ui_components.components.AppTitleText
-import com.adedom.ui_components.theme.MyFoodTheme
 import kotlinx.coroutines.launch
 import com.adedom.ui_components.R as res
 
+@ExperimentalMaterialApi
 @Composable
 fun MainScreen(
     viewModel: HomeViewModel,
@@ -68,6 +68,7 @@ fun MainScreen(
     BackHandler(onBack = { viewModel.dispatch(HomeUiEvent.BackHandler) })
 }
 
+@ExperimentalMaterialApi
 @Composable
 fun MainContent(
     state: HomeUiState,
@@ -186,26 +187,6 @@ private fun DrawableItemMenu(
         AppText(
             text = text,
             modifier = Modifier.weight(1f)
-        )
-    }
-}
-
-@Preview(
-    name = "Main content",
-    group = "Feature - Main",
-    showBackground = true,
-)
-@Composable
-fun MainContentPreview() {
-    MyFoodTheme {
-        MainContent(
-            state = HomeUiState(),
-            onLogoutClick = {},
-            dispatch = {},
-            openFoodDetailPage = {},
-            openSearchFoodPage = {},
-            openUserProfilePage = {},
-            openInfoPage = {},
         )
     }
 }
