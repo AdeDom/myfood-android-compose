@@ -92,7 +92,6 @@ android {
 dependencies {
 
     implementation(Dependencies.AndroidXActivity.activityCompose)
-    implementation(Dependencies.AndroidGoogle.material)
 
     implementation(Dependencies.KotlinX.coroutinesCore)
 

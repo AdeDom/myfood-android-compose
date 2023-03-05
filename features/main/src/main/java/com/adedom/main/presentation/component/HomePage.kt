@@ -11,10 +11,14 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
+import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.IconButton
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Menu
+import androidx.compose.material.pullrefresh.PullRefreshIndicator
+import androidx.compose.material.pullrefresh.pullRefresh
+import androidx.compose.material.pullrefresh.rememberPullRefreshState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
@@ -33,10 +37,9 @@ import com.adedom.ui_components.domain.models.FoodModel
 import com.adedom.ui_components.theme.MyFoodTheme
 import com.adedom.ui_components.theme.RectangleLargeShape
 import com.adedom.ui_components.theme.RectangleSmallShape
-import com.google.accompanist.swiperefresh.SwipeRefresh
-import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import com.adedom.ui_components.R as res
 
+@ExperimentalMaterialApi
 @Composable
 fun HomePage(
     modifier: Modifier = Modifier,
@@ -81,6 +84,7 @@ fun HomePage(
     }
 }
 
+@ExperimentalMaterialApi
 @Composable
 private fun HomeContent(
     modifier: Modifier = Modifier,
@@ -91,98 +95,117 @@ private fun HomeContent(
     openSearchFoodPage: () -> Unit,
     openUserProfilePage: () -> Unit,
 ) {
-    Box(
-        modifier = modifier,
-    ) {
-        Column(
-            modifier = Modifier.fillMaxSize(),
-        ) {
-            SwipeRefresh(
-                state = rememberSwipeRefreshState(state.isRefreshing),
-                onRefresh = { dispatch(HomeUiEvent.Refreshing) },
+    val pullRefreshState = rememberPullRefreshState(
+        state.isRefreshing,
+        { dispatch(HomeUiEvent.Refreshing) }
+    )
+
+    Box(modifier = modifier.pullRefresh(pullRefreshState)) {
+        HomeContentDetail(
+            openSearchFoodPage,
+            onMenuClick,
+            state,
+            openUserProfilePage,
+            dispatch,
+            openFoodDetailPage
+        )
+
+        PullRefreshIndicator(
+            state.isRefreshing,
+            pullRefreshState,
+            Modifier.align(Alignment.TopCenter)
+        )
+    }
+}
+
+@Composable
+private fun HomeContentDetail(
+    openSearchFoodPage: () -> Unit,
+    onMenuClick: () -> Unit,
+    state: HomeUiState,
+    openUserProfilePage: () -> Unit,
+    dispatch: (HomeUiEvent) -> Unit,
+    openFoodDetailPage: (Long) -> Unit
+) {
+    LazyColumn(modifier = Modifier.fillMaxSize()) {
+        item {
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(60.dp)
+                    .padding(4.dp),
             ) {
-                LazyColumn {
-                    item {
-                        Box(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .height(60.dp)
-                                .padding(4.dp),
-                        ) {
-                            Box(
-                                contentAlignment = Alignment.Center,
+                Box(
+                    contentAlignment = Alignment.Center,
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .clip(RectangleLargeShape)
+                        .background(Color.LightGray)
+                        .clickable(onClick = openSearchFoodPage),
+                ) {
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically,
+                    ) {
+                        Spacer(modifier = Modifier.width(8.dp))
+                        IconButton(onClick = onMenuClick) {
+                            AppIcon(
+                                image = Icons.Default.Menu,
+                                contentDescription = stringResource(id = res.string.cd_icon_menu),
+                            )
+                        }
+                        Spacer(modifier = Modifier.width(8.dp))
+                        AppText(
+                            text = stringResource(id = res.string.str_search_food),
+                            color = Color.Gray,
+                            modifier = Modifier.weight(1f),
+                        )
+                        state.imageProfile?.let {
+                            AppImage(
+                                image = state.imageProfile,
+                                contentDescription = stringResource(id = res.string.cd_image_profile),
                                 modifier = Modifier
-                                    .fillMaxSize()
-                                    .clip(RectangleLargeShape)
-                                    .background(Color.LightGray)
-                                    .clickable(onClick = openSearchFoodPage),
-                            ) {
-                                Row(
-                                    verticalAlignment = Alignment.CenterVertically,
-                                ) {
-                                    Spacer(modifier = Modifier.width(8.dp))
-                                    IconButton(onClick = onMenuClick) {
-                                        AppIcon(
-                                            image = Icons.Default.Menu,
-                                            contentDescription = stringResource(id = res.string.cd_icon_menu),
-                                        )
-                                    }
-                                    Spacer(modifier = Modifier.width(8.dp))
-                                    AppText(
-                                        text = stringResource(id = res.string.str_search_food),
-                                        color = Color.Gray,
-                                        modifier = Modifier.weight(1f),
-                                    )
-                                    state.imageProfile?.let {
-                                        AppImage(
-                                            image = state.imageProfile,
-                                            contentDescription = stringResource(id = res.string.cd_image_profile),
-                                            modifier = Modifier
-                                                .size(40.dp)
-                                                .clip(CircleShape)
-                                                .clickable(onClick = openUserProfilePage),
-                                        )
-                                    }
-                                    Spacer(modifier = Modifier.width(8.dp))
-                                }
-                            }
-                        }
-                    }
-
-                    item {
-                        LazyRow {
-                            items(state.categories) { category ->
-                                CategoryBoxItem(
-                                    categoryId = state.categoryId,
-                                    category = category,
-                                    onClick = { dispatch(HomeUiEvent.CategoryClick(category.categoryId)) },
-                                )
-                            }
-                        }
-                    }
-
-                    item {
-                        Row {
-                            Spacer(modifier = Modifier.size(4.dp))
-                            AppTitleText(text = state.categoryName)
-                        }
-                    }
-
-                    if (state.foods.isEmpty()) {
-                        item {
-                            AppEmptyData(
-                                modifier = Modifier.fillMaxWidth(),
+                                    .size(40.dp)
+                                    .clip(CircleShape)
+                                    .clickable(onClick = openUserProfilePage),
                             )
                         }
-                    } else {
-                        items(state.foods) { food ->
-                            FoodBoxItem(
-                                food = food,
-                                onFoodClick = openFoodDetailPage,
-                            )
-                        }
+                        Spacer(modifier = Modifier.width(8.dp))
                     }
                 }
+            }
+        }
+
+        item {
+            LazyRow {
+                items(state.categories) { category ->
+                    CategoryBoxItem(
+                        categoryId = state.categoryId,
+                        category = category,
+                        onClick = { dispatch(HomeUiEvent.CategoryClick(category.categoryId)) },
+                    )
+                }
+            }
+        }
+
+        item {
+            Row {
+                Spacer(modifier = Modifier.size(4.dp))
+                AppTitleText(text = state.categoryName)
+            }
+        }
+
+        if (state.foods.isEmpty()) {
+            item {
+                AppEmptyData(
+                    modifier = Modifier.fillMaxWidth(),
+                )
+            }
+        } else {
+            items(state.foods) { food ->
+                FoodBoxItem(
+                    food = food,
+                    onFoodClick = openFoodDetailPage,
+                )
             }
         }
     }
@@ -246,7 +269,7 @@ fun CategoryBoxItem(
 fun HomePagePreview() {
     val context = LocalContext.current
     MyFoodTheme {
-        HomePage(
+        HomeContentDetail(
             state = HomeUiState(
                 categories = listOf(
                     CategoryModel(
@@ -352,11 +375,8 @@ fun HomePagePreview() {
                 ),
                 categoryId = 2,
                 imageProfile = "",
-//                dialog = HomeUiState.Dialog.Error(BaseError()),
-//                dialog = HomeUiState.Dialog.Logout,
             ),
             onMenuClick = {},
-            onLogoutClick = {},
             dispatch = { event ->
                 when (event) {
                     is HomeUiEvent.CategoryClick -> {

@@ -29,7 +29,7 @@ import com.adedom.food_detail.presentation.view_model.FoodDetailUiEvent
 import com.adedom.food_detail.presentation.view_model.FoodDetailUiState
 import com.adedom.food_detail.presentation.view_model.FoodDetailViewModel
 import com.adedom.ui_components.components.*
-import com.adedom.ui_components.theme.Amber
+import com.adedom.ui_components.theme.AppColor
 import com.adedom.ui_components.theme.MyFoodTheme
 import com.adedom.ui_components.R as res
 
@@ -66,7 +66,7 @@ fun FoodDetailContent(
     val infiniteTransition = rememberInfiniteTransition()
     val priceTextColor by infiniteTransition.animateColor(
         initialValue = MaterialTheme.colors.primary,
-        targetValue = Amber,
+        targetValue = AppColor.Amber,
         animationSpec = infiniteRepeatable(
             animation = tween(1000, easing = LinearEasing),
             repeatMode = RepeatMode.Reverse,
@@ -126,28 +126,28 @@ fun FoodDetailContent(
                                                 Row {
                                                     AppIcon(
                                                         image = Icons.Default.Favorite,
-                                                        color = Amber,
+                                                        color = AppColor.Amber,
                                                         modifier = Modifier.size(18.dp),
                                                         contentDescription = stringResource(id = res.string.cd_icon_favorite),
                                                     )
                                                     Spacer(modifier = Modifier.width(4.dp))
                                                     AppText(
                                                         text = state.foodDetail?.favorite.toString(),
-                                                        color = Amber,
+                                                        color = AppColor.Amber,
                                                         style = MaterialTheme.typography.body2,
                                                     )
                                                 }
                                                 Row {
                                                     AppIcon(
                                                         image = Icons.Default.Star,
-                                                        color = Amber,
+                                                        color = AppColor.Amber,
                                                         modifier = Modifier.size(18.dp),
                                                         contentDescription = stringResource(id = res.string.cd_icon_star),
                                                     )
                                                     Spacer(modifier = Modifier.width(4.dp))
                                                     AppText(
                                                         text = state.foodDetail?.ratingScoreCount.toString(),
-                                                        color = Amber,
+                                                        color = AppColor.Amber,
                                                         style = MaterialTheme.typography.body2,
                                                     )
                                                 }
