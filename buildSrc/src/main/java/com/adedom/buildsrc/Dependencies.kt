@@ -60,13 +60,8 @@ object Dependencies {
     }
 
     object AndroidXActivity {
-        private const val version = "1.5.1"
-        const val activityCompose = "androidx.activity:activity-compose:$version"
-    }
-
-    object AndroidGoogle {
         private const val version = "1.6.1"
-        const val material = "com.google.android.material:material:$version"
+        const val activityCompose = "androidx.activity:activity-compose:$version"
     }
 
     object AndroidXCompose {
@@ -84,7 +79,7 @@ object Dependencies {
     }
 
     object AndroidXNavigation {
-        private const val version = "2.5.2"
+        private const val version = "2.5.3"
         const val navigationCompose = "androidx.navigation:navigation-compose:$version"
     }
 
@@ -94,12 +89,12 @@ object Dependencies {
     }
 
     object AndroidXArch {
-        private const val version = "2.1.0"
+        private const val version = "2.2.0"
         const val testCoreTesting = "androidx.arch.core:core-testing:$version"
     }
 
     object Accompanist {
-        private const val version = "0.25.1"
+        private const val version = "0.28.0"
         const val swipeRefresh = "com.google.accompanist:accompanist-swiperefresh:$version"
     }
 
@@ -119,7 +114,7 @@ object Dependencies {
     }
 
     object Ktor {
-        private const val version = "2.1.1"
+        private const val version = "2.2.4"
         const val clientCore = "io.ktor:ktor-client-core:$version"
         const val clientCio = "io.ktor:ktor-client-cio:$version"
         const val clientWebSockets = "io.ktor:ktor-client-websockets:$version"
@@ -131,30 +126,28 @@ object Dependencies {
     }
 
     object Koin {
-        private const val version = "3.2.0"
-        const val koinCore = "io.insert-koin:koin-core:$version"
-        const val koinAndroid = "io.insert-koin:koin-android:$version"
+        private const val version = "3.4.2"
         const val koinAndroidxCompose = "io.insert-koin:koin-androidx-compose:$version"
     }
 
     object SquareUp {
-        private const val version = "1.5.3"
+        private const val version = "1.5.5"
         const val sqlDelightCoroutinesExt = "com.squareup.sqldelight:coroutines-extensions:$version"
         const val sqlDelightAndroidDriver = "com.squareup.sqldelight:android-driver:$version"
     }
 
     object Coil {
-        private const val version = "2.2.1"
+        private const val version = "2.2.2"
         const val coilCompose = "io.coil-kt:coil-compose:$version"
     }
 
     object AirBnbLottie {
-        private const val version = "5.2.0"
+        private const val version = "6.0.0"
         const val lottieCompose = "com.airbnb.android:lottie-compose:$version"
     }
 
     object AirBnbShowkase {
-        private const val version = "1.0.0-beta14"
+        private const val version = "1.0.0-beta17"
         const val showkase = "com.airbnb.android:showkase:$version"
         const val showkaseProcessor = "com.airbnb.android:showkase-processor:$version"
     }
@@ -170,7 +163,7 @@ object Dependencies {
     }
 
     object Mockk {
-        private const val version = "1.13.1"
+        private const val version = "1.13.4"
         const val testMockk = "io.mockk:mockk:$version"
         const val androidTestMockk = "io.mockk:mockk-android:$version"
     }

@@ -101,4 +101,5 @@ dependencies {
     implementation(project(Dependencies.Project.myFood))
     implementation(Dependencies.AndroidXCore.coreKtx)
     implementation(Dependencies.AndroidXActivity.activityCompose)
+    implementation(Dependencies.AndroidMaterial.material)
 }

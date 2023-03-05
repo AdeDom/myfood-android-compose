@@ -123,7 +123,6 @@ fun SearchFoodContent(
     }
 }
 
-@ExperimentalComposeUiApi
 @Preview(
     name = "Search food content",
     group = "Feature - Search food",
@@ -132,12 +131,10 @@ fun SearchFoodContent(
 @Composable
 fun SearchFoodContentPreview() {
     MyFoodTheme {
-        val keyboardController = LocalSoftwareKeyboardController.current
         val focusRequester = remember { FocusRequester() }
 
         LaunchedEffect(Unit) {
             focusRequester.requestFocus()
-            keyboardController?.show()
         }
 
         SearchFoodContent(

@@ -111,8 +111,6 @@ dependencies {
 
     implementation(Dependencies.AndroidXCore.coreKtx)
 
-    implementation(Dependencies.Koin.koinCore)
-    implementation(Dependencies.Koin.koinAndroid)
     implementation(Dependencies.Koin.koinAndroidxCompose)
 
     implementation(Dependencies.KotlinX.coroutinesCore)
