@@ -7,7 +7,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
 import com.airbnb.android.showkase.annotation.ShowkaseTypography
 
-object Material {
+object AppTypography {
+
     @ShowkaseTypography
     val h4 = TextStyle(
         fontFamily = FontFamily.Default,
@@ -52,10 +53,10 @@ object Material {
 }
 
 val Typography = Typography(
-    h4 = Material.h4,
-    h5 = Material.h5,
-    h6 = Material.h6,
-    subtitle1 = Material.subtitle1,
-    body1 = Material.body1,
-    body2 = Material.body2,
+    h4 = AppTypography.h4,
+    h5 = AppTypography.h5,
+    h6 = AppTypography.h6,
+    subtitle1 = AppTypography.subtitle1,
+    body1 = AppTypography.body1,
+    body2 = AppTypography.body2,
 )

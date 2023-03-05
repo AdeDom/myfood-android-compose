@@ -16,7 +16,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.adedom.ui_components.R
 import com.adedom.ui_components.domain.models.FoodModel
-import com.adedom.ui_components.theme.Amber
+import com.adedom.ui_components.theme.AppColor
 import com.adedom.ui_components.theme.MyFoodTheme
 import com.adedom.ui_components.theme.RectangleMediumShape
 
@@ -62,14 +62,14 @@ fun FoodBoxItem(
                     Row {
                         AppIcon(
                             image = Icons.Default.Favorite,
-                            color = Amber,
+                            color = AppColor.Amber,
                             modifier = Modifier.size(18.dp),
                             contentDescription = stringResource(id = R.string.cd_icon_favorite),
                         )
                         Spacer(modifier = Modifier.width(4.dp))
                         AppText(
                             text = favorite.toString(),
-                            color = Amber,
+                            color = AppColor.Amber,
                             style = MaterialTheme.typography.body2,
                         )
                     }
@@ -79,14 +79,14 @@ fun FoodBoxItem(
                     Row {
                         AppIcon(
                             image = Icons.Default.Star,
-                            color = Amber,
+                            color = AppColor.Amber,
                             modifier = Modifier.size(18.dp),
                             contentDescription = stringResource(id = R.string.cd_icon_star),
                         )
                         Spacer(modifier = Modifier.width(4.dp))
                         AppText(
                             text = ratingScoreCount,
-                            color = Amber,
+                            color = AppColor.Amber,
                             style = MaterialTheme.typography.body2,
                         )
                     }
