@@ -1,5 +1,3 @@
-@file:Suppress("TestFunctionName")
-
 package com.adedom.myfood
 
 import androidx.activity.OnBackPressedDispatcher
@@ -96,7 +94,6 @@ class PaparazziSampleScreenshotTest {
         }
     }
 }
-
 
 interface TestPreview {
     @Composable
