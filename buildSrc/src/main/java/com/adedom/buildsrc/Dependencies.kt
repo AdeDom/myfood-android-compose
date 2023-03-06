@@ -34,6 +34,7 @@ object Flavors {
 object Dependencies {
 
     object Project {
+        const val showkase = ":showkase"
         const val app = ":app"
         const val core = ":core"
         const val coreUiComponents = ":core:ui_components"
