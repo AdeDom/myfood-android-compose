@@ -131,12 +131,6 @@ fun SearchFoodContent(
 @Composable
 fun SearchFoodContentPreview() {
     MyFoodTheme {
-        val focusRequester = remember { FocusRequester() }
-
-        LaunchedEffect(Unit) {
-            focusRequester.requestFocus()
-        }
-
         SearchFoodContent(
             state = SearchFoodUiState(
                 search = "Abc",
@@ -234,7 +228,7 @@ fun SearchFoodContentPreview() {
                 ),
             ),
             dispatch = {},
-            focusRequester = focusRequester,
+            focusRequester = FocusRequester(),
             openFoodDetailPage = {},
             onBackPressed = {},
         )

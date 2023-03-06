@@ -168,6 +168,12 @@ object Dependencies {
         const val androidTestMockk = "io.mockk:mockk-android:$version"
     }
 
+    object TestParameterInjector {
+        private const val version = "1.10"
+        const val testParameterInjector =
+            "com.google.testparameterinjector:test-parameter-injector:$version"
+    }
+
     object AdeDom {
         private const val version = "0.3.2"
         const val myFoodKtorServer = "com.github.AdeDom:myfood-ktor-server:$version"
