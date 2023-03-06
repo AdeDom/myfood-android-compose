@@ -6,6 +6,8 @@ plugins {
     id("com.android.library")
     id("org.jetbrains.kotlin.android")
     id("kotlin-android")
+    id("com.google.devtools.ksp") version "1.8.10-1.0.9"
+    id("app.cash.paparazzi") version "1.2.0"
 }
 
 android {
@@ -124,4 +126,8 @@ dependencies {
     implementation(Dependencies.AndroidXNavigation.navigationCompose)
 
     implementation(Dependencies.AdeDom.myFoodKtorServer)
+
+    testImplementation(Dependencies.TestParameterInjector.testParameterInjector)
+    testImplementation(Dependencies.AirBnbShowkase.showkase)
+    kspTest(Dependencies.AirBnbShowkase.showkaseProcessor)
 }

@@ -34,6 +34,7 @@ object Flavors {
 object Dependencies {
 
     object Project {
+        const val showkase = ":showkase"
         const val app = ":app"
         const val core = ":core"
         const val coreUiComponents = ":core:ui_components"
@@ -166,6 +167,12 @@ object Dependencies {
         private const val version = "1.13.4"
         const val testMockk = "io.mockk:mockk:$version"
         const val androidTestMockk = "io.mockk:mockk-android:$version"
+    }
+
+    object TestParameterInjector {
+        private const val version = "1.10"
+        const val testParameterInjector =
+            "com.google.testparameterinjector:test-parameter-injector:$version"
     }
 
     object AdeDom {
