@@ -17,17 +17,18 @@ My Food
 
 - Dependency injection - Koin
 
-- Test - UI test(Compose), Mockk, Truth, Showkase+paparuzzi
+- Test - UI test(Compose), Mockk, Truth, Screenshot test(Showkase, Paparuzzi)
 
 - Gradle - KTS
 
-- Other 
-   - Showkase(Catalog) `Run Configurations showkase`
-   - Lottie(Animation)
-   - Coil(Image network)
-   - Navigation compose
+- Other - Lottie, Coil, Navigation compose
 
 # Testing
+
+- Record
+```
+./gradlew testDevelopDebug
+```
 
 - Record
 ```
