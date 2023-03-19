@@ -12,7 +12,7 @@ val myFoodModule = module {
 
     single {
         PreferenceDataStoreFactory.create {
-            get<Context>().preferencesDataStoreFile("file")
+            get<Context>().preferencesDataStoreFile(AppDataStore.fileName)
         }
     }
     single<AppDataStore> { AppDataStoreImpl(get()) }
