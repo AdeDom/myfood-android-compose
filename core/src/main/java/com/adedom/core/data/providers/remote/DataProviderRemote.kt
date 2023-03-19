@@ -1,5 +1,6 @@
 package com.adedom.core.data.providers.remote
 
+import co.touchlab.kermit.Logger
 import com.adedom.core.BuildConfig
 import com.adedom.core.data.providers.data_store.AppDataStore
 import com.adedom.core.utils.ApiServiceException
@@ -46,7 +47,7 @@ class DataProviderRemote(
 
             if (BuildConfig.IS_DEVELOP_MODE) {
                 install(Logging) {
-                    logger = Logger.DEFAULT
+                    logger = io.ktor.client.plugins.logging.Logger.DEFAULT
                     level = LogLevel.HEADERS
                 }
             }
@@ -96,6 +97,10 @@ class DataProviderRemote(
             expectSuccess = true
             HttpResponseValidator {
                 handleResponseExceptionWithRequest { exception, _ ->
+                    if (BuildConfig.IS_DEVELOP_MODE) {
+                        val loggerTag = DataProviderRemote::class.simpleName.orEmpty()
+                        Logger.e(exception, loggerTag) { exception.message.orEmpty() }
+                    }
                     when (exception) {
                         is ClientRequestException -> {
                             val exceptionResponse = exception.response
