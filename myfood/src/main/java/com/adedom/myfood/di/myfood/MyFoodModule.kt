@@ -6,6 +6,8 @@ import androidx.datastore.preferences.preferencesDataStoreFile
 import com.adedom.core.data.providers.data_store.AppDataStore
 import com.adedom.myfood.data.providers.data_store.AppDataStoreImpl
 import com.adedom.myfood.data.providers.database.MyFoodDatabaseDriverFactory
+import org.koin.core.module.dsl.bind
+import org.koin.core.module.dsl.singleOf
 import org.koin.dsl.module
 
 val myFoodModule = module {
@@ -15,7 +17,7 @@ val myFoodModule = module {
             get<Context>().preferencesDataStoreFile("file")
         }
     }
-    single<AppDataStore> { AppDataStoreImpl(get()) }
-    single { MyFoodDatabaseDriverFactory(get()) }
+    singleOf(::AppDataStoreImpl) { bind<AppDataStore>() }
+    singleOf(::MyFoodDatabaseDriverFactory)
     single { get<MyFoodDatabaseDriverFactory>().createDriver() }
 }

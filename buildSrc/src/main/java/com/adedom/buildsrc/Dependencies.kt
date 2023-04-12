@@ -127,7 +127,7 @@ object Dependencies {
     }
 
     object Koin {
-        private const val version = "3.4.2"
+        private const val version = "3.4.3"
         const val koinAndroidxCompose = "io.insert-koin:koin-androidx-compose:$version"
     }
 

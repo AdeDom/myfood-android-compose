@@ -5,17 +5,18 @@ import com.adedom.food_detail.domain.use_cases.GetFoodDetailUseCase
 import com.adedom.food_detail.domain.use_cases.InsertOrReplaceFavoriteUseCase
 import com.adedom.food_detail.domain.use_cases.UpdateBackupFavoriteUseCase
 import com.adedom.food_detail.presentation.view_model.FoodDetailViewModel
-import org.koin.androidx.viewmodel.dsl.viewModel
+import org.koin.androidx.viewmodel.dsl.viewModelOf
+import org.koin.core.module.dsl.factoryOf
 import org.koin.dsl.module
 
 val featureFoodDetailModule = module {
 
     // domain
-    factory { GetFoodDetailUseCase(get(), get(), get()) }
-    factory { InsertOrReplaceFavoriteUseCase(get(), get()) }
-    factory { GetFavoriteFlowUseCase(get()) }
-    factory { UpdateBackupFavoriteUseCase(get()) }
+    factoryOf(::GetFoodDetailUseCase)
+    factoryOf(::InsertOrReplaceFavoriteUseCase)
+    factoryOf(::GetFavoriteFlowUseCase)
+    factoryOf(::UpdateBackupFavoriteUseCase)
 
     // view model
-    viewModel { FoodDetailViewModel(get(), get(), get(), get(), get(), get(), get()) }
+    viewModelOf(::FoodDetailViewModel)
 }

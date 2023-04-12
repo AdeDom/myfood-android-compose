@@ -11,24 +11,26 @@ import com.adedom.authentication.presentation.view_model.LoginViewModel
 import com.adedom.authentication.presentation.view_model.RegisterViewModel
 import com.myfood.server.usecase.validate.ValidateEmailUseCase
 import com.myfood.server.usecase.validate.ValidatePasswordUseCase
-import org.koin.androidx.viewmodel.dsl.viewModel
+import org.koin.androidx.viewmodel.dsl.viewModelOf
+import org.koin.core.module.dsl.bind
+import org.koin.core.module.dsl.factoryOf
 import org.koin.dsl.module
 
 val featureAuthenticationModule = module {
 
     // data
-    factory<AuthRemoteDataSource> { AuthRemoteDataSourceImpl(get()) }
+    factoryOf(::AuthRemoteDataSourceImpl) { bind<AuthRemoteDataSource>() }
 
-    factory<AuthRepository> { AuthRepositoryImpl(get(), get()) }
+    factoryOf(::AuthRepositoryImpl) { bind<AuthRepository>() }
 
     // domain
-    factory { ValidateEmailUseCase() }
-    factory { ValidatePasswordUseCase() }
-    factory { LoginUseCase(get()) }
-    factory { RegisterUseCase(get()) }
-    factory { FavoriteUseCase(get(), get()) }
+    factoryOf(::ValidateEmailUseCase)
+    factoryOf(::ValidatePasswordUseCase)
+    factoryOf(::LoginUseCase)
+    factoryOf(::RegisterUseCase)
+    factoryOf(::FavoriteUseCase)
 
     // presentation
-    viewModel { LoginViewModel(get(), get(), get(), get(), get()) }
-    viewModel { RegisterViewModel(get(), get(), get()) }
+    viewModelOf(::LoginViewModel)
+    viewModelOf(::RegisterViewModel)
 }

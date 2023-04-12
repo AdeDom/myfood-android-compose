@@ -4,17 +4,19 @@ import com.adedom.welcome.data.repositories.WelcomeRepositoryImpl
 import com.adedom.welcome.domain.repositories.WelcomeRepository
 import com.adedom.welcome.domain.use_cases.WelcomeGuestRoleUseCase
 import com.adedom.welcome.presentation.view_model.WelcomeViewModel
-import org.koin.androidx.viewmodel.dsl.viewModel
+import org.koin.androidx.viewmodel.dsl.viewModelOf
+import org.koin.core.module.dsl.bind
+import org.koin.core.module.dsl.factoryOf
 import org.koin.dsl.module
 
 val featureWelcomeModule = module {
 
     // data
-    factory<WelcomeRepository> { WelcomeRepositoryImpl(get()) }
+    factoryOf(::WelcomeRepositoryImpl) { bind<WelcomeRepository>() }
 
     // domain
-    factory { WelcomeGuestRoleUseCase(get()) }
+    factoryOf(::WelcomeGuestRoleUseCase)
 
     // presentation
-    viewModel { WelcomeViewModel(get()) }
+    viewModelOf(::WelcomeViewModel)
 }

@@ -6,19 +6,22 @@ import com.adedom.connectivity.data.repositories.ConnectivityRepositoryImpl
 import com.adedom.connectivity.domain.repositories.ConnectivityRepository
 import com.adedom.connectivity.domain.use_cases.GetConnectivityStatusUseCase
 import com.adedom.connectivity.presentation.view_model.ConnectivityViewModel
-import org.koin.androidx.viewmodel.dsl.viewModel
+import org.koin.androidx.viewmodel.dsl.viewModelOf
+import org.koin.core.module.dsl.bind
+import org.koin.core.module.dsl.factoryOf
+import org.koin.core.module.dsl.singleOf
 import org.koin.dsl.module
 
 val featureConnectivityModule = module {
 
     // data
-    single<ConnectivityObserver> { NetworkConnectivityObserver(get()) }
+    singleOf(::NetworkConnectivityObserver) { bind<ConnectivityObserver>() }
 
-    single<ConnectivityRepository> { ConnectivityRepositoryImpl(get()) }
+    singleOf(::ConnectivityRepositoryImpl) { bind<ConnectivityRepository>() }
 
     // domain
-    factory { GetConnectivityStatusUseCase(get()) }
+    factoryOf(::GetConnectivityStatusUseCase)
 
     // view model
-    viewModel { ConnectivityViewModel(get()) }
+    viewModelOf(::ConnectivityViewModel)
 }

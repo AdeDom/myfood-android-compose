@@ -6,16 +6,18 @@ import com.adedom.profile.providers.remote.ProfileRemoteDataSource
 import com.adedom.profile.providers.remote.ProfileRemoteDataSourceImpl
 import com.adedom.profile.repositories.UserProfileRepository
 import com.adedom.profile.repositories.UserProfileRepositoryImpl
+import org.koin.core.module.dsl.bind
+import org.koin.core.module.dsl.singleOf
 import org.koin.dsl.module
 
 val dataProfileModule = module {
 
     // local
-    single<UserProfileLocalDataSource> { UserProfileLocalDataSourceImpl(get()) }
+    singleOf(::UserProfileLocalDataSourceImpl) { bind<UserProfileLocalDataSource>() }
 
     // remote
-    single<ProfileRemoteDataSource> { ProfileRemoteDataSourceImpl(get(), get()) }
+    singleOf(::ProfileRemoteDataSourceImpl) { bind<ProfileRemoteDataSource>() }
 
     // repository
-    single<UserProfileRepository> { UserProfileRepositoryImpl(get(), get()) }
+    singleOf(::UserProfileRepositoryImpl) { bind<UserProfileRepository>() }
 }

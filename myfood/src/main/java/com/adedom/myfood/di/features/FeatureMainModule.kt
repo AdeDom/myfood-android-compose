@@ -18,45 +18,34 @@ import com.adedom.main.domain.repositories.AuthLogoutRepository
 import com.adedom.main.domain.repositories.HomeCategoryRepository
 import com.adedom.main.domain.use_cases.*
 import com.adedom.main.presentation.view_model.HomeViewModel
-import org.koin.androidx.viewmodel.dsl.viewModel
+import org.koin.androidx.viewmodel.dsl.viewModelOf
+import org.koin.core.module.dsl.bind
+import org.koin.core.module.dsl.factoryOf
+import org.koin.core.module.dsl.singleOf
 import org.koin.dsl.module
 
 val featureMainModule = module {
 
     // data
-    single<CategoryLocalDataSource> { CategoryLocalDataSourceImpl(get()) }
-    single<FoodLocalDataSource> { FoodLocalDataSourceImpl(get()) }
+    singleOf(::CategoryLocalDataSourceImpl) { bind<CategoryLocalDataSource>() }
+    singleOf(::FoodLocalDataSourceImpl) { bind<FoodLocalDataSource>() }
 
-    single<CategoryRemoteDataSource> { CategoryRemoteDataSourceImpl(get()) }
-    single<FoodRemoteDataSource> { FoodRemoteDataSourceImpl(get()) }
-    single<AuthRemoteDataSource> { AuthRemoteDataSourceImpl(get(), get()) }
+    singleOf(::CategoryRemoteDataSourceImpl) { bind<CategoryRemoteDataSource>() }
+    singleOf(::FoodRemoteDataSourceImpl) { bind<FoodRemoteDataSource>() }
+    singleOf(::AuthRemoteDataSourceImpl) { bind<AuthRemoteDataSource>() }
 
-    single<AuthLogoutRepository> { AuthLogoutRepositoryImpl(get(), get()) }
-    single<HomeCategoryRepository> { HomeCategoryRepositoryImpl(get(), get()) }
-    single<FoodRepository> { FoodRepositoryImpl(get(), get()) }
+    singleOf(::AuthLogoutRepositoryImpl) { bind<AuthLogoutRepository>() }
+    singleOf(::HomeCategoryRepositoryImpl) { bind<HomeCategoryRepository>() }
+    singleOf(::FoodRepositoryImpl) { bind<FoodRepository>() }
 
     // domain
-    factory { HomeContentUseCase(get(), get()) }
-    factory { GetImageProfileUseCase(get()) }
-    factory { LogoutUseCase(get(), get(), get(), get(), get()) }
-    factory { GetIsAuthRoleUseCase(get()) }
-    factory { SaveUnAuthRoleUseCase(get()) }
-    factory { GetFoodListByCategoryIdPairUseCase(get(), get()) }
+    factoryOf(::HomeContentUseCase)
+    factoryOf(::GetImageProfileUseCase)
+    factoryOf(::LogoutUseCase)
+    factoryOf(::GetIsAuthRoleUseCase)
+    factoryOf(::SaveUnAuthRoleUseCase)
+    factoryOf(::GetFoodListByCategoryIdPairUseCase)
 
     //presentation
-    viewModel {
-        HomeViewModel(
-            homeContentUseCase = get(),
-            getImageProfileUseCase = get(),
-            getFoodListByCategoryIdPairUseCase = get(),
-            logoutUseCase = get(),
-            getIsAuthRoleUseCase = get(),
-            saveUnAuthRoleUseCase = get(),
-            initFavoriteWebSocketUseCase = get(),
-            getIsActiveFavoriteWebSocketUseCase = get(),
-            getMyFavoriteWebSocketFlowUseCase = get(),
-            updateFavoriteUseCase = get(),
-            getFoodListByCategoryIdUseCase = get(),
-        )
-    }
+    viewModelOf(::HomeViewModel)
 }
