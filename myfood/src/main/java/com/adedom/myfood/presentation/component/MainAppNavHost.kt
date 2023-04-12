@@ -16,30 +16,22 @@ import androidx.navigation.compose.navigation
 import androidx.navigation.compose.rememberNavController
 import com.adedom.authentication.presentation.component.LoginScreen
 import com.adedom.authentication.presentation.component.RegisterScreen
-import com.adedom.authentication.presentation.view_model.LoginViewModel
-import com.adedom.authentication.presentation.view_model.RegisterViewModel
 import com.adedom.connectivity.presentation.component.ConnectivityScreen
 import com.adedom.food_detail.presentation.component.FoodDetailScreen
-import com.adedom.food_detail.presentation.view_model.FoodDetailViewModel
 import com.adedom.main.presentation.component.MainScreen
-import com.adedom.main.presentation.view_model.HomeViewModel
 import com.adedom.search_food.presentation.component.SearchFoodScreen
-import com.adedom.search_food.presentation.view_model.SearchFoodViewModel
 import com.adedom.splash_screen.presentation.component.SplashScreen
-import com.adedom.splash_screen.presentation.view_model.SplashScreenViewModel
 import com.adedom.ui_components.theme.MyFoodTheme
 import com.adedom.user_profile.presentation.component.UserProfileScreen
-import com.adedom.user_profile.presentation.view_model.UserProfileViewModel
 import com.adedom.welcome.presentation.component.WelcomeScreen
-import com.adedom.welcome.presentation.view_model.WelcomeViewModel
-import org.koin.androidx.compose.getViewModel
+import org.koin.androidx.compose.koinViewModel
 
 @ExperimentalMaterialApi
 @ExperimentalComposeUiApi
 @Composable
 fun MyFood() {
     MyFoodTheme {
-        ConnectivityScreen(getViewModel())
+        ConnectivityScreen(koinViewModel())
         MainAppNavHost()
     }
 }
@@ -58,9 +50,8 @@ fun MainAppNavHost(
         startDestination = startDestination,
     ) {
         composable(Screen.SplashScreen.route) {
-            val viewModel: SplashScreenViewModel = getViewModel()
             SplashScreen(
-                viewModel = viewModel,
+                viewModel = koinViewModel(),
                 openMainPage = {
                     navController.navigate(Screen.Main.route) {
                         popUpTo(Screen.SplashScreen.route) {
@@ -88,9 +79,8 @@ fun NavGraphBuilder.authGraph(navController: NavController) {
         route = Screen.Welcome.route,
     ) {
         composable(Screen.Welcome.Init.route) {
-            val viewModel: WelcomeViewModel = getViewModel()
             WelcomeScreen(
-                viewModel = viewModel,
+                viewModel = koinViewModel(),
                 openLoginPage = {
                     navController.navigate(Screen.Welcome.Login.route)
                 },
@@ -107,9 +97,8 @@ fun NavGraphBuilder.authGraph(navController: NavController) {
             )
         }
         composable(Screen.Welcome.Login.route) {
-            val viewModel: LoginViewModel = getViewModel()
             LoginScreen(
-                viewModel = viewModel,
+                viewModel = koinViewModel(),
                 openMainPage = {
                     navController.navigate(Screen.Main.route) {
                         popUpTo(Screen.Welcome.route) {
@@ -124,9 +113,8 @@ fun NavGraphBuilder.authGraph(navController: NavController) {
             )
         }
         composable(Screen.Welcome.Register.route) {
-            val viewModel: RegisterViewModel = getViewModel()
             RegisterScreen(
-                viewModel = viewModel,
+                viewModel = koinViewModel(),
                 openLoginPage = {
                     navController.popBackStack()
                     navController.navigate(Screen.Welcome.Login.route)
@@ -152,9 +140,8 @@ fun NavGraphBuilder.mainGraph(navController: NavController) {
     ) {
         composable(Screen.Main.Init.route) {
             val context = LocalContext.current
-            val viewModel: HomeViewModel = getViewModel()
             MainScreen(
-                viewModel = viewModel,
+                viewModel = koinViewModel(),
                 onLogoutClick = {
                     navController.navigate(Screen.Welcome.route) {
                         popUpTo(Screen.Main.route) {
@@ -184,9 +171,8 @@ fun NavGraphBuilder.mainGraph(navController: NavController) {
             )
         }
         composable(Screen.Main.UserProfile.route) {
-            val viewModel: UserProfileViewModel = getViewModel()
             UserProfileScreen(
-                viewModel = viewModel,
+                viewModel = koinViewModel(),
                 onBackPressed = {
                     navController.popBackStack()
                 },
@@ -200,9 +186,8 @@ fun NavGraphBuilder.mainGraph(navController: NavController) {
             )
         }
         composable(Screen.Main.SearchFood.route) {
-            val viewModel: SearchFoodViewModel = getViewModel()
             SearchFoodScreen(
-                viewModel = viewModel,
+                viewModel = koinViewModel(),
                 openFoodDetailPage = { foodId ->
                     val route = Screen.Main.FoodDetail.arguments(foodId)
                     navController.navigate(route)
@@ -216,10 +201,9 @@ fun NavGraphBuilder.mainGraph(navController: NavController) {
             route = Screen.Main.FoodDetail.route,
             arguments = Screen.Main.FoodDetail.arguments,
         ) { backStackEntry ->
-            val viewModel: FoodDetailViewModel = getViewModel()
             val foodId = backStackEntry.arguments?.getInt(Screen.Main.FOOD_ID)
             FoodDetailScreen(
-                viewModel = viewModel,
+                viewModel = koinViewModel(),
                 foodId = foodId,
                 onBackPressed = {
                     navController.popBackStack()
