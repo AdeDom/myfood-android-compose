@@ -4,7 +4,6 @@ import com.adedom.profile.providers.local.UserProfileLocalDataSource
 import com.adedom.profile.providers.remote.ProfileRemoteDataSource
 import com.myfood.server.data.models.response.UserProfileResponse
 import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.withContext
@@ -13,7 +12,7 @@ import myfood.database.UserProfileEntity
 class UserProfileRepositoryImpl(
     private val userProfileLocalDataSource: UserProfileLocalDataSource,
     private val profileRemoteDataSource: ProfileRemoteDataSource,
-    private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO,
+    private val ioDispatcher: CoroutineDispatcher
 ) : UserProfileRepository {
 
     override suspend fun callUserProfile(): UserProfileResponse? {

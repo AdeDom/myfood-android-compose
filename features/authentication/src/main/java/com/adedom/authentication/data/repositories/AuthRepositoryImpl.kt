@@ -8,13 +8,12 @@ import com.myfood.server.data.models.request.LoginRequest
 import com.myfood.server.data.models.request.RegisterRequest
 import com.myfood.server.data.models.response.TokenResponse
 import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
 class AuthRepositoryImpl(
     private val appDataStore: AppDataStore,
     private val authRemoteDataSource: AuthRemoteDataSource,
-    private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO,
+    private val ioDispatcher: CoroutineDispatcher
 ) : AuthRepository {
 
     override suspend fun callLogin(loginRequest: LoginRequest): TokenResponse? {

@@ -5,13 +5,12 @@ import com.adedom.core.utils.AuthRole
 import com.adedom.main.data.providers.remote.auth.AuthRemoteDataSource
 import com.adedom.main.domain.repositories.AuthLogoutRepository
 import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
 class AuthLogoutRepositoryImpl(
     private val appDataStore: AppDataStore,
     private val authRemoteDataSource: AuthRemoteDataSource,
-    private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO,
+    private val ioDispatcher: CoroutineDispatcher
 ) : AuthLogoutRepository {
 
     override suspend fun callLogout() {

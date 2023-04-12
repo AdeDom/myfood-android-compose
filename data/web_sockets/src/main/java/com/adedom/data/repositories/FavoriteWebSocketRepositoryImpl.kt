@@ -3,14 +3,13 @@ package com.adedom.data.repositories
 import com.adedom.data.models.MyFavoriteResponse
 import com.adedom.data.providers.web_sockets.FavoriteWebSocketDataSource
 import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.withContext
 
 class FavoriteWebSocketRepositoryImpl(
     private val favoriteWebSocketDataSource: FavoriteWebSocketDataSource,
-    private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO,
+    private val ioDispatcher: CoroutineDispatcher
 ) : FavoriteWebSocketRepository {
 
     override suspend fun init(): Unit? {

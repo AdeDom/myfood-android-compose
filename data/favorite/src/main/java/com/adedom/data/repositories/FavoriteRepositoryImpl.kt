@@ -4,7 +4,6 @@ import com.adedom.data.providers.local.FavoriteLocalDataSource
 import com.adedom.data.providers.remote.FavoriteRemoteDataSource
 import com.myfood.server.data.models.response.FavoriteResponse
 import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.withContext
@@ -13,7 +12,7 @@ import myfood.database.FavoriteEntity
 class FavoriteRepositoryImpl(
     private val favoriteLocalDataSource: FavoriteLocalDataSource,
     private val favoriteRemoteDataSource: FavoriteRemoteDataSource,
-    private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO,
+    private val ioDispatcher: CoroutineDispatcher
 ) : FavoriteRepository {
 
     override suspend fun callFavoriteAll(): List<FavoriteResponse>? {

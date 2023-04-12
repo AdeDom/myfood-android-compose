@@ -4,12 +4,11 @@ import com.adedom.core.data.providers.data_store.AppDataStore
 import com.adedom.core.utils.AuthRole
 import com.adedom.splash_screen.domain.repositories.SplashScreenRepository
 import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
 class SplashScreenRepositoryImpl(
     private val appDataStore: AppDataStore,
-    private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO,
+    private val ioDispatcher: CoroutineDispatcher
 ) : SplashScreenRepository {
 
     override suspend fun getAuthRole(): AuthRole {
