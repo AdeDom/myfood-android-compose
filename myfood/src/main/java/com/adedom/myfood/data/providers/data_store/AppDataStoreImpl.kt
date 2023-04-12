@@ -13,9 +13,9 @@ class AppDataStoreImpl(
     private val dataStoreFile: DataStore<Preferences>,
 ) : AppDataStore {
 
-    private val accessToken = stringPreferencesKey("accessToken")
-    private val refreshToken = stringPreferencesKey("refreshToken")
-    private val authRole = intPreferencesKey("authRole")
+    private val accessToken = stringPreferencesKey(accessTokenKey)
+    private val refreshToken = stringPreferencesKey(refreshTokenKey)
+    private val authRole = intPreferencesKey(authRoleKey)
 
     override suspend fun setAccessToken(accessToken: String) {
         dataStoreFile.edit { preferences ->

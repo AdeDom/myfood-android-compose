@@ -14,7 +14,7 @@ val myFoodModule = module {
 
     single {
         PreferenceDataStoreFactory.create {
-            get<Context>().preferencesDataStoreFile("file")
+            get<Context>().preferencesDataStoreFile(AppDataStore.fileName)
         }
     }
     singleOf(::AppDataStoreImpl) { bind<AppDataStore>() }

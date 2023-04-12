@@ -103,5 +103,8 @@ dependencies {
     implementation(Dependencies.Ktor.serializationKotlinxJson)
     implementation(Dependencies.Ktor.clientAuth)
 
+    implementation(kotlin(Dependencies.Touchlab.stdlibCommon))
+    implementation(Dependencies.Touchlab.kermit)
+
     implementation(Dependencies.AdeDom.myFoodKtorServer)
 }
