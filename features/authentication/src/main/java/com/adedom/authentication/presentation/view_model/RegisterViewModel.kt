@@ -43,23 +43,25 @@ class RegisterViewModel(
     private val _nav = Channel<Unit>()
     val nav: Flow<Unit> = _nav.receiveAsFlow()
 
-    override fun dispatch(event: RegisterUiEvent) {
+    override fun onEvent(event: RegisterUiEvent) {
         launch {
             when (event) {
                 is RegisterUiEvent.SetName -> {
-                    setState { copy(name = event.value) }
+                    emit { copy(name = event.value) }
                 }
+
                 is RegisterUiEvent.SetEmail -> {
-                    setState { copy(email = event.value) }
+                    emit { copy(email = event.value) }
                 }
+
                 is RegisterUiEvent.SetPassword -> {
-                    setState { copy(password = event.value) }
+                    emit { copy(password = event.value) }
                 }
                 is RegisterUiEvent.SetConfirmPassword -> {
-                    setState { copy(confirmPassword = event.value) }
+                    emit { copy(confirmPassword = event.value) }
                 }
                 RegisterUiEvent.Submit -> {
-                    setState {
+                    emit {
                         copy(dialog = RegisterUiState.Dialog.Loading)
                     }
 
@@ -75,17 +77,17 @@ class RegisterViewModel(
                         favoriteUseCase()
                         _nav.send(Unit)
                     } catch (exception: ApiServiceException) {
-                        setState {
+                        emit {
                             copy(dialog = RegisterUiState.Dialog.Error(exception.toBaseError()))
                         }
                     } catch (exception: Throwable) {
-                        setState {
+                        emit {
                             copy(dialog = RegisterUiState.Dialog.Error(exception.toBaseError()))
                         }
                     }
                 }
                 RegisterUiEvent.HideErrorDialog -> {
-                    setState { copy(dialog = null) }
+                    emit { copy(dialog = null) }
                 }
             }
         }

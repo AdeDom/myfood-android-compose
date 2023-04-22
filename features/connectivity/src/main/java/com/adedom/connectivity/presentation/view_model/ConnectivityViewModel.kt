@@ -24,21 +24,21 @@ class ConnectivityViewModel(
     init {
         getConnectivityStatusUseCase()
             .onEach { status ->
-                setState { copy(status = status) }
+                emit { copy(status = status) }
             }
             .filter { it == Status.Available }
             .onEach {
                 delay(3_000)
-                dispatch(ConnectivityUiEvent.DismissRequest)
+                onEvent(ConnectivityUiEvent.DismissRequest)
             }
             .launchIn(this)
     }
 
-    override fun dispatch(event: ConnectivityUiEvent) {
+    override fun onEvent(event: ConnectivityUiEvent) {
         launch {
             when (event) {
                 ConnectivityUiEvent.DismissRequest -> {
-                    setState { copy(status = Status.Unknown) }
+                    emit { copy(status = Status.Unknown) }
                 }
             }
         }

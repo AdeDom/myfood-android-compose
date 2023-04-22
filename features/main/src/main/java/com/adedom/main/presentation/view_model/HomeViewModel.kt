@@ -2,9 +2,18 @@ package com.adedom.main.presentation.view_model
 
 import com.adedom.core.utils.ApiServiceException
 import com.adedom.core.utils.RefreshTokenExpiredException
-import com.adedom.domain.use_cases.*
+import com.adedom.domain.use_cases.GetFoodListByCategoryIdUseCase
+import com.adedom.domain.use_cases.GetIsActiveFavoriteWebSocketUseCase
+import com.adedom.domain.use_cases.GetMyFavoriteWebSocketFlowUseCase
+import com.adedom.domain.use_cases.InitFavoriteWebSocketUseCase
+import com.adedom.domain.use_cases.UpdateFavoriteUseCase
 import com.adedom.main.domain.models.CategoryModel
-import com.adedom.main.domain.use_cases.*
+import com.adedom.main.domain.use_cases.GetFoodListByCategoryIdPairUseCase
+import com.adedom.main.domain.use_cases.GetImageProfileUseCase
+import com.adedom.main.domain.use_cases.GetIsAuthRoleUseCase
+import com.adedom.main.domain.use_cases.HomeContentUseCase
+import com.adedom.main.domain.use_cases.LogoutUseCase
+import com.adedom.main.domain.use_cases.SaveUnAuthRoleUseCase
 import com.adedom.ui_components.base.BaseViewModel
 import com.adedom.ui_components.domain.models.FoodModel
 import com.myfood.server.data.models.base.BaseError
@@ -78,7 +87,7 @@ class HomeViewModel(
 
     private fun setupHome() {
         launch {
-            coState {
+            coEmit {
                 copy(
                     isExitAuth = getIsAuthRoleUseCase(),
                     imageProfile = getImageProfileUseCase(),
@@ -117,7 +126,7 @@ class HomeViewModel(
             val foodIdList = uiState.foods.map { it.foodId.toInt() }
             val isFoodIdUpdate = socket?.foodId in foodIdList
             if (isFoodIdUpdate) {
-                coState {
+                coEmit {
                     copy(
                         foods = getFoodListByCategoryIdUseCase(
                             uiState.categoryId ?: CATEGORY_RECOMMEND,
@@ -132,7 +141,7 @@ class HomeViewModel(
         dialog: HomeUiState.Dialog? = null,
         isRefreshing: Boolean = false,
     ) {
-        setState {
+        emit {
             copy(
                 dialog = dialog,
                 isRefreshing = isRefreshing,
@@ -144,7 +153,7 @@ class HomeViewModel(
             val (categoryName, foods) = getFoodListByCategoryIdPairUseCase(
                 categoryId = uiState.categoryId ?: CATEGORY_RECOMMEND,
             )
-            setState {
+            emit {
                 copy(
                     dialog = null,
                     isRefreshing = false,
@@ -155,7 +164,7 @@ class HomeViewModel(
                 )
             }
         } catch (exception: ApiServiceException) {
-            setState {
+            emit {
                 copy(
                     isRefreshing = false,
                     dialog = HomeUiState.Dialog.Error(exception.toBaseError()),
@@ -177,12 +186,12 @@ class HomeViewModel(
         }
     }
 
-    override fun dispatch(event: HomeUiEvent) {
+    override fun onEvent(event: HomeUiEvent) {
         launch {
             when (event) {
                 is HomeUiEvent.CategoryClick -> {
                     val (categoryName, foods) = getFoodListByCategoryIdPairUseCase(event.categoryId)
-                    setState {
+                    emit {
                         copy(
                             categoryId = event.categoryId,
                             categoryName = categoryName,
@@ -215,10 +224,10 @@ class HomeViewModel(
                     }
                 }
                 HomeUiEvent.Logout -> {
-                    setState { copy(dialog = HomeUiState.Dialog.Logout) }
+                    emit { copy(dialog = HomeUiState.Dialog.Logout) }
                 }
                 HomeUiEvent.HideDialog -> {
-                    setState { copy(dialog = null) }
+                    emit { copy(dialog = null) }
                 }
             }
         }

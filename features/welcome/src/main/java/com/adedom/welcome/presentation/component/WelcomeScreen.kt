@@ -18,7 +18,7 @@ fun WelcomeScreen(
     }
 
     WelcomeContent(
-        viewModel::dispatch,
+        viewModel::onEvent,
         openLoginPage,
         openRegisterPage,
     )

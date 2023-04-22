@@ -67,7 +67,7 @@ class LoginViewModelTest {
     fun `validate email on incorrect should be failed`() {
         val email = "dom"
 
-        viewModel.dispatch(LoginUiEvent.SetEmail(email))
+        viewModel.onEvent(LoginUiEvent.SetEmail(email))
 
         val result = viewModel.uiState
         assertThat(result.email).isEqualTo(email)
@@ -81,8 +81,8 @@ class LoginViewModelTest {
         val email = "dom6"
         val password = "1234"
 
-        viewModel.dispatch(LoginUiEvent.SetEmail(email))
-        viewModel.dispatch(LoginUiEvent.SetPassword(password))
+        viewModel.onEvent(LoginUiEvent.SetEmail(email))
+        viewModel.onEvent(LoginUiEvent.SetPassword(password))
 
         val result = viewModel.uiState
         assertThat(result.email).isEqualTo(email)
@@ -95,7 +95,7 @@ class LoginViewModelTest {
     fun `validate password on incorrect should be failed`() {
         val password = "dom"
 
-        viewModel.dispatch(LoginUiEvent.SetPassword(password))
+        viewModel.onEvent(LoginUiEvent.SetPassword(password))
 
         val result = viewModel.uiState
         assertThat(result.email).isEqualTo("")
@@ -109,8 +109,8 @@ class LoginViewModelTest {
         val email = "dom6"
         val password = "1234"
 
-        viewModel.dispatch(LoginUiEvent.SetEmail(email))
-        viewModel.dispatch(LoginUiEvent.SetPassword(password))
+        viewModel.onEvent(LoginUiEvent.SetEmail(email))
+        viewModel.onEvent(LoginUiEvent.SetPassword(password))
 
         val result = viewModel.uiState
         assertThat(result.email).isEqualTo(email)
@@ -129,9 +129,9 @@ class LoginViewModelTest {
         coEvery { fetchUserProfileUseCase() } returns Unit
         coEvery { favoriteUseCase() } returns Unit
 
-        viewModel.dispatch(LoginUiEvent.SetEmail(email))
-        viewModel.dispatch(LoginUiEvent.SetPassword(password))
-        viewModel.dispatch(LoginUiEvent.Submit)
+        viewModel.onEvent(LoginUiEvent.SetEmail(email))
+        viewModel.onEvent(LoginUiEvent.SetPassword(password))
+        viewModel.onEvent(LoginUiEvent.Submit)
 
         val state = viewModel.uiState
         assertThat(state.dialog).isEqualTo(LoginUiState.Dialog.Error(baseError))
@@ -151,9 +151,9 @@ class LoginViewModelTest {
         coEvery { fetchUserProfileUseCase() } returns Unit
         coEvery { favoriteUseCase() } returns Unit
 
-        viewModel.dispatch(LoginUiEvent.SetEmail(email))
-        viewModel.dispatch(LoginUiEvent.SetPassword(password))
-        viewModel.dispatch(LoginUiEvent.Submit)
+        viewModel.onEvent(LoginUiEvent.SetEmail(email))
+        viewModel.onEvent(LoginUiEvent.SetPassword(password))
+        viewModel.onEvent(LoginUiEvent.Submit)
 
         val state = viewModel.uiState
         val baseError = BaseError(message = messageError)
@@ -172,9 +172,9 @@ class LoginViewModelTest {
         coEvery { fetchUserProfileUseCase() } returns Unit
         coEvery { favoriteUseCase() } returns Unit
 
-        viewModel.dispatch(LoginUiEvent.SetEmail(email))
-        viewModel.dispatch(LoginUiEvent.SetPassword(password))
-        viewModel.dispatch(LoginUiEvent.Submit)
+        viewModel.onEvent(LoginUiEvent.SetEmail(email))
+        viewModel.onEvent(LoginUiEvent.SetPassword(password))
+        viewModel.onEvent(LoginUiEvent.Submit)
 
         val result = viewModel.nav.firstOrNull()
         assertThat(result).isEqualTo(Unit)
@@ -185,7 +185,7 @@ class LoginViewModelTest {
 
     @Test
     fun `set error null should be error return null`() {
-        viewModel.dispatch(LoginUiEvent.HideErrorDialog)
+        viewModel.onEvent(LoginUiEvent.HideErrorDialog)
 
         val result = viewModel.uiState
         assertThat(result.dialog).isNull()

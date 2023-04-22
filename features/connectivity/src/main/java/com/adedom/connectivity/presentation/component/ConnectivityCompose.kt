@@ -28,18 +28,18 @@ fun ConnectivityScreen(
 ) {
     ConnectivityContent(
         state = viewModel.uiState,
-        viewModel::dispatch,
+        viewModel::onEvent,
     )
 }
 
 @Composable
 fun ConnectivityContent(
     state: ConnectivityUiState,
-    dispatch: (ConnectivityUiEvent) -> Unit,
+    onEvent: (ConnectivityUiEvent) -> Unit,
 ) {
     when (state.status) {
         Status.Available -> {
-            OnlineNetworkPopup(dispatch)
+            OnlineNetworkPopup(onEvent)
         }
         Status.Unavailable -> {
             OfflineNetworkPopup()
@@ -56,10 +56,10 @@ fun ConnectivityContent(
 
 @Composable
 private fun OnlineNetworkPopup(
-    dispatch: (ConnectivityUiEvent) -> Unit,
+    onEvent: (ConnectivityUiEvent) -> Unit,
 ) {
     Popup(
-        onDismissRequest = { dispatch(ConnectivityUiEvent.DismissRequest) },
+        onDismissRequest = { onEvent(ConnectivityUiEvent.DismissRequest) },
     ) {
         Box(
             contentAlignment = Alignment.Center,
@@ -105,7 +105,7 @@ fun ConnectivityContentAvailablePreview() {
             state = ConnectivityUiState(
                 status = Status.Available,
             ),
-            dispatch = { event ->
+            onEvent = { event ->
                 when (event) {
                     ConnectivityUiEvent.DismissRequest -> {
                         Toast.makeText(context, "onDismissRequest", Toast.LENGTH_SHORT).show()
@@ -129,7 +129,7 @@ fun ConnectivityContentUnavailablePreview() {
             state = ConnectivityUiState(
                 status = Status.Unavailable,
             ),
-            dispatch = { event ->
+            onEvent = { event ->
                 when (event) {
                     ConnectivityUiEvent.DismissRequest -> {
                         Toast.makeText(context, "onDismissRequest", Toast.LENGTH_SHORT).show()

@@ -18,7 +18,7 @@ class WelcomeContentTest {
         composeTestRule.setContent {
             MyFoodTheme {
                 WelcomeContent(
-                    dispatch = {},
+                    onEvent = {},
                     openLoginPage = {},
                     openRegisterPage = {},
                 )

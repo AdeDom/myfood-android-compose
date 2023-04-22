@@ -20,7 +20,7 @@ class WelcomeViewModel(
     private val _nav = Channel<Unit>()
     val nav: Flow<Unit> = _nav.receiveAsFlow()
 
-    override fun dispatch(event: WelcomeUiEvent) {
+    override fun onEvent(event: WelcomeUiEvent) {
         launch {
             when (event) {
                 WelcomeUiEvent.NavSkip -> {

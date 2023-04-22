@@ -4,7 +4,17 @@ import android.widget.Toast
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
@@ -32,7 +42,15 @@ import androidx.compose.ui.unit.dp
 import com.adedom.main.domain.models.CategoryModel
 import com.adedom.main.presentation.view_model.HomeUiEvent
 import com.adedom.main.presentation.view_model.HomeUiState
-import com.adedom.ui_components.components.*
+import com.adedom.ui_components.components.AppEmptyData
+import com.adedom.ui_components.components.AppErrorAlertDialog
+import com.adedom.ui_components.components.AppIcon
+import com.adedom.ui_components.components.AppImage
+import com.adedom.ui_components.components.AppInteractAlertDialog
+import com.adedom.ui_components.components.AppLoadingLottieAnimation
+import com.adedom.ui_components.components.AppText
+import com.adedom.ui_components.components.AppTitleText
+import com.adedom.ui_components.components.FoodBoxItem
 import com.adedom.ui_components.domain.models.FoodModel
 import com.adedom.ui_components.theme.MyFoodTheme
 import com.adedom.ui_components.theme.RectangleLargeShape
@@ -46,7 +64,7 @@ fun HomePage(
     state: HomeUiState,
     onMenuClick: () -> Unit,
     onLogoutClick: () -> Unit,
-    dispatch: (HomeUiEvent) -> Unit,
+    onEvent: (HomeUiEvent) -> Unit,
     openFoodDetailPage: (Long) -> Unit,
     openSearchFoodPage: () -> Unit,
     openUserProfilePage: () -> Unit,
@@ -58,7 +76,7 @@ fun HomePage(
         is HomeUiState.Dialog.Error -> {
             AppErrorAlertDialog(
                 error = state.dialog.error,
-                onDismiss = { dispatch(HomeUiEvent.ErrorDismiss) },
+                onDismiss = { onEvent(HomeUiEvent.ErrorDismiss) },
             )
         }
         HomeUiState.Dialog.Logout -> {
@@ -66,7 +84,7 @@ fun HomePage(
                 title = stringResource(id = res.string.str_logout),
                 text = stringResource(id = res.string.str_logout_message),
                 confirmButton = onLogoutClick,
-                dismissButton = { dispatch(HomeUiEvent.HideDialog) },
+                dismissButton = { onEvent(HomeUiEvent.HideDialog) },
                 modifier = Modifier.wrapContentSize(),
             )
         }
@@ -75,7 +93,7 @@ fun HomePage(
                 modifier = modifier,
                 state = state,
                 onMenuClick = onMenuClick,
-                dispatch = dispatch,
+                onEvent = onEvent,
                 openFoodDetailPage = openFoodDetailPage,
                 openSearchFoodPage = openSearchFoodPage,
                 openUserProfilePage = openUserProfilePage,
@@ -90,14 +108,14 @@ private fun HomeContent(
     modifier: Modifier = Modifier,
     state: HomeUiState,
     onMenuClick: () -> Unit,
-    dispatch: (HomeUiEvent) -> Unit,
+    onEvent: (HomeUiEvent) -> Unit,
     openFoodDetailPage: (Long) -> Unit,
     openSearchFoodPage: () -> Unit,
     openUserProfilePage: () -> Unit,
 ) {
     val pullRefreshState = rememberPullRefreshState(
         state.isRefreshing,
-        { dispatch(HomeUiEvent.Refreshing) }
+        { onEvent(HomeUiEvent.Refreshing) }
     )
 
     Box(modifier = modifier.pullRefresh(pullRefreshState)) {
@@ -106,7 +124,7 @@ private fun HomeContent(
             onMenuClick,
             state,
             openUserProfilePage,
-            dispatch,
+            onEvent,
             openFoodDetailPage
         )
 
@@ -124,7 +142,7 @@ private fun HomeContentDetail(
     onMenuClick: () -> Unit,
     state: HomeUiState,
     openUserProfilePage: () -> Unit,
-    dispatch: (HomeUiEvent) -> Unit,
+    onEvent: (HomeUiEvent) -> Unit,
     openFoodDetailPage: (Long) -> Unit
 ) {
     LazyColumn(modifier = Modifier.fillMaxSize()) {
@@ -181,7 +199,7 @@ private fun HomeContentDetail(
                     CategoryBoxItem(
                         categoryId = state.categoryId,
                         category = category,
-                        onClick = { dispatch(HomeUiEvent.CategoryClick(category.categoryId)) },
+                        onClick = { onEvent(HomeUiEvent.CategoryClick(category.categoryId)) },
                     )
                 }
             }
@@ -377,7 +395,7 @@ fun HomePagePreview() {
                 imageProfile = "",
             ),
             onMenuClick = {},
-            dispatch = { event ->
+            onEvent = { event ->
                 when (event) {
                     is HomeUiEvent.CategoryClick -> {
                         Toast.makeText(
@@ -386,6 +404,7 @@ fun HomePagePreview() {
                             Toast.LENGTH_SHORT
                         ).show()
                     }
+
                     HomeUiEvent.ErrorDismiss -> {
                         Toast.makeText(context, "ErrorDismiss", Toast.LENGTH_SHORT).show()
                     }

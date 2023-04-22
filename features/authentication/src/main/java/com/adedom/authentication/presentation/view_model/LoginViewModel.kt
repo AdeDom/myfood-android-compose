@@ -46,13 +46,13 @@ class LoginViewModel(
     private val _nav = Channel<Unit>()
     val nav: Flow<Unit> = _nav.receiveAsFlow()
 
-    override fun dispatch(event: LoginUiEvent) {
+    override fun onEvent(event: LoginUiEvent) {
         launch {
             when (event) {
                 is LoginUiEvent.SetEmail -> {
                     val isValidateEmail = validateEmailUseCase(email = event.value)
                     val isValidatePassword = validatePasswordUseCase(uiState.password)
-                    setState {
+                    emit {
                         copy(
                             email = event.value,
                             isErrorEmail = !isValidateEmail,
@@ -63,7 +63,7 @@ class LoginViewModel(
                 is LoginUiEvent.SetPassword -> {
                     val isValidateEmail = validateEmailUseCase(uiState.email)
                     val isValidatePassword = validatePasswordUseCase(event.value)
-                    setState {
+                    emit {
                         copy(
                             password = event.value,
                             isErrorPassword = !isValidatePassword,
@@ -72,7 +72,7 @@ class LoginViewModel(
                     }
                 }
                 LoginUiEvent.Submit -> {
-                    setState {
+                    emit {
                         copy(
                             isLogin = false,
                             dialog = LoginUiState.Dialog.Loading,
@@ -85,14 +85,14 @@ class LoginViewModel(
                         favoriteUseCase()
                         _nav.send(Unit)
                     } catch (exception: ApiServiceException) {
-                        setState {
+                        emit {
                             copy(
                                 isLogin = true,
                                 dialog = LoginUiState.Dialog.Error(exception.toBaseError()),
                             )
                         }
                     } catch (exception: Throwable) {
-                        setState {
+                        emit {
                             copy(
                                 isLogin = true,
                                 dialog = LoginUiState.Dialog.Error(exception.toBaseError()),
@@ -101,7 +101,7 @@ class LoginViewModel(
                     }
                 }
                 LoginUiEvent.HideErrorDialog -> {
-                    setState { copy(dialog = null) }
+                    emit { copy(dialog = null) }
                 }
             }
         }

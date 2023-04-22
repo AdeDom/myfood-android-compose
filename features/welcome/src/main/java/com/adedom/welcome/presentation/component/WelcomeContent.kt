@@ -15,7 +15,7 @@ import com.adedom.welcome.presentation.view_model.WelcomeUiEvent
 
 @Composable
 fun WelcomeContent(
-    dispatch: (WelcomeUiEvent) -> Unit,
+    onEvent: (WelcomeUiEvent) -> Unit,
     openLoginPage: () -> Unit,
     openRegisterPage: () -> Unit,
 ) {
@@ -27,7 +27,7 @@ fun WelcomeContent(
         WelcomeBottomSection(
             openLoginPage = openLoginPage,
             openRegisterPage = openRegisterPage,
-            openHomePage = { dispatch(WelcomeUiEvent.NavSkip) },
+            openHomePage = { onEvent(WelcomeUiEvent.NavSkip) },
             modifier = Modifier.semantics { contentDescription = "Welcome bottom section" },
         )
     }
@@ -42,7 +42,7 @@ fun WelcomeContent(
 fun WelcomeContentPreview() {
     MyFoodTheme {
         WelcomeContent(
-            dispatch = {},
+            onEvent = {},
             openLoginPage = {},
             openRegisterPage = {},
         )

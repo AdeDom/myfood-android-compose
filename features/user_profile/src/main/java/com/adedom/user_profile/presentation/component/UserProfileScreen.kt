@@ -1,7 +1,16 @@
 package com.adedom.user_profile.presentation.component
 
 import android.widget.Toast
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.Card
 import androidx.compose.runtime.Composable
@@ -13,7 +22,12 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.adedom.ui_components.components.*
+import com.adedom.ui_components.components.AnimatedBrushBox
+import com.adedom.ui_components.components.AppColorButton
+import com.adedom.ui_components.components.AppErrorAlertDialog
+import com.adedom.ui_components.components.AppIcon
+import com.adedom.ui_components.components.AppImage
+import com.adedom.ui_components.components.AppText
 import com.adedom.ui_components.theme.MyFoodTheme
 import com.adedom.ui_components.theme.RectangleMediumShape
 import com.adedom.user_profile.R
@@ -31,7 +45,7 @@ fun UserProfileScreen(
 ) {
     UserProfileContent(
         viewModel.uiState,
-        viewModel::dispatch,
+        viewModel::onEvent,
         onBackPressed,
         refreshTokenExpired,
     )
@@ -40,7 +54,7 @@ fun UserProfileScreen(
 @Composable
 fun UserProfileContent(
     state: UserProfileUiState,
-    dispatch: (UserProfileUiEvent) -> Unit,
+    onEvent: (UserProfileUiEvent) -> Unit,
     onBackPressed: () -> Unit,
     refreshTokenExpired: () -> Unit,
 ) {
@@ -125,7 +139,7 @@ fun UserProfileContent(
             is UserProfileUiState.Dialog.Error -> {
                 AppErrorAlertDialog(
                     error = state.dialog.error,
-                    onDismiss = { dispatch(UserProfileUiEvent.DismissErrorDialog) },
+                    onDismiss = { onEvent(UserProfileUiEvent.DismissErrorDialog) },
                 )
             }
             is UserProfileUiState.Dialog.RefreshTokenExpired -> {
@@ -162,7 +176,7 @@ fun UserProfileContentPreview() {
 //                dialog = UserProfileUiState.Dialog.Error(BaseError()),
 //                dialog = UserProfileUiState.Dialog.RefreshTokenExpired(BaseError()),
             ),
-            dispatch = { event ->
+            onEvent = { event ->
                 when (event) {
                     UserProfileUiEvent.DismissErrorDialog -> {
                         Toast.makeText(context, "DismissErrorDialog", Toast.LENGTH_SHORT).show()

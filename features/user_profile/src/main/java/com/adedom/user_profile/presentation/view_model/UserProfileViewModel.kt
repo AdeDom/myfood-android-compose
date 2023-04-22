@@ -38,7 +38,7 @@ class UserProfileViewModel(
     private fun initUserProfile() {
         getUserProfileUseCase()
             .onEach { userProfile ->
-                setState { copy(userProfile = userProfile) }
+                emit { copy(userProfile = userProfile) }
             }
             .launchIn(this)
     }
@@ -48,7 +48,7 @@ class UserProfileViewModel(
             try {
                 fetchUserProfileUseCase()
             } catch (exception: ApiServiceException) {
-                setState {
+                emit {
                     copy(
                         dialog = UserProfileUiState.Dialog.Error(
                             exception.toBaseError(),
@@ -56,7 +56,7 @@ class UserProfileViewModel(
                     )
                 }
             } catch (exception: RefreshTokenExpiredException) {
-                setState {
+                emit {
                     copy(
                         dialog = UserProfileUiState.Dialog.RefreshTokenExpired(
                             exception.toBaseError(),
@@ -67,11 +67,11 @@ class UserProfileViewModel(
         }
     }
 
-    override fun dispatch(event: UserProfileUiEvent) {
+    override fun onEvent(event: UserProfileUiEvent) {
         launch {
             when (event) {
                 UserProfileUiEvent.DismissErrorDialog -> {
-                    setState { copy(dialog = null) }
+                    emit { copy(dialog = null) }
                 }
             }
         }

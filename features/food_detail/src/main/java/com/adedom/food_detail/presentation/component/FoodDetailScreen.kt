@@ -1,9 +1,23 @@
 package com.adedom.food_detail.presentation.component
 
 import androidx.compose.animation.animateColor
-import androidx.compose.animation.core.*
+import androidx.compose.animation.core.LinearEasing
+import androidx.compose.animation.core.RepeatMode
+import androidx.compose.animation.core.infiniteRepeatable
+import androidx.compose.animation.core.rememberInfiniteTransition
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.offset
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -28,7 +42,12 @@ import com.adedom.food_detail.domain.models.FoodDetailModel
 import com.adedom.food_detail.presentation.view_model.FoodDetailUiEvent
 import com.adedom.food_detail.presentation.view_model.FoodDetailUiState
 import com.adedom.food_detail.presentation.view_model.FoodDetailViewModel
-import com.adedom.ui_components.components.*
+import com.adedom.ui_components.components.AppErrorAlertDialog
+import com.adedom.ui_components.components.AppIcon
+import com.adedom.ui_components.components.AppImage
+import com.adedom.ui_components.components.AppLoadingLottieAnimation
+import com.adedom.ui_components.components.AppText
+import com.adedom.ui_components.components.AppTitleText
 import com.adedom.ui_components.theme.AppColor
 import com.adedom.ui_components.theme.MyFoodTheme
 import com.adedom.ui_components.R as res
@@ -46,7 +65,7 @@ fun FoodDetailScreen(
 
     FoodDetailContent(
         state = viewModel.uiState,
-        viewModel::dispatch,
+        viewModel::onEvent,
         onBackPressed,
         foodId,
     )
@@ -55,7 +74,7 @@ fun FoodDetailScreen(
 @Composable
 fun FoodDetailContent(
     state: FoodDetailUiState,
-    dispatch: (FoodDetailUiEvent) -> Unit,
+    onEvent: (FoodDetailUiEvent) -> Unit,
     onBackPressed: () -> Unit,
     foodId: Int?,
 ) {
@@ -183,7 +202,7 @@ fun FoodDetailContent(
                                             y = 16.dp,
                                         )
                                         .clip(CircleShape)
-                                        .clickable { dispatch(FoodDetailUiEvent.MyFavorite(foodId)) },
+                                        .clickable { onEvent(FoodDetailUiEvent.MyFavorite(foodId)) },
                                 )
                             }
                         }
@@ -215,7 +234,7 @@ fun FoodDetailContentPreview() {
                     isFavoriteState = true,
                 ),
             ),
-            dispatch = {},
+            onEvent = {},
             onBackPressed = {},
             foodId = 0,
         )

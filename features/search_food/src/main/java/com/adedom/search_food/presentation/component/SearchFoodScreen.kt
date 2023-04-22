@@ -1,7 +1,12 @@
 package com.adedom.search_food.presentation.component
 
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.TextField
@@ -48,13 +53,13 @@ fun SearchFoodScreen(
         if (viewModel.uiState.initial == null) {
             focusRequester.requestFocus()
             keyboardController?.show()
-            viewModel.dispatch(SearchFoodUiEvent.Initial)
+            viewModel.onEvent(SearchFoodUiEvent.Initial)
         }
     }
 
     SearchFoodContent(
         state = viewModel.uiState,
-        viewModel::dispatch,
+        viewModel::onEvent,
         focusRequester,
         openFoodDetailPage,
         onBackPressed,
@@ -64,7 +69,7 @@ fun SearchFoodScreen(
 @Composable
 fun SearchFoodContent(
     state: SearchFoodUiState,
-    dispatch: (SearchFoodUiEvent) -> Unit,
+    onEvent: (SearchFoodUiEvent) -> Unit,
     focusRequester: FocusRequester,
     openFoodDetailPage: (Long) -> Unit,
     onBackPressed: () -> Unit,
@@ -85,7 +90,7 @@ fun SearchFoodContent(
                 Spacer(modifier = Modifier.width(8.dp))
                 TextField(
                     value = state.search,
-                    onValueChange = { dispatch(SearchFoodUiEvent.SetSearch(it)) },
+                    onValueChange = { onEvent(SearchFoodUiEvent.SetSearch(it)) },
                     placeholder = { AppText(stringResource(id = res.string.str_search_food)) },
                     leadingIcon = {
                         AppIcon(
@@ -227,7 +232,7 @@ fun SearchFoodContentPreview() {
                     ),
                 ),
             ),
-            dispatch = {},
+            onEvent = {},
             focusRequester = FocusRequester(),
             openFoodDetailPage = {},
             onBackPressed = {},

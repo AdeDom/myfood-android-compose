@@ -1,8 +1,13 @@
 package com.adedom.connectivity.presentation.component
 
 import androidx.activity.ComponentActivity
-import androidx.compose.ui.test.*
+import androidx.compose.ui.test.assertIsDisplayed
+import androidx.compose.ui.test.assertIsNotDisplayed
+import androidx.compose.ui.test.isPopup
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
+import androidx.compose.ui.test.onNodeWithContentDescription
+import androidx.compose.ui.test.onNodeWithText
+import androidx.compose.ui.test.onRoot
 import com.adedom.connectivity.data.models.Status
 import com.adedom.connectivity.presentation.view_model.ConnectivityUiState
 import com.adedom.ui_components.theme.MyFoodTheme
@@ -23,7 +28,7 @@ class ConnectivityComposeTest {
                     state = ConnectivityUiState(
                         status = Status.Available,
                     ),
-                    dispatch = {},
+                    onEvent = {},
                 )
             }
         }
@@ -42,7 +47,7 @@ class ConnectivityComposeTest {
                     state = ConnectivityUiState(
                         status = Status.Unavailable,
                     ),
-                    dispatch = {},
+                    onEvent = {},
                 )
             }
         }
@@ -61,7 +66,7 @@ class ConnectivityComposeTest {
                     state = ConnectivityUiState(
                         status = Status.Losing,
                     ),
-                    dispatch = {},
+                    onEvent = {},
                 )
             }
         }
@@ -80,7 +85,7 @@ class ConnectivityComposeTest {
                     state = ConnectivityUiState(
                         status = Status.Lost,
                     ),
-                    dispatch = {},
+                    onEvent = {},
                 )
             }
         }
@@ -99,7 +104,7 @@ class ConnectivityComposeTest {
                     state = ConnectivityUiState(
                         status = Status.Unknown,
                     ),
-                    dispatch = {},
+                    onEvent = {},
                 )
             }
         }

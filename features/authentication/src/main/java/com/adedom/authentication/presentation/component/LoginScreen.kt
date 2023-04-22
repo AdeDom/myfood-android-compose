@@ -1,6 +1,13 @@
 package com.adedom.authentication.presentation.component
 
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
@@ -16,7 +23,14 @@ import androidx.compose.ui.unit.dp
 import com.adedom.authentication.presentation.view_model.LoginUiEvent
 import com.adedom.authentication.presentation.view_model.LoginUiState
 import com.adedom.authentication.presentation.view_model.LoginViewModel
-import com.adedom.ui_components.components.*
+import com.adedom.ui_components.components.AppColorButton
+import com.adedom.ui_components.components.AppConcatText
+import com.adedom.ui_components.components.AppErrorAlertDialog
+import com.adedom.ui_components.components.AppLoadingAlertDialog
+import com.adedom.ui_components.components.AppSubTitleText
+import com.adedom.ui_components.components.AppText
+import com.adedom.ui_components.components.AppTextField
+import com.adedom.ui_components.components.AppTitleText
 import com.adedom.ui_components.theme.MyFoodTheme
 import com.adedom.ui_components.R as res
 
@@ -34,7 +48,7 @@ fun LoginScreen(
 
     LoginContent(
         state = viewModel.uiState,
-        viewModel::dispatch,
+        viewModel::onEvent,
         openRegisterPage,
     )
 }
@@ -42,7 +56,7 @@ fun LoginScreen(
 @Composable
 fun LoginContent(
     state: LoginUiState,
-    dispatch: (LoginUiEvent) -> Unit,
+    onEvent: (LoginUiEvent) -> Unit,
     openRegisterPage: () -> Unit,
 ) {
     Box(
@@ -62,7 +76,7 @@ fun LoginContent(
             Spacer(modifier = Modifier.height(20.dp))
             AppTextField(
                 value = state.email,
-                onValueChange = { dispatch(LoginUiEvent.SetEmail(it)) },
+                onValueChange = { onEvent(LoginUiEvent.SetEmail(it)) },
                 hint = stringResource(id = res.string.str_your_email),
                 error = if (state.isErrorEmail) stringResource(id = res.string.str_email_is_incorrect) else null,
                 keyboardType = KeyboardType.Email,
@@ -70,7 +84,7 @@ fun LoginContent(
             )
             AppTextField(
                 value = state.password,
-                onValueChange = { dispatch(LoginUiEvent.SetPassword(it)) },
+                onValueChange = { onEvent(LoginUiEvent.SetPassword(it)) },
                 hint = stringResource(id = res.string.str_password),
                 error = if (state.isErrorPassword) stringResource(id = res.string.str_password_is_incorrect) else null,
                 keyboardType = KeyboardType.Password,
@@ -79,7 +93,7 @@ fun LoginContent(
             AppColorButton(
                 text = stringResource(id = res.string.str_login),
                 enabled = state.isLogin,
-                onClick = { dispatch(LoginUiEvent.Submit) },
+                onClick = { onEvent(LoginUiEvent.Submit) },
             )
             Spacer(modifier = Modifier.height(20.dp))
             AppText(
@@ -108,7 +122,7 @@ fun LoginContent(
             is LoginUiState.Dialog.Error -> {
                 AppErrorAlertDialog(
                     error = state.dialog.error,
-                    onDismiss = { dispatch(LoginUiEvent.HideErrorDialog) },
+                    onDismiss = { onEvent(LoginUiEvent.HideErrorDialog) },
                     modifier = Modifier.semantics { contentDescription = "Error dialog" },
                 )
             }
@@ -127,7 +141,7 @@ fun LoginContentPreview() {
     MyFoodTheme {
         LoginContent(
             state = LoginUiState(),
-            dispatch = {},
+            onEvent = {},
             openRegisterPage = {},
         )
     }

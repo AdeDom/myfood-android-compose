@@ -1,6 +1,13 @@
 package com.adedom.authentication.presentation.component
 
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
@@ -15,7 +22,13 @@ import androidx.compose.ui.unit.dp
 import com.adedom.authentication.presentation.view_model.RegisterUiEvent
 import com.adedom.authentication.presentation.view_model.RegisterUiState
 import com.adedom.authentication.presentation.view_model.RegisterViewModel
-import com.adedom.ui_components.components.*
+import com.adedom.ui_components.components.AppColorButton
+import com.adedom.ui_components.components.AppConcatText
+import com.adedom.ui_components.components.AppErrorAlertDialog
+import com.adedom.ui_components.components.AppLoadingAlertDialog
+import com.adedom.ui_components.components.AppSubTitleText
+import com.adedom.ui_components.components.AppTextField
+import com.adedom.ui_components.components.AppTitleText
 import com.adedom.ui_components.theme.MyFoodTheme
 import com.adedom.ui_components.R as res
 
@@ -33,7 +46,7 @@ fun RegisterScreen(
 
     RegisterContent(
         state = viewModel.uiState,
-        viewModel::dispatch,
+        viewModel::onEvent,
         openLoginPage,
     )
 }
@@ -41,7 +54,7 @@ fun RegisterScreen(
 @Composable
 fun RegisterContent(
     state: RegisterUiState,
-    dispatch: (RegisterUiEvent) -> Unit,
+    onEvent: (RegisterUiEvent) -> Unit,
     openLoginPage: () -> Unit,
 ) {
     Box(
@@ -61,33 +74,33 @@ fun RegisterContent(
             Spacer(modifier = Modifier.height(20.dp))
             AppTextField(
                 value = state.name,
-                onValueChange = { dispatch(RegisterUiEvent.SetName(it)) },
+                onValueChange = { onEvent(RegisterUiEvent.SetName(it)) },
                 hint = stringResource(id = res.string.str_name),
                 imeAction = ImeAction.Next,
             )
             AppTextField(
                 value = state.email,
-                onValueChange = { dispatch(RegisterUiEvent.SetEmail(it)) },
+                onValueChange = { onEvent(RegisterUiEvent.SetEmail(it)) },
                 hint = stringResource(id = res.string.str_email),
                 imeAction = ImeAction.Next,
             )
             AppTextField(
                 value = state.password,
-                onValueChange = { dispatch(RegisterUiEvent.SetPassword(it)) },
+                onValueChange = { onEvent(RegisterUiEvent.SetPassword(it)) },
                 hint = stringResource(id = res.string.str_password),
                 keyboardType = KeyboardType.Password,
                 imeAction = ImeAction.Next,
             )
             AppTextField(
                 value = state.confirmPassword,
-                onValueChange = { dispatch(RegisterUiEvent.SetConfirmPassword(it)) },
+                onValueChange = { onEvent(RegisterUiEvent.SetConfirmPassword(it)) },
                 hint = stringResource(id = res.string.str_confirm_password),
                 keyboardType = KeyboardType.Password,
                 imeAction = ImeAction.Next,
             )
             AppColorButton(
                 text = stringResource(id = res.string.str_sign_up),
-                onClick = { dispatch(RegisterUiEvent.Submit) },
+                onClick = { onEvent(RegisterUiEvent.Submit) },
             )
         }
 
@@ -111,7 +124,7 @@ fun RegisterContent(
             is RegisterUiState.Dialog.Error -> {
                 AppErrorAlertDialog(
                     error = state.dialog.error,
-                    onDismiss = { dispatch(RegisterUiEvent.HideErrorDialog) },
+                    onDismiss = { onEvent(RegisterUiEvent.HideErrorDialog) },
                     modifier = Modifier.semantics { contentDescription = "Error dialog" },
                 )
             }
@@ -130,7 +143,7 @@ fun RegisterContentPreview() {
     MyFoodTheme {
         RegisterContent(
             state = RegisterUiState(),
-            dispatch = {},
+            onEvent = {},
             openLoginPage = {},
         )
     }

@@ -50,7 +50,7 @@ class FoodDetailViewModel(
             while (true) {
                 if (getIsActiveFavoriteWebSocketUseCase()) {
                     getMyFavoriteWebSocketFlowUseCase().collect {
-                        setState {
+                        emit {
                             copy(
                                 foodDetail = foodDetail?.copy(favorite = it?.favorite ?: 0L)
                             )
@@ -65,7 +65,7 @@ class FoodDetailViewModel(
     fun observeFavoriteState(foodId: Int?) {
         getFavoriteFlowUseCase(foodId)
             .onEach {
-                setState {
+                emit {
                     copy(
                         foodDetail = foodDetail?.copy(isFavoriteState = it)
                     )
@@ -77,29 +77,29 @@ class FoodDetailViewModel(
     fun callFoodDetail(foodId: Int?) {
         launch {
             try {
-                setState {
+                emit {
                     copy(dialog = FoodDetailUiState.Dialog.Loading)
                 }
                 val foodDetailModel = getFoodDetailUseCase(foodId)
-                setState {
+                emit {
                     copy(
                         foodDetail = foodDetailModel,
                         dialog = null,
                     )
                 }
             } catch (exception: ApiServiceException) {
-                setState {
+                emit {
                     copy(dialog = FoodDetailUiState.Dialog.Error(exception.toBaseError()))
                 }
             } catch (exception: Throwable) {
-                setState {
+                emit {
                     copy(dialog = FoodDetailUiState.Dialog.Error(exception.toBaseError()))
                 }
             }
         }
     }
 
-    override fun dispatch(event: FoodDetailUiEvent) {
+    override fun onEvent(event: FoodDetailUiEvent) {
         when (event) {
             is FoodDetailUiEvent.MyFavorite -> {
                 launch {
@@ -109,12 +109,12 @@ class FoodDetailViewModel(
                             sendMyFavoriteWebSocketUseCase(event.foodId)
                             updateBackupFavoriteUseCase(favoriteId)
                         } else {
-                            setState {
+                            emit {
                                 copy(dialog = FoodDetailUiState.Dialog.Error(BaseError()))
                             }
                         }
                     } catch (exception: Throwable) {
-                        setState {
+                        emit {
                             copy(dialog = FoodDetailUiState.Dialog.Error(exception.toBaseError()))
                         }
                     }

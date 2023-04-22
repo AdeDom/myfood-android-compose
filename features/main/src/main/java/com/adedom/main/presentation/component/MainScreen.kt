@@ -2,7 +2,14 @@ package com.adedom.main.presentation.component
 
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Scaffold
 import androidx.compose.material.icons.Icons
@@ -58,14 +65,14 @@ fun MainScreen(
     MainContent(
         state = viewModel.uiState,
         onLogoutClick = viewModel::onLogoutEvent,
-        viewModel::dispatch,
+        viewModel::onEvent,
         openFoodDetailPage,
         openSearchFoodPage,
         openUserProfilePage,
         openInfoPage,
     )
 
-    BackHandler(onBack = { viewModel.dispatch(HomeUiEvent.BackHandler) })
+    BackHandler(onBack = { viewModel.onEvent(HomeUiEvent.BackHandler) })
 }
 
 @ExperimentalMaterialApi
@@ -73,7 +80,7 @@ fun MainScreen(
 fun MainContent(
     state: HomeUiState,
     onLogoutClick: () -> Unit,
-    dispatch: (HomeUiEvent) -> Unit,
+    onEvent: (HomeUiEvent) -> Unit,
     openFoodDetailPage: (Long) -> Unit,
     openSearchFoodPage: () -> Unit,
     openUserProfilePage: () -> Unit,
@@ -130,7 +137,7 @@ fun MainContent(
                             )
                         },
                         onClick = {
-                            dispatch(HomeUiEvent.Logout)
+                            onEvent(HomeUiEvent.Logout)
                             scope.launch {
                                 scaffoldState.drawerState.close()
                             }
@@ -145,7 +152,7 @@ fun MainContent(
                                 contentDescription = stringResource(id = res.string.cd_icon_logout),
                             )
                         },
-                        onClick = { dispatch(HomeUiEvent.NavLogout) },
+                        onClick = { onEvent(HomeUiEvent.NavLogout) },
                     )
                 }
             }
@@ -153,7 +160,7 @@ fun MainContent(
     ) {
         HomePage(
             state = state,
-            dispatch = dispatch,
+            onEvent = onEvent,
             onMenuClick = {
                 scope.launch {
                     scaffoldState.drawerState.open()
