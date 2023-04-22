@@ -21,7 +21,7 @@ abstract class BaseViewModel<Event, State>(
     }
 
     var uiState by mutableStateOf(initialUiState)
-        private set
+        protected set
 
     override val coroutineContext: CoroutineContext
         get() = job + Dispatchers.Main + exceptionHandler
