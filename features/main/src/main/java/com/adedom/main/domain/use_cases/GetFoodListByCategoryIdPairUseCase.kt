@@ -11,7 +11,7 @@ class GetFoodListByCategoryIdPairUseCase(
     private val foodRepository: FoodRepository,
 ) {
 
-    suspend operator fun invoke(categoryId: Long): Pair<String, List<FoodModel>> {
+    suspend operator fun invoke(categoryId: Long): Pair<String?, List<FoodModel>> {
         return coroutineScope {
             val categoryNameAsync = async {
                 homeCategoryRepository.getCategoryNameByCategoryId(categoryId)

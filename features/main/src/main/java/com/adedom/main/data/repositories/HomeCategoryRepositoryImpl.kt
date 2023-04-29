@@ -33,7 +33,7 @@ class HomeCategoryRepositoryImpl(
         }
     }
 
-    override suspend fun getCategoryNameByCategoryId(categoryId: Long): String {
+    override suspend fun getCategoryNameByCategoryId(categoryId: Long): String? {
         return withContext(ioDispatcher) {
             categoryLocalDataSource.getCategoryNameByCategoryId(categoryId)
         }

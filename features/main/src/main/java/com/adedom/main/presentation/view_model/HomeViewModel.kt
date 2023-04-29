@@ -31,7 +31,7 @@ data class HomeUiState(
     val imageProfile: String? = null,
     val categories: List<CategoryModel> = emptyList(),
     val categoryId: Long? = null,
-    val categoryName: String = "",
+    val categoryName: String? = null,
     val foods: List<FoodModel> = emptyList(),
     val isExitAuth: Boolean = false,
     val dialog: Dialog? = null,
