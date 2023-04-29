@@ -205,10 +205,12 @@ private fun HomeContentDetail(
             }
         }
 
-        item {
-            Row {
-                Spacer(modifier = Modifier.size(4.dp))
-                AppTitleText(text = state.categoryName)
+        state.categoryName?.let {
+            item {
+                Row {
+                    Spacer(modifier = Modifier.size(4.dp))
+                    AppTitleText(text = state.categoryName)
+                }
             }
         }
 

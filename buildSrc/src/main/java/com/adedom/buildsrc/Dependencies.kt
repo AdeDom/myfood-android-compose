@@ -20,8 +20,8 @@ object Flavors {
 
     object DevelopValueField {
         const val isDevelopMode = "true"
-        const val baseUrl = "\"http://192.168.220.110:8080/\""
-        const val host = "\"192.168.220.110:8080\""
+        const val baseUrl = "\"http://192.168.189.135:8080/\""
+        const val host = "\"192.168.189.135:8080\""
     }
 
     object ProductionValueField {
