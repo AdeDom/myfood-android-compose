@@ -1,11 +1,10 @@
-package com.adedom.myfood
+package com.adedom.myfood.presentation.component
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.ui.ExperimentalComposeUiApi
-import com.adedom.myfood.presentation.component.MyFood
 
 @ExperimentalMaterialApi
 @ExperimentalComposeUiApi

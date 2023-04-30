@@ -112,6 +112,7 @@ dependencies {
     implementation(project(Dependencies.Project.featuresWelcome))
 
     implementation(Dependencies.AndroidXCore.coreKtx)
+    implementation(Dependencies.AndroidXActivity.activityCompose)
     implementation(Dependencies.AndroidMaterial.material)
 
     implementation(Dependencies.Koin.koinAndroidxCompose)
