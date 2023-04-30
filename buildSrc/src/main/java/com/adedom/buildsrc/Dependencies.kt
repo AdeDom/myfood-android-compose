@@ -152,12 +152,6 @@ object Dependencies {
         const val showkaseProcessor = "com.airbnb.android:showkase-processor:$version"
     }
 
-    object Touchlab {
-        private const val version = "2.0.0-RC3"
-        const val stdlibCommon = "stdlib-common"
-        const val kermit = "co.touchlab:kermit:$version"
-    }
-
     object Junit {
         private const val version = "4.13.2"
         const val testJunit = "junit:junit:$version"

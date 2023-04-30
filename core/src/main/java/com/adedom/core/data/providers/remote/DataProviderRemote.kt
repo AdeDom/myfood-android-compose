@@ -1,6 +1,5 @@
 package com.adedom.core.data.providers.remote
 
-import co.touchlab.kermit.Logger
 import com.adedom.core.BuildConfig
 import com.adedom.core.data.providers.data_store.AppDataStore
 import com.adedom.core.utils.ApiServiceException
@@ -11,18 +10,27 @@ import com.myfood.server.data.models.base.BaseResponse
 import com.myfood.server.data.models.base.ErrorResponse
 import com.myfood.server.data.models.request.TokenRequest
 import com.myfood.server.data.models.response.TokenResponse
-import io.ktor.client.*
-import io.ktor.client.call.*
-import io.ktor.client.plugins.*
-import io.ktor.client.plugins.auth.*
-import io.ktor.client.plugins.auth.providers.*
-import io.ktor.client.plugins.contentnegotiation.*
-import io.ktor.client.plugins.logging.*
-import io.ktor.client.plugins.websocket.*
-import io.ktor.client.request.*
-import io.ktor.client.statement.*
-import io.ktor.http.*
-import io.ktor.serialization.kotlinx.json.*
+import io.ktor.client.HttpClient
+import io.ktor.client.call.body
+import io.ktor.client.plugins.ClientRequestException
+import io.ktor.client.plugins.HttpResponseValidator
+import io.ktor.client.plugins.HttpTimeout
+import io.ktor.client.plugins.auth.Auth
+import io.ktor.client.plugins.auth.providers.BearerTokens
+import io.ktor.client.plugins.auth.providers.bearer
+import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
+import io.ktor.client.plugins.logging.DEFAULT
+import io.ktor.client.plugins.logging.LogLevel
+import io.ktor.client.plugins.logging.Logger
+import io.ktor.client.plugins.logging.Logging
+import io.ktor.client.plugins.websocket.WebSockets
+import io.ktor.client.request.post
+import io.ktor.client.request.setBody
+import io.ktor.client.statement.bodyAsText
+import io.ktor.http.ContentType
+import io.ktor.http.HttpStatusCode
+import io.ktor.http.contentType
+import io.ktor.serialization.kotlinx.json.json
 import kotlinx.serialization.json.Json
 
 class DataProviderRemote(
@@ -47,7 +55,7 @@ class DataProviderRemote(
 
             if (BuildConfig.IS_DEVELOP_MODE) {
                 install(Logging) {
-                    logger = io.ktor.client.plugins.logging.Logger.DEFAULT
+                    logger = Logger.DEFAULT
                     level = LogLevel.HEADERS
                 }
             }
@@ -97,10 +105,6 @@ class DataProviderRemote(
             expectSuccess = true
             HttpResponseValidator {
                 handleResponseExceptionWithRequest { exception, _ ->
-                    if (BuildConfig.IS_DEVELOP_MODE) {
-                        val loggerTag = DataProviderRemote::class.simpleName.orEmpty()
-                        Logger.e(exception, loggerTag) { exception.message.orEmpty() }
-                    }
                     when (exception) {
                         is ClientRequestException -> {
                             val exceptionResponse = exception.response

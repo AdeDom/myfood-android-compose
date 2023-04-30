@@ -12,6 +12,7 @@ import com.myfood.server.data.models.base.BaseResponse
 import com.myfood.server.data.models.response.UserProfileResponse
 import io.mockk.coEvery
 import io.mockk.mockk
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.test.runTest
 import myfood.database.UserProfileEntity
 import org.junit.Before
@@ -30,6 +31,7 @@ class FetchUserProfileUseCaseTest {
         userProfileRepository = UserProfileRepositoryImpl(
             userProfileLocalDataSource,
             profileRemoteDataSource,
+            Dispatchers.IO
         )
         useCase = FetchUserProfileUseCase(userProfileRepository)
     }

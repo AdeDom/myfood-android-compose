@@ -14,6 +14,7 @@ import com.myfood.server.data.models.base.BaseResponse
 import com.myfood.server.data.models.response.TokenResponse
 import io.mockk.coEvery
 import io.mockk.mockk
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.test.runTest
 import org.junit.Before
 import org.junit.Test
@@ -31,6 +32,7 @@ class RegisterUseCaseTest {
         authRepository = AuthRepositoryImpl(
             appDataStore,
             authRemoteDataSource,
+            Dispatchers.IO
         )
         useCase = RegisterUseCase(
             authRepository,
