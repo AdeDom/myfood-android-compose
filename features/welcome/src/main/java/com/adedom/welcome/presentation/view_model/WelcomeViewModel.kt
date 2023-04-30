@@ -1,5 +1,6 @@
 package com.adedom.welcome.presentation.view_model
 
+import androidx.lifecycle.viewModelScope
 import com.adedom.ui_components.base.BaseViewModel
 import com.adedom.welcome.domain.use_cases.WelcomeGuestRoleUseCase
 import kotlinx.coroutines.channels.Channel
@@ -21,7 +22,7 @@ class WelcomeViewModel(
     val nav: Flow<Unit> = _nav.receiveAsFlow()
 
     override fun onEvent(event: WelcomeUiEvent) {
-        launch {
+        viewModelScope.launch {
             when (event) {
                 WelcomeUiEvent.NavSkip -> {
                     _nav.send(welcomeGuestRoleUseCase())

@@ -1,5 +1,6 @@
 package com.adedom.authentication.presentation.view_model
 
+import androidx.lifecycle.viewModelScope
 import com.adedom.authentication.domain.use_cases.FavoriteUseCase
 import com.adedom.authentication.domain.use_cases.RegisterUseCase
 import com.adedom.core.utils.ApiServiceException
@@ -44,7 +45,7 @@ class RegisterViewModel(
     val nav: Flow<Unit> = _nav.receiveAsFlow()
 
     override fun onEvent(event: RegisterUiEvent) {
-        launch {
+        viewModelScope.launch {
             when (event) {
                 is RegisterUiEvent.SetName -> {
                     emit { copy(name = event.value) }

@@ -1,5 +1,6 @@
 package com.adedom.user_profile.presentation.view_model
 
+import androidx.lifecycle.viewModelScope
 import com.adedom.core.utils.ApiServiceException
 import com.adedom.core.utils.RefreshTokenExpiredException
 import com.adedom.ui_components.base.BaseViewModel
@@ -40,11 +41,11 @@ class UserProfileViewModel(
             .onEach { userProfile ->
                 emit { copy(userProfile = userProfile) }
             }
-            .launchIn(this)
+            .launchIn(viewModelScope)
     }
 
     private fun callUserProfile() {
-        launch {
+        viewModelScope.launch {
             try {
                 fetchUserProfileUseCase()
             } catch (exception: ApiServiceException) {
@@ -68,7 +69,7 @@ class UserProfileViewModel(
     }
 
     override fun onEvent(event: UserProfileUiEvent) {
-        launch {
+        viewModelScope.launch {
             when (event) {
                 UserProfileUiEvent.DismissErrorDialog -> {
                     emit { copy(dialog = null) }

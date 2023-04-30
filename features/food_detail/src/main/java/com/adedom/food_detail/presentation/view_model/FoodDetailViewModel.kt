@@ -1,5 +1,6 @@
 package com.adedom.food_detail.presentation.view_model
 
+import androidx.lifecycle.viewModelScope
 import com.adedom.core.utils.ApiServiceException
 import com.adedom.core.utils.toBaseError
 import com.adedom.domain.use_cases.GetIsActiveFavoriteWebSocketUseCase
@@ -46,7 +47,7 @@ class FoodDetailViewModel(
     }
 
     private fun observeMyFavorite() {
-        launch {
+        viewModelScope.launch {
             while (true) {
                 if (getIsActiveFavoriteWebSocketUseCase()) {
                     getMyFavoriteWebSocketFlowUseCase().collect {
@@ -71,11 +72,11 @@ class FoodDetailViewModel(
                     )
                 }
             }
-            .launchIn(this)
+            .launchIn(viewModelScope)
     }
 
     fun callFoodDetail(foodId: Int?) {
-        launch {
+        viewModelScope.launch {
             try {
                 emit {
                     copy(dialog = FoodDetailUiState.Dialog.Loading)
@@ -100,9 +101,9 @@ class FoodDetailViewModel(
     }
 
     override fun onEvent(event: FoodDetailUiEvent) {
-        when (event) {
-            is FoodDetailUiEvent.MyFavorite -> {
-                launch {
+        viewModelScope.launch {
+            when (event) {
+                is FoodDetailUiEvent.MyFavorite -> {
                     try {
                         if (getIsActiveFavoriteWebSocketUseCase()) {
                             val favoriteId = insertOrReplaceFavoriteUseCase(event.foodId)

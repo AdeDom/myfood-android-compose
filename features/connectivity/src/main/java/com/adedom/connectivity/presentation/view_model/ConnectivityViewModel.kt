@@ -1,5 +1,6 @@
 package com.adedom.connectivity.presentation.view_model
 
+import androidx.lifecycle.viewModelScope
 import com.adedom.connectivity.data.models.Status
 import com.adedom.connectivity.domain.use_cases.GetConnectivityStatusUseCase
 import com.adedom.ui_components.base.BaseViewModel
@@ -31,11 +32,11 @@ class ConnectivityViewModel(
                 delay(3_000)
                 onEvent(ConnectivityUiEvent.DismissRequest)
             }
-            .launchIn(this)
+            .launchIn(viewModelScope)
     }
 
     override fun onEvent(event: ConnectivityUiEvent) {
-        launch {
+        viewModelScope.launch {
             when (event) {
                 ConnectivityUiEvent.DismissRequest -> {
                     emit { copy(status = Status.Unknown) }

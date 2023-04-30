@@ -1,5 +1,6 @@
 package com.adedom.authentication.presentation.view_model
 
+import androidx.lifecycle.viewModelScope
 import com.adedom.authentication.domain.use_cases.FavoriteUseCase
 import com.adedom.authentication.domain.use_cases.LoginUseCase
 import com.adedom.core.utils.ApiServiceException
@@ -47,7 +48,7 @@ class LoginViewModel(
     val nav: Flow<Unit> = _nav.receiveAsFlow()
 
     override fun onEvent(event: LoginUiEvent) {
-        launch {
+        viewModelScope.launch {
             when (event) {
                 is LoginUiEvent.SetEmail -> {
                     val isValidateEmail = validateEmailUseCase(email = event.value)

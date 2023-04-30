@@ -1,5 +1,6 @@
 package com.adedom.main.presentation.view_model
 
+import androidx.lifecycle.viewModelScope
 import com.adedom.core.utils.ApiServiceException
 import com.adedom.core.utils.RefreshTokenExpiredException
 import com.adedom.domain.use_cases.GetFoodListByCategoryIdUseCase
@@ -86,19 +87,17 @@ class HomeViewModel(
     }
 
     private fun setupHome() {
-        launch {
-            coEmit {
-                copy(
-                    isExitAuth = getIsAuthRoleUseCase(),
-                    imageProfile = getImageProfileUseCase(),
-                )
-            }
+        viewModelScope.launch {
+            uiState = uiState.copy(
+                isExitAuth = getIsAuthRoleUseCase(),
+                imageProfile = getImageProfileUseCase(),
+            )
             callHomeContent(dialog = HomeUiState.Dialog.Loading)
         }
     }
 
     private fun setupMyFavorite() {
-        launch {
+        viewModelScope.launch {
             while (true) {
                 if (!getIsActiveFavoriteWebSocketUseCase()) {
                     initFavoriteWebSocketUseCase()
@@ -109,7 +108,7 @@ class HomeViewModel(
     }
 
     private fun observeMyFavorite() {
-        launch {
+        viewModelScope.launch {
             while (true) {
                 if (getIsActiveFavoriteWebSocketUseCase()) {
                     getMyFavoriteWebSocketFlowUseCase().collect(::updateFoodSocket)
@@ -120,19 +119,17 @@ class HomeViewModel(
     }
 
     private fun updateFoodSocket(socket: FavoriteWebSocketsResponse?) {
-        launch {
+        viewModelScope.launch {
             updateFavoriteUseCase(socket)
 
             val foodIdList = uiState.foods.map { it.foodId.toInt() }
             val isFoodIdUpdate = socket?.foodId in foodIdList
             if (isFoodIdUpdate) {
-                coEmit {
-                    copy(
-                        foods = getFoodListByCategoryIdUseCase(
-                            uiState.categoryId ?: CATEGORY_RECOMMEND,
-                        )
+                uiState = uiState.copy(
+                    foods = getFoodListByCategoryIdUseCase(
+                        uiState.categoryId ?: CATEGORY_RECOMMEND,
                     )
-                }
+                )
             }
         }
     }
@@ -187,7 +184,7 @@ class HomeViewModel(
     }
 
     override fun onEvent(event: HomeUiEvent) {
-        launch {
+        viewModelScope.launch {
             when (event) {
                 is HomeUiEvent.CategoryClick -> {
                     val (categoryName, foods) = getFoodListByCategoryIdPairUseCase(event.categoryId)

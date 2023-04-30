@@ -1,5 +1,6 @@
 package com.adedom.search_food.presentation.view_model
 
+import androidx.lifecycle.viewModelScope
 import com.adedom.search_food.domain.use_cases.SearchFoodUseCase
 import com.adedom.ui_components.base.BaseViewModel
 import com.adedom.ui_components.domain.models.FoodModel
@@ -25,7 +26,7 @@ class SearchFoodViewModel(
     private var searchJob: Job? = null
 
     override fun onEvent(event: SearchFoodUiEvent) {
-        launch {
+        viewModelScope.launch {
             when (event) {
                 SearchFoodUiEvent.Initial -> {
                     delay(200)

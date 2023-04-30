@@ -1,5 +1,6 @@
 package com.adedom.splash_screen.presentation.view_model
 
+import androidx.lifecycle.viewModelScope
 import com.adedom.splash_screen.domain.use_cases.GetIsAuthUseCase
 import com.adedom.ui_components.base.BaseViewModel
 import kotlinx.coroutines.channels.Channel
@@ -20,7 +21,7 @@ class SplashScreenViewModel(
     val nav: Flow<Boolean> = _nav.receiveAsFlow()
 
     init {
-        launch {
+        viewModelScope.launch {
             delay(2_000)
             val isAuth = getIsAuthUseCase()
             _nav.send(isAuth)
