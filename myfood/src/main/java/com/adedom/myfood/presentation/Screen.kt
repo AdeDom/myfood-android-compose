@@ -1,4 +1,4 @@
-package com.adedom.myfood.presentation.component
+package com.adedom.myfood.presentation
 
 import androidx.navigation.NamedNavArgument
 import androidx.navigation.NavType

@@ -1,4 +1,4 @@
-package com.adedom.myfood.presentation.component
+package com.adedom.myfood.presentation
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity

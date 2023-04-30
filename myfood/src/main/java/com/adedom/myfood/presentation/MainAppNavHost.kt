@@ -1,4 +1,4 @@
-package com.adedom.myfood.presentation.component
+package com.adedom.myfood.presentation
 
 import android.app.Activity
 import android.widget.Toast
