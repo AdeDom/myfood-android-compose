@@ -2,20 +2,20 @@ package com.adedom.main.presentation.component
 
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
-import androidx.compose.material.ExperimentalMaterialApi
-import androidx.compose.material.Scaffold
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Info
-import androidx.compose.material.rememberScaffoldState
+import androidx.compose.material3.DrawerValue
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.ModalDrawerSheet
+import androidx.compose.material3.ModalNavigationDrawer
+import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.rememberCoroutineScope
@@ -34,7 +34,6 @@ import com.adedom.ui_components.components.AppTitleText
 import kotlinx.coroutines.launch
 import com.adedom.ui_components.R as res
 
-@ExperimentalMaterialApi
 @Composable
 fun MainScreen(
     viewModel: HomeViewModel,
@@ -75,7 +74,7 @@ fun MainScreen(
     BackHandler(onBack = { viewModel.onEvent(HomeUiEvent.BackHandler) })
 }
 
-@ExperimentalMaterialApi
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MainContent(
     state: HomeUiState,
@@ -86,20 +85,16 @@ fun MainContent(
     openUserProfilePage: () -> Unit,
     openInfoPage: () -> Unit,
 ) {
-    val scaffoldState = rememberScaffoldState()
+    val drawerState = rememberDrawerState(DrawerValue.Closed)
     val scope = rememberCoroutineScope()
-    Scaffold(
-        scaffoldState = scaffoldState,
-        drawerGesturesEnabled = scaffoldState.drawerState.isOpen,
+
+    ModalNavigationDrawer(
+        drawerState = drawerState,
         drawerContent = {
-            Column(
-                modifier = Modifier.fillMaxSize(),
-            ) {
+            ModalDrawerSheet {
                 AppTitleText(
                     text = stringResource(id = res.string.app_name),
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(8.dp),
+                    modifier = Modifier.padding(8.dp)
                 )
                 Spacer(modifier = Modifier.height(16.dp))
                 DrawableItemMenu(
@@ -112,7 +107,7 @@ fun MainContent(
                     },
                     onClick = {
                         scope.launch {
-                            scaffoldState.drawerState.close()
+                            drawerState.close()
                         }
                     },
                 )
@@ -139,7 +134,7 @@ fun MainContent(
                         onClick = {
                             onEvent(HomeUiEvent.Logout)
                             scope.launch {
-                                scaffoldState.drawerState.close()
+                                drawerState.close()
                             }
                         },
                     )
@@ -163,16 +158,14 @@ fun MainContent(
             onEvent = onEvent,
             onMenuClick = {
                 scope.launch {
-                    scaffoldState.drawerState.open()
+                    drawerState.open()
                 }
             },
             onLogoutClick = onLogoutClick,
             openFoodDetailPage = openFoodDetailPage,
             openSearchFoodPage = openSearchFoodPage,
             openUserProfilePage = openUserProfilePage,
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(it),
+            modifier = Modifier.fillMaxSize()
         )
     }
 }
@@ -185,15 +178,11 @@ private fun DrawableItemMenu(
 ) {
     Row(
         modifier = Modifier
-            .fillMaxWidth()
             .clickable(onClick = onClick)
             .padding(16.dp)
     ) {
         icon()
         Spacer(modifier = Modifier.width(16.dp))
-        AppText(
-            text = text,
-            modifier = Modifier.weight(1f)
-        )
+        AppText(text)
     }
 }

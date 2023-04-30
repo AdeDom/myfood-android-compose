@@ -113,7 +113,6 @@ dependencies {
 
     implementation(Dependencies.AndroidXCore.coreKtx)
     implementation(Dependencies.AndroidXActivity.activityCompose)
-    implementation(Dependencies.AndroidMaterial.material)
 
     implementation(Dependencies.Koin.koinAndroidxCompose)
 

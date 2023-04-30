@@ -104,9 +104,11 @@ dependencies {
 
     implementation(Dependencies.AndroidXCore.coreKtx)
     implementation(Dependencies.AndroidXActivity.activityCompose)
-    implementation(Dependencies.AndroidMaterial.material)
+    implementation(platform(Dependencies.AndroidXCompose.composeBom))
     implementation(Dependencies.AndroidXCompose.ui)
+    implementation(Dependencies.AndroidXCompose.uiGraphics)
     implementation(Dependencies.AndroidXCompose.uiToolingPreview)
+    implementation(Dependencies.AndroidXCompose.material3)
 
     implementation(Dependencies.Lifecycle.viewModelKtx)
     implementation(Dependencies.Lifecycle.viewModelCompose)
@@ -121,8 +123,6 @@ dependencies {
     implementation(Dependencies.SquareUp.sqlDelightCoroutinesExt)
 
     implementation(Dependencies.AdeDom.myFoodKtorServer)
-
-    implementation(Dependencies.Accompanist.swipeRefresh)
 
     implementation(Dependencies.AirBnbShowkase.showkase)
     ksp(Dependencies.AirBnbShowkase.showkaseProcessor)

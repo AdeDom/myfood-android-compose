@@ -1,6 +1,6 @@
 package com.adedom.ui_components.theme
 
-import androidx.compose.material.Typography
+import androidx.compose.material3.Typography
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
@@ -10,53 +10,65 @@ import com.airbnb.android.showkase.annotation.ShowkaseTypography
 object AppTypography {
 
     @ShowkaseTypography
-    val h4 = TextStyle(
+    val headlineLarge = TextStyle(
         fontFamily = FontFamily.Default,
         fontWeight = FontWeight.Bold,
         fontSize = 34.sp,
+        lineHeight = 40.sp,
+        letterSpacing = 0.sp
     )
 
     @ShowkaseTypography
-    val h5 = TextStyle(
+    val headlineMedium = TextStyle(
         fontFamily = FontFamily.Default,
         fontWeight = FontWeight.Bold,
         fontSize = 24.sp,
+        lineHeight = 36.sp,
+        letterSpacing = 0.sp
     )
 
     @ShowkaseTypography
-    val h6 = TextStyle(
+    val headlineSmall = TextStyle(
         fontFamily = FontFamily.Default,
         fontWeight = FontWeight.Normal,
         fontSize = 20.sp,
+        lineHeight = 32.sp,
+        letterSpacing = 0.sp
     )
 
     @ShowkaseTypography
-    val subtitle1 = TextStyle(
+    val titleLarge = TextStyle(
         fontFamily = FontFamily.Default,
         fontWeight = FontWeight.Bold,
         fontSize = 16.sp,
+        lineHeight = 28.sp,
+        letterSpacing = 0.sp
     )
 
     @ShowkaseTypography
-    val body1 = TextStyle(
+    val bodyLarge = TextStyle(
         fontFamily = FontFamily.Default,
         fontWeight = FontWeight.Normal,
         fontSize = 16.sp,
+        lineHeight = 24.sp,
+        letterSpacing = 0.5.sp
     )
 
     @ShowkaseTypography
-    val body2 = TextStyle(
+    val bodyMedium = TextStyle(
         fontFamily = FontFamily.Default,
         fontWeight = FontWeight.Normal,
         fontSize = 14.sp,
+        lineHeight = 20.sp,
+        letterSpacing = 0.2.sp
     )
 }
 
 val Typography = Typography(
-    h4 = AppTypography.h4,
-    h5 = AppTypography.h5,
-    h6 = AppTypography.h6,
-    subtitle1 = AppTypography.subtitle1,
-    body1 = AppTypography.body1,
-    body2 = AppTypography.body2,
+    headlineLarge = AppTypography.headlineLarge,
+    headlineMedium = AppTypography.headlineMedium,
+    headlineSmall = AppTypography.headlineSmall,
+    titleLarge = AppTypography.titleLarge,
+    bodyLarge = AppTypography.bodyLarge,
+    bodyMedium = AppTypography.bodyMedium
 )

@@ -119,6 +119,7 @@ fun LoginContent(
                     },
                 )
             }
+
             is LoginUiState.Dialog.Error -> {
                 AppErrorAlertDialog(
                     error = state.dialog.error,
@@ -126,6 +127,7 @@ fun LoginContent(
                     modifier = Modifier.semantics { contentDescription = "Error dialog" },
                 )
             }
+
             null -> {}
         }
     }

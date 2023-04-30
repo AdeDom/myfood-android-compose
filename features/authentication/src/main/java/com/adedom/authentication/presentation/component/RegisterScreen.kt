@@ -121,6 +121,7 @@ fun RegisterContent(
                     },
                 )
             }
+
             is RegisterUiState.Dialog.Error -> {
                 AppErrorAlertDialog(
                     error = state.dialog.error,
@@ -128,6 +129,7 @@ fun RegisterContent(
                     modifier = Modifier.semantics { contentDescription = "Error dialog" },
                 )
             }
+
             null -> {}
         }
     }

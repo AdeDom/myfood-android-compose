@@ -8,8 +8,8 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.size
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Surface
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
@@ -29,7 +29,7 @@ fun AppOutlinedButton(
     text: String,
     modifier: Modifier = Modifier,
     color: Color = Color.White,
-    border: Color = MaterialTheme.colors.primary,
+    border: Color = MaterialTheme.colorScheme.primary,
     enabled: Boolean = true,
     onClick: () -> Unit,
 ) {
@@ -45,7 +45,7 @@ fun AppOutlinedButton(
             shape = RectangleLargeShape,
             color = buttonColor,
             border = BorderStroke(1.dp, border),
-            elevation = 2.dp,
+            shadowElevation = 2.dp,
             modifier = Modifier
                 .size(
                     width = 300.dp,
@@ -71,8 +71,8 @@ fun AppOutlinedButton(
 fun AppColorButton(
     text: String,
     modifier: Modifier = Modifier,
-    color: Color = MaterialTheme.colors.primary,
-    border: Color = MaterialTheme.colors.primary,
+    color: Color = MaterialTheme.colorScheme.primary,
+    border: Color = MaterialTheme.colorScheme.primary,
     enabled: Boolean = true,
     onClick: () -> Unit,
 ) {
@@ -88,7 +88,7 @@ fun AppColorButton(
             shape = RectangleLargeShape,
             color = buttonColor,
             border = BorderStroke(1.dp, border),
-            elevation = 2.dp,
+            shadowElevation = 2.dp,
             modifier = Modifier
                 .size(
                     width = 300.dp,

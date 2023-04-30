@@ -4,8 +4,8 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.width
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -21,7 +21,7 @@ fun AppText(
     text: String,
     modifier: Modifier = Modifier,
     color: Color = Color.Black,
-    style: TextStyle = MaterialTheme.typography.body1,
+    style: TextStyle = MaterialTheme.typography.bodyLarge,
 ) {
     Text(
         text = text,
@@ -36,7 +36,7 @@ fun AppTitleText(
     text: String,
     modifier: Modifier = Modifier,
     color: Color = Color.Black,
-    style: TextStyle = MaterialTheme.typography.h5,
+    style: TextStyle = MaterialTheme.typography.headlineMedium,
 ) {
     Text(
         text = text,
@@ -51,7 +51,7 @@ fun AppSubTitleText(
     text: String,
     modifier: Modifier = Modifier,
     color: Color = Color.Gray,
-    style: TextStyle = MaterialTheme.typography.h6,
+    style: TextStyle = MaterialTheme.typography.headlineSmall,
 ) {
     Text(
         text = text,
@@ -76,13 +76,13 @@ fun AppConcatText(
         Text(
             text = firstText,
             color = Color.Gray,
-            style = MaterialTheme.typography.body1,
+            style = MaterialTheme.typography.bodyLarge,
         )
         Spacer(modifier = Modifier.width(4.dp))
         Text(
             text = secondText,
-            color = MaterialTheme.colors.primary,
-            style = MaterialTheme.typography.subtitle1,
+            color = MaterialTheme.colorScheme.primary,
+            style = MaterialTheme.typography.titleLarge,
         )
     }
 }
