@@ -1,10 +1,8 @@
-package com.adedom.myfood.presentation.component
+package com.adedom.myfood.presentation
 
 import android.app.Activity
 import android.widget.Toast
-import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.NavController
@@ -16,28 +14,14 @@ import androidx.navigation.compose.navigation
 import androidx.navigation.compose.rememberNavController
 import com.adedom.authentication.presentation.component.LoginScreen
 import com.adedom.authentication.presentation.component.RegisterScreen
-import com.adedom.connectivity.presentation.component.ConnectivityScreen
 import com.adedom.food_detail.presentation.component.FoodDetailScreen
 import com.adedom.main.presentation.component.MainScreen
 import com.adedom.search_food.presentation.component.SearchFoodScreen
 import com.adedom.splash_screen.presentation.component.SplashScreen
-import com.adedom.ui_components.theme.MyFoodTheme
 import com.adedom.user_profile.presentation.component.UserProfileScreen
 import com.adedom.welcome.presentation.component.WelcomeScreen
 import org.koin.androidx.compose.koinViewModel
 
-@ExperimentalMaterialApi
-@ExperimentalComposeUiApi
-@Composable
-fun MyFood() {
-    MyFoodTheme {
-        ConnectivityScreen(koinViewModel())
-        MainAppNavHost()
-    }
-}
-
-@ExperimentalMaterialApi
-@ExperimentalComposeUiApi
 @Composable
 fun MainAppNavHost(
     modifier: Modifier = Modifier,
@@ -131,8 +115,6 @@ fun NavGraphBuilder.authGraph(navController: NavController) {
     }
 }
 
-@ExperimentalMaterialApi
-@ExperimentalComposeUiApi
 fun NavGraphBuilder.mainGraph(navController: NavController) {
     navigation(
         startDestination = Screen.Main.Init.route,

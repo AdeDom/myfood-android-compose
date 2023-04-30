@@ -5,8 +5,8 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.size
-import androidx.compose.material.AlertDialog
-import androidx.compose.material.MaterialTheme
+import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -25,7 +25,7 @@ fun AppLoadingAlertDialog(
     AlertDialog(
         onDismissRequest = {},
         confirmButton = {},
-        backgroundColor = Color.Transparent,
+        containerColor = Color.Transparent,
         text = {
             AppLoadingLottieAnimation()
         },
@@ -53,7 +53,7 @@ fun AppErrorAlertDialog(
                 }
                 AppText(
                     text = stringResource(id = R.string.str_ok),
-                    style = MaterialTheme.typography.subtitle1,
+                    style = MaterialTheme.typography.titleLarge,
                     modifier = Modifier
                         .align(Alignment.BottomEnd)
                         .clickable {

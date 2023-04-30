@@ -21,11 +21,12 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Card
-import androidx.compose.material.MaterialTheme
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.Star
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -84,7 +85,7 @@ fun FoodDetailContent(
 
     val infiniteTransition = rememberInfiniteTransition()
     val priceTextColor by infiniteTransition.animateColor(
-        initialValue = MaterialTheme.colors.primary,
+        initialValue = MaterialTheme.colorScheme.primary,
         targetValue = AppColor.Amber,
         animationSpec = infiniteRepeatable(
             animation = tween(1000, easing = LinearEasing),
@@ -124,7 +125,7 @@ fun FoodDetailContent(
                                         topStart = 64.dp,
                                         topEnd = 64.dp,
                                     ),
-                                    elevation = 16.dp,
+                                    elevation = CardDefaults.cardElevation(defaultElevation = 16.dp),
                                     modifier = Modifier
                                         .fillMaxWidth()
                                         .height(screenHeightDp - 64.dp),
@@ -153,7 +154,7 @@ fun FoodDetailContent(
                                                     AppText(
                                                         text = state.foodDetail?.favorite.toString(),
                                                         color = AppColor.Amber,
-                                                        style = MaterialTheme.typography.body2,
+                                                        style = MaterialTheme.typography.bodyMedium,
                                                     )
                                                 }
                                                 Row {
@@ -167,7 +168,7 @@ fun FoodDetailContent(
                                                     AppText(
                                                         text = state.foodDetail?.ratingScoreCount.toString(),
                                                         color = AppColor.Amber,
-                                                        style = MaterialTheme.typography.body2,
+                                                        style = MaterialTheme.typography.bodyMedium,
                                                     )
                                                 }
                                             }
@@ -177,14 +178,14 @@ fun FoodDetailContent(
                                                     id = res.string.str_baht,
                                                     state.foodDetail?.price.toString(),
                                                 ),
-                                                style = MaterialTheme.typography.h4,
+                                                style = MaterialTheme.typography.headlineLarge,
                                                 color = priceTextColor,
                                             )
                                         }
                                         Spacer(modifier = Modifier.height(32.dp))
                                         AppText(
                                             text = stringResource(id = res.string.str_description),
-                                            style = MaterialTheme.typography.subtitle1,
+                                            style = MaterialTheme.typography.titleLarge,
                                         )
                                         Spacer(modifier = Modifier.height(8.dp))
                                         AppText(state.foodDetail?.description.toString())

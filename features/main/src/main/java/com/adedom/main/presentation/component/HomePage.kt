@@ -20,15 +20,12 @@ import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Card
-import androidx.compose.material.ExperimentalMaterialApi
-import androidx.compose.material.IconButton
-import androidx.compose.material.MaterialTheme
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Menu
-import androidx.compose.material.pullrefresh.PullRefreshIndicator
-import androidx.compose.material.pullrefresh.pullRefresh
-import androidx.compose.material.pullrefresh.rememberPullRefreshState
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
@@ -57,7 +54,6 @@ import com.adedom.ui_components.theme.RectangleLargeShape
 import com.adedom.ui_components.theme.RectangleSmallShape
 import com.adedom.ui_components.R as res
 
-@ExperimentalMaterialApi
 @Composable
 fun HomePage(
     modifier: Modifier = Modifier,
@@ -102,7 +98,6 @@ fun HomePage(
     }
 }
 
-@ExperimentalMaterialApi
 @Composable
 private fun HomeContent(
     modifier: Modifier = Modifier,
@@ -113,31 +108,20 @@ private fun HomeContent(
     openSearchFoodPage: () -> Unit,
     openUserProfilePage: () -> Unit,
 ) {
-    val pullRefreshState = rememberPullRefreshState(
-        state.isRefreshing,
-        { onEvent(HomeUiEvent.Refreshing) }
+    HomeContentDetail(
+        modifier,
+        openSearchFoodPage,
+        onMenuClick,
+        state,
+        openUserProfilePage,
+        onEvent,
+        openFoodDetailPage
     )
-
-    Box(modifier = modifier.pullRefresh(pullRefreshState)) {
-        HomeContentDetail(
-            openSearchFoodPage,
-            onMenuClick,
-            state,
-            openUserProfilePage,
-            onEvent,
-            openFoodDetailPage
-        )
-
-        PullRefreshIndicator(
-            state.isRefreshing,
-            pullRefreshState,
-            Modifier.align(Alignment.TopCenter)
-        )
-    }
 }
 
 @Composable
 private fun HomeContentDetail(
+    modifier: Modifier = Modifier,
     openSearchFoodPage: () -> Unit,
     onMenuClick: () -> Unit,
     state: HomeUiState,
@@ -145,7 +129,7 @@ private fun HomeContentDetail(
     onEvent: (HomeUiEvent) -> Unit,
     openFoodDetailPage: (Long) -> Unit
 ) {
-    LazyColumn(modifier = Modifier.fillMaxSize()) {
+    LazyColumn(modifier = modifier.fillMaxSize()) {
         item {
             Box(
                 modifier = Modifier
@@ -243,7 +227,7 @@ fun CategoryBoxItem(
 
     Card(
         shape = RoundedCornerShape(borderRadius),
-        elevation = 8.dp,
+        elevation = CardDefaults.cardElevation(defaultElevation = 8.dp),
         modifier = Modifier
             .padding(4.dp)
             .clickable(onClick = onClick),
@@ -259,7 +243,7 @@ fun CategoryBoxItem(
             Spacer(modifier = Modifier.height(4.dp))
             AppText(
                 text = category.categoryName,
-                style = MaterialTheme.typography.subtitle1,
+                style = MaterialTheme.typography.titleLarge,
             )
             Spacer(modifier = Modifier.height(4.dp))
             if (category.categoryId == categoryId) {
@@ -270,7 +254,7 @@ fun CategoryBoxItem(
                             height = 4.dp,
                         )
                         .clip(RectangleSmallShape)
-                        .background(MaterialTheme.colors.primary),
+                        .background(MaterialTheme.colorScheme.primary),
                 )
                 Spacer(modifier = Modifier.height(4.dp))
             } else {

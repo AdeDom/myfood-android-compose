@@ -1,10 +1,16 @@
 package com.adedom.welcome.presentation.component
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Card
-import androidx.compose.material.MaterialTheme
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -28,7 +34,7 @@ fun WelcomeTopSection(
     val screenHeight = configuration.screenHeightDp.dp
 
     Card(
-        elevation = 32.dp,
+        elevation = CardDefaults.cardElevation(defaultElevation = 32.dp),
         shape = RoundedCornerShape(
             bottomStart = 32.dp,
             bottomEnd = 32.dp,
@@ -41,7 +47,7 @@ fun WelcomeTopSection(
             contentAlignment = Alignment.Center,
             modifier = Modifier
                 .size(550.dp)
-                .background(MaterialTheme.colors.primary)
+                .background(MaterialTheme.colorScheme.primary)
                 .semantics {
                     contentDescription = "Background logo app"
                 },

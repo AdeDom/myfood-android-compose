@@ -3,8 +3,16 @@ package com.adedom.welcome.presentation.component
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
-import androidx.compose.foundation.layout.*
-import androidx.compose.material.MaterialTheme
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -57,7 +65,7 @@ fun WelcomeBottomSection(
                 .border(
                     border = BorderStroke(
                         width = 1.dp,
-                        color = MaterialTheme.colors.primary,
+                        color = MaterialTheme.colorScheme.primary,
                     ),
                     shape = RectangleLargeShape,
                 )
@@ -71,7 +79,7 @@ fun WelcomeBottomSection(
                     .width(40.dp)
                     .height(32.dp)
                     .background(
-                        color = MaterialTheme.colors.primary,
+                        color = MaterialTheme.colorScheme.primary,
                         shape = RectangleLargeShape,
                     )
                     .semantics {
@@ -81,7 +89,7 @@ fun WelcomeBottomSection(
                 AppText(
                     text = stringResource(id = res.string.str_th),
                     color = Color.White,
-                    style = MaterialTheme.typography.subtitle1,
+                    style = MaterialTheme.typography.titleLarge,
                 )
             }
             Box(

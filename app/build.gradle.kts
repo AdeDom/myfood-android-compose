@@ -19,9 +19,6 @@ android {
         versionName = Versions.versionName
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-        vectorDrawables {
-            useSupportLibrary = true
-        }
     }
 
     buildTypes {
@@ -82,12 +79,6 @@ android {
     kotlinOptions {
         jvmTarget = "1.8"
     }
-    buildFeatures {
-        compose = true
-    }
-    composeOptions {
-        kotlinCompilerExtensionVersion = Versions.composeCompilerVersion
-    }
     packagingOptions {
         resources {
             excludes += "META-INF/io.netty.versions.properties"
@@ -97,9 +88,5 @@ android {
 }
 
 dependencies {
-
     implementation(project(Dependencies.Project.myFood))
-    implementation(Dependencies.AndroidXCore.coreKtx)
-    implementation(Dependencies.AndroidXActivity.activityCompose)
-    implementation(Dependencies.AndroidMaterial.material)
 }

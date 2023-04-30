@@ -25,7 +25,7 @@ My Food
 
 # Testing
 
-- Record
+- Test
 ```
 ./gradlew testDevelopDebug
 ```

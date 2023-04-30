@@ -100,13 +100,16 @@ dependencies {
 
     implementation(Dependencies.AndroidXCore.coreKtx)
     implementation(Dependencies.AndroidXActivity.activityCompose)
-    implementation(Dependencies.AndroidMaterial.material)
+    implementation(platform(Dependencies.AndroidXCompose.composeBom))
     implementation(Dependencies.AndroidXCompose.ui)
+    implementation(Dependencies.AndroidXCompose.uiGraphics)
     implementation(Dependencies.AndroidXCompose.uiToolingPreview)
+    implementation(Dependencies.AndroidXCompose.material3)
 
     implementation(Dependencies.AirBnbShowkase.showkase)
     ksp(Dependencies.AirBnbShowkase.showkaseProcessor)
 
+    androidTestImplementation(platform(Dependencies.AndroidXCompose.composeBom))
     androidTestImplementation(Dependencies.AndroidXCompose.androidTestUiTestJunit4)
 
     debugImplementation(Dependencies.AndroidXCompose.debugUiTooling)

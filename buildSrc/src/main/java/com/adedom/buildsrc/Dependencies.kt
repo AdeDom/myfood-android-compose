@@ -67,16 +67,16 @@ object Dependencies {
 
     object AndroidXCompose {
         private const val version = "1.3.3"
-        const val ui = "androidx.compose.ui:ui:$version"
-        const val uiToolingPreview = "androidx.compose.ui:ui-tooling-preview:$version"
-        const val androidTestUiTestJunit4 = "androidx.compose.ui:ui-test-junit4:$version"
-        const val debugUiTooling = "androidx.compose.ui:ui-tooling:$version"
-        const val debugUiTestManifest = "androidx.compose.ui:ui-test-manifest:$version"
-    }
+        const val composeBom = "androidx.compose:compose-bom:2022.10.00"
+        const val ui = "androidx.compose.ui:ui"
+        const val uiGraphics = "androidx.compose.ui:ui-graphics"
+        const val uiToolingPreview = "androidx.compose.ui:ui-tooling-preview"
+        const val material3 = "androidx.compose.material3:material3"
 
-    object AndroidMaterial {
-        private const val version = "1.3.1"
-        const val material = "androidx.compose.material:material:$version"
+        const val androidTestUiTestJunit4 = "androidx.compose.ui:ui-test-junit4"
+
+        const val debugUiTooling = "androidx.compose.ui:ui-tooling"
+        const val debugUiTestManifest = "androidx.compose.ui:ui-test-manifest"
     }
 
     object AndroidXNavigation {
@@ -95,8 +95,7 @@ object Dependencies {
     }
 
     object Accompanist {
-        private const val version = "0.28.0"
-        const val swipeRefresh = "com.google.accompanist:accompanist-swiperefresh:$version"
+        private const val version = "0.30.1"
     }
 
     object Lifecycle {
@@ -151,12 +150,6 @@ object Dependencies {
         private const val version = "1.0.0-beta17"
         const val showkase = "com.airbnb.android:showkase:$version"
         const val showkaseProcessor = "com.airbnb.android:showkase-processor:$version"
-    }
-
-    object Touchlab {
-        private const val version = "2.0.0-RC3"
-        const val stdlibCommon = "stdlib-common"
-        const val kermit = "co.touchlab:kermit:$version"
     }
 
     object Junit {

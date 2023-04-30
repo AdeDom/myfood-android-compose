@@ -14,6 +14,7 @@ import com.myfood.server.data.models.response.TokenResponse
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.mockk
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.test.runTest
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
@@ -32,6 +33,7 @@ class AuthRepositoryImplTest {
         repository = AuthRepositoryImpl(
             appDataStore,
             authRemoteDataSource,
+            Dispatchers.IO
         )
     }
 

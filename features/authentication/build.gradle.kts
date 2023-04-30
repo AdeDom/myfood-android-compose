@@ -104,9 +104,11 @@ dependencies {
 
     implementation(Dependencies.AndroidXCore.coreKtx)
     implementation(Dependencies.AndroidXActivity.activityCompose)
-    implementation(Dependencies.AndroidMaterial.material)
+    implementation(platform(Dependencies.AndroidXCompose.composeBom))
     implementation(Dependencies.AndroidXCompose.ui)
+    implementation(Dependencies.AndroidXCompose.uiGraphics)
     implementation(Dependencies.AndroidXCompose.uiToolingPreview)
+    implementation(Dependencies.AndroidXCompose.material3)
 
     implementation(Dependencies.Lifecycle.viewModelKtx)
     implementation(Dependencies.Lifecycle.viewModelCompose)
@@ -131,6 +133,7 @@ dependencies {
     testImplementation(Dependencies.Mockk.testMockk)
     testImplementation(Dependencies.AndroidXArch.testCoreTesting)
 
+    androidTestImplementation(platform(Dependencies.AndroidXCompose.composeBom))
     androidTestImplementation(Dependencies.AndroidXCompose.androidTestUiTestJunit4)
     androidTestImplementation(Dependencies.Mockk.androidTestMockk)
 
