@@ -60,8 +60,8 @@ fun FoodDetailScreen(
     onBackPressed: () -> Unit,
 ) {
     LaunchedEffect(key1 = Unit) {
-        viewModel.observeFavoriteState(foodId)
-        viewModel.callFoodDetail(foodId)
+        viewModel.onEvent(FoodDetailUiEvent.ObserveFavoriteState(foodId))
+        viewModel.onEvent(FoodDetailUiEvent.Initial(foodId))
     }
 
     FoodDetailContent(

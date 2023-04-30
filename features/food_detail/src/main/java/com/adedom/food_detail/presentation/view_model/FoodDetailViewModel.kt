@@ -29,6 +29,14 @@ data class FoodDetailUiState(
 }
 
 sealed interface FoodDetailUiEvent {
+    data class Initial(
+        val foodId: Int?
+    ) : FoodDetailUiEvent
+
+    data class ObserveFavoriteState(
+        val foodId: Int?
+    ) : FoodDetailUiEvent
+
     data class MyFavorite(val foodId: Int?) : FoodDetailUiEvent
 }
 
@@ -63,46 +71,44 @@ class FoodDetailViewModel(
         }
     }
 
-    fun observeFavoriteState(foodId: Int?) {
-        getFavoriteFlowUseCase(foodId)
-            .onEach {
-                emit {
-                    copy(
-                        foodDetail = foodDetail?.copy(isFavoriteState = it)
-                    )
-                }
-            }
-            .launchIn(viewModelScope)
-    }
-
-    fun callFoodDetail(foodId: Int?) {
-        viewModelScope.launch {
-            try {
-                emit {
-                    copy(dialog = FoodDetailUiState.Dialog.Loading)
-                }
-                val foodDetailModel = getFoodDetailUseCase(foodId)
-                emit {
-                    copy(
-                        foodDetail = foodDetailModel,
-                        dialog = null,
-                    )
-                }
-            } catch (exception: ApiServiceException) {
-                emit {
-                    copy(dialog = FoodDetailUiState.Dialog.Error(exception.toBaseError()))
-                }
-            } catch (exception: Throwable) {
-                emit {
-                    copy(dialog = FoodDetailUiState.Dialog.Error(exception.toBaseError()))
-                }
-            }
-        }
-    }
-
     override fun onEvent(event: FoodDetailUiEvent) {
         viewModelScope.launch {
             when (event) {
+                is FoodDetailUiEvent.Initial -> {
+                    try {
+                        emit {
+                            copy(dialog = FoodDetailUiState.Dialog.Loading)
+                        }
+                        val foodDetailModel = getFoodDetailUseCase(event.foodId)
+                        emit {
+                            copy(
+                                foodDetail = foodDetailModel,
+                                dialog = null,
+                            )
+                        }
+                    } catch (exception: ApiServiceException) {
+                        emit {
+                            copy(dialog = FoodDetailUiState.Dialog.Error(exception.toBaseError()))
+                        }
+                    } catch (exception: Throwable) {
+                        emit {
+                            copy(dialog = FoodDetailUiState.Dialog.Error(exception.toBaseError()))
+                        }
+                    }
+                }
+
+                is FoodDetailUiEvent.ObserveFavoriteState -> {
+                    getFavoriteFlowUseCase(event.foodId)
+                        .onEach {
+                            emit {
+                                copy(
+                                    foodDetail = foodDetail?.copy(isFavoriteState = it)
+                                )
+                            }
+                        }
+                        .launchIn(this)
+                }
+
                 is FoodDetailUiEvent.MyFavorite -> {
                     try {
                         if (getIsActiveFavoriteWebSocketUseCase()) {

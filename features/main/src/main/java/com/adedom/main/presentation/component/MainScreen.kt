@@ -63,7 +63,9 @@ fun MainScreen(
 
     MainContent(
         state = viewModel.uiState,
-        onLogoutClick = viewModel::onLogoutEvent,
+        onLogoutClick = {
+            viewModel.onEvent(HomeUiEvent.LogoutClick)
+        },
         viewModel::onEvent,
         openFoodDetailPage,
         openSearchFoodPage,
@@ -132,7 +134,7 @@ fun MainContent(
                             )
                         },
                         onClick = {
-                            onEvent(HomeUiEvent.Logout)
+                            onEvent(HomeUiEvent.LogoutDialog)
                             scope.launch {
                                 drawerState.close()
                             }

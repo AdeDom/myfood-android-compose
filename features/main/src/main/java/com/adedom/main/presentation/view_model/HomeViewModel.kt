@@ -50,7 +50,8 @@ sealed interface HomeUiEvent {
     object ErrorDismiss : HomeUiEvent
     object Refreshing : HomeUiEvent
     object BackHandler : HomeUiEvent
-    object Logout : HomeUiEvent
+    object LogoutDialog : HomeUiEvent
+    object LogoutClick : HomeUiEvent
     object HideDialog : HomeUiEvent
 }
 
@@ -170,7 +171,7 @@ class HomeViewModel(
         }
     }
 
-    fun onLogoutEvent() {
+    private fun onLogoutEvent() {
         GlobalScope.launch {
             try {
                 _channel.send(HomeChannel.Logout)
@@ -220,9 +221,15 @@ class HomeViewModel(
                         isBackPressed = false
                     }
                 }
-                HomeUiEvent.Logout -> {
+
+                HomeUiEvent.LogoutDialog -> {
                     emit { copy(dialog = HomeUiState.Dialog.Logout) }
                 }
+
+                HomeUiEvent.LogoutClick -> {
+                    onLogoutEvent()
+                }
+
                 HomeUiEvent.HideDialog -> {
                     emit { copy(dialog = null) }
                 }

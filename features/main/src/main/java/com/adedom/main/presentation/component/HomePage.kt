@@ -394,13 +394,17 @@ fun HomePagePreview() {
                     HomeUiEvent.ErrorDismiss -> {
                         Toast.makeText(context, "ErrorDismiss", Toast.LENGTH_SHORT).show()
                     }
+
                     HomeUiEvent.BackHandler -> {
                         Toast.makeText(context, "BackHandler", Toast.LENGTH_SHORT).show()
                     }
+
                     HomeUiEvent.Refreshing -> {
                         Toast.makeText(context, "Refreshing", Toast.LENGTH_SHORT).show()
                     }
-                    is HomeUiEvent.Logout -> {}
+
+                    is HomeUiEvent.LogoutDialog -> {}
+                    HomeUiEvent.LogoutClick -> {}
                     HomeUiEvent.NavLogout -> {}
                     HomeUiEvent.HideDialog -> {}
                 }
