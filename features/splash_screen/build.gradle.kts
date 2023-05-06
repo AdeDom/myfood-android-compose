@@ -98,7 +98,7 @@ dependencies {
     implementation(project(Dependencies.Project.core))
     implementation(project(Dependencies.Project.coreUiComponents))
 
-    implementation(Dependencies.AndroidXCore.coreKtx)
+    implementation(libs.androidx.ktx)
     implementation(Dependencies.AndroidXActivity.activityCompose)
     implementation(platform(Dependencies.AndroidXCompose.composeBom))
     implementation(Dependencies.AndroidXCompose.ui)

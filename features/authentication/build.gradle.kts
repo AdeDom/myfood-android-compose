@@ -102,7 +102,7 @@ dependencies {
     implementation(project(Dependencies.Project.dataFavorite))
     implementation(project(Dependencies.Project.domainUserProfile))
 
-    implementation(Dependencies.AndroidXCore.coreKtx)
+    implementation(libs.androidx.ktx)
     implementation(Dependencies.AndroidXActivity.activityCompose)
     implementation(platform(Dependencies.AndroidXCompose.composeBom))
     implementation(Dependencies.AndroidXCompose.ui)

@@ -111,7 +111,7 @@ dependencies {
     implementation(project(Dependencies.Project.featuresUserProfile))
     implementation(project(Dependencies.Project.featuresWelcome))
 
-    implementation(Dependencies.AndroidXCore.coreKtx)
+    implementation(libs.androidx.ktx)
     implementation(Dependencies.AndroidXActivity.activityCompose)
 
     implementation(Dependencies.Koin.koinAndroidxCompose)

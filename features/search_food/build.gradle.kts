@@ -99,7 +99,7 @@ dependencies {
     implementation(project(Dependencies.Project.coreUiComponents))
     implementation(project(Dependencies.Project.dataFood))
 
-    implementation(Dependencies.AndroidXCore.coreKtx)
+    implementation(libs.androidx.ktx)
     implementation(Dependencies.AndroidXActivity.activityCompose)
     implementation(platform(Dependencies.AndroidXCompose.composeBom))
     implementation(Dependencies.AndroidXCompose.ui)

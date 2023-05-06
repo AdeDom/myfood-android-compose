@@ -55,11 +55,6 @@ object Dependencies {
         const val myFood = ":myfood"
     }
 
-    object AndroidXCore {
-        private const val version = "1.9.0"
-        const val coreKtx = "androidx.core:core-ktx:$version"
-    }
-
     object AndroidXActivity {
         private const val version = "1.6.1"
         const val activityCompose = "androidx.activity:activity-compose:$version"
