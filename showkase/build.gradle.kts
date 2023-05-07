@@ -5,7 +5,7 @@ import com.adedom.buildsrc.Versions
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
-    id("com.google.devtools.ksp") version "1.8.10-1.0.9"
+    alias(libs.plugins.google.devtools.ksp)
 }
 
 android {
