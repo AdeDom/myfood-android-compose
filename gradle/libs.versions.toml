@@ -1,12 +1,12 @@
 [versions]
-ktx = "1.9.0"
+androidxCoreKtx = "1.9.0"
 androidGradlePlugin = "7.4.2"
 jetbrainsKotlinAndroid = "1.8.10"
 googleDevtoolsKsp = "1.8.10-1.0.9"
 appCashPaparazzi = "1.2.0"
 
 [libraries]
-androidx-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "ktx" }
+androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "androidxCoreKtx" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "androidGradlePlugin" }

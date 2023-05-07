@@ -101,7 +101,7 @@ dependencies {
     implementation(project(Dependencies.Project.dataFood))
     implementation(project(Dependencies.Project.dataFavorite))
 
-    implementation(libs.androidx.ktx)
+    implementation(libs.androidx.core.ktx)
     implementation(Dependencies.AndroidXActivity.activityCompose)
     implementation(platform(Dependencies.AndroidXCompose.composeBom))
     implementation(Dependencies.AndroidXCompose.ui)
