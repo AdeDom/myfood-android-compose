@@ -3,8 +3,8 @@ import com.adedom.buildsrc.Flavors
 import com.adedom.buildsrc.Versions
 
 plugins {
-    id("com.android.library")
-    id("org.jetbrains.kotlin.android")
+    alias(libs.plugins.android.library)
+    alias(libs.plugins.jetbrains.kotlin.android)
 }
 
 android {
@@ -83,18 +83,18 @@ dependencies {
 
     implementation(project(Dependencies.Project.core))
 
-    implementation(Dependencies.KotlinX.coroutinesCore)
+    implementation(libs.jetbrains.kotlinx.coroutines.core)
 
-    implementation(Dependencies.Ktor.clientCore)
+    implementation(libs.ktor.client.core)
 
-    implementation(Dependencies.SquareUp.sqlDelightCoroutinesExt)
+    implementation(libs.squareup.sqldelight.coroutines.extensions)
 
-    implementation(Dependencies.AdeDom.myFoodKtorServer)
+    implementation(libs.myFood.ktor.server)
 
-    testImplementation(Dependencies.Junit.testJunit)
-    testImplementation(Dependencies.Truth.testTruth)
-    testImplementation(Dependencies.KotlinX.testCoroutinesTest)
-    testImplementation(Dependencies.Ktor.testClientMock)
-    testImplementation(Dependencies.Ktor.serializationKotlinxJson)
-    testImplementation(Dependencies.Mockk.testMockk)
+    testImplementation(libs.junit)
+    testImplementation(libs.google.truth)
+    testImplementation(libs.jetbrains.kotlinx.coroutines.test)
+    testImplementation(libs.ktor.client.mock)
+    testImplementation(libs.ktor.serialization.kotlinx.json)
+    testImplementation(libs.mockk)
 }

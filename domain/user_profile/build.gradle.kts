@@ -3,8 +3,8 @@ import com.adedom.buildsrc.Flavors
 import com.adedom.buildsrc.Versions
 
 plugins {
-    id("com.android.library")
-    id("org.jetbrains.kotlin.android")
+    alias(libs.plugins.android.library)
+    alias(libs.plugins.jetbrains.kotlin.android)
 }
 
 android {
@@ -84,12 +84,12 @@ dependencies {
     implementation(project(Dependencies.Project.core))
     implementation(project(Dependencies.Project.dataProfile))
 
-    implementation(Dependencies.KotlinX.coroutinesCore)
+    implementation(libs.jetbrains.kotlinx.coroutines.core)
 
-    implementation(Dependencies.AdeDom.myFoodKtorServer)
+    implementation(libs.myFood.ktor.server)
 
-    testImplementation(Dependencies.Junit.testJunit)
-    testImplementation(Dependencies.Truth.testTruth)
-    testImplementation(Dependencies.KotlinX.testCoroutinesTest)
-    testImplementation(Dependencies.Mockk.testMockk)
+    testImplementation(libs.junit)
+    testImplementation(libs.google.truth)
+    testImplementation(libs.jetbrains.kotlinx.coroutines.test)
+    testImplementation(libs.mockk)
 }

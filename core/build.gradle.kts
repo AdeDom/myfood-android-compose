@@ -1,10 +1,9 @@
-import com.adedom.buildsrc.Dependencies
 import com.adedom.buildsrc.Flavors
 import com.adedom.buildsrc.Versions
 
 plugins {
-    id("com.android.library")
-    id("org.jetbrains.kotlin.android")
+    alias(libs.plugins.android.library)
+    alias(libs.plugins.jetbrains.kotlin.android)
     id("kotlinx-serialization")
     id("com.squareup.sqldelight")
 }
@@ -91,17 +90,17 @@ android {
 
 dependencies {
 
-    implementation(Dependencies.AndroidXActivity.activityCompose)
+    implementation(libs.androidx.activity.compose)
 
-    implementation(Dependencies.KotlinX.coroutinesCore)
+    implementation(libs.jetbrains.kotlinx.coroutines.core)
 
-    implementation(Dependencies.Ktor.clientCore)
-    implementation(Dependencies.Ktor.clientCio)
-    implementation(Dependencies.Ktor.clientWebSockets)
-    implementation(Dependencies.Ktor.clientLogging)
-    implementation(Dependencies.Ktor.clientContentNegotiation)
-    implementation(Dependencies.Ktor.serializationKotlinxJson)
-    implementation(Dependencies.Ktor.clientAuth)
+    implementation(libs.ktor.client.core)
+    implementation(libs.ktor.client.cio)
+    implementation(libs.ktor.client.websockets)
+    implementation(libs.ktor.client.logging)
+    implementation(libs.ktor.client.content.negotiation)
+    implementation(libs.ktor.serialization.kotlinx.json)
+    implementation(libs.ktor.client.auth)
 
-    implementation(Dependencies.AdeDom.myFoodKtorServer)
+    implementation(libs.myFood.ktor.server)
 }

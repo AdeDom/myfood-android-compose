@@ -3,10 +3,9 @@ import com.adedom.buildsrc.Flavors
 import com.adedom.buildsrc.Versions
 
 plugins {
-    id("com.android.library")
-    id("org.jetbrains.kotlin.android")
-    id("kotlin-android")
-    id("com.google.devtools.ksp") version "1.8.10-1.0.9"
+    alias(libs.plugins.android.library)
+    alias(libs.plugins.jetbrains.kotlin.android)
+    alias(libs.plugins.google.devtools.ksp)
 }
 
 android {
@@ -99,22 +98,22 @@ dependencies {
     implementation(project(Dependencies.Project.coreUiComponents))
     implementation(project(Dependencies.Project.dataFood))
 
-    implementation(Dependencies.AndroidXCore.coreKtx)
-    implementation(Dependencies.AndroidXActivity.activityCompose)
-    implementation(platform(Dependencies.AndroidXCompose.composeBom))
-    implementation(Dependencies.AndroidXCompose.ui)
-    implementation(Dependencies.AndroidXCompose.uiGraphics)
-    implementation(Dependencies.AndroidXCompose.uiToolingPreview)
-    implementation(Dependencies.AndroidXCompose.material3)
+    implementation(libs.androidx.core.ktx)
+    implementation(libs.androidx.activity.compose)
+    implementation(platform(libs.androidx.compose.bom))
+    implementation(libs.androidx.compose.ui)
+    implementation(libs.androidx.compose.ui.graphics)
+    implementation(libs.androidx.compose.ui.tooling.preview)
+    implementation(libs.androidx.compose.material3)
 
-    implementation(Dependencies.Lifecycle.viewModelKtx)
-    implementation(Dependencies.Lifecycle.viewModelCompose)
-    implementation(Dependencies.Lifecycle.livedataKtx)
-    implementation(Dependencies.Lifecycle.runtimeKtx)
+    implementation(libs.androidx.lifecycle.viewmodel.ktx)
+    implementation(libs.androidx.lifecycle.viewmodel.compose)
+    implementation(libs.androidx.lifecycle.livedata.ktx)
+    implementation(libs.androidx.lifecycle.runtime.ktx)
 
-    implementation(Dependencies.AirBnbShowkase.showkase)
-    ksp(Dependencies.AirBnbShowkase.showkaseProcessor)
+    implementation(libs.airbnb.android.showkase)
+    ksp(libs.airbnb.android.showkase.processor)
 
-    debugImplementation(Dependencies.AndroidXCompose.debugUiTooling)
-    debugImplementation(Dependencies.AndroidXCompose.debugUiTestManifest)
+    debugImplementation(libs.androidx.compose.ui.tooling)
+    debugImplementation(libs.androidx.compose.ui.test.manifest)
 }

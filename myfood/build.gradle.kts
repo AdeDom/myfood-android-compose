@@ -3,11 +3,10 @@ import com.adedom.buildsrc.Flavors
 import com.adedom.buildsrc.Versions
 
 plugins {
-    id("com.android.library")
-    id("org.jetbrains.kotlin.android")
-    id("kotlin-android")
-    id("com.google.devtools.ksp") version "1.8.10-1.0.9"
-    id("app.cash.paparazzi") version "1.2.0"
+    alias(libs.plugins.android.library)
+    alias(libs.plugins.jetbrains.kotlin.android)
+    alias(libs.plugins.google.devtools.ksp)
+    alias(libs.plugins.app.cash.paparazzi)
 }
 
 android {
@@ -111,23 +110,23 @@ dependencies {
     implementation(project(Dependencies.Project.featuresUserProfile))
     implementation(project(Dependencies.Project.featuresWelcome))
 
-    implementation(Dependencies.AndroidXCore.coreKtx)
-    implementation(Dependencies.AndroidXActivity.activityCompose)
+    implementation(libs.androidx.core.ktx)
+    implementation(libs.androidx.activity.compose)
 
-    implementation(Dependencies.Koin.koinAndroidxCompose)
+    implementation(libs.insert.koin.androidx.compose)
 
-    implementation(Dependencies.KotlinX.coroutinesCore)
-    implementation(Dependencies.KotlinX.coroutinesAndroid)
+    implementation(libs.jetbrains.kotlinx.coroutines.core)
+    implementation(libs.jetbrains.kotlinx.coroutines.android)
 
-    implementation(Dependencies.AndroidXDataStore.datastorePreferences)
+    implementation(libs.androidx.datastore.preferences)
 
-    implementation(Dependencies.SquareUp.sqlDelightAndroidDriver)
+    implementation(libs.squareup.sqldelight.android.driver)
 
-    implementation(Dependencies.AndroidXNavigation.navigationCompose)
+    implementation(libs.androidx.navigation.compose)
 
-    implementation(Dependencies.AdeDom.myFoodKtorServer)
+    implementation(libs.myFood.ktor.server)
 
-    testImplementation(Dependencies.TestParameterInjector.testParameterInjector)
-    testImplementation(Dependencies.AirBnbShowkase.showkase)
-    kspTest(Dependencies.AirBnbShowkase.showkaseProcessor)
+    testImplementation(libs.google.test.parameter.injector)
+    testImplementation(libs.airbnb.android.showkase)
+    kspTest(libs.airbnb.android.showkase.processor)
 }

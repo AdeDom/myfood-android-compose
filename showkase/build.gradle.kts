@@ -3,9 +3,9 @@ import com.adedom.buildsrc.Flavors
 import com.adedom.buildsrc.Versions
 
 plugins {
-    id("com.android.application")
-    id("org.jetbrains.kotlin.android")
-    id("com.google.devtools.ksp") version "1.8.10-1.0.9"
+    alias(libs.plugins.android.application)
+    alias(libs.plugins.jetbrains.kotlin.android)
+    alias(libs.plugins.google.devtools.ksp)
 }
 
 android {
@@ -100,9 +100,9 @@ dependencies {
     implementation(project(Dependencies.Project.featuresUserProfile))
     implementation(project(Dependencies.Project.featuresWelcome))
 
-    implementation(Dependencies.AndroidXCore.coreKtx)
-    implementation(Dependencies.AndroidXActivity.activityCompose)
+    implementation(libs.androidx.core.ktx)
+    implementation(libs.androidx.activity.compose)
 
-    implementation(Dependencies.AirBnbShowkase.showkase)
-    ksp(Dependencies.AirBnbShowkase.showkaseProcessor)
+    implementation(libs.airbnb.android.showkase)
+    ksp(libs.airbnb.android.showkase.processor)
 }
