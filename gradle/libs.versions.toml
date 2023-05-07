@@ -3,6 +3,7 @@ ktx = "1.9.0"
 androidGradlePlugin = "7.4.2"
 jetbrainsKotlinAndroid = "1.8.10"
 googleDevtoolsKsp = "1.8.10-1.0.9"
+appCashPaparazzi = "1.2.0"
 
 [libraries]
 androidx-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "ktx" }
@@ -12,3 +13,4 @@ android-application = { id = "com.android.application", version.ref = "androidGr
 android-library = { id = "com.android.library", version.ref = "androidGradlePlugin" }
 jetbrains-kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "jetbrainsKotlinAndroid" }
 google-devtools-ksp = { id = "com.google.devtools.ksp", version.ref = "googleDevtoolsKsp" }
+app-cash-paparazzi = { id = "app.cash.paparazzi", version.ref = "appCashPaparazzi" }

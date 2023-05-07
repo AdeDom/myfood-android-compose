@@ -6,7 +6,7 @@ plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.jetbrains.kotlin.android)
     alias(libs.plugins.google.devtools.ksp)
-    id("app.cash.paparazzi") version "1.2.0"
+    alias(libs.plugins.app.cash.paparazzi)
 }
 
 android {
