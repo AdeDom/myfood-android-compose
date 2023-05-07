@@ -3,8 +3,8 @@ import com.adedom.buildsrc.Flavors
 import com.adedom.buildsrc.Versions
 
 plugins {
-    id("com.android.library")
-    id("org.jetbrains.kotlin.android")
+    alias(libs.plugins.android.library)
+    alias(libs.plugins.jetbrains.kotlin.android)
     id("kotlin-android")
     id("com.google.devtools.ksp") version "1.8.10-1.0.9"
 }

@@ -1,9 +1,12 @@
 [versions]
 ktx = "1.9.0"
 androidGradlePlugin = "7.4.2"
+jetbrainsKotlinAndroid = "1.8.10"
 
 [libraries]
 androidx-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "ktx" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "androidGradlePlugin" }
+android-library = { id = "com.android.library", version.ref = "androidGradlePlugin" }
+jetbrains-kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "jetbrainsKotlinAndroid" }

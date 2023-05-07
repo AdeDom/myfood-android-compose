@@ -4,7 +4,7 @@ import com.adedom.buildsrc.Versions
 
 plugins {
     alias(libs.plugins.android.application)
-    id("org.jetbrains.kotlin.android")
+    alias(libs.plugins.jetbrains.kotlin.android)
 }
 
 android {
