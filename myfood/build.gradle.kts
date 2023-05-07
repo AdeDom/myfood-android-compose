@@ -5,7 +5,6 @@ import com.adedom.buildsrc.Versions
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.jetbrains.kotlin.android)
-    id("kotlin-android")
     alias(libs.plugins.google.devtools.ksp)
     id("app.cash.paparazzi") version "1.2.0"
 }
