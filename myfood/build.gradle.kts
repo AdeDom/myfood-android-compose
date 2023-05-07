@@ -111,22 +111,22 @@ dependencies {
     implementation(project(Dependencies.Project.featuresWelcome))
 
     implementation(libs.androidx.core.ktx)
-    implementation(Dependencies.AndroidXActivity.activityCompose)
+    implementation(libs.androidx.activity.compose)
 
-    implementation(Dependencies.Koin.koinAndroidxCompose)
+    implementation(libs.insert.koin.androidx.compose)
 
-    implementation(Dependencies.KotlinX.coroutinesCore)
-    implementation(Dependencies.KotlinX.coroutinesAndroid)
+    implementation(libs.jetbrains.kotlinx.coroutines.core)
+    implementation(libs.jetbrains.kotlinx.coroutines.android)
 
-    implementation(Dependencies.AndroidXDataStore.datastorePreferences)
+    implementation(libs.androidx.datastore.preferences)
 
-    implementation(Dependencies.SquareUp.sqlDelightAndroidDriver)
+    implementation(libs.squareup.sqldelight.android.driver)
 
-    implementation(Dependencies.AndroidXNavigation.navigationCompose)
+    implementation(libs.androidx.navigation.compose)
 
-    implementation(Dependencies.AdeDom.myFoodKtorServer)
+    implementation(libs.myFood.ktor.server)
 
-    testImplementation(Dependencies.TestParameterInjector.testParameterInjector)
-    testImplementation(Dependencies.AirBnbShowkase.showkase)
-    kspTest(Dependencies.AirBnbShowkase.showkaseProcessor)
+    testImplementation(libs.google.test.parameter.injector)
+    testImplementation(libs.airbnb.android.showkase)
+    kspTest(libs.airbnb.android.showkase.processor)
 }

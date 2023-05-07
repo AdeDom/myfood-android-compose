@@ -101,8 +101,8 @@ dependencies {
     implementation(project(Dependencies.Project.featuresWelcome))
 
     implementation(libs.androidx.core.ktx)
-    implementation(Dependencies.AndroidXActivity.activityCompose)
+    implementation(libs.androidx.activity.compose)
 
-    implementation(Dependencies.AirBnbShowkase.showkase)
-    ksp(Dependencies.AirBnbShowkase.showkaseProcessor)
+    implementation(libs.airbnb.android.showkase)
+    ksp(libs.airbnb.android.showkase.processor)
 }

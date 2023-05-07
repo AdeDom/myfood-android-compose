@@ -97,27 +97,27 @@ dependencies {
     implementation(project(Dependencies.Project.core))
 
     implementation(libs.androidx.core.ktx)
-    implementation(Dependencies.AndroidXActivity.activityCompose)
-    implementation(platform(Dependencies.AndroidXCompose.composeBom))
-    implementation(Dependencies.AndroidXCompose.ui)
-    implementation(Dependencies.AndroidXCompose.uiGraphics)
-    implementation(Dependencies.AndroidXCompose.uiToolingPreview)
-    implementation(Dependencies.AndroidXCompose.material3)
+    implementation(libs.androidx.activity.compose)
+    implementation(platform(libs.androidx.compose.bom))
+    implementation(libs.androidx.compose.ui)
+    implementation(libs.androidx.compose.ui.graphics)
+    implementation(libs.androidx.compose.ui.tooling.preview)
+    implementation(libs.androidx.compose.material3)
 
-    implementation(Dependencies.Lifecycle.viewModelKtx)
-    implementation(Dependencies.Lifecycle.viewModelCompose)
-    implementation(Dependencies.Lifecycle.livedataKtx)
-    implementation(Dependencies.Lifecycle.runtimeKtx)
+    implementation(libs.androidx.lifecycle.viewmodel.ktx)
+    implementation(libs.androidx.lifecycle.viewmodel.compose)
+    implementation(libs.androidx.lifecycle.livedata.ktx)
+    implementation(libs.androidx.lifecycle.runtime.ktx)
 
-    implementation(Dependencies.AdeDom.myFoodKtorServer)
+    implementation(libs.myFood.ktor.server)
 
-    implementation(Dependencies.Coil.coilCompose)
+    implementation(libs.coil.kt.coil.compose)
 
-    implementation(Dependencies.AirBnbLottie.lottieCompose)
+    implementation(libs.airbnb.android.lottie.compose)
 
-    implementation(Dependencies.AirBnbShowkase.showkase)
-    ksp(Dependencies.AirBnbShowkase.showkaseProcessor)
+    implementation(libs.airbnb.android.showkase)
+    ksp(libs.airbnb.android.showkase.processor)
 
-    debugImplementation(Dependencies.AndroidXCompose.debugUiTooling)
-    debugImplementation(Dependencies.AndroidXCompose.debugUiTestManifest)
+    debugImplementation(libs.androidx.compose.ui.tooling)
+    debugImplementation(libs.androidx.compose.ui.test.manifest)
 }

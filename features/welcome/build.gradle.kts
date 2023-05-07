@@ -98,19 +98,19 @@ dependencies {
     implementation(project(Dependencies.Project.coreUiComponents))
 
     implementation(libs.androidx.core.ktx)
-    implementation(Dependencies.AndroidXActivity.activityCompose)
-    implementation(platform(Dependencies.AndroidXCompose.composeBom))
-    implementation(Dependencies.AndroidXCompose.ui)
-    implementation(Dependencies.AndroidXCompose.uiGraphics)
-    implementation(Dependencies.AndroidXCompose.uiToolingPreview)
-    implementation(Dependencies.AndroidXCompose.material3)
+    implementation(libs.androidx.activity.compose)
+    implementation(platform(libs.androidx.compose.bom))
+    implementation(libs.androidx.compose.ui)
+    implementation(libs.androidx.compose.ui.graphics)
+    implementation(libs.androidx.compose.ui.tooling.preview)
+    implementation(libs.androidx.compose.material3)
 
-    implementation(Dependencies.AirBnbShowkase.showkase)
-    ksp(Dependencies.AirBnbShowkase.showkaseProcessor)
+    implementation(libs.airbnb.android.showkase)
+    ksp(libs.airbnb.android.showkase.processor)
 
-    androidTestImplementation(platform(Dependencies.AndroidXCompose.composeBom))
-    androidTestImplementation(Dependencies.AndroidXCompose.androidTestUiTestJunit4)
+    androidTestImplementation(platform(libs.androidx.compose.bom))
+    androidTestImplementation(libs.androidx.compose.ui.test.junit4)
 
-    debugImplementation(Dependencies.AndroidXCompose.debugUiTooling)
-    debugImplementation(Dependencies.AndroidXCompose.debugUiTestManifest)
+    debugImplementation(libs.androidx.compose.ui.tooling)
+    debugImplementation(libs.androidx.compose.ui.test.manifest)
 }

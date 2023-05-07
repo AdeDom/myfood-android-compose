@@ -86,7 +86,7 @@ dependencies {
     implementation(project(Dependencies.Project.dataWebsockets))
     implementation(project(Dependencies.Project.dataFood))
 
-    implementation(Dependencies.KotlinX.coroutinesCore)
+    implementation(libs.jetbrains.kotlinx.coroutines.core)
 
-    implementation(Dependencies.AdeDom.myFoodKtorServer)
+    implementation(libs.myFood.ktor.server)
 }

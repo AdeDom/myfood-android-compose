@@ -83,11 +83,11 @@ dependencies {
 
     implementation(project(Dependencies.Project.core))
 
-    implementation(Dependencies.KotlinX.coroutinesCore)
+    implementation(libs.jetbrains.kotlinx.coroutines.core)
 
-    implementation(Dependencies.Ktor.clientCore)
+    implementation(libs.ktor.client.core)
 
-    implementation(Dependencies.SquareUp.sqlDelightCoroutinesExt)
+    implementation(libs.squareup.sqldelight.coroutines.extensions)
 
-    implementation(Dependencies.AdeDom.myFoodKtorServer)
+    implementation(libs.myFood.ktor.server)
 }

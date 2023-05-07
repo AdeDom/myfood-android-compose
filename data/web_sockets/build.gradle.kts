@@ -84,10 +84,10 @@ dependencies {
 
     implementation(project(Dependencies.Project.core))
 
-    implementation(Dependencies.KotlinX.coroutinesCore)
+    implementation(libs.jetbrains.kotlinx.coroutines.core)
 
-    implementation(Dependencies.Ktor.clientCore)
-    implementation(Dependencies.Ktor.serializationKotlinxJson)
+    implementation(libs.ktor.client.core)
+    implementation(libs.ktor.serialization.kotlinx.json)
 
-    implementation(Dependencies.AdeDom.myFoodKtorServer)
+    implementation(libs.myFood.ktor.server)
 }
