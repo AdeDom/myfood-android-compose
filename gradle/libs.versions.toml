@@ -1,6 +1,6 @@
 [versions]
 androidxCoreKtx = "1.9.0"
-androidGradlePlugin = "7.4.2"
+androidGradlePlugin = "8.0.1"
 jetbrainsKotlinAndroid = "1.8.10"
 googleDevtoolsKsp = "1.8.10-1.0.9"
 appCashPaparazzi = "1.2.0"
