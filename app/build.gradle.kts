@@ -89,4 +89,5 @@ android {
 
 dependencies {
     implementation(project(Dependencies.Project.myFood))
+    implementation(libs.androidx.appcompat)
 }

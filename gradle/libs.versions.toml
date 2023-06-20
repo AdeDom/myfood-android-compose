@@ -10,6 +10,7 @@ androidxDatastorePreferences = "1.0.0"
 androidxArchCoreTesting = "2.2.0"
 androidxLifecycle = "2.5.1"
 androidxComposeBom = "2022.10.00"
+androidxAppcompat = "1.6.1"
 jetbrainsKotlinx = "1.6.4"
 ktor = "2.2.4"
 insertKoinAndroidxCompose = "3.4.3"
@@ -41,6 +42,7 @@ androidx-compose-material3 = { group = "androidx.compose.material3", name = "mat
 androidx-compose-ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-test-junit4" }
 androidx-compose-ui-tooling = { group = "androidx.compose.ui", name = "ui-tooling" }
 androidx-compose-ui-test-manifest = { group = "androidx.compose.ui", name = "ui-test-manifest" }
+androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "androidxAppcompat" }
 jetbrains-kotlinx-coroutines-core = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-core", version.ref = "jetbrainsKotlinx" }
 jetbrains-kotlinx-coroutines-android = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-android", version.ref = "jetbrainsKotlinx" }
 jetbrains-kotlinx-coroutines-test = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-test", version.ref = "jetbrainsKotlinx" }

@@ -23,6 +23,7 @@ class WelcomeBottomSectionTest {
                     openLoginPage = {},
                     openRegisterPage = {},
                     openHomePage = {},
+                    onChangeLanguage = {},
                 )
             }
         }

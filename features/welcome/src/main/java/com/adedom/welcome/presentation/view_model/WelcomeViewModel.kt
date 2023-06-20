@@ -12,6 +12,9 @@ object WelcomeUiState
 
 sealed interface WelcomeUiEvent {
     object NavSkip : WelcomeUiEvent
+    data class OnChangeLanguage(
+        val value: String,
+    ) : WelcomeUiEvent
 }
 
 class WelcomeViewModel(
@@ -21,11 +24,18 @@ class WelcomeViewModel(
     private val _nav = Channel<Unit>()
     val nav: Flow<Unit> = _nav.receiveAsFlow()
 
+    private val _onChangeEnLanguage = Channel<String>()
+    val onChangeEnLanguage: Flow<String> = _onChangeEnLanguage.receiveAsFlow()
+
     override fun onEvent(event: WelcomeUiEvent) {
         viewModelScope.launch {
             when (event) {
                 WelcomeUiEvent.NavSkip -> {
                     _nav.send(welcomeGuestRoleUseCase())
+                }
+
+                is WelcomeUiEvent.OnChangeLanguage -> {
+                    _onChangeEnLanguage.send(event.value)
                 }
             }
         }

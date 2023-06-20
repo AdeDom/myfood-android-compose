@@ -28,6 +28,7 @@ fun WelcomeContent(
             openLoginPage = openLoginPage,
             openRegisterPage = openRegisterPage,
             openHomePage = { onEvent(WelcomeUiEvent.NavSkip) },
+            onChangeLanguage = { onEvent(WelcomeUiEvent.OnChangeLanguage(it)) },
             modifier = Modifier.semantics { contentDescription = "Welcome bottom section" },
         )
     }

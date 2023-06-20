@@ -1,10 +1,15 @@
 package com.adedom.myfood.presentation
 
 import android.app.Activity
+import android.app.LocaleManager
+import android.os.Build
+import android.os.LocaleList
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.core.os.LocaleListCompat
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
@@ -63,6 +68,7 @@ fun NavGraphBuilder.authGraph(navController: NavController) {
         route = Screen.Welcome.route,
     ) {
         composable(Screen.Welcome.Init.route) {
+            val context = LocalContext.current
             WelcomeScreen(
                 viewModel = koinViewModel(),
                 openLoginPage = {
@@ -76,6 +82,15 @@ fun NavGraphBuilder.authGraph(navController: NavController) {
                         popUpTo(Screen.Welcome.route) {
                             inclusive = true
                         }
+                    }
+                },
+                onChangeLanguage = {
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                        context.getSystemService(LocaleManager::class.java)
+                            .applicationLocales = LocaleList.forLanguageTags(it)
+                    } else {
+                        val appLocale: LocaleListCompat = LocaleListCompat.forLanguageTags(it)
+                        AppCompatDelegate.setApplicationLocales(appLocale)
                     }
                 },
             )

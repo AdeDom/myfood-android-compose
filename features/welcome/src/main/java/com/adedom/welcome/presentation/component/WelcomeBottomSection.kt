@@ -3,6 +3,7 @@ package com.adedom.welcome.presentation.component
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -35,6 +36,7 @@ fun WelcomeBottomSection(
     openLoginPage: () -> Unit,
     openRegisterPage: () -> Unit,
     openHomePage: () -> Unit,
+    onChangeLanguage: (String) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Column(
@@ -84,7 +86,10 @@ fun WelcomeBottomSection(
                     )
                     .semantics {
                         contentDescription = "Background change language th"
-                    },
+                    }
+                    .clickable {
+                        onChangeLanguage("th")
+                    }
             ) {
                 AppText(
                     text = stringResource(id = res.string.str_th),
@@ -94,10 +99,14 @@ fun WelcomeBottomSection(
             }
             Box(
                 contentAlignment = Alignment.Center,
-                modifier = Modifier.size(
-                    width = 40.dp,
-                    height = 32.dp,
-                ),
+                modifier = Modifier
+                    .size(
+                        width = 40.dp,
+                        height = 32.dp,
+                    )
+                    .clickable {
+                        onChangeLanguage("en")
+                    }
             ) {
                 AppText(text = stringResource(id = res.string.str_en))
             }
@@ -117,6 +126,7 @@ fun WelcomeBottomSectionPreview() {
             openLoginPage = {},
             openRegisterPage = {},
             openHomePage = {},
+            onChangeLanguage = {},
         )
     }
 }
