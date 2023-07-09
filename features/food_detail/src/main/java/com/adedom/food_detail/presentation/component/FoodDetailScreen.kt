@@ -43,15 +43,15 @@ import com.adedom.food_detail.domain.models.FoodDetailModel
 import com.adedom.food_detail.presentation.view_model.FoodDetailUiEvent
 import com.adedom.food_detail.presentation.view_model.FoodDetailUiState
 import com.adedom.food_detail.presentation.view_model.FoodDetailViewModel
-import com.adedom.ui_components.components.AppErrorAlertDialog
-import com.adedom.ui_components.components.AppIcon
-import com.adedom.ui_components.components.AppImage
-import com.adedom.ui_components.components.AppLoadingLottieAnimation
-import com.adedom.ui_components.components.AppText
-import com.adedom.ui_components.components.AppTitleText
-import com.adedom.ui_components.theme.AppColor
-import com.adedom.ui_components.theme.MyFoodTheme
-import com.adedom.ui_components.R as res
+import com.adedom.ui.components.components.AppErrorAlertDialog
+import com.adedom.ui.components.components.AppIcon
+import com.adedom.ui.components.components.AppImage
+import com.adedom.ui.components.components.AppLoadingLottieAnimation
+import com.adedom.ui.components.components.AppText
+import com.adedom.ui.components.components.AppTitleText
+import com.adedom.ui.components.theme.AppColor
+import com.adedom.ui.components.theme.MyFoodTheme
+import com.adedom.ui.components.R as res
 
 @Composable
 fun FoodDetailScreen(

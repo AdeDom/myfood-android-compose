@@ -1,7 +1,7 @@
 package com.adedom.domain.use_cases
 
 import com.adedom.data.repositories.FoodRepository
-import com.adedom.ui_components.domain.models.FoodModel
+import com.adedom.ui.components.domain.models.FoodModel
 
 class GetFoodListByCategoryIdUseCase(
     private val foodRepository: FoodRepository,

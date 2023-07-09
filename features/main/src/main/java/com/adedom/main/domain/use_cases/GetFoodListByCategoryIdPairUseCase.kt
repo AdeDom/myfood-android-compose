@@ -2,7 +2,7 @@ package com.adedom.main.domain.use_cases
 
 import com.adedom.data.repositories.FoodRepository
 import com.adedom.main.domain.repositories.HomeCategoryRepository
-import com.adedom.ui_components.domain.models.FoodModel
+import com.adedom.ui.components.domain.models.FoodModel
 import kotlinx.coroutines.async
 import kotlinx.coroutines.coroutineScope
 

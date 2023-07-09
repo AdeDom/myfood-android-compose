@@ -4,10 +4,10 @@ import androidx.activity.ComponentActivity
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import androidx.compose.ui.test.onNodeWithContentDescription
-import com.adedom.ui_components.theme.MyFoodTheme
+import com.adedom.ui.components.theme.MyFoodTheme
 import org.junit.Rule
 import org.junit.Test
-import com.adedom.ui_components.R as res
+import com.adedom.ui.components.R as res
 
 class SplashScreenTest {
 

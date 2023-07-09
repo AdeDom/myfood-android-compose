@@ -15,8 +15,8 @@ import com.adedom.main.domain.use_cases.GetIsAuthRoleUseCase
 import com.adedom.main.domain.use_cases.HomeContentUseCase
 import com.adedom.main.domain.use_cases.LogoutUseCase
 import com.adedom.main.domain.use_cases.SaveUnAuthRoleUseCase
-import com.adedom.ui_components.base.BaseViewModel
-import com.adedom.ui_components.domain.models.FoodModel
+import com.adedom.ui.components.base.BaseViewModel
+import com.adedom.ui.components.domain.models.FoodModel
 import com.myfood.server.data.models.base.BaseError
 import com.myfood.server.data.models.web_sockets.FavoriteWebSocketsResponse
 import kotlinx.coroutines.GlobalScope

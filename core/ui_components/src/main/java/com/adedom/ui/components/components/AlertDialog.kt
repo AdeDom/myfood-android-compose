@@ -1,4 +1,4 @@
-package com.adedom.ui_components.components
+package com.adedom.ui.components.components
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
@@ -14,13 +14,13 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.adedom.ui_components.R
-import com.adedom.ui_components.theme.MyFoodTheme
+import com.adedom.ui.components.R
+import com.adedom.ui.components.theme.MyFoodTheme
 import com.myfood.server.data.models.base.BaseError
 
 @Composable
 fun AppLoadingAlertDialog(
-    modifier: Modifier = Modifier,
+    modifier: Modifier = Modifier
 ) {
     AlertDialog(
         onDismissRequest = {},
@@ -29,7 +29,7 @@ fun AppLoadingAlertDialog(
         text = {
             AppLoadingLottieAnimation()
         },
-        modifier = modifier.fillMaxSize(),
+        modifier = modifier.fillMaxSize()
     )
 }
 
@@ -38,14 +38,14 @@ fun AppErrorAlertDialog(
     modifier: Modifier = Modifier,
     title: String = stringResource(id = R.string.str_error_default),
     error: BaseError,
-    onDismiss: () -> Unit,
+    onDismiss: () -> Unit
 ) {
     AlertDialog(
         onDismissRequest = {},
         confirmButton = {},
         text = {
             Box(
-                modifier = Modifier.fillMaxSize(),
+                modifier = Modifier.fillMaxSize()
             ) {
                 Column {
                     AppTitleText(text = title)
@@ -64,8 +64,8 @@ fun AppErrorAlertDialog(
         },
         modifier = modifier.size(
             width = 300.dp,
-            height = 200.dp,
-        ),
+            height = 200.dp
+        )
     )
 }
 
@@ -75,20 +75,20 @@ fun AppInteractAlertDialog(
     title: String,
     text: String? = null,
     confirmButton: () -> Unit,
-    dismissButton: () -> Unit,
+    dismissButton: () -> Unit
 ) {
     AlertDialog(
         onDismissRequest = {},
         confirmButton = {
             AppText(
                 text = stringResource(id = R.string.str_ok),
-                modifier = Modifier.clickable(onClick = confirmButton),
+                modifier = Modifier.clickable(onClick = confirmButton)
             )
         },
         dismissButton = {
             AppText(
                 text = stringResource(id = R.string.str_cancel),
-                modifier = Modifier.clickable(onClick = dismissButton),
+                modifier = Modifier.clickable(onClick = dismissButton)
             )
         },
         title = {
@@ -97,14 +97,14 @@ fun AppInteractAlertDialog(
         text = {
             text?.let { AppText(text = text) }
         },
-        modifier = modifier,
+        modifier = modifier
     )
 }
 
 @Preview(
     name = "Loading",
     group = "Component - AlertDialog",
-    showBackground = true,
+    showBackground = true
 )
 @Composable
 fun AlertDialogPreview() {

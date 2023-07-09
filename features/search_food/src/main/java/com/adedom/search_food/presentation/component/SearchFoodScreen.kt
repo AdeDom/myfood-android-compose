@@ -27,13 +27,13 @@ import androidx.compose.ui.unit.dp
 import com.adedom.search_food.presentation.view_model.SearchFoodUiEvent
 import com.adedom.search_food.presentation.view_model.SearchFoodUiState
 import com.adedom.search_food.presentation.view_model.SearchFoodViewModel
-import com.adedom.ui_components.components.AppEmptyData
-import com.adedom.ui_components.components.AppIcon
-import com.adedom.ui_components.components.AppTextField
-import com.adedom.ui_components.components.FoodBoxItem
-import com.adedom.ui_components.domain.models.FoodModel
-import com.adedom.ui_components.theme.MyFoodTheme
-import com.adedom.ui_components.R as res
+import com.adedom.ui.components.components.AppEmptyData
+import com.adedom.ui.components.components.AppIcon
+import com.adedom.ui.components.components.AppTextField
+import com.adedom.ui.components.components.FoodBoxItem
+import com.adedom.ui.components.domain.models.FoodModel
+import com.adedom.ui.components.theme.MyFoodTheme
+import com.adedom.ui.components.R as res
 
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable

@@ -39,20 +39,20 @@ import androidx.compose.ui.unit.dp
 import com.adedom.main.domain.models.CategoryModel
 import com.adedom.main.presentation.view_model.HomeUiEvent
 import com.adedom.main.presentation.view_model.HomeUiState
-import com.adedom.ui_components.components.AppEmptyData
-import com.adedom.ui_components.components.AppErrorAlertDialog
-import com.adedom.ui_components.components.AppIcon
-import com.adedom.ui_components.components.AppImage
-import com.adedom.ui_components.components.AppInteractAlertDialog
-import com.adedom.ui_components.components.AppLoadingLottieAnimation
-import com.adedom.ui_components.components.AppText
-import com.adedom.ui_components.components.AppTitleText
-import com.adedom.ui_components.components.FoodBoxItem
-import com.adedom.ui_components.domain.models.FoodModel
-import com.adedom.ui_components.theme.MyFoodTheme
-import com.adedom.ui_components.theme.RectangleLargeShape
-import com.adedom.ui_components.theme.RectangleSmallShape
-import com.adedom.ui_components.R as res
+import com.adedom.ui.components.components.AppEmptyData
+import com.adedom.ui.components.components.AppErrorAlertDialog
+import com.adedom.ui.components.components.AppIcon
+import com.adedom.ui.components.components.AppImage
+import com.adedom.ui.components.components.AppInteractAlertDialog
+import com.adedom.ui.components.components.AppLoadingLottieAnimation
+import com.adedom.ui.components.components.AppText
+import com.adedom.ui.components.components.AppTitleText
+import com.adedom.ui.components.components.FoodBoxItem
+import com.adedom.ui.components.domain.models.FoodModel
+import com.adedom.ui.components.theme.MyFoodTheme
+import com.adedom.ui.components.theme.RectangleLargeShape
+import com.adedom.ui.components.theme.RectangleSmallShape
+import com.adedom.ui.components.R as res
 
 @Composable
 fun HomePage(

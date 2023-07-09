@@ -1,4 +1,4 @@
-package com.adedom.ui_components.theme
+package com.adedom.ui.components.theme
 
 import android.app.Activity
 import android.os.Build

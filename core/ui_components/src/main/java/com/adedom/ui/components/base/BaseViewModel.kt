@@ -1,4 +1,4 @@
-package com.adedom.ui_components.base
+package com.adedom.ui.components.base
 
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -6,7 +6,7 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 
 abstract class BaseViewModel<Event, State>(
-    initialUiState: State,
+    initialUiState: State
 ) : ViewModel() {
 
     var uiState by mutableStateOf(initialUiState)

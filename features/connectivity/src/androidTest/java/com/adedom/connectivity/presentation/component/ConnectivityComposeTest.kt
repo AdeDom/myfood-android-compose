@@ -10,10 +10,10 @@ import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.onRoot
 import com.adedom.connectivity.data.models.Status
 import com.adedom.connectivity.presentation.view_model.ConnectivityUiState
-import com.adedom.ui_components.theme.MyFoodTheme
+import com.adedom.ui.components.theme.MyFoodTheme
 import org.junit.Rule
 import org.junit.Test
-import com.adedom.ui_components.R as res
+import com.adedom.ui.components.R as res
 
 class ConnectivityComposeTest {
 

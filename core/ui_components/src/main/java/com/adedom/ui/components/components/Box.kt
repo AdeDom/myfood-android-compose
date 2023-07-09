@@ -1,7 +1,11 @@
-package com.adedom.ui_components.components
+package com.adedom.ui.components.components
 
 import androidx.compose.animation.animateColor
-import androidx.compose.animation.core.*
+import androidx.compose.animation.core.LinearEasing
+import androidx.compose.animation.core.RepeatMode
+import androidx.compose.animation.core.infiniteRepeatable
+import androidx.compose.animation.core.rememberInfiniteTransition
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.runtime.Composable
@@ -15,7 +19,7 @@ fun AnimatedBrushBox(
     modifier: Modifier = Modifier,
     initialColor: Color = Color.Black,
     startY: Float = 100f,
-    durationMillis: Int = 1000,
+    durationMillis: Int = 1000
 ) {
     val infiniteTransition = rememberInfiniteTransition()
     val imageBrushColor by infiniteTransition.animateColor(
@@ -23,8 +27,8 @@ fun AnimatedBrushBox(
         targetValue = Color.Transparent,
         animationSpec = infiniteRepeatable(
             animation = tween(durationMillis, easing = LinearEasing),
-            repeatMode = RepeatMode.Reverse,
-        ),
+            repeatMode = RepeatMode.Reverse
+        )
     )
 
     Box(
@@ -32,10 +36,10 @@ fun AnimatedBrushBox(
             Brush.verticalGradient(
                 colors = listOf(
                     Color.Transparent,
-                    imageBrushColor,
+                    imageBrushColor
                 ),
-                startY = startY,
-            ),
-        ),
+                startY = startY
+            )
+        )
     )
 }

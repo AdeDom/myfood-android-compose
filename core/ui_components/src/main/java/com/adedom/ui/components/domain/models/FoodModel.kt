@@ -1,4 +1,4 @@
-package com.adedom.ui_components.domain.models
+package com.adedom.ui.components.domain.models
 
 data class FoodModel(
     val foodId: Long,
@@ -7,5 +7,5 @@ data class FoodModel(
     val image: String,
     val favorite: Long?,
     val ratingScoreCount: String?,
-    val categoryId: Long?,
+    val categoryId: Long?
 )

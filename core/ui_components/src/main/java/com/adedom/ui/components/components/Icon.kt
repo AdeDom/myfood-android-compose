@@ -1,4 +1,4 @@
-package com.adedom.ui_components.components
+package com.adedom.ui.components.components
 
 import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
@@ -12,13 +12,13 @@ fun AppIcon(
     image: ImageVector,
     modifier: Modifier = Modifier,
     color: Color = Color.Black,
-    contentDescription: String,
+    contentDescription: String
 ) {
     Icon(
         imageVector = image,
         contentDescription = contentDescription,
         tint = color,
-        modifier = modifier,
+        modifier = modifier
     )
 }
 
@@ -26,11 +26,11 @@ fun AppIcon(
 fun AppIcon(
     image: Painter,
     modifier: Modifier = Modifier,
-    contentDescription: String,
+    contentDescription: String
 ) {
     Icon(
         painter = image,
         contentDescription = contentDescription,
-        modifier = modifier,
+        modifier = modifier
     )
 }

@@ -1,4 +1,4 @@
-package com.adedom.ui_components.theme
+package com.adedom.ui.components.theme
 
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.ui.unit.dp

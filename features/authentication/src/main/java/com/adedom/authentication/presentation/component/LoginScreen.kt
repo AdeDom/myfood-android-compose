@@ -23,16 +23,16 @@ import androidx.compose.ui.unit.dp
 import com.adedom.authentication.presentation.view_model.LoginUiEvent
 import com.adedom.authentication.presentation.view_model.LoginUiState
 import com.adedom.authentication.presentation.view_model.LoginViewModel
-import com.adedom.ui_components.components.AppColorButton
-import com.adedom.ui_components.components.AppConcatText
-import com.adedom.ui_components.components.AppErrorAlertDialog
-import com.adedom.ui_components.components.AppLoadingAlertDialog
-import com.adedom.ui_components.components.AppSubTitleText
-import com.adedom.ui_components.components.AppText
-import com.adedom.ui_components.components.AppTextField
-import com.adedom.ui_components.components.AppTitleText
-import com.adedom.ui_components.theme.MyFoodTheme
-import com.adedom.ui_components.R as res
+import com.adedom.ui.components.components.AppColorButton
+import com.adedom.ui.components.components.AppConcatText
+import com.adedom.ui.components.components.AppErrorAlertDialog
+import com.adedom.ui.components.components.AppLoadingAlertDialog
+import com.adedom.ui.components.components.AppSubTitleText
+import com.adedom.ui.components.components.AppText
+import com.adedom.ui.components.components.AppTextField
+import com.adedom.ui.components.components.AppTitleText
+import com.adedom.ui.components.theme.MyFoodTheme
+import com.adedom.ui.components.R as res
 
 @Composable
 fun LoginScreen(

@@ -2,7 +2,7 @@ package com.adedom.splash_screen.presentation.view_model
 
 import androidx.lifecycle.viewModelScope
 import com.adedom.splash_screen.domain.use_cases.GetIsAuthUseCase
-import com.adedom.ui_components.base.BaseViewModel
+import com.adedom.ui.components.base.BaseViewModel
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow

@@ -11,7 +11,7 @@ import com.adedom.food_detail.domain.use_cases.GetFavoriteFlowUseCase
 import com.adedom.food_detail.domain.use_cases.GetFoodDetailUseCase
 import com.adedom.food_detail.domain.use_cases.InsertOrReplaceFavoriteUseCase
 import com.adedom.food_detail.domain.use_cases.UpdateBackupFavoriteUseCase
-import com.adedom.ui_components.base.BaseViewModel
+import com.adedom.ui.components.base.BaseViewModel
 import com.myfood.server.data.models.base.BaseError
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.launchIn

@@ -1,4 +1,4 @@
-package com.adedom.ui_components.components
+package com.adedom.ui.components.components
 
 import android.widget.Toast
 import androidx.compose.animation.animateColorAsState
@@ -20,9 +20,9 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.adedom.ui_components.R
-import com.adedom.ui_components.theme.MyFoodTheme
-import com.adedom.ui_components.theme.RectangleLargeShape
+import com.adedom.ui.components.R
+import com.adedom.ui.components.theme.MyFoodTheme
+import com.adedom.ui.components.theme.RectangleLargeShape
 
 @Composable
 fun AppOutlinedButton(
@@ -31,11 +31,11 @@ fun AppOutlinedButton(
     color: Color = Color.White,
     border: Color = MaterialTheme.colorScheme.primary,
     enabled: Boolean = true,
-    onClick: () -> Unit,
+    onClick: () -> Unit
 ) {
     val buttonColor by animateColorAsState(
         targetValue = if (enabled) color else Color.Gray,
-        animationSpec = tween(durationMillis = 500),
+        animationSpec = tween(durationMillis = 500)
     )
 
     Box(
@@ -49,17 +49,17 @@ fun AppOutlinedButton(
             modifier = Modifier
                 .size(
                     width = 300.dp,
-                    height = 60.dp,
+                    height = 60.dp
                 )
                 .clip(RectangleLargeShape)
                 .clickable(
                     enabled = enabled,
-                    onClick = onClick,
-                ),
+                    onClick = onClick
+                )
         ) {
             Box(
                 contentAlignment = Alignment.Center,
-                modifier = Modifier.fillMaxSize(),
+                modifier = Modifier.fillMaxSize()
             ) {
                 AppText(text)
             }
@@ -74,11 +74,11 @@ fun AppColorButton(
     color: Color = MaterialTheme.colorScheme.primary,
     border: Color = MaterialTheme.colorScheme.primary,
     enabled: Boolean = true,
-    onClick: () -> Unit,
+    onClick: () -> Unit
 ) {
     val buttonColor by animateColorAsState(
         targetValue = if (enabled) color else Color.Gray,
-        animationSpec = tween(durationMillis = 500),
+        animationSpec = tween(durationMillis = 500)
     )
 
     Box(
@@ -92,21 +92,21 @@ fun AppColorButton(
             modifier = Modifier
                 .size(
                     width = 300.dp,
-                    height = 60.dp,
+                    height = 60.dp
                 )
                 .clip(RectangleLargeShape)
                 .clickable(
                     enabled = enabled,
-                    onClick = onClick,
-                ),
+                    onClick = onClick
+                )
         ) {
             Box(
                 contentAlignment = Alignment.Center,
-                modifier = Modifier.fillMaxSize(),
+                modifier = Modifier.fillMaxSize()
             ) {
                 AppText(
                     text = text,
-                    color = Color.White,
+                    color = Color.White
                 )
             }
         }
@@ -116,7 +116,7 @@ fun AppColorButton(
 @Preview(
     name = "Outline button",
     group = "Component - Button",
-    showBackground = true,
+    showBackground = true
 )
 @Composable
 fun OutlinedButtonPreview() {
@@ -126,7 +126,7 @@ fun OutlinedButtonPreview() {
             text = stringResource(id = R.string.app_name),
             onClick = {
                 Toast.makeText(context, "Button", Toast.LENGTH_SHORT).show()
-            },
+            }
         )
     }
 }
@@ -134,7 +134,7 @@ fun OutlinedButtonPreview() {
 @Preview(
     name = "Color button",
     group = "Component - Button",
-    showBackground = true,
+    showBackground = true
 )
 @Composable
 fun ColorButtonPreview() {
@@ -144,7 +144,7 @@ fun ColorButtonPreview() {
             text = stringResource(id = R.string.app_name),
             onClick = {
                 Toast.makeText(context, "Button", Toast.LENGTH_SHORT).show()
-            },
+            }
         )
     }
 }

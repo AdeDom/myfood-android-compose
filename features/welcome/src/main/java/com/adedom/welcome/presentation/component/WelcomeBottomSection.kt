@@ -22,13 +22,13 @@ import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.adedom.ui_components.components.AppColorButton
-import com.adedom.ui_components.components.AppConcatText
-import com.adedom.ui_components.components.AppOutlinedButton
-import com.adedom.ui_components.components.AppText
-import com.adedom.ui_components.theme.MyFoodTheme
-import com.adedom.ui_components.theme.RectangleLargeShape
-import com.adedom.ui_components.R as res
+import com.adedom.ui.components.components.AppColorButton
+import com.adedom.ui.components.components.AppConcatText
+import com.adedom.ui.components.components.AppOutlinedButton
+import com.adedom.ui.components.components.AppText
+import com.adedom.ui.components.theme.MyFoodTheme
+import com.adedom.ui.components.theme.RectangleLargeShape
+import com.adedom.ui.components.R as res
 
 @Composable
 fun WelcomeBottomSection(

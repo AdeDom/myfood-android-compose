@@ -3,7 +3,7 @@ package com.adedom.connectivity.presentation.view_model
 import androidx.lifecycle.viewModelScope
 import com.adedom.connectivity.data.models.Status
 import com.adedom.connectivity.domain.use_cases.GetConnectivityStatusUseCase
-import com.adedom.ui_components.base.BaseViewModel
+import com.adedom.ui.components.base.BaseViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.launchIn

@@ -1,4 +1,4 @@
-package com.adedom.ui_components.theme
+package com.adedom.ui.components.theme
 
 import androidx.compose.ui.graphics.Color
 import com.airbnb.android.showkase.annotation.ShowkaseColor

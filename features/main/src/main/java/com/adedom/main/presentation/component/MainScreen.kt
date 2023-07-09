@@ -28,11 +28,11 @@ import com.adedom.main.presentation.view_model.HomeChannel
 import com.adedom.main.presentation.view_model.HomeUiEvent
 import com.adedom.main.presentation.view_model.HomeUiState
 import com.adedom.main.presentation.view_model.HomeViewModel
-import com.adedom.ui_components.components.AppIcon
-import com.adedom.ui_components.components.AppText
-import com.adedom.ui_components.components.AppTitleText
+import com.adedom.ui.components.components.AppIcon
+import com.adedom.ui.components.components.AppText
+import com.adedom.ui.components.components.AppTitleText
 import kotlinx.coroutines.launch
-import com.adedom.ui_components.R as res
+import com.adedom.ui.components.R as res
 
 @Composable
 fun MainScreen(

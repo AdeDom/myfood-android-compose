@@ -23,20 +23,20 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.adedom.ui_components.components.AnimatedBrushBox
-import com.adedom.ui_components.components.AppColorButton
-import com.adedom.ui_components.components.AppErrorAlertDialog
-import com.adedom.ui_components.components.AppIcon
-import com.adedom.ui_components.components.AppImage
-import com.adedom.ui_components.components.AppText
-import com.adedom.ui_components.theme.MyFoodTheme
-import com.adedom.ui_components.theme.RectangleMediumShape
+import com.adedom.ui.components.components.AnimatedBrushBox
+import com.adedom.ui.components.components.AppColorButton
+import com.adedom.ui.components.components.AppErrorAlertDialog
+import com.adedom.ui.components.components.AppIcon
+import com.adedom.ui.components.components.AppImage
+import com.adedom.ui.components.components.AppText
+import com.adedom.ui.components.theme.MyFoodTheme
+import com.adedom.ui.components.theme.RectangleMediumShape
 import com.adedom.user_profile.R
 import com.adedom.user_profile.domain.models.UserProfileModel
 import com.adedom.user_profile.presentation.view_model.UserProfileUiEvent
 import com.adedom.user_profile.presentation.view_model.UserProfileUiState
 import com.adedom.user_profile.presentation.view_model.UserProfileViewModel
-import com.adedom.ui_components.R as res
+import com.adedom.ui.components.R as res
 
 @Composable
 fun UserProfileScreen(

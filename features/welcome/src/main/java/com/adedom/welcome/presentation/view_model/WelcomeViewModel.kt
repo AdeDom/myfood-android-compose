@@ -1,7 +1,7 @@
 package com.adedom.welcome.presentation.view_model
 
 import androidx.lifecycle.viewModelScope
-import com.adedom.ui_components.base.BaseViewModel
+import com.adedom.ui.components.base.BaseViewModel
 import com.adedom.welcome.domain.use_cases.WelcomeGuestRoleUseCase
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.Flow

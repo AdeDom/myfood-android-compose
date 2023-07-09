@@ -3,7 +3,7 @@ package com.adedom.user_profile.presentation.view_model
 import androidx.lifecycle.viewModelScope
 import com.adedom.core.utils.ApiServiceException
 import com.adedom.core.utils.RefreshTokenExpiredException
-import com.adedom.ui_components.base.BaseViewModel
+import com.adedom.ui.components.base.BaseViewModel
 import com.adedom.user_profile.domain.models.UserProfileModel
 import com.adedom.user_profile.domain.use_cases.FetchUserProfileUseCase
 import com.adedom.user_profile.domain.use_cases.GetUserProfileUseCase

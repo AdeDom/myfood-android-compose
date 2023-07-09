@@ -22,15 +22,15 @@ import androidx.compose.ui.unit.dp
 import com.adedom.authentication.presentation.view_model.RegisterUiEvent
 import com.adedom.authentication.presentation.view_model.RegisterUiState
 import com.adedom.authentication.presentation.view_model.RegisterViewModel
-import com.adedom.ui_components.components.AppColorButton
-import com.adedom.ui_components.components.AppConcatText
-import com.adedom.ui_components.components.AppErrorAlertDialog
-import com.adedom.ui_components.components.AppLoadingAlertDialog
-import com.adedom.ui_components.components.AppSubTitleText
-import com.adedom.ui_components.components.AppTextField
-import com.adedom.ui_components.components.AppTitleText
-import com.adedom.ui_components.theme.MyFoodTheme
-import com.adedom.ui_components.R as res
+import com.adedom.ui.components.components.AppColorButton
+import com.adedom.ui.components.components.AppConcatText
+import com.adedom.ui.components.components.AppErrorAlertDialog
+import com.adedom.ui.components.components.AppLoadingAlertDialog
+import com.adedom.ui.components.components.AppSubTitleText
+import com.adedom.ui.components.components.AppTextField
+import com.adedom.ui.components.components.AppTitleText
+import com.adedom.ui.components.theme.MyFoodTheme
+import com.adedom.ui.components.R as res
 
 @Composable
 fun RegisterScreen(

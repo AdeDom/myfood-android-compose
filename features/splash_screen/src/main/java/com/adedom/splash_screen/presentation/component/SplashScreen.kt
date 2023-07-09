@@ -19,9 +19,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.adedom.splash_screen.R
 import com.adedom.splash_screen.presentation.view_model.SplashScreenViewModel
-import com.adedom.ui_components.components.AppImage
-import com.adedom.ui_components.theme.MyFoodTheme
-import com.adedom.ui_components.R as res
+import com.adedom.ui.components.components.AppImage
+import com.adedom.ui.components.theme.MyFoodTheme
+import com.adedom.ui.components.R as res
 
 @Composable
 fun SplashScreen(

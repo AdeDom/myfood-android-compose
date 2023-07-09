@@ -1,4 +1,4 @@
-package com.adedom.ui_components.components
+package com.adedom.ui.components.components
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
@@ -22,16 +22,16 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.adedom.ui_components.R
-import com.adedom.ui_components.domain.models.FoodModel
-import com.adedom.ui_components.theme.AppColor
-import com.adedom.ui_components.theme.MyFoodTheme
-import com.adedom.ui_components.theme.RectangleMediumShape
+import com.adedom.ui.components.R
+import com.adedom.ui.components.domain.models.FoodModel
+import com.adedom.ui.components.theme.AppColor
+import com.adedom.ui.components.theme.MyFoodTheme
+import com.adedom.ui.components.theme.RectangleMediumShape
 
 @Composable
 fun FoodBoxItem(
     food: FoodModel,
-    onFoodClick: (Long) -> Unit,
+    onFoodClick: (Long) -> Unit
 ) {
     Card(
         shape = RectangleMediumShape,
@@ -41,7 +41,7 @@ fun FoodBoxItem(
             .padding(4.dp)
             .clickable {
                 onFoodClick(food.foodId)
-            },
+            }
     ) {
         Row {
             AppImage(
@@ -49,20 +49,20 @@ fun FoodBoxItem(
                 contentDescription = stringResource(id = R.string.cd_food_image),
                 modifier = Modifier
                     .size(100.dp)
-                    .clip(RectangleMediumShape),
+                    .clip(RectangleMediumShape)
             )
             Spacer(modifier = Modifier.width(16.dp))
             Column {
                 AppText(
                     text = food.foodName,
-                    style = MaterialTheme.typography.titleLarge,
+                    style = MaterialTheme.typography.titleLarge
                 )
                 food.alias?.let { alias ->
                     Spacer(modifier = Modifier.height(4.dp))
                     AppText(
                         text = alias,
                         color = Color.Gray,
-                        style = MaterialTheme.typography.bodyMedium,
+                        style = MaterialTheme.typography.bodyMedium
                     )
                 }
                 food.favorite?.let { favorite ->
@@ -72,13 +72,13 @@ fun FoodBoxItem(
                             image = Icons.Default.Favorite,
                             color = AppColor.Amber,
                             modifier = Modifier.size(18.dp),
-                            contentDescription = stringResource(id = R.string.cd_icon_favorite),
+                            contentDescription = stringResource(id = R.string.cd_icon_favorite)
                         )
                         Spacer(modifier = Modifier.width(4.dp))
                         AppText(
                             text = favorite.toString(),
                             color = AppColor.Amber,
-                            style = MaterialTheme.typography.bodyMedium,
+                            style = MaterialTheme.typography.bodyMedium
                         )
                     }
                 }
@@ -89,13 +89,13 @@ fun FoodBoxItem(
                             image = Icons.Default.Star,
                             color = AppColor.Amber,
                             modifier = Modifier.size(18.dp),
-                            contentDescription = stringResource(id = R.string.cd_icon_star),
+                            contentDescription = stringResource(id = R.string.cd_icon_star)
                         )
                         Spacer(modifier = Modifier.width(4.dp))
                         AppText(
                             text = ratingScoreCount,
                             color = AppColor.Amber,
-                            style = MaterialTheme.typography.bodyMedium,
+                            style = MaterialTheme.typography.bodyMedium
                         )
                     }
                 }
@@ -107,7 +107,7 @@ fun FoodBoxItem(
 @Preview(
     name = "Food item",
     group = "Component - FoodBox",
-    showBackground = true,
+    showBackground = true
 )
 @Composable
 fun FoodBoxItemPreview() {
@@ -120,9 +120,9 @@ fun FoodBoxItemPreview() {
                 image = "",
                 favorite = 5,
                 ratingScoreCount = "ratingScoreCount",
-                categoryId = 2,
+                categoryId = 2
             ),
-            onFoodClick = {},
+            onFoodClick = {}
         )
     }
 }

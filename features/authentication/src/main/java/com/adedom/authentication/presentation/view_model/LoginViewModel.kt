@@ -5,7 +5,7 @@ import com.adedom.authentication.domain.use_cases.FavoriteUseCase
 import com.adedom.authentication.domain.use_cases.LoginUseCase
 import com.adedom.core.utils.ApiServiceException
 import com.adedom.core.utils.toBaseError
-import com.adedom.ui_components.base.BaseViewModel
+import com.adedom.ui.components.base.BaseViewModel
 import com.adedom.user_profile.domain.use_cases.FetchUserProfileUseCase
 import com.myfood.server.data.models.base.BaseError
 import com.myfood.server.usecase.validate.ValidateEmailUseCase

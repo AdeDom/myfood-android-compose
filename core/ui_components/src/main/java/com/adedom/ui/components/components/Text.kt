@@ -1,4 +1,4 @@
-package com.adedom.ui_components.components
+package com.adedom.ui.components.components
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Row
@@ -13,21 +13,21 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.adedom.ui_components.R
-import com.adedom.ui_components.theme.MyFoodTheme
+import com.adedom.ui.components.R
+import com.adedom.ui.components.theme.MyFoodTheme
 
 @Composable
 fun AppText(
     text: String,
     modifier: Modifier = Modifier,
     color: Color = Color.Black,
-    style: TextStyle = MaterialTheme.typography.bodyLarge,
+    style: TextStyle = MaterialTheme.typography.bodyLarge
 ) {
     Text(
         text = text,
         color = color,
         style = style,
-        modifier = modifier,
+        modifier = modifier
     )
 }
 
@@ -36,13 +36,13 @@ fun AppTitleText(
     text: String,
     modifier: Modifier = Modifier,
     color: Color = Color.Black,
-    style: TextStyle = MaterialTheme.typography.headlineMedium,
+    style: TextStyle = MaterialTheme.typography.headlineMedium
 ) {
     Text(
         text = text,
         color = color,
         style = style,
-        modifier = modifier,
+        modifier = modifier
     )
 }
 
@@ -51,13 +51,13 @@ fun AppSubTitleText(
     text: String,
     modifier: Modifier = Modifier,
     color: Color = Color.Gray,
-    style: TextStyle = MaterialTheme.typography.headlineSmall,
+    style: TextStyle = MaterialTheme.typography.headlineSmall
 ) {
     Text(
         text = text,
         color = color,
         style = style,
-        modifier = modifier,
+        modifier = modifier
     )
 }
 
@@ -66,7 +66,7 @@ fun AppConcatText(
     firstText: String,
     secondText: String,
     modifier: Modifier = Modifier,
-    onClick: () -> Unit,
+    onClick: () -> Unit
 ) {
     Row(
         modifier = modifier.clickable {
@@ -76,13 +76,13 @@ fun AppConcatText(
         Text(
             text = firstText,
             color = Color.Gray,
-            style = MaterialTheme.typography.bodyLarge,
+            style = MaterialTheme.typography.bodyLarge
         )
         Spacer(modifier = Modifier.width(4.dp))
         Text(
             text = secondText,
             color = MaterialTheme.colorScheme.primary,
-            style = MaterialTheme.typography.titleLarge,
+            style = MaterialTheme.typography.titleLarge
         )
     }
 }
@@ -90,7 +90,7 @@ fun AppConcatText(
 @Preview(
     name = "Text",
     group = "Component - Text",
-    showBackground = true,
+    showBackground = true
 )
 @Composable
 fun AppTextPreview() {
@@ -102,7 +102,7 @@ fun AppTextPreview() {
 @Preview(
     name = "Title text",
     group = "Component - Text",
-    showBackground = true,
+    showBackground = true
 )
 @Composable
 fun AppTitleTextPreview() {
@@ -114,7 +114,7 @@ fun AppTitleTextPreview() {
 @Preview(
     name = "Sub title text",
     group = "Component - Text",
-    showBackground = true,
+    showBackground = true
 )
 @Composable
 fun AppSubTitleTextPreview() {
@@ -126,7 +126,7 @@ fun AppSubTitleTextPreview() {
 @Preview(
     name = "Concat text",
     group = "Component - Text",
-    showBackground = true,
+    showBackground = true
 )
 @Composable
 fun AppConcatTextPreview() {
@@ -134,7 +134,7 @@ fun AppConcatTextPreview() {
         AppConcatText(
             firstText = stringResource(id = R.string.str_don_t_want_login),
             secondText = stringResource(id = R.string.str_skip),
-            onClick = {},
+            onClick = {}
         )
     }
 }
