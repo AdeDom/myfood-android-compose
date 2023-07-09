@@ -1,6 +1,6 @@
 package com.adedom.food_detail.domain.use_cases
 
-import com.adedom.core.data.providers.data_store.AppDataStore
+import com.adedom.core.data.providers.datastore.AppDataStore
 import com.adedom.core.utils.AuthRole
 import com.adedom.data.repositories.FavoriteRepository
 import com.adedom.data.repositories.FoodRepository

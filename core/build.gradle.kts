@@ -4,6 +4,7 @@ import com.adedom.buildsrc.Versions
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.jetbrains.kotlin.android)
+    alias(libs.plugins.jlleitschuh.gradle.ktlint)
     id("kotlinx-serialization")
     id("com.squareup.sqldelight")
 }
@@ -45,17 +46,17 @@ android {
             buildConfigField(
                 Flavors.booleanTypeField,
                 Flavors.isDevelopModeNameField,
-                Flavors.DevelopValueField.isDevelopMode,
+                Flavors.DevelopValueField.isDevelopMode
             )
             buildConfigField(
                 Flavors.stringTypeField,
                 Flavors.baseUrlNameField,
-                Flavors.DevelopValueField.baseUrl,
+                Flavors.DevelopValueField.baseUrl
             )
             buildConfigField(
                 Flavors.stringTypeField,
                 Flavors.hostNameField,
-                Flavors.DevelopValueField.host,
+                Flavors.DevelopValueField.host
             )
         }
 
@@ -64,17 +65,17 @@ android {
             buildConfigField(
                 Flavors.booleanTypeField,
                 Flavors.isDevelopModeNameField,
-                Flavors.ProductionValueField.isDevelopMode,
+                Flavors.ProductionValueField.isDevelopMode
             )
             buildConfigField(
                 Flavors.stringTypeField,
                 Flavors.baseUrlNameField,
-                Flavors.ProductionValueField.baseUrl,
+                Flavors.ProductionValueField.baseUrl
             )
             buildConfigField(
                 Flavors.stringTypeField,
                 Flavors.hostNameField,
-                Flavors.ProductionValueField.host,
+                Flavors.ProductionValueField.host
             )
         }
     }
@@ -85,6 +86,18 @@ android {
     }
     kotlinOptions {
         jvmTarget = "17"
+    }
+}
+
+tasks.getByPath("preBuild").dependsOn("ktlintFormat")
+
+ktlint {
+    android.set(true)
+    ignoreFailures.set(false)
+    reporters {
+        reporter(org.jlleitschuh.gradle.ktlint.reporter.ReporterType.PLAIN)
+        reporter(org.jlleitschuh.gradle.ktlint.reporter.ReporterType.CHECKSTYLE)
+        reporter(org.jlleitschuh.gradle.ktlint.reporter.ReporterType.SARIF)
     }
 }
 

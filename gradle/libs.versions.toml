@@ -22,6 +22,7 @@ googleTruth = "1.1.3"
 mockk = "1.13.4"
 googleTestParameterInjector = "1.10"
 myFoodKtorServer = "0.3.2"
+ktlintVersion = "11.5.0"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "androidxCoreKtx" }
@@ -72,3 +73,4 @@ android-library = { id = "com.android.library", version.ref = "androidGradlePlug
 jetbrains-kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "jetbrainsKotlinAndroid" }
 google-devtools-ksp = { id = "com.google.devtools.ksp", version.ref = "googleDevtoolsKsp" }
 app-cash-paparazzi = { id = "app.cash.paparazzi", version.ref = "appCashPaparazzi" }
+jlleitschuh-gradle-ktlint = { id = "org.jlleitschuh.gradle.ktlint", version.ref = "ktlintVersion" }

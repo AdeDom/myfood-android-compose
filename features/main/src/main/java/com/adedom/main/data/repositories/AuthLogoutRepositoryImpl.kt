@@ -1,6 +1,6 @@
 package com.adedom.main.data.repositories
 
-import com.adedom.core.data.providers.data_store.AppDataStore
+import com.adedom.core.data.providers.datastore.AppDataStore
 import com.adedom.core.utils.AuthRole
 import com.adedom.main.data.providers.remote.auth.AuthRemoteDataSource
 import com.adedom.main.domain.repositories.AuthLogoutRepository

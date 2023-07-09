@@ -1,12 +1,13 @@
 package com.adedom.main.data.providers.remote.auth
 
-import com.adedom.core.data.providers.data_store.AppDataStore
+import com.adedom.core.data.providers.datastore.AppDataStore
 import com.adedom.core.data.providers.remote.DataProviderRemote
 import com.adedom.main.BuildConfig
 import com.myfood.server.data.models.base.BaseResponse
-import io.ktor.client.call.*
-import io.ktor.client.request.*
-import io.ktor.http.*
+import io.ktor.client.call.body
+import io.ktor.client.request.header
+import io.ktor.client.request.post
+import io.ktor.http.HttpHeaders
 
 class AuthRemoteDataSourceImpl(
     private val dataProviderRemote: DataProviderRemote,

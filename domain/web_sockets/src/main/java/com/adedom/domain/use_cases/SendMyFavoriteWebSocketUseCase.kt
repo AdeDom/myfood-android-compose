@@ -1,6 +1,6 @@
 package com.adedom.domain.use_cases
 
-import com.adedom.core.data.providers.data_store.AppDataStore
+import com.adedom.core.data.providers.datastore.AppDataStore
 import com.adedom.core.utils.AuthRole
 import com.adedom.data.repositories.FavoriteWebSocketRepository
 

@@ -1,4 +1,4 @@
-package com.adedom.core.data.providers.data_store
+package com.adedom.core.data.providers.datastore
 
 import com.adedom.core.utils.AuthRole
 

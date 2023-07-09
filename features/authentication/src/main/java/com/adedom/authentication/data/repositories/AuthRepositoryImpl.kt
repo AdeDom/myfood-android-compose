@@ -2,7 +2,7 @@ package com.adedom.authentication.data.repositories
 
 import com.adedom.authentication.data.providers.remote.auth.AuthRemoteDataSource
 import com.adedom.authentication.domain.repositories.AuthRepository
-import com.adedom.core.data.providers.data_store.AppDataStore
+import com.adedom.core.data.providers.datastore.AppDataStore
 import com.adedom.core.utils.AuthRole
 import com.myfood.server.data.models.request.LoginRequest
 import com.myfood.server.data.models.request.RegisterRequest

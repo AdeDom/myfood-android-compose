@@ -1,6 +1,6 @@
 package com.adedom.profile.providers.remote
 
-import com.adedom.core.data.providers.data_store.AppDataStore
+import com.adedom.core.data.providers.datastore.AppDataStore
 import com.adedom.core.data.providers.remote.AppHttpClientEngine
 import com.adedom.core.data.providers.remote.DataProviderRemote
 import com.adedom.core.utils.ApiServiceException
@@ -8,10 +8,14 @@ import com.adedom.profile.providers.data_store.FakeAppDataStore
 import com.google.common.truth.Truth.assertThat
 import com.myfood.server.data.models.base.BaseResponse
 import com.myfood.server.data.models.response.UserProfileResponse
-import io.ktor.client.engine.*
-import io.ktor.client.engine.mock.*
-import io.ktor.http.*
-import io.ktor.utils.io.*
+import io.ktor.client.engine.HttpClientEngine
+import io.ktor.client.engine.mock.MockEngine
+import io.ktor.client.engine.mock.respond
+import io.ktor.http.ContentType
+import io.ktor.http.HttpHeaders
+import io.ktor.http.HttpStatusCode
+import io.ktor.http.headersOf
+import io.ktor.utils.io.ByteReadChannel
 import kotlinx.coroutines.test.runTest
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json

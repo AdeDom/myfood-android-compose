@@ -1,7 +1,7 @@
 package com.adedom.core.data.providers.remote
 
 import com.adedom.core.BuildConfig
-import com.adedom.core.data.providers.data_store.AppDataStore
+import com.adedom.core.data.providers.datastore.AppDataStore
 import com.adedom.core.utils.ApiServiceException
 import com.adedom.core.utils.AuthRole
 import com.adedom.core.utils.RefreshTokenExpiredException
@@ -35,7 +35,7 @@ import kotlinx.serialization.json.Json
 
 class DataProviderRemote(
     private val appHttpClientEngine: AppHttpClientEngine,
-    private val appDataStore: AppDataStore,
+    private val appDataStore: AppDataStore
 ) {
 
     fun getHttpClient(): HttpClient {
@@ -43,10 +43,12 @@ class DataProviderRemote(
             install(WebSockets)
 
             install(ContentNegotiation) {
-                json(Json {
-                    ignoreUnknownKeys = true
-                    explicitNulls = false
-                })
+                json(
+                    Json {
+                        ignoreUnknownKeys = true
+                        explicitNulls = false
+                    }
+                )
             }
 
             install(HttpTimeout) {
@@ -75,7 +77,7 @@ class DataProviderRemote(
                     refreshTokens {
                         val tokenRequest = TokenRequest(
                             accessToken = oldTokens?.accessToken,
-                            refreshToken = oldTokens?.refreshToken,
+                            refreshToken = oldTokens?.refreshToken
                         )
                         val tokenResponse: BaseResponse<TokenResponse> = client
                             .post("${BuildConfig.BASE_URL}api/auth/refreshToken") {
@@ -85,7 +87,7 @@ class DataProviderRemote(
                             .body()
                         val baseError = BaseError(
                             code = ErrorResponse.RefreshTokenError.code,
-                            message = ErrorResponse.RefreshTokenError.message,
+                            message = ErrorResponse.RefreshTokenError.message
                         )
                         val accessToken = tokenResponse.result?.accessToken
                             ?: throw RefreshTokenExpiredException(baseError)

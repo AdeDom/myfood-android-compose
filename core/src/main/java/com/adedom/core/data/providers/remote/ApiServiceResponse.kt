@@ -10,7 +10,7 @@ import kotlinx.serialization.json.Json
 data class ApiServiceResponse(
     var version: String = ResponseKeyConstant.VERSION,
     var status: String = ResponseKeyConstant.ERROR,
-    var error: BaseError? = null,
+    var error: BaseError? = null
 )
 
 fun String.decodeApiServiceResponseFromString(): ApiServiceResponse {

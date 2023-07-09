@@ -1,6 +1,6 @@
 package com.adedom.splash_screen.data.repositories
 
-import com.adedom.core.data.providers.data_store.AppDataStore
+import com.adedom.core.data.providers.datastore.AppDataStore
 import com.adedom.core.utils.AuthRole
 import com.adedom.splash_screen.domain.repositories.SplashScreenRepository
 import kotlinx.coroutines.CoroutineDispatcher
