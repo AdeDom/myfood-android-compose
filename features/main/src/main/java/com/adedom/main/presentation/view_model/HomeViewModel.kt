@@ -20,7 +20,6 @@ import com.adedom.ui_components.domain.models.FoodModel
 import com.myfood.server.data.models.base.BaseError
 import com.myfood.server.data.models.web_sockets.FavoriteWebSocketsResponse
 import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.Job
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
@@ -49,16 +48,15 @@ sealed interface HomeUiEvent {
     object NavLogout : HomeUiEvent
     object ErrorDismiss : HomeUiEvent
     object Refreshing : HomeUiEvent
-    object BackHandler : HomeUiEvent
     object LogoutDialog : HomeUiEvent
     object LogoutClick : HomeUiEvent
     object HideDialog : HomeUiEvent
+    object OnBackPressed : HomeUiEvent
 }
 
 sealed interface HomeChannel {
     object Logout : HomeChannel
     object OnBackPressed : HomeChannel
-    object OnBackAlert : HomeChannel
 }
 
 class HomeViewModel(
@@ -74,9 +72,6 @@ class HomeViewModel(
     private val updateFavoriteUseCase: UpdateFavoriteUseCase,
     private val getFoodListByCategoryIdUseCase: GetFoodListByCategoryIdUseCase,
 ) : BaseViewModel<HomeUiEvent, HomeUiState>(HomeUiState()) {
-
-    private var isBackPressed = false
-    private var backPressedJob: Job? = null
 
     private val _channel = Channel<HomeChannel>()
     val channel: Flow<HomeChannel> = _channel.receiveAsFlow()
@@ -207,20 +202,6 @@ class HomeViewModel(
                 HomeUiEvent.Refreshing -> {
                     callHomeContent(isRefreshing = true)
                 }
-                HomeUiEvent.BackHandler -> {
-                    backPressedJob?.cancel()
-                    backPressedJob = launch {
-                        if (isBackPressed) {
-                            _channel.send(HomeChannel.OnBackPressed)
-                        } else {
-                            _channel.send(HomeChannel.OnBackAlert)
-                        }
-
-                        isBackPressed = true
-                        delay(2_000)
-                        isBackPressed = false
-                    }
-                }
 
                 HomeUiEvent.LogoutDialog -> {
                     emit { copy(dialog = HomeUiState.Dialog.Logout) }
@@ -232,6 +213,10 @@ class HomeViewModel(
 
                 HomeUiEvent.HideDialog -> {
                     emit { copy(dialog = null) }
+                }
+
+                HomeUiEvent.OnBackPressed -> {
+                    _channel.send(HomeChannel.OnBackPressed)
                 }
             }
         }

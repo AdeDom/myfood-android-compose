@@ -1,5 +1,6 @@
 package com.adedom.main.presentation.component
 
+import android.widget.Toast
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Row
@@ -20,6 +21,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -28,6 +30,8 @@ import com.adedom.main.presentation.view_model.HomeChannel
 import com.adedom.main.presentation.view_model.HomeUiEvent
 import com.adedom.main.presentation.view_model.HomeUiState
 import com.adedom.main.presentation.view_model.HomeViewModel
+import com.adedom.main.utils.effect.BackHandlerEffect
+import com.adedom.main.utils.effect.rememberBackHandlerEffect
 import com.adedom.ui_components.components.AppIcon
 import com.adedom.ui_components.components.AppText
 import com.adedom.ui_components.components.AppTitleText
@@ -37,26 +41,36 @@ import com.adedom.ui_components.R as res
 @Composable
 fun MainScreen(
     viewModel: HomeViewModel,
+    backHandlerEffect: BackHandlerEffect = rememberBackHandlerEffect(),
     onLogoutClick: () -> Unit,
     openFoodDetailPage: (Long) -> Unit,
     openSearchFoodPage: () -> Unit,
     openUserProfilePage: () -> Unit,
     openInfoPage: () -> Unit,
-    onBackAlert: () -> Unit,
     onBackPressed: () -> Unit,
 ) {
+    val context = LocalContext.current
+
     LaunchedEffect(key1 = Unit) {
         viewModel.channel.collect { homeChannel ->
             when (homeChannel) {
                 HomeChannel.Logout -> {
                     onLogoutClick()
                 }
-                HomeChannel.OnBackAlert -> {
-                    onBackAlert()
-                }
+
                 HomeChannel.OnBackPressed -> {
                     onBackPressed()
                 }
+            }
+        }
+    }
+
+    LaunchedEffect(key1 = Unit) {
+        backHandlerEffect.effect.collect { isBackPressed ->
+            if (isBackPressed) {
+                viewModel.onEvent(HomeUiEvent.OnBackPressed)
+            } else {
+                Toast.makeText(context, "Tap again to exit the app", Toast.LENGTH_SHORT).show()
             }
         }
     }
@@ -73,7 +87,7 @@ fun MainScreen(
         openInfoPage,
     )
 
-    BackHandler(onBack = { viewModel.onEvent(HomeUiEvent.BackHandler) })
+    BackHandler(onBack = backHandlerEffect::onBack)
 }
 
 @OptIn(ExperimentalMaterial3Api::class)

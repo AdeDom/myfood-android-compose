@@ -395,10 +395,6 @@ fun HomePagePreview() {
                         Toast.makeText(context, "ErrorDismiss", Toast.LENGTH_SHORT).show()
                     }
 
-                    HomeUiEvent.BackHandler -> {
-                        Toast.makeText(context, "BackHandler", Toast.LENGTH_SHORT).show()
-                    }
-
                     HomeUiEvent.Refreshing -> {
                         Toast.makeText(context, "Refreshing", Toast.LENGTH_SHORT).show()
                     }
@@ -407,6 +403,7 @@ fun HomePagePreview() {
                     HomeUiEvent.LogoutClick -> {}
                     HomeUiEvent.NavLogout -> {}
                     HomeUiEvent.HideDialog -> {}
+                    HomeUiEvent.OnBackPressed -> {}
                 }
             },
             openFoodDetailPage = {},

@@ -144,9 +144,6 @@ fun NavGraphBuilder.mainGraph(navController: NavController) {
                 openInfoPage = {
                     Toast.makeText(context, "Info", Toast.LENGTH_SHORT).show()
                 },
-                onBackAlert = {
-                    Toast.makeText(context, "Tap again to exit the app", Toast.LENGTH_SHORT).show()
-                },
                 onBackPressed = {
                     (context as? Activity)?.finishAffinity()
                 },
